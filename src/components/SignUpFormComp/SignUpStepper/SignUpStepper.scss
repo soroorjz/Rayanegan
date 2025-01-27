@@ -1,0 +1,68 @@
+@import "../../../styles/responsive.scss";
+$tablet-resize: 900px;
+$primary-color: #e55604;
+.stepper-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+}
+
+.stepper {
+  width: 100%;
+  display: flex;
+  gap: 15px;
+  justify-content: space-around;
+  align-items: center;
+  margin: 50px 0;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 5px;
+
+  &.active {
+    .step-number {
+      background-color: $primary-color;
+      color: #fff;
+    }
+
+    .step-label {
+      font-weight: bold;
+      color: $primary-color;
+    }
+  }
+
+  .step-number {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: bold;
+    color: #aaa;
+    background-color: #f9f9f9;
+  }
+
+  .step-label {
+    font-size: 14px;
+    color: #aaa;
+  }
+}
+
+.step-content {
+  border-radius: 8px;
+  padding: 20px;
+  @include responsive($tablet) {
+    width: 100%;
+  }
+}

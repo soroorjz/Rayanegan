@@ -1,0 +1,197 @@
+$primary-color: #e55604;
+@import "../../../styles/responsive.scss";
+$tablet-resize: 900px;
+a {
+  text-decoration: none;
+  color: #dafffb;
+}
+.error {
+  color: #e50404;
+  margin-top: 3px;
+  font-size: 12px;
+}
+.navBarTopPart {
+  position: fixed;
+  background-color: #fff;
+  top: 0;
+
+  width: 100%;
+  display: flex;
+  padding: 25px 15px;
+  z-index: 9999;
+
+  .logoPart {
+    height: 50px;
+    width: 25%;
+    align-items: center;
+    gap: 7px;
+    display: none;
+    @include responsive($tablet) {
+      display: flex;
+    }
+    a {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      img {
+        width: 60px;
+        @include responsive($tablet-resize) {
+          width: 80px;
+        }
+      }
+      p {
+        font-size: 14px;
+        color: #3d3d3d;
+      }
+    }
+  }
+  .navbar-JobPart {
+    height: 50px;
+    // width: 50%;
+    display: none;
+    @include responsive($tablet) {
+      display: flex;
+      justify-content: center;
+    }
+
+    .jobSearchBtn {
+    }
+
+    .search-button {
+      padding: 8px 15px;
+      width: 25%;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
+      cursor: pointer;
+      @include responsive($tablet-resize) {
+        width: 15%;
+      }
+    }
+  }
+  .logInPart {
+    height: 50px;
+    width: 25%;
+    display: none;
+    @include responsive($tablet) {
+      display: flex;
+      justify-content: flex-end;
+    }
+    button {
+      background: 0;
+      background-color: #04364a;
+      border: 0;
+      color: #dafffb;
+      padding: 10px 5px;
+      width: fit-content;
+      border-radius: 20px;
+      font-size: 14px;
+      transition: background-color 0.3s;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $primary-color;
+      }
+
+      @include responsive($tablet-resize) {
+        width: 40%;
+      }
+    }
+  }
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 35px;
+    @include responsive($tablet) {
+      display: none;
+    }
+  }
+  .responsiveLogo {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 25%;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    img {
+      height: 40px;
+      width: 55px;
+    }
+    p {
+      font-size: 10px;
+      text-align: center;
+      line-height: 13px;
+      color: #5d5a5a;
+    }
+    @include responsive($tablet) {
+      display: none;
+    }
+  }
+}
+.scrolledNav {
+  background-color: #fff;
+}
+.sidebar {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  right: -100%;
+  width: 250px;
+  height: 100%;
+  background-color: #04364a;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: right 0.3s;
+  &.open {
+    right: 0;
+  }
+  .close-sidebar {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+  }
+  .sidebar-content {
+    .sidebar-search-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .sidebar-search-button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: $primary-color;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .sidebar-login-button {
+      background: white;
+      padding: 10px;
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 5px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      a {
+        color: #04364a;
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+.examCardPart-Container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0 80px 0;
+  .examCardPart-Title {
+    margin: 30px 0;
+    h1 {
+      text-align: center;
+    }
+  }
+  .examCards {
+    width: 100%;
+  }
+}

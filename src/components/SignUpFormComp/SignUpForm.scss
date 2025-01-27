@@ -1,0 +1,85 @@
+@import "../../styles/responsive.scss";
+$tablet-resize: 900px;
+.form-container {
+  width: 100%;
+  margin: 0 auto;
+  background: #f9f9f9;
+  padding: 30px 40px 50px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  @include responsive($tablet) {
+    width: 90%;
+  }
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 24px;
+    font-size: 1.8rem;
+  }
+
+  form {
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          font-size: 14px;
+          margin-bottom: 8px;
+          color: #555;
+        }
+
+        input,
+        select {
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          font-size: 14px;
+
+          &:focus {
+            border-color: #e55604;
+            outline: none;
+            box-shadow: 0 0 4px rgba(0, 86, 179, 0.3);
+          }
+        }
+
+        input[type="file"] {
+          padding: 4px;
+        }
+
+        .radio-group {
+          display: flex;
+          gap: 10px;
+
+          label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+          }
+        }
+      }
+    }
+
+    .submit-button {
+      width: 40%;
+      display: block;
+      margin: 20px auto 0;
+      padding: 12px;
+      background: #04364a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+
+      &:hover {
+        background: #e55604;
+      }
+    }
+  }
+}

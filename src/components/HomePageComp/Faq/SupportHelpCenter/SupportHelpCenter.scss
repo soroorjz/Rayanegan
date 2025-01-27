@@ -1,0 +1,119 @@
+@import "../../../../styles/responsive.scss";
+$tablet-resize: 900px;
+
+.support-help-center {
+  width: 100%;
+  border-radius: 10px;
+  padding:30px 20px;
+  margin: 0 auto;
+  @include responsive($tablet-resize) {
+    width: 50%;
+  }
+  .categories,
+  .questions,
+  .answer,
+  .feedback-form {
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+  }
+  .answer {
+    width: 80%;
+    margin: 0 auto;
+    text-align: right;
+    p {
+      margin-bottom: 50px;
+    }
+    .feedback-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+      }
+    }
+  }
+  .category-button,
+  .question-button,
+  .back-button,
+  .like-button,
+  .dislike-button,
+  .submit-button {
+    // display: block;
+    width: 80%;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+
+    &.category-button,
+    &.question-button {
+      //   background-color: #04364a;
+      color: #04364a;
+      //   background: 0;
+      text-align: right;
+      &:hover {
+        // background-color: #0056b3;
+      }
+    }
+
+    &.back-button {
+      background-color: #6c757d;
+      color: #fff;
+
+      &:hover {
+        background-color: #5a6268;
+      }
+    }
+
+    &.like-button {
+      background-color: #578e7e;
+      color: #fff;
+
+      &:hover {
+        background-color: #218838;
+      }
+    }
+
+    &.dislike-button {
+      background-color: #ff5a5f;
+      color: #fff;
+
+      &:hover {
+        background-color: #c82333;
+      }
+    }
+
+    &.submit-button {
+      background-color: #17a2b8;
+      color: #fff;
+
+      &:hover {
+        background-color: #138496;
+      }
+    }
+  }
+
+  textarea {
+    width: 100%;
+    height: 100px;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+
+    &:focus {
+      border-color: #80bdff;
+      outline: none;
+    }
+  }
+}

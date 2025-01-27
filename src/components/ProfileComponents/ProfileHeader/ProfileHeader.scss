@@ -1,0 +1,33 @@
+.ProfileHeader {
+  width:91%;
+  border-bottom: 1px solid red;
+  .ProfileHeader-Wrapper {
+    width: 100%;
+    height: 80px;
+    // margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .rightPart {
+      width: 10%;
+      height: 100%;
+      img {
+        width: 100%;
+      }
+    }
+    .leftPart {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      button {
+        background: 0;
+        border: 0;
+      }
+      .profileImg {
+        svg {
+          font-size: 54px;
+        }
+      }
+    }
+  }
+}

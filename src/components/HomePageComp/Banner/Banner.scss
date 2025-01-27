@@ -1,0 +1,85 @@
+@import "../../../styles/responsive.scss";
+$tablet-resize: 900px;
+.bannerPart {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  padding: 100px 0;
+  flex-direction: column;
+  @include responsive($tablet-resize) {
+    flex-direction: row-reverse;
+    gap: 20px;
+  }
+  @include responsive($laptop) {
+    width: 80%;
+    padding: 160px 0 100px;
+  }
+
+  .banner_ImagePart {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 20px 0;
+    img {
+      width: 100%;
+      border-radius: 10px;
+      @include responsive($tablet) {
+        width: unset;
+      }
+    }
+    @include responsive($tablet-resize) {
+      width: 60%;
+      margin: 0;
+    }
+  }
+  .banner-SloganPart {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+    @include responsive($tablet-resize) {
+      width: 50%;
+    }
+    .sloganTitle {
+      h1 {
+        font-size: 27px;
+        line-height: 35px;
+      }
+      p {
+        margin: 25px 0;
+        line-height: 27px;
+        text-align: justify;
+        @include responsive($tablet) {
+          margin: 25px 0;
+          line-height: 30px;
+        }
+      }
+    }
+    .sloganBtns {
+      display: flex;
+      gap: 20px;
+      flex-direction: column;
+      align-items: center;
+      @include responsive($tablet) {
+        flex-direction: row;
+      }
+      button {
+        background: 0;
+        background-color: #04364a;
+        border: 0;
+        color: #dafffb;
+        padding: 15px 0;
+        width: 100%;
+        border-radius: 20px;
+        font-size: 14px;
+        @include responsive($tablet) {
+          font-size: 16px;
+          width: 50%;
+          padding: 15px 5px;
+        }
+      }
+    }
+  }
+}
