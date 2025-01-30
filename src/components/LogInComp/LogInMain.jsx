@@ -1,19 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import "./LogInMain.scss";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import LootieAnime from "../../lootie/loginanim.lottie";
+
 const LogInMain = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    // اطلاعات پیش‌فرض برای لاگین
+    const correctUsername = "testuser";
+    const correctPassword = "123456";
+    if (username === correctUsername && password === correctPassword) {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ username, avatar: "/assets/images/user-avatar.png" })
+      );
+      navigate("/");
+      window.location.reload(); // برای رندر مجدد Navbar
+    } else {
+      alert("نام کاربری یا رمز عبور اشتباه است!");
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="login-left">
         <h1>ورود به حساب کاربری</h1>
-        <form className="login-form">
-          <input type="text" placeholder="نام کاربری" className="form-input" />
+        <form className="login-form" onSubmit={handleLogin}>
+          <input
+            type="text"
+            placeholder="نام کاربری"
+            className="form-input"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
           <input
             type="password"
             placeholder="رمز عبور"
             className="form-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <div className="form-options">
             <Link className="forgot-password" to="/ForgotPassword">
@@ -21,11 +52,11 @@ const LogInMain = () => {
             </Link>
           </div>
 
-          <Link to="/profile">
+          {/* <Link to="/profile"> */}
             <button type="submit" className="login-button">
               ورود
             </button>
-          </Link>
+          {/* </Link> */}
         </form>
         <div className="login-divider">یا</div>
 

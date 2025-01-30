@@ -78,6 +78,6 @@ $tablet-resize: 900px;
     }
   }
   @include responsive($tablet-resize) {
-    height: 100vh;
+    min-height: 100vh;
   }
 }

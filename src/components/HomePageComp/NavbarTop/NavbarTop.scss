@@ -1,15 +1,20 @@
 $primary-color: #e55604;
 @import "../../../styles/responsive.scss";
 $tablet-resize: 900px;
+
 a {
   text-decoration: none;
   color: #dafffb;
 }
+
+// استایل پیام‌های خطا
 .error {
   color: #e50404;
   margin-top: 3px;
   font-size: 12px;
 }
+
+// استایل نوار بالا
 .navBarTopPart {
   position: fixed;
   background-color: #fff;
@@ -18,39 +23,39 @@ a {
   display: flex;
   padding: 25px 15px;
   z-index: 9999;
+
   .navbarLeftPart {
-    display: flex;
+    display: none;
     width: 75%;
     gap: 10px;
     justify-content: end;
     align-items: center;
-    // border: 1px solid red;
-    .jobSearchBtn {
-      width: fit-content;
-      // height: 50px;
+
+    @include responsive($tablet) {
       display: flex;
-      justify-content: flex-end;
     }
+
     .logInPart {
-      // height: 50px;
       width: fit-content;
       display: none;
+
       @include responsive($tablet) {
         display: flex;
         justify-content: flex-end;
       }
     }
+
     button {
       background: 0;
       background-color: #04364a;
       border: 0;
       color: #dafffb;
       padding: 10px 15px;
-      width: fit-content;
       border-radius: 20px;
       font-size: 14px;
       transition: background-color 0.3s;
       cursor: pointer;
+
       &:hover {
         background-color: $primary-color;
       }
@@ -60,124 +65,124 @@ a {
       }
     }
   }
+
   .logoPart {
     height: 50px;
     width: 25%;
     align-items: center;
     gap: 7px;
     display: none;
+
     @include responsive($tablet) {
       display: flex;
     }
+
     a {
       display: flex;
       align-items: center;
       gap: 7px;
+
       img {
         width: 60px;
+
         @include responsive($tablet-resize) {
           width: 80px;
         }
       }
+
       p {
         font-size: 14px;
         color: #3d3d3d;
       }
     }
   }
+}
 
-  .hamburger {
+// استایل پروفایل کاربری و دراپ‌داون
+.userProfile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 8px;
+ z-index: 5;
+  // اطلاعات کاربر (عکس و نام)
+
+ 
+  .user-info {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
     gap: 10px;
-    cursor: pointer;
-    font-size: 35px;
-    @include responsive($tablet) {
-      display: none;
-    }
   }
-  .responsiveLogo {
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+  }
+
+  .user-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .user-name {
+    font-weight: bold;
+  }
+
+  .user-role {
+    font-size: 12px;
+    color: gray;
+  }
+
+  // استایل دراپ داون
+  .dropdown-menu {
+    position: absolute;
+    top: 55px;
+    right: calc(50% - 32px);
+    background-color: #04364a;
+    border-radius: 10px;
+    border-top-right-radius: 0;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    width: fit-content;
+    display: none;
+    flex-direction: column;
+    z-index: 10;
+    overflow: hidden;
+   
+  }
+
+  &:hover .dropdown-menu {
+    display: flex;
+  }
+
+  .dropdown-menu a,
+  .exit {
+    border-radius: 0 !important;
     display: flex;
     align-items: center;
-    flex-direction: column;
-    width: 25%;
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    img {
-      height: 40px;
-      width: 55px;
-    }
-    p {
-      font-size: 10px;
-      text-align: center;
-      line-height: 13px;
-      color: #5d5a5a;
-    }
-    @include responsive($tablet) {
-      display: none;
-    }
+    gap: 5px;
+    font-size: 14px;
+    padding: 12px 15px;
+    text-align: center;
+    border: none;
+    background: none;
+    width: 100% !important;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .dropdown-menu a:hover,
+  .dropdown-menu button:hover {
+    background: #f1f1f1;
+    color: #04364a;
   }
 }
+
+// کلاس برای تغییر رنگ نوار هنگام اسکرول
 .scrolledNav {
   background-color: #fff;
-}
-.sidebar {
-  position: fixed;
-  z-index: 99999;
-  top: 0;
-  right: -100%;
-  width: 250px;
-  height: 100%;
-  background-color: #04364a;
-  color: white;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  transition: right 0.3s;
-  &.open {
-    right: 0;
-  }
-  .close-sidebar {
-    align-self: flex-end;
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: white;
-    cursor: pointer;
-  }
-  .sidebar-content {
-    .sidebar-search-input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    .sidebar-search-button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      background-color: $primary-color;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .sidebar-login-button {
-      background: white;
-      padding: 10px;
-      width: 100%;
-      margin-top: 20px;
-      border-radius: 5px;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      a {
-        color: #04364a;
-      }
-    }
-  }
 }

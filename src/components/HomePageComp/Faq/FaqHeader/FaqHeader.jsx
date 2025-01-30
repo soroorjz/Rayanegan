@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./FaqHeader.scss";
-import FaqChat from "../FaqChat";
 import Faq from "../Faq";
 import SupportHelpCenter from "../SupportHelpCenter/SupportHelpCenter";
 const FaqHeader = () => {

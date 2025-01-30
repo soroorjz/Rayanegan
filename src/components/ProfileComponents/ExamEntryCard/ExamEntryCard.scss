@@ -1,0 +1,81 @@
+.exam-entry-card {
+  background: #f9f9f9;
+  width: 80%;
+  max-height: 85vh;
+  margin: 80px auto 0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  .exam-entry-card__title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .exam-entry-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .exam-entry-card__info {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ccc;
+      .exam-entry-card__profile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+
+        .exam-entry-card__profile-image {
+          width: 100px;
+          height: 100px;
+          background: #ddd;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .exam-entry-card__profile-name {
+          margin-top: 10px;
+        }
+      }
+
+      .exam-entry-card__code {
+      }
+
+      .exam-entry-card__qr {
+        margin: 10px 0;
+        img {
+          width: 120px;
+          height: 120px;
+        }
+      }
+    }
+    .exam-entry-card__details {
+      height: 100%;
+      text-align: right;
+      display: grid;
+      grid-template-rows: repeat(6, auto);
+      grid-auto-flow: column;
+      gap: 10px 20px;
+      p {
+        margin: 0;
+      }
+    }
+    .signingPart {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      align-items: center;
+      .fingerPrint, .sign{
+        border: 1px solid #ccc;
+        padding: 50px 80px;
+        color: #ccc;
+      }
+    }
+  }
+}

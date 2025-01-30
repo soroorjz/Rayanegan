@@ -15,6 +15,7 @@ const SignUpForm = ({ onNext }) => {
     gender: "",
     birthDate: "",
     province: "",
+    city: "", 
     maritalStatus: "",
     religion: "",
     children: 0,
@@ -174,22 +175,36 @@ const SignUpForm = ({ onNext }) => {
               <small className="error">{errors.province}</small>
             )}
           </div>
+
           <div className="form-group">
-            <label htmlFor="province">شهرستان محل تولد:</label>
+            <label htmlFor="city">شهرستان محل تولد:</label>
             <select
-              id="province"
-              name="province"
-              value={formData.province}
+              id="city"
+              name="city"
+              value={formData.city}
               onChange={handleChange}
             >
               <option value="">انتخاب نمایید</option>
-              <option value="تهران">تهران</option>
-              <option value=" مشهد">مشهد</option>
-              <option value="اصفهان">اصفهان</option>
+              {formData.province === "تهران" && (
+                <>
+                  <option value="تهران">تهران</option>
+                  <option value="ری">ری</option>
+                </>
+              )}
+              {formData.province === "خراسان رضوی" && (
+                <>
+                  <option value="مشهد">مشهد</option>
+                  <option value="نیشابور">نیشابور</option>
+                </>
+              )}
+              {formData.province === "اصفهان" && (
+                <>
+                  <option value="اصفهان">اصفهان</option>
+                  <option value="کاشان">کاشان</option>
+                </>
+              )}
             </select>
-            {errors.province && (
-              <small className="error">{errors.province}</small>
-            )}
+            {errors.city && <small className="error">{errors.city}</small>}
           </div>
 
           <div className="form-group">

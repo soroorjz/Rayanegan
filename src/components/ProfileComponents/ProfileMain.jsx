@@ -2,6 +2,8 @@ import React from "react";
 import PersonalDetails from "./PersonalDetails/PersonalDetails";
 import "./ProfileMain.scss";
 import MyExams from "./MyExams/MyExams";
+import ExamEntryCard from "./ExamEntryCard/ExamEntryCard";
+import NoEntryCard from "./NoEntryCard/NoEntryCard";
 
 const ProfileMain = ({ selectedComponent }) => {
   let content;
@@ -13,10 +15,10 @@ const ProfileMain = ({ selectedComponent }) => {
       content = <MyExams />;
       break;
     case "suggested":
-      // content = <SuggestedExams />;
+      content = <ExamEntryCard />;
       break;
     case "news":
-      // content = <News />;
+      content = <NoEntryCard />;
       break;
     default:
       content = <PersonalDetails />;

@@ -1,6 +1,6 @@
 .profileSide-Container {
   background-color: #04364a;
-  height: 100vh;
+ height: 100vh;
   position: absolute;
   left: 0;
   top: 0;
@@ -15,7 +15,9 @@
     button {
       cursor: pointer;
       color: #dafffb;
+      font-size: 0.813rem;
       height: 10%;
+      padding: 10px 5px;
       display: flex;
       width: 100%;
       flex-direction: column;
@@ -23,14 +25,12 @@
       justify-content: center;
       background: 0;
       border: 0;
-      .moon{
-        display: none;
-      }
+     
       &:hover {
         color: #e55604;
       }
       svg {
-        font-size: 24px;
+        font-size: 1.5rem;
       }
     }
     .active {

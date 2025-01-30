@@ -1,6 +1,6 @@
 import React from "react";
 // import { FaUserGraduate } from "react-icons/fa";
-import { FaRegNewspaper } from "react-icons/fa6";
+import { BsQrCode } from "react-icons/bs";
 import { FaBookReader } from "react-icons/fa";
 
 import { FaUserPen } from "react-icons/fa6";
@@ -27,14 +27,17 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
           onClick={() => setSelectedComponent("suggested")}
           className={selectedComponent === "suggested" ? "active" : ""}
         >
-          آزمون‌های پیشنهادی
+          <BsQrCode />
+          کارت ورود به جلسه
+          <span>(آزمون کتبی)</span>
         </button>
         <button
           onClick={() => setSelectedComponent("news")}
           className={selectedComponent === "news" ? "active" : ""}
         >
-          <FaRegNewspaper />
-          اخبار مربوطه
+          <BsQrCode />
+          کارت ورود به جلسه
+          <span>(ارزیابی تکمیلی)</span>
         </button>
       </div>
     </div>
