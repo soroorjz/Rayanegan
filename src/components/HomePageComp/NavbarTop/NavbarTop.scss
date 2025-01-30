@@ -14,12 +14,52 @@ a {
   position: fixed;
   background-color: #fff;
   top: 0;
-
   width: 100%;
   display: flex;
   padding: 25px 15px;
   z-index: 9999;
+  .navbarLeftPart {
+    display: flex;
+    width: 75%;
+    gap: 10px;
+    justify-content: end;
+    align-items: center;
+    // border: 1px solid red;
+    .jobSearchBtn {
+      width: fit-content;
+      // height: 50px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .logInPart {
+      // height: 50px;
+      width: fit-content;
+      display: none;
+      @include responsive($tablet) {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+    button {
+      background: 0;
+      background-color: #04364a;
+      border: 0;
+      color: #dafffb;
+      padding: 10px 15px;
+      width: fit-content;
+      border-radius: 20px;
+      font-size: 14px;
+      transition: background-color 0.3s;
+      cursor: pointer;
+      &:hover {
+        background-color: $primary-color;
+      }
 
+      @include responsive($tablet-resize) {
+        width: fit-content;
+      }
+    }
+  }
   .logoPart {
     height: 50px;
     width: 25%;
@@ -45,61 +85,7 @@ a {
       }
     }
   }
-  .navbar-JobPart {
-    height: 50px;
-    // width: 50%;
-    display: none;
-    @include responsive($tablet) {
-      display: flex;
-      justify-content: center;
-    }
 
-    .jobSearchBtn {
-    }
-
-    .search-button {
-      padding: 8px 15px;
-      width: 25%;
-      background-color: $primary-color;
-      color: white;
-      border: none;
-      border-top-left-radius: 30px;
-      border-bottom-left-radius: 30px;
-      cursor: pointer;
-      @include responsive($tablet-resize) {
-        width: 15%;
-      }
-    }
-  }
-  .logInPart {
-    height: 50px;
-    width: 25%;
-    display: none;
-    @include responsive($tablet) {
-      display: flex;
-      justify-content: flex-end;
-    }
-    button {
-      background: 0;
-      background-color: #04364a;
-      border: 0;
-      color: #dafffb;
-      padding: 10px 5px;
-      width: fit-content;
-      border-radius: 20px;
-      font-size: 14px;
-      transition: background-color 0.3s;
-      cursor: pointer;
-
-      &:hover {
-        background-color: $primary-color;
-      }
-
-      @include responsive($tablet-resize) {
-        width: 40%;
-      }
-    }
-  }
   .hamburger {
     display: flex;
     flex-direction: column;

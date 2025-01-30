@@ -8,9 +8,7 @@ const ExamSignUpForm = () => {
     <div className="examSignUpForm-Contaner">
       <NavbarTop />
       <h2>فرم ثبت نام داوطلبان</h2>
-
       <SignUpStepper />
-      {/* <Footer /> */}
     </div>
   );
 };

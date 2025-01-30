@@ -4,7 +4,7 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 
-const SignUpForm = () => {
+const SignUpForm = ({ onNext }) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -33,6 +33,7 @@ const SignUpForm = () => {
     gender: "جنسیت",
     birthDate: "تاریخ تولد",
     province: "استان محل تولد",
+    city: "شهرستان محل تولد",
     maritalStatus: "وضعیت تاهل",
     religion: "دین",
     children: "تعداد فرزندان",
@@ -82,8 +83,7 @@ const SignUpForm = () => {
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-      alert("فرم با موفقیت ارسال شد!");
-      //با کامپوننت موفقیت جایگزین بشه
+      onNext();
     }
   };
 
@@ -167,7 +167,24 @@ const SignUpForm = () => {
             >
               <option value="">انتخاب نمایید</option>
               <option value="تهران">تهران</option>
-              <option value="مشهد">مشهد</option>
+              <option value="خراسان رضوی">خراسان رضوی</option>
+              <option value="اصفهان">اصفهان</option>
+            </select>
+            {errors.province && (
+              <small className="error">{errors.province}</small>
+            )}
+          </div>
+          <div className="form-group">
+            <label htmlFor="province">شهرستان محل تولد:</label>
+            <select
+              id="province"
+              name="province"
+              value={formData.province}
+              onChange={handleChange}
+            >
+              <option value="">انتخاب نمایید</option>
+              <option value="تهران">تهران</option>
+              <option value=" مشهد">مشهد</option>
               <option value="اصفهان">اصفهان</option>
             </select>
             {errors.province && (
@@ -233,7 +250,7 @@ const SignUpForm = () => {
         </div>
 
         <button type="submit" className="submit-button">
-          ثبت
+          مرحله‌ی بعد
         </button>
       </form>
     </div>

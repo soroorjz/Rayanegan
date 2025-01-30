@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import "./SignUpStepper.scss";
 import SignUpForm from "../SignUpForm";
+import EducationForm from "./EducationForm/EducationForm";
+import ContactForm from "./ContactForm/ContactForm";
+import BackgroundForm from "./BackgroundForm/BackgroundForm";
 const SignUpStepper = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [showModal, setShowModal] = useState(false);
 
-  const steps = [" اطلاعات فردی", "مرحله دوم", "مرحله سوم", "پایان"];
+  const steps = [" اطلاعات فردی", "اطلاعات تحصیلی ", "مرحله سوم", "پایان"];
 
   const handleNextStep = () => {
     if (currentStep < steps.length) {
@@ -12,16 +16,35 @@ const SignUpStepper = () => {
     }
   };
 
+  const handleFinalSubmit = () => {
+    setShowModal(true);
+    setTimeout(() => {
+      setShowModal(false);
+    }, 3000);
+  };
+
   const renderContent = () => {
     switch (currentStep) {
       case 1:
         return <SignUpForm onNext={handleNextStep} />;
       case 2:
-        return <div>محتوای مرحله دوم</div>;
+        return (
+          <div>
+            <EducationForm onNext={handleNextStep} />
+          </div>
+        );
       case 3:
-        return <div>محتوای مرحله سوم</div>;
+        return (
+          <div>
+            <ContactForm onNext={handleNextStep} />
+          </div>
+        );
       case 4:
-        return <div>تبریک! مراحل ثبت‌نام تکمیل شد.</div>;
+        return (
+          <div>
+            <BackgroundForm onFinalSubmit={handleFinalSubmit} />
+          </div>
+        );
       default:
         return null;
     }
@@ -41,6 +64,13 @@ const SignUpStepper = () => {
         ))}
       </div>
       <div className="step-content">{renderContent()}</div>
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <p>ثبت نام با موفقیت انجام شد!</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React from "react";
 import "./LogInMain.scss";
 import { Link } from "react-router";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import LootieAnime from "../../lootie/loginanim.lottie";
 const LogInMain = () => {
   return (
     <div className="login-container">
@@ -36,11 +37,15 @@ const LogInMain = () => {
         </div>
       </div>
       <div className="login-right">
-        {/* <DotLottieReact
-          src="https://lottie.host/84f860ce-fd65-43b2-af52-f9ed03033eb4/BZsen1HyYe.lottie"
-          loop
-          autoplay
-        /> */}
+        <div>
+          <DotLottieReact
+            id="loginAnim"
+            src={LootieAnime}
+            onError={(error) =>
+              console.error("Error loading animation:", error)
+            }
+          />
+        </div>
         <h1>خوش آمدید!</h1>
         <h3>برای ورود به حساب کاربری خود، اطلاعات را وارد کنید.</h3>
 

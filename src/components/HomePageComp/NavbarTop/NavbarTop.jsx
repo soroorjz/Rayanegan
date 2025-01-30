@@ -26,7 +26,7 @@ const NavbarTop = () => {
     };
   }, []);
 
-  // اسکرول به ExamForm در زمان فوکوس روی اینپوت جستجو
+  // اسکرول به ExamForm در زمان فوکوس روی دکمه جستجو مشاغل
   const handleSearchFocus = () => {
     const examFormElement = document.getElementById("ExamForm"); // پیدا کردن المان
     if (examFormElement) {
@@ -43,7 +43,17 @@ const NavbarTop = () => {
             <p>مرکز آموزشی و پژوهشی رایانگان</p>
           </Link>
         </div>
-
+        <div className="navbarLeftPart">
+          <div className="jobSearchBtn">
+            <button onFocus={handleSearchFocus}>جست و جوی مشاغل</button>
+          </div>
+          <div className="logInPart">
+            <button>
+              <Link to="/logIn">ورود/ ثبت‌نام</Link>
+            </button>
+          </div>
+        </div>
+        
         <div className="navbar-JobPart">
           {/* <input
             type="text"
@@ -56,14 +66,6 @@ const NavbarTop = () => {
           {/* <button onClick={handleSearch} className="search-button">
             جستجو
           </button> */}
-          <div className="jobSearchBtn">
-            <button onFocus={handleSearchFocus}>جست و جوی مشاغل</button>
-          </div>
-        </div>
-        <div className="logInPart">
-          <button>
-            <Link to="/logIn">ورود/ ثبت‌نام</Link>
-          </button>
         </div>
 
         <div className="hamburger" onClick={toggleSidebar}>

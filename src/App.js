@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import "./App.css";
 import ExamInfo from "./pages/ExamInfo/ExamInfo";
 import ExamSignUpForm from "./pages/ExamSignUpForm/ExamSignUpForm";
