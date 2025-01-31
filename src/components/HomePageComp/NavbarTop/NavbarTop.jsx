@@ -104,11 +104,37 @@ const NavbarTop = () => {
           &times;
         </button>
         <div className="sidebar-content">
+          {user ? (
+            <div className="responsive-userProfile">
+              <div className="responsive-user-info">
+                <img
+                  src="/assets/images/photo_2022-03-23_18-31-12.jpg"
+                  alt="User Avatar"
+                  className="responsive-user-avatar"
+                />
+                <div className="responsive-user-details">
+                  <span className="responsive-user-name">{user.username}</span>
+                </div>
+              </div>
+
+              <div className="responsive-dropdown-menu">
+                <Link to="/profile">
+                  <FaUser /> پروفایل
+                </Link>
+
+                <button className="responsive-exit" onClick={handleLogout}>
+                  <FaSignOutAlt /> خروج
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button className="sidebar-login-button">
+              <Link to="/logIn">ورود/ ثبت‌نام</Link>
+            </button>
+          )}
+
           <button className="jobSearchBtn" onFocus={handleSearchFocus}>
             جست و جوی مشاغل
-          </button>
-          <button className="sidebar-login-button">
-            <Link to="/logIn">ورود/ ثبت‌نام</Link>
           </button>
         </div>
       </div>

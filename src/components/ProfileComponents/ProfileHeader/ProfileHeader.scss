@@ -1,37 +1,83 @@
 .ProfileHeader {
   width: 90%;
   background-color: #fff;
-  // background-color: #fff;
   border-radius: 50px 50px 0 0;
   position: fixed;
   top: 10px;
-  // border-bottom: 1px solid red;
+
   .ProfileHeader-Wrapper {
     width: 95%;
     margin: 0 auto;
     height: 80px;
-    // margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .ProfileHeader-rightPart {
-      // width: 10%;
       height: 100%;
       img {
         width: 90px;
       }
     }
+
     .leftPart {
+      position: relative;
       display: flex;
       align-items: center;
       gap: 5px;
-      button {
-        background: 0;
-        border: 0;
+      cursor: pointer;
+
+      .user-btn {
+        background: none;
+        border: none;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
       }
+
+      .dropdown-icon {
+        transition: transform 0.3s ease;
+      }
+
+      .dropdown-icon.open {
+        transform: rotate(180deg);
+      }
+
       .profileImg {
         svg {
           font-size: 54px;
+        }
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+        padding: 8px 12px;
+        width: 120px;
+        display: flex;
+        flex-direction: column;
+        z-index: 100;
+      }
+
+      .logout-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        svg {
+          font-size: 22px;
+        }
+        &:hover{
+          color: #e55604;
         }
       }
     }

@@ -4,11 +4,13 @@ import "./ProfileMain.scss";
 import MyExams from "./MyExams/MyExams";
 import ExamEntryCard from "./ExamEntryCard/ExamEntryCard";
 import NoEntryCard from "./NoEntryCard/NoEntryCard";
+import ExamSignUpForm from "../../pages/ExamSignUpForm/ExamSignUpForm";
 
 const ProfileMain = ({ selectedComponent }) => {
   let content;
   switch (selectedComponent) {
     case "personal":
+      // content = <ExamSignUpForm />;
       content = <PersonalDetails />;
       break;
     case "exams":
