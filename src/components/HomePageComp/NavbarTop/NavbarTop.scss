@@ -35,10 +35,15 @@ a {
       display: flex;
     }
 
+    .jobSearchBtn {
+      width: fit-content;
+      display: flex;
+      justify-content: flex-end;
+    }
+
     .logInPart {
       width: fit-content;
       display: none;
-
       @include responsive($tablet) {
         display: flex;
         justify-content: flex-end;
@@ -84,7 +89,6 @@ a {
 
       img {
         width: 60px;
-
         @include responsive($tablet-resize) {
           width: 80px;
         }
@@ -94,6 +98,94 @@ a {
         font-size: 14px;
         color: #3d3d3d;
       }
+    }
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 35px;
+    @include responsive($tablet) {
+      display: none;
+    }
+  }
+
+  .responsiveLogo {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 25%;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    img {
+      height: 40px;
+      width: 55px;
+    }
+    p {
+      font-size: 10px;
+      text-align: center;
+      line-height: 13px;
+      color: #5d5a5a;
+    }
+    @include responsive($tablet) {
+      display: none;
+    }
+  }
+}
+
+// کلاس برای تغییر رنگ نوار هنگام اسکرول
+.scrolledNav {
+  background-color: #fff;
+}
+
+// استایل سایدبار
+.sidebar {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  right: -100%;
+  width: 250px;
+  height: 100%;
+  background-color: #04364a;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: right 0.3s;
+  
+  &.open {
+    right: 0;
+  }
+
+  .close-sidebar {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+  }
+
+  .sidebar-content {
+    .jobSearchBtn {
+      width: 100%;
+      justify-content: center;
+      display: flex;
+      background: 0;
+      background-color: #dafffb;
+      border: 0;
+      color: #04364a;
+      padding: 10px 15px;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: background-color 0.3s;
+      cursor: pointer;
     }
   }
 }
@@ -107,10 +199,8 @@ a {
   cursor: pointer;
   padding: 10px;
   border-radius: 8px;
- z-index: 5;
-  // اطلاعات کاربر (عکس و نام)
-
- 
+  z-index: 5;
+  
   .user-info {
     display: flex;
     align-items: center;
@@ -124,21 +214,6 @@ a {
     border: 2px solid #ddd;
   }
 
-  .user-details {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .user-name {
-    font-weight: bold;
-  }
-
-  .user-role {
-    font-size: 12px;
-    color: gray;
-  }
-
-  // استایل دراپ داون
   .dropdown-menu {
     position: absolute;
     top: 55px;
@@ -152,7 +227,6 @@ a {
     flex-direction: column;
     z-index: 10;
     overflow: hidden;
-   
   }
 
   &:hover .dropdown-menu {
@@ -161,15 +235,12 @@ a {
 
   .dropdown-menu a,
   .exit {
-    border-radius: 0 !important;
     display: flex;
     align-items: center;
     gap: 5px;
     font-size: 14px;
     padding: 12px 15px;
     text-align: center;
-    border: none;
-    background: none;
     width: 100% !important;
     cursor: pointer;
     transition: background 0.3s;
@@ -180,9 +251,4 @@ a {
     background: #f1f1f1;
     color: #04364a;
   }
-}
-
-// کلاس برای تغییر رنگ نوار هنگام اسکرول
-.scrolledNav {
-  background-color: #fff;
 }

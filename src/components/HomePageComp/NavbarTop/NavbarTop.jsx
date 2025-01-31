@@ -6,6 +6,7 @@ import { Link } from "react-router";
 import { FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 const NavbarTop = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -28,46 +29,90 @@ const NavbarTop = () => {
     window.location.reload(); // برای ریفرش Navbar
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleSearchFocus = () => {
+    const examFormElement = document.getElementById("ExamForm");
+    if (examFormElement) {
+      examFormElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <div className={`navBarTopPart ${isScrolled ? "scrolledNav" : ""}`}>
-      <div className="logoPart">
-        <Link to="/">
-          <img src="/assets/images/logo2.png" alt="لوگو" />
-          <p>مرکز آموزشی و پژوهشی رایانگان</p>
-        </Link>
-      </div>
+    <>
+      <div className={`navBarTopPart ${isScrolled ? "scrolledNav" : ""}`}>
+        <div className="logoPart">
+          <Link to="/">
+            <img src="/assets/images/logo2.png" alt="لوگو" />
+            <p>مرکز آموزشی و پژوهشی رایانگان</p>
+          </Link>
+        </div>
 
-      <div className="navbarLeftPart">
-        {user ? (
-          <div className="userProfile">
+        <div className="navbarLeftPart">
+          <div className="jobSearchBtn">
+            <button onFocus={handleSearchFocus}>جست و جوی مشاغل</button>
+          </div>
 
-            <div className="user-info">
-              <img src="/assets/images/photo_2022-03-23_18-31-12.jpg" alt="User Avatar" className="user-avatar" />
-              <div className="user-details">
-                <span className="user-name">{user.username}</span>
-                <span className="user-role">Admin</span>
+          {user ? (
+            <div className="userProfile">
+              <div className="user-info">
+                <img
+                  src="/assets/images/photo_2022-03-23_18-31-12.jpg"
+                  alt="User Avatar"
+                  className="user-avatar"
+                />
+                <div className="user-details">
+                  <span className="user-name">{user.username}</span>
+                  <span className="user-role">Admin</span>
+                </div>
+              </div>
+
+              <div className="dropdown-menu">
+                <Link to="/profile">
+                  <FaUser /> پروفایل
+                </Link>
+
+                <button className="exit" onClick={handleLogout}>
+                  <FaSignOutAlt /> خروج
+                </button>
               </div>
             </div>
-
-            <div className="dropdown-menu">
-              <Link to="/profile">
-                <FaUser /> پروفایل
-              </Link>
-             
-              <button className="exit" onClick={handleLogout}>
-                <FaSignOutAlt /> خروج
+          ) : (
+            <div className="logInPart">
+              <button>
+                <Link to="/logIn">ورود/ ثبت‌نام</Link>
               </button>
             </div>
-          </div>
-        ) : (
-          <div className="logInPart">
-            <button>
-              <Link to="/logIn">ورود/ ثبت‌نام</Link>
-            </button>
-          </div>
-        )}
+          )}
+        </div>
+
+        <div className="hamburger" onClick={toggleSidebar}>
+          <GiHamburgerMenu />
+        </div>
+        <div className="responsiveLogo">
+          <Link to="/">
+            <img src="/assets/images/logo2.png" alt="" />
+          </Link>
+          <p>مرکز آموزشی و پژوهشی رایانگان</p>
+        </div>
       </div>
-    </div>
+
+      <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
+        <button className="close-sidebar" onClick={toggleSidebar}>
+          &times;
+        </button>
+        <div className="sidebar-content">
+          <button className="jobSearchBtn" onFocus={handleSearchFocus}>
+            جست و جوی مشاغل
+          </button>
+          <button className="sidebar-login-button">
+            <Link to="/logIn">ورود/ ثبت‌نام</Link>
+          </button>
+        </div>
+      </div>
+    </>
   );
 };
 
