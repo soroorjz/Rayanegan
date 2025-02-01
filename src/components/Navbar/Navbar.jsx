@@ -16,7 +16,7 @@ const Navbar = () => {
       { icon: <FaTasks />, text: "آزمون‌ها", target: "ExamCardPart" },
       { icon: <FaSearch />, text: "آزمون‌یاب", target: "ExamForm" },
       { icon: <FaNewspaper />, text: "اخبار", target: "NewsComp" },
-      { icon: <FaQuestionCircle />, text: "سوالات پرتکرار", target: "Faq" },
+      { icon: <FaQuestionCircle />, text: "سوالات متداول", target: "Faq" },
       { icon: <FaPhone />, text: "تماس با ما", target: "footer" },
     ],
     [] // Dependency array ensures this only recalculates once
