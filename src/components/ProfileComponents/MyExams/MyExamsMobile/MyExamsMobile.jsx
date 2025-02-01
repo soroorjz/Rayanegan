@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./MyExamsMobile.scss";
-const MyExamsMobile = ({ examData }) => {
+import { examData } from "../data";
+
+const MyExamsMobile = () => {
   const [selectedExam, setSelectedExam] = useState(""); // آزمون انتخاب‌شده
   const [selectedExamId, setSelectedExamId] = useState(null); // برای باز و بسته کردن دراپ‌داون
 
@@ -33,35 +35,39 @@ const MyExamsMobile = ({ examData }) => {
           {examData
             .filter((exam) => exam.examName === selectedExam) // فیلتر کردن بر اساس انتخاب
             .map((exam) => (
-              <div key={exam.id} className="exam-item">
-                <div
-                  className="exam-header"
-                  onClick={() => toggleDropdown(exam.id)}
-                >
-                  <span>{exam.category}</span>
-                  <span>{exam.date}</span>
-                  <span className="dropdown-icon">
-                    {selectedExamId === exam.id ? "▲" : "▼"}
-                  </span>
-                </div>
-                <div
-                  className={`exam-details ${
-                    selectedExamId === exam.id ? "open" : ""
-                  }`}
-                >
-                  <p>
-                    <strong>وضعیت فعالیت:</strong> {exam.status}
-                  </p>
-                  <p>
-                    <strong>نمره:</strong> {exam.score}
-                  </p>
-                  <p>
-                    <strong>درصد از کل:</strong> {exam.percentage}
-                  </p>
-                  <p>
-                    <strong>وضعیت داوطلب:</strong> {exam.candidateStatus}
-                  </p>
-                </div>
+              <div key={exam.examName} className="exam-item">
+                {exam.exams.map((subExam) => (
+                  <div key={subExam.id}>
+                    <div
+                      className="exam-header"
+                      onClick={() => toggleDropdown(subExam.id)}
+                    >
+                      <span>{subExam.category}</span>
+                      <span>{subExam.date}</span>
+                      <span className="dropdown-icon">
+                        {selectedExamId === subExam.id ? "▲" : "▼"}
+                      </span>
+                    </div>
+                    <div
+                      className={`exam-details ${
+                        selectedExamId === subExam.id ? "open" : ""
+                      }`}
+                    >
+                      <p>
+                        <strong>وضعیت فعالیت:</strong> {subExam.status}
+                      </p>
+                      <p>
+                        <strong>نمره:</strong> {subExam.score}
+                      </p>
+                      <p>
+                        <strong>درصد از کل:</strong> {subExam.percentage}
+                      </p>
+                      <p>
+                        <strong>وضعیت داوطلب:</strong> {subExam.candidateStatus}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
             ))}
         </div>

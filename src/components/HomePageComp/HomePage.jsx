@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./HomePage.scss";
 import Navbar from "../Navbar/Navbar";
 import Banner from "./Banner/Banner";
@@ -8,7 +8,26 @@ import NewsComp from "./NewsComp/NewsComp";
 import Footer from "./Footer/Footer";
 import NavbarTop from "./NavbarTop/NavbarTop";
 import FaqHeader from "./Faq/FaqHeader/FaqHeader";
+import { FaArrowUp } from "react-icons/fa";
 const HomePage = () => {
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const bannerHeight = document.getElementById("home")?.offsetHeight || 0;
+      setShowScrollButton(window.scrollY > bannerHeight);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    const banner = document.getElementById("home");
+    if (banner) {
+      banner.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
     <div className="homeContainer">
       <NavbarTop />
@@ -31,6 +50,11 @@ const HomePage = () => {
       <div id="footer">
         <Footer />
       </div>
+      {showScrollButton && (
+        <button className="scrollToTopBtn" onClick={scrollToTop}>
+          <FaArrowUp />
+        </button>
+      )}
     </div>
   );
 };

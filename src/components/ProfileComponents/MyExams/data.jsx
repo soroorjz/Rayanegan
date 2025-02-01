@@ -1,0 +1,66 @@
+export const examData = [
+  {
+    examName: "آزمون پنجم",
+    exams: [
+      {
+        id: 1,
+        category: "آزمون کتبی",
+        date: "1402/11/15",
+        status: "برگزار شده",
+        score: "74",
+        percentage: "85%",
+        candidateStatus: "قبول شده",
+      },
+      {
+        id: 2,
+        category: "ارزیابی تکمیلی",
+        date: "1402/12/02",
+        status: "در انتظار اعلام نتایج",
+        score: "24",
+        percentage: "30%",
+        candidateStatus: "مردود",
+      },
+      {
+        id: 3,
+        category: "گزینش",
+        date: "1402/12/02",
+        status: "در حال برگزاری",
+        score: "0",
+        percentage: "-",
+        candidateStatus: "غایب",
+      },
+    ],
+  },
+  {
+    examName: "آزمون دوازدهم",
+    exams: [
+      {
+        id: 4,
+        category: "آزمون کتبی",
+        date: "1403/01/10",
+        status: "برگزار شده",
+        score: "60",
+        percentage: "75%",
+        candidateStatus: "قبول شده",
+      },
+      {
+        id: 5,
+        category: "ارزیابی تکمیلی",
+        date: "1403/01/15",
+        status: "در انتظار اعلام نتایج",
+        score: "40",
+        percentage: "50%",
+        candidateStatus: "مردود",
+      },
+      {
+        id: 6,
+        category: "گزینش",
+        date: "1403/01/20",
+        status: "در حال برگزاری",
+        score: "0",
+        percentage: "-",
+        candidateStatus: "غایب",
+      },
+    ],
+  },
+];
