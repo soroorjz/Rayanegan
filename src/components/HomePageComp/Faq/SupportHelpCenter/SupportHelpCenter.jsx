@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import "./SupportHelpCenter.scss";
-import { SlLike } from "react-icons/sl";
-import { SlDislike } from "react-icons/sl";
+// import { SlLike } from "react-icons/sl";
+// import { SlDislike } from "react-icons/sl";
 import { categories } from "./SupportHelpCenterData";
 import SupportAptions from "./SupportAptions/SupportAptions";
-import OnlineChat from "./SupportAptions/OnlineChat/OnlineChat";
-import PhoneSupport from "./SupportAptions/PhoneSupport/PhoneSupport";
-import GuideCards from "./SupportAptions/GuideCards/GuideCards";
 
 const SupportHelpCenter = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeQuestion, setActiveQuestion] = useState(null);
   const [feedback, setFeedback] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const resetState = () => {
     setActiveCategory(null);
     setActiveQuestion(null);
     setFeedback(null);
+    setSelectedOption(null);
   };
 
   const handleCategoryClick = (category) => {
@@ -35,11 +34,6 @@ const SupportHelpCenter = () => {
     } else {
       setFeedback("dislike");
     }
-  };
-
-  const handleRequestSubmit = () => {
-    alert("درخواست شما ثبت شد!");
-    resetState();
   };
 
   return (
@@ -90,21 +84,24 @@ const SupportHelpCenter = () => {
               onClick={() => handleFeedbackClick("like")}
               className="like-button"
             >
-              <SlLike />
+              {/* <SlLike /> */}
               مفید بود
             </button>
             <button
               onClick={() => handleFeedbackClick("dislike")}
               className="dislike-button"
             >
-              <SlDislike />
+              {/* <SlDislike /> */}
               نیاز به راهنمایی بیشتر دارم
             </button>
           </div>
         </div>
       )}
 
-      {feedback === "dislike" && <SupportAptions />}
+      {feedback === "dislike" && !selectedOption && (
+        <SupportAptions onSelectOption={setSelectedOption}  resetState={resetState}/>
+      )}
+
     </div>
   );
 };

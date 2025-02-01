@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./ProfileHeader.scss";
 
 import { FaSignOutAlt, FaAngleDown } from "react-icons/fa";
@@ -7,16 +7,34 @@ import { Link, useNavigate } from "react-router";
 const ProfileHeader = () => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null); // تعریف ref برای دراپ‌داون
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    navigate("/"); // هدایت کاربر به صفحه اصلی
-    window.location.reload(); // ریفرش صفحه برای اعمال تغییرات در نوبار
+    navigate("/");
+    window.location.reload();
   };
 
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    setIsDropdownOpen((prev) => !prev);
   };
+
+  // بستن دراپ‌داون هنگام کلیک بیرون از آن
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
 
   return (
     <div className="ProfileHeader">
@@ -29,18 +47,18 @@ const ProfileHeader = () => {
             />
           </Link>
         </div>
-        
-        {/* بخش پروفایل با قابلیت باز شدن دراپ‌داون */}
-        <div className="leftPart" onClick={toggleDropdown}>
-          <button className="user-btn">
+
+        <div className="leftPart" ref={dropdownRef}>
+          <button className="user-btn" onClick={toggleDropdown}>
             سرور جامعی زاده
-            <FaAngleDown className={`dropdown-icon ${isDropdownOpen ? "open" : ""}`} />
+            <FaAngleDown
+              className={`dropdown-icon ${isDropdownOpen ? "open" : ""}`}
+            />
           </button>
           <div className="profileImg">
             <MdAccountCircle />
           </div>
 
-          {/* دراپ‌داون خروج */}
           {isDropdownOpen && (
             <div className="dropdown-menu">
               <button className="logout-btn" onClick={handleLogout}>

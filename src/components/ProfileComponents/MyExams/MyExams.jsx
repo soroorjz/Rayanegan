@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MyExams.scss";
+import MyExamsMobile from "./MyExamsMobile/MyExamsMobile";
 const examData = [
   {
     id: 1,
@@ -67,6 +68,20 @@ const examNames = [...new Set(examData.map((exam) => exam.examName))];
 
 const MyExams = () => {
   const [selectedExam, setSelectedExam] = useState("");
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 900);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  if (isMobile) {
+    return <MyExamsMobile examData={examData} />;
+  }
+
 
   return (
     <div className="exam-list">
@@ -75,11 +90,13 @@ const MyExams = () => {
         <label>انتخاب آزمون:</label>
         <select onChange={(e) => setSelectedExam(e.target.value)}>
           <option value="">انتخاب کنید</option>
-          {examNames.map((name, index) => (
-            <option key={index} value={name}>
-              {name}
-            </option>
-          ))}
+          {[...new Set(examData.map((exam) => exam.examName))].map(
+            (name, index) => (
+              <option key={index} value={name}>
+                {name}
+              </option>
+            )
+          )}
         </select>
       </div>
       <div className="exam-table-container">

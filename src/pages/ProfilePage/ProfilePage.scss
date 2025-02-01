@@ -1,3 +1,5 @@
+@import "../../styles/responsive.scss";
+$tablet-resize: 900px;
 .profile-page {
   // width: 100%;
   display: flex;
@@ -6,16 +8,22 @@
   height: 100vh;
   position: relative;
   background-color: #04364a;
+
   .rightPart {
     position: relative;
     z-index: 90;
+    width: 100%;
     justify-content: center;
-    width: 90%;
     // margin: 0 auto;
     display: flex;
     flex-direction: column;
     height: 100vh;
     background: #fff;
-    border-radius: 50px 0  0 50px;
+    border-radius: 50px 0;
+    width: 90%;
+    @include responsive($tablet-resize){
+    border-radius: 50px 0 0 50px;
+
+    }
   }
 }

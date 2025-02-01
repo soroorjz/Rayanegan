@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import "./PhoneSupport.scss";
-const PhoneSupport = () => {
+const PhoneSupport = ({ title, defaultMethod }) => {
   const [phone, setPhone] = useState("");
-  const [method, setMethod] = useState("پیامکی");
+  const [method, setMethod] = useState(defaultMethod);
 
   return (
     <div className="support-container">
-      <p className="support-title">
-        جهت دریافت پشتیبانی تماس، شماره همراه خود را وارد نمایید.
-      </p>
-      <div className="support-form">
+      <p className="support-title">{title}</p>
+      <div className="phone-support-form">
         <input
           type="text"
           placeholder="شماره همراه"
