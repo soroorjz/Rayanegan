@@ -4,6 +4,9 @@ import { SlLike } from "react-icons/sl";
 import { SlDislike } from "react-icons/sl";
 import { categories } from "./SupportHelpCenterData";
 import SupportAptions from "./SupportAptions/SupportAptions";
+import OnlineChat from "./SupportAptions/OnlineChat/OnlineChat";
+import PhoneSupport from "./SupportAptions/PhoneSupport/PhoneSupport";
+import GuideCards from "./SupportAptions/GuideCards/GuideCards";
 
 const SupportHelpCenter = () => {
   const [activeCategory, setActiveCategory] = useState(null);
@@ -101,21 +104,7 @@ const SupportHelpCenter = () => {
         </div>
       )}
 
-      {feedback === "dislike" && (
-        // <div className="feedback-form">
-        //   <h2>توضیحات خود را وارد کنید</h2>
-        //   <p>
-        //     لطفاً جزئیات مشکل را توضیح دهید تا در سریع‌ترین زمان ممکن با شما
-        //     تماس بگیریم.
-        //   </p>
-        //   <textarea placeholder="لطفاً جزئیات مشکل را توضیح دهید."></textarea>
-        //   <button onClick={handleRequestSubmit} className="submit-button">
-        //     ثبت درخواست
-        //   </button>
-        // </div>
-
-        <SupportAptions />
-      )}
+      {feedback === "dislike" && <SupportAptions />}
     </div>
   );
 };
