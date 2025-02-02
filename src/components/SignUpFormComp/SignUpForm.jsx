@@ -6,7 +6,6 @@ import FileInput from "./FileInput";
 import DatePickerInput from "./DatePickerInput";
 import { textInputsDatas } from "./data";
 import { fieldLabels } from "./data";
-import TextInputs from "./TextInputs/TextInputs";
 
 const SignUpForm = ({ onNext }) => {
   const [formData, setFormData] = useState({
@@ -24,12 +23,14 @@ const SignUpForm = ({ onNext }) => {
     religion: "",
     children: 0,
   });
-
   const [errors, setErrors] = useState({});
   const [isChildrenEnabled, setIsChildrenEnabled] = useState(false);
 
   const isPersianText = (text) => /^[\u0600-\u06FF\s]+$/.test(text);
   const isValidMobile = (mobile) => /^09\d{9}$/.test(mobile);
+  const isValidIdNumber = (idNumber) => {
+    return /^\d{1,10}$/.test(idNumber) && !/^0+$/.test(idNumber);
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -53,12 +54,20 @@ const SignUpForm = ({ onNext }) => {
       });
     }
   };
+  const isValidIranianNationalCode = (nationalCode) => {
+    if (!/^\d{10}$/.test(nationalCode)) return false; // بررسی ۱۰ رقمی بودن
 
-  const handleDateChange = (value) => {
-    setFormData({
-      ...formData,
-      birthDate: value.format("YYYY-MM-DD"),
-    });
+    let checkDigit = parseInt(nationalCode[9]); // رقم کنترل
+    let sum = 0;
+
+    for (let i = 0; i < 9; i++) {
+      sum += parseInt(nationalCode[i]) * (10 - i);
+    }
+
+    let remainder = sum % 11;
+    let calculatedCheckDigit = remainder < 2 ? remainder : 11 - remainder;
+
+    return checkDigit === calculatedCheckDigit;
   };
 
   const handleSubmit = (e) => {
@@ -81,16 +90,23 @@ const SignUpForm = ({ onNext }) => {
       newErrors.mobile = "شماره تلفن نامعتبر است.";
     }
 
+    if (!isValidIranianNationalCode(formData.nationalCode)) {
+      newErrors.nationalCode = "کد ملی نامعتبر است.";
+    }
+
+    if (!isValidIdNumber(formData.idNumber)) {
+      newErrors.idNumber = "شماره شناسنامه نامعتبر است.";
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      console.log("Errors found:", newErrors); // لاگ برای بررسی خطاها
+      console.log("Errors found:", newErrors);
     } else {
       setErrors({});
-      console.log("No errors, going to next step!"); // لاگ برای تست
+      console.log("No errors, going to next step!");
       onNext();
     }
   };
-
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
@@ -111,10 +127,10 @@ const SignUpForm = ({ onNext }) => {
               )}
             </div>
           ))}
-         
+
           <DatePickerInput
             formData={formData}
-            handleDateChange={handleDateChange}
+            setFormData={setFormData}
             errors={errors}
           />
           <SelectInput

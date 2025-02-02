@@ -3,7 +3,14 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 
-const DatePickerInput = ({handleDateChange,formData,errors}) => {
+const DatePickerInput = ({setFormData,formData,errors}) => {
+  const handleDateChange = (value) => {
+    setFormData({
+      ...formData,
+      birthDate: value.format("YYYY-MM-DD"),
+    });
+  };
+
   return (
     <div className="form-group">
                 <label htmlFor="birthDate">تاریخ تولد:</label>
