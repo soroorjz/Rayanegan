@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./ReportFormComp.scss"
+import "./ReportFormComp.scss";
+import ReportModal from "./ReportModal/ReportModal";
 const ReportFormComp = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -16,11 +17,13 @@ const ReportFormComp = () => {
     captcha: "",
   });
   const [errors, setErrors] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [trackingCode, setTrackingCode] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     let newErrors = { ...errors };
-    
+
     if (name === "mobile") {
       if (!/^09\d{0,9}$/.test(value)) {
         newErrors[name] = "شماره تلفن معتبر نیست.";
@@ -36,7 +39,7 @@ const ReportFormComp = () => {
         delete newErrors[name];
       }
     }
-    
+
     setFormData({ ...formData, [name]: value });
     setErrors(newErrors);
   };
@@ -44,22 +47,22 @@ const ReportFormComp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let newErrors = {};
-    
+
     Object.keys(formData).forEach((key) => {
       if (!formData[key]) {
         newErrors[key] = "تکمیل این فیلد الزامی است.";
       }
     });
-    
+
     if (formData.mobile && !/^09\d{9}$/.test(formData.mobile)) {
       newErrors.mobile = "شماره تلفن معتبر نیست.";
     }
-    
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-    
+
     alert("فرم ارسال شد!");
   };
 
@@ -77,7 +80,9 @@ const ReportFormComp = () => {
               onChange={handleChange}
               required
             />
-             {errors.firstName && <small className="error">{errors.firstName}</small>}
+            {errors.firstName && (
+              <small className="error">{errors.firstName}</small>
+            )}
           </div>
           <div className="form-group">
             <label>نام خانوادگی</label>
@@ -88,7 +93,9 @@ const ReportFormComp = () => {
               onChange={handleChange}
               required
             />
-                {errors.lastName && <small className="error">{errors.lastName}</small>}
+            {errors.lastName && (
+              <small className="error">{errors.lastName}</small>
+            )}
           </div>
           <div className="form-group">
             <label>کد ملی</label>
@@ -114,7 +121,6 @@ const ReportFormComp = () => {
               required
               maxLength="11"
             />
-            
           </div>
           <div className="form-group">
             <label>شماره تلفن ثابت</label>
@@ -199,6 +205,13 @@ const ReportFormComp = () => {
 
         <button type="submit">تایید و دریافت کد پیگیری</button>
       </form>
+
+      {isModalOpen && (
+        <ReportModal
+          trackingCode={trackingCode}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

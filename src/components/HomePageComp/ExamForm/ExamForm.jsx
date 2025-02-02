@@ -38,32 +38,6 @@ const ExamForm = () => {
                   <option value="law">حقوق</option>
                 </select>
               </div>
-              <div className="form-group gender-radio">
-                <label>جنسیت </label>
-                <div className="radio-group">
-                  <label>
-                    <input type="radio" name="gender" value="female" />
-                    خانم
-                  </label>
-                  <label>
-                    <input type="radio" name="gender" value="male" />
-                    آقا
-                  </label>
-                </div>
-              </div>
-              <div className="form-group maritalRadio">
-                <label>وضعیت تاهل</label>
-                <div className="radio-group">
-                  <label>
-                    <input type="radio" name="maritalStatus" value="single" />
-                    مجرد
-                  </label>
-                  <label>
-                    <input type="radio" name="maritalStatus" value="married" />
-                    متاهل
-                  </label>
-                </div>
-              </div>
               <div className="form-group birthDay">
                 <label htmlFor="birthDate">تاریخ تولد</label>
                 <DatePicker
@@ -92,6 +66,37 @@ const ExamForm = () => {
                   <option value="martyr">سهمیه شهید</option>
                   <option value="veteran">سهمیه ایثارگر</option>
                 </select>
+              </div>
+<br />
+              <div className="form-group gender-radio">
+                <label>جنسیت </label>
+                <div className="radio-group">
+                  <label>
+                    <input type="radio" name="gender" value="female" />
+                    خانم
+                  </label>
+                  <label>
+                    <input type="radio" name="gender" value="male" />
+                    آقا
+                  </label>
+                </div>
+              </div>
+              <div className="form-group maritalRadio">
+                <label>وضعیت تاهل</label>
+                <div className="radio-group">
+                  <label>
+                    <input type="radio" name="maritalStatus" value="single" />
+                    مجرد
+                  </label>
+                  <label>
+                    <input type="radio" name="maritalStatus" value="married" />
+                    متاهل
+                  </label>
+                  <label>
+                    <input type="radio" name="maritalStatus" value="married" />
+                    معیل
+                  </label>
+                </div>
               </div>
               <div className="form-group Experience">
                 <div className="toggle-container" onClick={handleToggle}>
