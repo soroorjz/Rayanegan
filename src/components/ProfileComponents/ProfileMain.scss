@@ -1,5 +1,6 @@
 .ProfileMain-Container {
   width: 100%;
+  max-height: 80vh;
   border-radius: 0 0 10px 10px;
   position: relative;
   .homeBtn {
@@ -17,7 +18,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+
     a {
       display: flex;
       align-items: center;

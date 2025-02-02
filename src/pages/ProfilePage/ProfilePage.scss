@@ -5,9 +5,11 @@ $tablet-resize: 900px;
   display: flex;
   // align-items: center;
   // flex-direction: column;
-  height: 100vh;
   position: relative;
   background-color: #04364a;
+  @include responsive($tablet-resize) {
+    height: 100vh;
+  }
 
   .rightPart {
     position: relative;
@@ -21,9 +23,8 @@ $tablet-resize: 900px;
     background: #fff;
     border-radius: 50px 0;
     width: 90%;
-    @include responsive($tablet-resize){
-    border-radius: 50px 0 0 50px;
-
+    @include responsive($tablet-resize) {
+      border-radius: 50px 0 0 50px;
     }
   }
 }

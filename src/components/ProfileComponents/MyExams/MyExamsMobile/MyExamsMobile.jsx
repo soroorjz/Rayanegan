@@ -28,11 +28,15 @@ function getStyles(name, selectedExams, theme) {
 
 const MyExamsMobile = () => {
   const theme = useTheme();
-  const [selectedExams, setSelectedExams] = useState([]); // لیست آزمون‌های انتخاب‌شده
-  const [selectedExamId, setSelectedExamId] = useState(null); // برای باز و بسته کردن دراپ‌داون
+  const [selectedExams, setSelectedExams] = useState([]);
+  const [openExamIds, setOpenExamIds] = useState([]); // تغییر از مقدار منفرد به آرایه
 
   const toggleDropdown = (id) => {
-    setSelectedExamId(selectedExamId === id ? null : id);
+    setOpenExamIds((prevOpenExamIds) =>
+      prevOpenExamIds.includes(id)
+        ? prevOpenExamIds.filter((examId) => examId !== id) // اگر موجود بود، حذف کن
+        : [...prevOpenExamIds, id] // اگر نبود، اضافه کن
+    );
   };
 
   const handleExamChange = (event) => {
@@ -46,7 +50,6 @@ const MyExamsMobile = () => {
     <div className="exam-list-mobile">
       <h2>آزمون‌های ثبت‌نام‌شده</h2>
 
-      {/* انتخاب آزمون‌ها */}
       <div className="exam-selection">
         <label>انتخاب آزمون‌ها:</label>
         <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
@@ -99,11 +102,10 @@ const MyExamsMobile = () => {
         </FormControl>
       </div>
 
-      {/* نمایش آزمون‌های مرتبط تنها پس از انتخاب */}
       {selectedExams.length > 0 && (
-        <div className="exam-list">
+        <div className="mobile-exam-list">
           {examData
-            .filter((exam) => selectedExams.includes(exam.examName)) // فیلتر کردن بر اساس انتخاب
+            .filter((exam) => selectedExams.includes(exam.examName))
             .map((exam) => (
               <div key={exam.examName} className="exam-item">
                 {exam.exams.map((subExam) => (
@@ -115,12 +117,12 @@ const MyExamsMobile = () => {
                       <span>{subExam.category}</span>
                       <span>{subExam.date}</span>
                       <span className="dropdown-icon">
-                        {selectedExamId === subExam.id ? "▲" : "▼"}
+                        {openExamIds.includes(subExam.id) ? "▲" : "▼"}
                       </span>
                     </div>
                     <div
                       className={`exam-details ${
-                        selectedExamId === subExam.id ? "open" : ""
+                        openExamIds.includes(subExam.id) ? "open" : ""
                       }`}
                     >
                       <p>

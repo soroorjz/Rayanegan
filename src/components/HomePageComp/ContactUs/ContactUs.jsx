@@ -7,7 +7,7 @@ const ContactUs = () => {
           <div className="info-card">
             <div className="infoCardTitle">
               <span className="icon">شماره تماس:📞</span>
-              <span className="text">765 685 (+98) </span>
+              <span className="text">۰۲۶-۳۴۱۶۴۰۳۰ </span>
             </div>
           </div>
           <div className="info-card">

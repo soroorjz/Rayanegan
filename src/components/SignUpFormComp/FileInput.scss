@@ -1,0 +1,57 @@
+.file-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.hidden-input {
+  display: none;
+}
+
+.upload-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+  transition: color 0.3s;
+}
+
+.upload-icon:hover {
+  color: black;
+}
+
+.preview-container {
+  position: relative;
+  display: inline-block;
+}
+
+.preview-image {
+  width: 57px;
+  height: 57px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.remove-button {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photoError {
+  align-self: flex-end;
+}

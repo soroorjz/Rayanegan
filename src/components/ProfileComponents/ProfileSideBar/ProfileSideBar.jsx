@@ -28,7 +28,11 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
   // بستن سایدبار هنگام کلیک بیرون از آن
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (isSidebarOpen && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      if (
+        isSidebarOpen &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target)
+      ) {
         setIsSidebarOpen(false);
       }
     };
@@ -40,31 +44,61 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
   return (
     <>
       {isMobile && (
-        <button className="menu-toggle" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+        <button
+          className="menu-toggle"
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        >
           <FaBars />
         </button>
       )}
-      <div ref={sidebarRef} className={`profileSide-Container ${isSidebarOpen ? "open" : "closed"}`}>
+      <div
+        ref={sidebarRef}
+        className={`profileSide-Container ${isSidebarOpen ? "open" : "closed"}`}
+      >
         {/* دکمه بستن سایدبار */}
         <button className="close-btn" onClick={() => setIsSidebarOpen(false)}>
           <IoClose className="sideBar-Close" />
         </button>
 
         <div className="acountBtns">
-          <button onClick={() => setSelectedComponent("personal")} className={selectedComponent === "personal" ? "active" : ""}>
+          <button
+            onClick={() => {
+              setSelectedComponent("personal");
+              setIsSidebarOpen(false); // بستن سایدبار
+            }}
+            className={selectedComponent === "personal" ? "active" : ""}
+          >
             <FaUserPen />
             مشخصات شخصی
           </button>
-          <button onClick={() => setSelectedComponent("exams")} className={selectedComponent === "exams" ? "active" : ""}>
+          <button
+            onClick={() => {
+              setSelectedComponent("exams");
+              setIsSidebarOpen(false);
+            }}
+            className={selectedComponent === "exams" ? "active" : ""}
+          >
             <FaBookReader />
             آزمون‌های من
           </button>
-          <button onClick={() => setSelectedComponent("suggested")} className={selectedComponent === "suggested" ? "active" : ""}>
+          <button
+            onClick={() => {
+              setSelectedComponent("suggested");
+              setIsSidebarOpen(false);
+            }}
+            className={selectedComponent === "suggested" ? "active" : ""}
+          >
             <BsQrCode />
             کارت ورود به جلسه
             <span>(آزمون کتبی)</span>
           </button>
-          <button onClick={() => setSelectedComponent("news")} className={selectedComponent === "news" ? "active" : ""}>
+          <button
+            onClick={() => {
+              setSelectedComponent("news");
+              setIsSidebarOpen(false);
+            }}
+            className={selectedComponent === "news" ? "active" : ""}
+          >
             <BsQrCode />
             کارت ورود به جلسه
             <span>(ارزیابی تکمیلی)</span>
@@ -74,6 +108,5 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
     </>
   );
 };
-
 
 export default ProfileSideBar;

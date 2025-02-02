@@ -3,18 +3,18 @@ import "./ExamEntryCard.scss";
 const user = {
   fullName: "امیر هراتی",
   fatherName: "محمد هراتی",
-  nationalCode: "1234567890",
-  birthDate: "1375/05/20",
+  nationalCode: "۱۲۳۴۵۶۷۸۹۰",
+  birthDate: "۱۳۷۵/۰۵/۲۰",
   religion: "اسلام",
   leftHand: false,
   preRegisterCode: "ABC12345",
 };
 
 const exam = {
-  name: "آزمون کارشناسی ارشد",
-  date: "1402/12/15",
+  name: "آزمون پنجم ",
+  date: "۱۴۰۲/۱۲/۱۵",
   province: "تهران",
-  zone: "حوزه 5",
+  zone: "حوزه ۵",
   address: "خیابان آزادی، دانشگاه صنعتی شریف",
   needSecretary: false,
 };

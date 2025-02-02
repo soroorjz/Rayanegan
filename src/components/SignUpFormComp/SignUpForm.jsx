@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SignUpForm.scss";
-import DatePicker from "react-multi-date-picker";
-import persian from "react-date-object/calendars/persian";
-import persian_fa from "react-date-object/locales/persian_fa";
+import TextInput from "./TextInput";
+import SelectInput from "./SelectInput";
+import DatePickerInput from "./DatePickerInput";
+import RadioGroup from "./RadioGroup";
+import FileInput from "./FileInput";
 
 const SignUpForm = ({ onNext }) => {
   const [formData, setFormData] = useState({
@@ -15,51 +17,26 @@ const SignUpForm = ({ onNext }) => {
     gender: "",
     birthDate: "",
     province: "",
-    city: "", 
+    city: "",
     maritalStatus: "",
     religion: "",
-    children: 0,
+    children: null,
   });
 
   const [errors, setErrors] = useState({});
   const [isChildrenEnabled, setIsChildrenEnabled] = useState(false);
 
-  const fieldLabels = {
-    firstName: "نام",
-    lastName: "نام خانوادگی",
-    nationalCode: "کد ملی",
-    mobile: "تلفن همراه",
-    fatherName: "نام پدر",
-    idNumber: "شماره شناسنامه",
-    gender: "جنسیت",
-    birthDate: "تاریخ تولد",
-    province: "استان محل تولد",
-    city: "شهرستان محل تولد",
-    maritalStatus: "وضعیت تاهل",
-    religion: "دین",
-    children: "تعداد فرزندان",
-  };
-
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
-    if (type === "radio") {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-
-      if (name === "maritalStatus") {
-        setIsChildrenEnabled(value === "married");
-        if (value !== "married") {
-          setFormData((prev) => ({ ...prev, children: 0 }));
-        }
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+    if (name === "maritalStatus") {
+      setIsChildrenEnabled(value === "married" || value === "Moeil");
+      if (value !== "married" && value !== "Moeil") {
+        setFormData((prev) => ({ ...prev, children: null }));
       }
-    } else {
-      setFormData({
-        ...formData,
-        [name]: type === "checkbox" ? checked : value,
-      });
     }
   };
 
@@ -74,196 +51,122 @@ const SignUpForm = ({ onNext }) => {
     e.preventDefault();
     const newErrors = {};
 
-    // Validate required fields
     Object.keys(formData).forEach((key) => {
-      if (!formData[key] && key !== "children") {
-        newErrors[key] = `وارد کردن ${fieldLabels[key]} الزامی است.`;
+      if (!formData[key] && key !== "children" && key !== "profileImage") {
+        newErrors[key] = "این فیلد الزامی است";
       }
     });
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-    } else {
-      onNext();
+    setErrors(newErrors);
+
+    // اگر هیچ خطایی نبود، به مرحله بعد بروید
+    if (Object.keys(newErrors).length === 0) {
+      onNext(); // مرحله بعد را فراخوانی می‌کند
     }
   };
+
 
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <div className="grid-container">
-          {[
-            { id: "firstName", label: "نام", type: "text" },
-            { id: "lastName", label: "نام خانوادگی", type: "text" },
-            { id: "nationalCode", label: "کد ملی", type: "text" },
-            { id: "mobile", label: "تلفن همراه", type: "text" },
-            { id: "fatherName", label: "نام پدر", type: "text" },
-            { id: "idNumber", label: "شماره شناسنامه", type: "text" },
-            { id: "religion", label: "دین", type: "text" },
-          ].map(({ id, label, type }) => (
-            <div key={id} className="form-group">
-              <label htmlFor={id}>{label}:</label>
-              <input
-                type={type}
-                id={id}
-                name={id}
-                value={formData[id]}
-                onChange={handleChange}
-                placeholder={`${label} خود را وارد کنید`}
-              />
-              {errors[id] && <small className="error">{errors[id]}</small>}
-            </div>
-          ))}
-          <div className="form-group">
-            <label htmlFor="birthDate">تاریخ تولد:</label>
-            <DatePicker
-              id="birthDate"
-              name="birthDate"
-              calendar={persian}
-              locale={persian_fa}
-              value={formData.birthDate}
-              onChange={handleDateChange}
-              inputClass="custom-date-input"
-              placeholder="تاریخ تولد را انتخاب کنید"
-            />
-            {errors.birthDate && (
-              <small className="error">{errors.birthDate}</small>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label>جنسیت:</label>
-            <div className="radio-group">
-              <label>
-                <input
-                  type="radio"
-                  name="gender"
-                  value="male"
-                  checked={formData.gender === "male"}
-                  onChange={handleChange}
-                />{" "}
-                مرد
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="gender"
-                  value="female"
-                  checked={formData.gender === "female"}
-                  onChange={handleChange}
-                />{" "}
-                زن
-              </label>
-            </div>
-            {errors.gender && <small className="error">{errors.gender}</small>}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="province">استان محل تولد:</label>
-            <select
-              id="province"
-              name="province"
-              value={formData.province}
-              onChange={handleChange}
-            >
-              <option value="">انتخاب نمایید</option>
-              <option value="تهران">تهران</option>
-              <option value="خراسان رضوی">خراسان رضوی</option>
-              <option value="اصفهان">اصفهان</option>
-            </select>
-            {errors.province && (
-              <small className="error">{errors.province}</small>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="city">شهرستان محل تولد:</label>
-            <select
-              id="city"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-            >
-              <option value="">انتخاب نمایید</option>
-              {formData.province === "تهران" && (
-                <>
-                  <option value="تهران">تهران</option>
-                  <option value="ری">ری</option>
-                </>
-              )}
-              {formData.province === "خراسان رضوی" && (
-                <>
-                  <option value="مشهد">مشهد</option>
-                  <option value="نیشابور">نیشابور</option>
-                </>
-              )}
-              {formData.province === "اصفهان" && (
-                <>
-                  <option value="اصفهان">اصفهان</option>
-                  <option value="کاشان">کاشان</option>
-                </>
-              )}
-            </select>
-            {errors.city && <small className="error">{errors.city}</small>}
-          </div>
-
-          <div className="form-group">
-            <label>وضعیت تاهل:</label>
-            <div className="radio-group">
-              <label>
-                <input
-                  type="radio"
-                  name="maritalStatus"
-                  value="single"
-                  checked={formData.maritalStatus === "single"}
-                  onChange={handleChange}
-                />
-                مجرد
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="maritalStatus"
-                  value="married"
-                  checked={formData.maritalStatus === "married"}
-                  onChange={handleChange}
-                />
-                متأهل
-              </label>
-            </div>
-            {errors.maritalStatus && (
-              <small className="error">{errors.maritalStatus}</small>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="children">تعداد فرزندان:</label>
-            <input
-              type="number"
-              id="children"
-              name="children"
-              value={formData.children}
-              onChange={handleChange}
-              min="0"
-              disabled={!isChildrenEnabled}
-              placeholder="تعداد فرزندان خود را وارد کنید"
-            />
-            {errors.children && (
-              <small className="error">{errors.children}</small>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="profileImage">تصویر پرسنلی:</label>
-            <input
-              type="file"
-              id="profileImage"
-              name="profileImage"
-              onChange={handleChange}
-            />
-          </div>
+          <TextInput
+            label="نام"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            error={errors.firstName}
+          />
+          <TextInput
+            label="نام خانوادگی"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            error={errors.lastName}
+          />
+          <TextInput
+            label="کد ملی"
+            name="nationalCode"
+            value={formData.nationalCode}
+            onChange={handleChange}
+            error={errors.nationalCode}
+          />
+          <TextInput
+            label="تلفن همراه"
+            name="mobile"
+            value={formData.mobile}
+            onChange={handleChange}
+            error={errors.mobile}
+          />
+          <DatePickerInput
+            label="تاریخ تولد"
+            name="birthDate"
+            value={formData.birthDate}
+            onChange={handleDateChange}
+            error={errors.birthDate}
+          />
+          <RadioGroup
+            label="جنسیت"
+            name="gender"
+            options={[
+              { value: "male", label: "مرد" },
+              { value: "female", label: "زن" },
+            ]}
+            value={formData.gender}
+            onChange={handleChange}
+            error={errors.gender}
+          />
+          <SelectInput
+            label="استان محل تولد"
+            name="province"
+            options={["تهران", "خراسان رضوی", "اصفهان"]}
+            value={formData.province}
+            onChange={handleChange}
+            error={errors.province}
+          />
+          <SelectInput
+            label="شهرستان محل تولد"
+            name="city"
+            options={
+              formData.province === "تهران"
+                ? ["تهران", "ری"]
+                : formData.province === "خراسان رضوی"
+                ? ["مشهد", "نیشابور"]
+                : formData.province === "اصفهان"
+                ? ["اصفهان", "کاشان"]
+                : []
+            }
+            value={formData.city}
+            onChange={handleChange}
+            error={errors.city}
+          />
+          <RadioGroup
+            label="وضعیت تاهل"
+            name="maritalStatus"
+            options={[
+              { value: "single", label: "مجرد" },
+              { value: "married", label: "متأهل" },
+              { value: "Moeil", label: "معیل" },
+            ]}
+            value={formData.maritalStatus}
+            onChange={handleChange}
+            error={errors.maritalStatus}
+          />
+          <TextInput
+            label="تعداد فرزندان"
+            name="children"
+            type="number"
+            value={formData.children || ""}
+            onChange={handleChange}
+            error={errors.children}
+            disabled={!isChildrenEnabled}
+          />
+          <FileInput
+            label="تصویر پرسنلی"
+            name="profileImage"
+            onChange={handleChange}
+          />
         </div>
-
         <button type="submit" className="submit-button">
           مرحله‌ی بعد
         </button>
@@ -271,4 +174,5 @@ const SignUpForm = ({ onNext }) => {
     </div>
   );
 };
+
 export default SignUpForm;

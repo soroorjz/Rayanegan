@@ -3,8 +3,8 @@ $tablet-resize: 900px;
 
 .profileSide-Container {
   background-color: #04364a;
-  height: 100vh;
   position: absolute;
+  height: 100%;
   left: 0;
   top: 0;
   width: 10%;
@@ -23,7 +23,6 @@ $tablet-resize: 900px;
       display: none;
     }
   }
-
   .acountBtns {
     height: 100%;
     display: flex;
@@ -57,11 +56,14 @@ $tablet-resize: 900px;
 
     .active {
       background-color: #fff;
-      color: #04364a;
+      color: #e55604;
       font-weight: bold;
       position: relative;
       z-index: 2;
     }
+  }
+  @include responsive($tablet-resize) {
+    height: 100vh;
   }
 }
 

@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
+import { AuthProvider } from "./AuthContext";
 import ExamInfo from "./pages/ExamInfo/ExamInfo";
 import ExamSignUpForm from "./pages/ExamSignUpForm/ExamSignUpForm";
 import Home from "./pages/HomePage/Home";
@@ -18,18 +19,20 @@ function App() {
   };
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/signUpForm" element={<ExamSignUpForm />} />
-      <Route
-        path="/examInfo"
-        element={<ExamInfo registrationData={registrationData} />}
-      />
-      <Route path="/logIn" element={<LogIn />} />
-      <Route path="/ForgotPassword" element={<ForgotPasswordPage />} />
-      <Route path="/ResetPass" element={<ResetPassPage />} />
-      <Route path="/profile" element={<ProfilePage />} />
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signUpForm" element={<ExamSignUpForm />} />
+        <Route
+          path="/examInfo"
+          element={<ExamInfo registrationData={registrationData} />}
+        />
+        <Route path="/logIn" element={<LogIn />} />
+        <Route path="/ForgotPassword" element={<ForgotPasswordPage />} />
+        <Route path="/ResetPass" element={<ResetPassPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+      </Routes>
+    </AuthProvider>
   );
 }
 

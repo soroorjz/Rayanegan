@@ -1,14 +1,14 @@
 .exam-list-mobile {
   width: 100%;
-  padding: 10px;
-  background: #f9f9f9;
+  padding: 15px;
+  background: transparent;
 }
 
 .exam-selection {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   label {
     padding: 5px;
   }
@@ -27,10 +27,16 @@
   justify-content: space-between;
   cursor: pointer;
   font-weight: bold;
-}
+  padding: 10px 0;
+  span {
+    width: 33.3%;
+    text-align: center;
+  }
 
-.dropdown-icon {
-  font-size: 16px;
+  .dropdown-icon {
+    font-size: 16px;
+    text-align: left;
+  }
 }
 
 .exam-details {
@@ -38,9 +44,20 @@
   overflow: hidden;
   transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
   padding: 0 10px;
+  background-color: rgba(128, 128, 128, 0.242);
 }
 
 .exam-details.open {
   max-height: 300px;
-  padding: 10px;
+  padding:5px 10px;
+}
+
+.mobile-exam-list {
+  width: 90%;
+  max-height: 70vh;
+  overflow: auto;
+  margin: 0 auto;
+  padding: 5px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
