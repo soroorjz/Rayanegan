@@ -3,22 +3,24 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 
-const DatePickerInput = ({ label, name, value, onChange, error }) => {
+const DatePickerInput = ({handleDateChange,formData,errors}) => {
   return (
     <div className="form-group">
-      <label htmlFor={name}>{label}:</label>
-      <DatePicker
-        id={name}
-        name={name}
-        calendar={persian}
-        locale={persian_fa}
-        value={value}
-        onChange={onChange}
-        inputClass="custom-date-input"
-        placeholder="تاریخ را انتخاب کنید"
-      />
-      {error && <small className="error">{error}</small>}
-    </div>
+                <label htmlFor="birthDate">تاریخ تولد:</label>
+                <DatePicker
+                  id="birthDate"
+                  name="birthDate"
+                  calendar={persian}
+                  locale={persian_fa}
+                  value={formData.birthDate}
+                  onChange={handleDateChange}
+                  inputClass="custom-date-input"
+                  placeholder="تاریخ تولد را انتخاب کنید"
+                />
+                {errors.birthDate && (
+                  <small className="error">{errors.birthDate}</small>
+                )}
+              </div>
   );
 };
 
