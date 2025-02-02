@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./SignUpForm.scss";
-import DatePicker from "react-multi-date-picker";
-import persian from "react-date-object/calendars/persian";
-import persian_fa from "react-date-object/locales/persian_fa";
 import SelectInput from "./SelectInput";
 import RadioGroup from "./RadioGroup";
 import FileInput from "./FileInput";
 import DatePickerInput from "./DatePickerInput";
+import { textInputsDatas } from "./data";
+import { fieldLabels } from "./data";
+import TextInputs from "./TextInputs/TextInputs";
 
 const SignUpForm = ({ onNext }) => {
   const [formData, setFormData] = useState({
@@ -27,22 +27,6 @@ const SignUpForm = ({ onNext }) => {
 
   const [errors, setErrors] = useState({});
   const [isChildrenEnabled, setIsChildrenEnabled] = useState(false);
-
-  const fieldLabels = {
-    firstName: "نام",
-    lastName: "نام خانوادگی",
-    nationalCode: "کد ملی",
-    mobile: "تلفن همراه",
-    fatherName: "نام پدر",
-    idNumber: "شماره شناسنامه",
-    gender: "جنسیت",
-    birthDate: "تاریخ تولد",
-    province: "استان محل تولد",
-    city: "شهرستان محل تولد",
-    maritalStatus: "وضعیت تاهل",
-    religion: "دین",
-    children: "تعداد فرزندان",
-  };
 
   const isPersianText = (text) => /^[\u0600-\u06FF\s]+$/.test(text);
   const isValidMobile = (mobile) => /^09\d{9}$/.test(mobile);
@@ -111,35 +95,28 @@ const SignUpForm = ({ onNext }) => {
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <div className="grid-container">
-          {[
-            { id: "firstName", label: "نام", type: "text" },
-            { id: "lastName", label: "نام خانوادگی", type: "text" },
-            { id: "nationalCode", label: "کد ملی", type: "text" },
-            { id: "mobile", label: "تلفن همراه", type: "text" },
-            { id: "fatherName", label: "نام پدر", type: "text" },
-            { id: "idNumber", label: "شماره شناسنامه", type: "text" },
-            { id: "religion", label: "دین", type: "text" },
-          ].map(({ id, label, type }) => (
-            <div key={id} className="form-group">
-              <label htmlFor={id}>{label}:</label>
+          {textInputsDatas.map((input) => (
+            <div key={input.id} className="form-group">
+              <label htmlFor={input.id}>{input.label}:</label>
               <input
-                type={type}
-                id={id}
-                name={id}
-                value={formData[id]}
+                type={input.type}
+                id={input.id}
+                name={input.id}
+                value={formData[input.id]}
                 onChange={handleChange}
-                placeholder={`${label} خود را وارد کنید`}
+                placeholder={`${input.label} خود را وارد کنید`}
               />
-              {errors[id] && <small className="error">{errors[id]}</small>}
+              {errors[input.id] && (
+                <small className="error">{errors[input.id]}</small>
+              )}
             </div>
           ))}
-
+         
           <DatePickerInput
             formData={formData}
             handleDateChange={handleDateChange}
             errors={errors}
           />
-
           <SelectInput
             formData={formData}
             handleChange={handleChange}
