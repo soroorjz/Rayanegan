@@ -15,6 +15,7 @@ const DatePickerInput = ({setFormData,formData,errors}) => {
     <div className="form-group">
                 <label htmlFor="birthDate">تاریخ تولد:</label>
                 <DatePicker
+                style={{ width: "100%" }}
                   id="birthDate"
                   name="birthDate"
                   calendar={persian}

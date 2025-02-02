@@ -1,11 +1,10 @@
 export let textInputsDatas = [
   { id: "firstName", label: "نام", type: "text" },
   { id: "lastName", label: "نام خانوادگی", type: "text" },
-  { id: "nationalCode", label: "کد ملی", type: "text" },
-  { id: "mobile", label: "تلفن همراه", type: "text" },
   { id: "fatherName", label: "نام پدر", type: "text" },
+  { id: "nationalCode", label: "کد ملی", type: "text" },
   { id: "idNumber", label: "شماره شناسنامه", type: "text" },
-  { id: "religion", label: "دین", type: "text" },
+  { id: "mobile", label: "تلفن همراه", type: "text" },
 ];
 
 

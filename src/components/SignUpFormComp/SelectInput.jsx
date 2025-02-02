@@ -1,8 +1,25 @@
 import React from "react";
 
-const SelectInput = ({formData,handleChange,errors}) => {
+const SelectInput = ({ formData, handleChange, errors }) => {
   return (
     <>
+      <div className="form-group">
+        <label htmlFor="religion">دین :</label>
+        <select
+          id="religion"
+          name="religion"
+          value={formData.religion}
+          onChange={handleChange}
+        >
+          <option value="">انتخاب نمایید</option>
+
+          <option value="اسلام">اسلام</option>
+          <option value="مسیحیت">مسیحیت</option>
+          <option value="کلیمی">کلیمی</option>
+          <option value="یهودیت">زرتشتی</option>
+        </select>
+        {errors.city && <small className="error">{errors.city}</small>}
+      </div>
       <div className="form-group">
         <label htmlFor="province">استان محل تولد:</label>
         <select
@@ -18,7 +35,6 @@ const SelectInput = ({formData,handleChange,errors}) => {
         </select>
         {errors.province && <small className="error">{errors.province}</small>}
       </div>
-
       <div className="form-group">
         <label htmlFor="city">شهرستان محل تولد:</label>
         <select
