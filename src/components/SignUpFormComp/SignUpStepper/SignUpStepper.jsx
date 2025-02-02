@@ -7,6 +7,7 @@ import BackgroundForm from "./BackgroundForm/BackgroundForm";
 const SignUpStepper = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showModal, setShowModal] = useState(false);
+  const persianNumbers = ["۱", "۲", "۳", "۴"];
 
   const steps = [" اطلاعات فردی", "اطلاعات تحصیلی ", "مرحله سوم", "پایان"];
 
@@ -58,7 +59,7 @@ const SignUpStepper = () => {
             key={index}
             className={`step ${index + 1 <= currentStep ? "active" : ""}`}
           >
-            <div className="step-number">{index + 1}</div>
+            <div className="step-number">{persianNumbers[index]}</div>
             <div className="step-label">{step}</div>
           </div>
         ))}
