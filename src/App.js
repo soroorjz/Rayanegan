@@ -9,6 +9,7 @@ import LogIn from "./pages/LogIn/LogIn";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import ResetPassPage from "./pages/ForgotPasswordPage/ResetPass/ResetPassPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import ReportForm from "./pages/ReportForm/ReportForm";
 
 function App() {
   const registrationData = {
@@ -31,6 +32,7 @@ function App() {
         <Route path="/ForgotPassword" element={<ForgotPasswordPage />} />
         <Route path="/ResetPass" element={<ResetPassPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/ReportForm" element={<ReportForm />} />
       </Routes>
     </AuthProvider>
   );

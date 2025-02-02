@@ -5,8 +5,11 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 import { Link } from "react-router";
+import { useAuth } from "../../../AuthContext";
 
 const ExamCard = () => {
+  const { user } = useAuth(); // ✅ دریافت مقدار user برای بررسی لاگین بودن
+
   return (
     <div className="examCard-Container">
       <Swiper
@@ -53,9 +56,11 @@ const ExamCard = () => {
                 </p>
               </div>
               <div className="examCard-Footer">
-                <button className="btn1">
-                  <Link to="/signUpForm">ثبت‌نام</Link>
-                </button>
+                {!user && ( // ✅ اگر لاگین نکرده باشد، دکمه "ثبت‌نام" را نمایش بده
+                  <button className="btn1">
+                    <Link to="/signUpForm">ثبت‌نام</Link>
+                  </button>
+                )}
                 <button className="btn2">دفترچه</button>
                 <button className="btn3">
                   <Link to="/examInfo">بیشتر</Link>

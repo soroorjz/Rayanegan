@@ -57,13 +57,16 @@ const guideData = [
 
 const GuideCards = () => {
   return (
-    <div className="guide-container">
-      {guideData.map((guide) => (
-        <div key={guide.id} className="guide-card">
-          <img src={guide.image} alt={guide.title} className="guide-image" />
-          <button className="guide-button">{guide.title}</button>
-        </div>
-      ))}
+    <div className="guideCards">
+      <h2> پشتیبانی تصویری</h2>
+      <div className="guide-container">
+        {guideData.map((guide) => (
+          <div key={guide.id} className="guide-card">
+            <img src={guide.image} alt={guide.title} className="guide-image" />
+            <button className="guide-button">{guide.title}</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

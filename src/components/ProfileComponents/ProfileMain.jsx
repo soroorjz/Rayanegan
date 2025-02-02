@@ -13,7 +13,7 @@ const ProfileMain = ({ selectedComponent }) => {
   switch (selectedComponent) {
     case "personal":
       // content = <ExamSignUpForm />;
-      content = <PersonalDetails />;
+      // content = <PersonalDetails />;
       break;
     case "exams":
       content = <MyExams />;

@@ -26,6 +26,7 @@ $tablet-resize: 900px;
       justify-items: start;
       .form-group {
         display: flex;
+        width: 100%;
         flex-direction: column;
 
         label {

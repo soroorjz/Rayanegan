@@ -1,0 +1,21 @@
+import { Link } from "react-router";
+import NavbarTop from "../../components/HomePageComp/NavbarTop/NavbarTop";
+import ReportFormComp from "../../components/ReportFormComp/ReportFormComp";
+import "./ReportForm.scss";
+import { IoMdHome } from "react-icons/io";
+
+const ReportForm = () => {
+  return (
+    <>
+      <NavbarTop hideJobSearch={true} />
+      <ReportFormComp />
+      <button className="homeBtn">
+        <Link to="/">
+          <IoMdHome />
+        </Link>
+      </button>
+    </>
+  );
+};
+
+export default ReportForm;

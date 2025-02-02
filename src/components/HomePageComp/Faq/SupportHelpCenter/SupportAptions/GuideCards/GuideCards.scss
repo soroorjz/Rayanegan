@@ -1,10 +1,14 @@
-.guide-container {
+.guideCards {
+  h2 {
+    color: #04364a;
+  }
+  .guide-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     gap: 15px;
     padding: 20px;
     text-align: center;
-  
+
     .guide-card {
       background: #fff;
       border-radius: 10px;
@@ -14,18 +18,19 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-  
+
       &:hover {
         transform: translateY(-5px);
       }
-  
+
       .guide-image {
         // width: 80px;
         // height: 80px;
         width: 80%;
         margin-bottom: 10px;
+        height: 70%;
       }
-  
+
       .guide-button {
         background: #17bebb;
         color: white;
@@ -35,11 +40,12 @@
         font-size: 14px;
         cursor: pointer;
         transition: 0.3s;
-  
+        height: 30%;
+
         &:hover {
           background: #14a1a1;
         }
       }
     }
   }
-  
+}

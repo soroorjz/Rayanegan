@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { IoTriangle } from "react-icons/io5";
 import "./NavbarTop.scss";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link } from "react-router";
-import { FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
-const NavbarTop = () => {
+import { Link } from "react-router-dom"; // ✅ تغییر ایمپورت به react-router-dom
+import { FaUser, FaSignOutAlt } from "react-icons/fa";
+import { useAuth } from "../../../AuthContext";
+
+const NavbarTop = ({ hideJobSearch = false }) => {
+  const { user, logout } = useAuth(); // ✅ دریافت user و logout از AuthContext
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
@@ -22,12 +18,6 @@ const NavbarTop = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-    window.location.reload(); // برای ریفرش Navbar
-  };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -51,8 +41,15 @@ const NavbarTop = () => {
         </div>
 
         <div className="navbarLeftPart">
+          {!hideJobSearch && ( // بررسی مقدار hideJobSearch
+            <div className="jobSearchBtn">
+              <button onFocus={handleSearchFocus}>جست و جوی مشاغل</button>
+            </div>
+          )}
           <div className="jobSearchBtn">
-            <button onFocus={handleSearchFocus}>جست و جوی مشاغل</button>
+            <button>
+              <Link to="/ReportForm">گزارش تخلف</Link>
+            </button>
           </div>
 
           {user ? (
@@ -74,7 +71,7 @@ const NavbarTop = () => {
                   <FaUser /> پروفایل
                 </Link>
 
-                <button className="exit" onClick={handleLogout}>
+                <button className="exit" onClick={logout}>
                   <FaSignOutAlt /> خروج
                 </button>
               </div>
@@ -122,7 +119,7 @@ const NavbarTop = () => {
                   <FaUser /> پروفایل
                 </Link>
 
-                <button className="responsive-exit" onClick={handleLogout}>
+                <button className="responsive-exit" onClick={logout}>
                   <FaSignOutAlt /> خروج
                 </button>
               </div>
@@ -133,9 +130,11 @@ const NavbarTop = () => {
             </button>
           )}
 
-          <button className="jobSearchBtn" onFocus={handleSearchFocus}>
-            جست و جوی مشاغل
-          </button>
+          {!hideJobSearch && ( // بررسی مقدار hideJobSearch
+            <button className="jobSearchBtn" onFocus={handleSearchFocus}>
+              جست و جوی مشاغل
+            </button>
+          )}
         </div>
       </div>
     </>

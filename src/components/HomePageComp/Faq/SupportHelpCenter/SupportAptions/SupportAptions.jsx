@@ -49,7 +49,7 @@ const SupportAptions = ({ onSelectOption, resetState }) => {
       <div className="support-detail">
         {supportComponents[selectedOption]}
         <button className="back-button" onClick={handleBack}>
-          ⬅ بازگشت
+          بازگشت⬅
         </button>
       </div>
     );
@@ -77,7 +77,10 @@ const SupportAptions = ({ onSelectOption, resetState }) => {
           </button>
         ))}
       </div>
-      <button className="SupportAptions-back-button" onClick={handleReturnToHelpCenter}>
+      <button
+        className="SupportAptions-back-button"
+        onClick={handleReturnToHelpCenter}
+      >
         بازگشت ⬅
       </button>
     </div>

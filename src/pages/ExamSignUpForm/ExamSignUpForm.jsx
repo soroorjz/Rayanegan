@@ -6,7 +6,7 @@ import NavbarTop from "../../components/HomePageComp/NavbarTop/NavbarTop";
 const ExamSignUpForm = () => {
   return (
     <div className="examSignUpForm-Contaner">
-      <NavbarTop />
+      <NavbarTop hideJobSearch={true} />
       <h2>فرم ثبت نام داوطلبان</h2>
       <SignUpStepper />
     </div>
