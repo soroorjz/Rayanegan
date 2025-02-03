@@ -7,7 +7,7 @@ import { IoMdHome } from "react-icons/io";
 const ReportForm = () => {
   return (
     <>
-      <NavbarTop hideJobSearch={true} hideRepotBtn = {true} />
+      <NavbarTop hideJobSearch={true} hideRepotBtn = {true} showReportTrackingBtn={true} />
       <ReportFormComp />
       <button className="homeBtn">
         <Link to="/">

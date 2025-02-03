@@ -14,6 +14,7 @@ const ReportModal = ({ trackingCode, onClose }) => {
         <Link to="/" className="home-button">
           صفحه آغازین
         </Link>
+        
       </div>
     </div>
   );

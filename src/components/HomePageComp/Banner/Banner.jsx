@@ -1,5 +1,6 @@
 import React from "react";
 import "./Banner.scss";
+import { Link } from "react-router";
 const Banner = () => {
   return (
     <div className="bannerPart">
@@ -19,8 +20,12 @@ const Banner = () => {
           </p>
         </div>
         <div className="sloganBtns">
-          <button>دسترسی به آزمون‌های استخدامی</button>
-          <button>اخبار استخدامی</button>
+          <button>
+            <Link to="/EmploymentTests">دسترسی به آزمون‌های استخدامی</Link>
+          </button>
+          <button>
+            <Link to="/Announcements">اطلاعیه‌های آزمون‌های  استخدامی</Link>
+          </button>
         </div>
       </div>
     </div>

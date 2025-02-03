@@ -1,0 +1,41 @@
+.user-reports {
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+  
+    h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+  
+    ul {
+      list-style: none;
+      padding: 0;
+  
+      .report-item {
+        background: #fff;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+        .report-title {
+          font-size: 18px;
+          font-weight: bold;
+        }
+  
+        .report-date,
+        .report-status,
+        .report-description {
+          font-size: 14px;
+          margin: 5px 0;
+        }
+  
+        .report-status {
+          font-weight: bold;
+          color: #d35400;
+        }
+      }
+    }
+  }
+  
