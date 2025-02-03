@@ -1,7 +1,7 @@
 import React from "react";
 import "./FileInput.scss";
 import { useState } from "react";
-import { FaCamera, FaTimes } from "react-icons/fa";
+import {  FaTimes } from "react-icons/fa";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 
 const FileInput = ({ handleChange, fileError }) => {
