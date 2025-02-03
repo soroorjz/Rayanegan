@@ -7,7 +7,7 @@ const ReportModal = ({ trackingCode, onClose }) => {
       <div className="modal-content">
         <h2>کد پیگیری تخلف</h2>
         <p className="tracking-code">{trackingCode}</p>
-        <p>
+        <p className="tracking-desc">
           اطلاعات شما با موفقیت ثبت گردید. در صورت لزوم با شما تماس گرفته
           می‌شود.
         </p>

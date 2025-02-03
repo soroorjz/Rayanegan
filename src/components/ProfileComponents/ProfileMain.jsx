@@ -7,6 +7,7 @@ import NoEntryCard from "./NoEntryCard/NoEntryCard";
 import { IoMdHome } from "react-icons/io";
 import ExamSignUpForm from "../../pages/ExamSignUpForm/ExamSignUpForm";
 import { Link } from "react-router";
+import ExamEntryCopm from "./ExamEntryCard/ExamEntryCopm";
 
 const ProfileMain = ({ selectedComponent }) => {
   let content;
@@ -19,7 +20,8 @@ const ProfileMain = ({ selectedComponent }) => {
       content = <MyExams />;
       break;
     case "suggested":
-      content = <ExamEntryCard />;
+      // content = <ExamEntryCard />;
+      content = <ExamEntryCopm />;
       break;
     case "news":
       content = <NoEntryCard />;

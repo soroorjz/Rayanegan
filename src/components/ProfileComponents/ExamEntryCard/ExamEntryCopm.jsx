@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import "./MyExams.scss";
-import MyExamsMobile from "./MyExamsMobile/MyExamsMobile";
+import React, { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { examData } from "./data";
+import { examData } from "../MyExams/data";
+import "./ExamEntryCopm.scss";
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -18,35 +18,17 @@ const MenuProps = {
   },
 };
 
-const names = ["آزمون پنجم", "آزمون دوازدهم"];
-
-const MyExams = () => {
-  const theme = useTheme();
+const ExamEntryCopm = () => {
   const [selectedExam, setSelectedExam] = useState("");
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 900);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  if (isMobile) {
-    return <MyExamsMobile />;
-  }
-
   return (
-    <div className="exam-list">
-      <h2>آزمون‌های ثبت‌نام‌شده</h2>
-      <div className="exam-selection">
+    <div className="Entry-list">
+      <h2>کارت ‌های ورود به آزمون </h2>
+      <div className="Entry-selection">
         <label>انتخاب آزمون:</label>
         <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
           <Select
             displayEmpty
-            value={selectedExam}
-            onChange={(event) => setSelectedExam(event.target.value)}
+            value=""
             input={
               <OutlinedInput
                 sx={{ height: 36, fontSize: "12px", padding: "5px" }}
@@ -100,7 +82,7 @@ const MyExams = () => {
               <th>وضعیت داوطلب</th>
             </tr>
           </thead>
-          <tbody>
+          {/* <tbody>
             {examData
               .find((exam) => exam.examName === selectedExam)
               ?.exams.map((exam, index) => (
@@ -124,11 +106,11 @@ const MyExams = () => {
                   </td>
                 </tr>
               ))}
-          </tbody>
+          </tbody> */}
         </table>
       </div>
     </div>
   );
 };
 
-export default MyExams;
+export default ExamEntryCopm;

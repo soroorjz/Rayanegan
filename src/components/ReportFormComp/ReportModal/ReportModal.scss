@@ -1,47 +1,49 @@
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+.modal-content {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 50%;
+}
+
+.tracking-code {
+  font-size: 24px;
+  color: #578e7e;
+  font-weight: bold;
+}
+
+.tracking-desc{
+  color: #7d7979;
+}
+
+.home-button {
+  display: block;
+  background: #04364a;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  width: 50%;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #e55604;
   }
-  
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    width: 90%;
-    max-width: 400px;
-  }
-  
-  .tracking-code {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 10px 0;
-  }
-  
-  .home-button {
-    display: block;
-    background: #007bff;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-top: 15px;
-  }
-  
-  .close-button {
-    margin-top: 10px;
-    background: gray;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
+}
+}

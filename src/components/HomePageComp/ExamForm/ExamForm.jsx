@@ -67,7 +67,7 @@ const ExamForm = () => {
                   <option value="veteran">سهمیه ایثارگر</option>
                 </select>
               </div>
-<br />
+              <br />
               <div className="form-group gender-radio">
                 <label>جنسیت </label>
                 <div className="radio-group">
@@ -112,7 +112,7 @@ const ExamForm = () => {
           </div>
         )}
 
-        <div className="searchForm-side">
+        <div className={`searchForm-side ${user ? "searchForm-side-single" : ""}`}>
           <h2>آزمون خود را پیدا کنید. </h2>
           <p>
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با

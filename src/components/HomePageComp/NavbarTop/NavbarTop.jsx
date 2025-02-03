@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"; // ✅ تغییر ایمپورت به r
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
 import { useAuth } from "../../../AuthContext";
 
-const NavbarTop = ({ hideJobSearch = false }) => {
+const NavbarTop = ({ hideJobSearch = false, hideRepotBtn = false }) => {
   const { user, logout } = useAuth(); // ✅ دریافت user و logout از AuthContext
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -46,11 +46,14 @@ const NavbarTop = ({ hideJobSearch = false }) => {
               <button onFocus={handleSearchFocus}>جست و جوی مشاغل</button>
             </div>
           )}
-          <div className="jobSearchBtn">
-            <button>
-              <Link to="/ReportForm">گزارش تخلف</Link>
-            </button>
-          </div>
+
+          {!hideRepotBtn && (
+            <div className="jobSearchBtn">
+              <button>
+                <Link to="/ReportForm">گزارش تخلف</Link>
+              </button>
+            </div>
+          )}
 
           {user ? (
             <div className="userProfile">
@@ -134,6 +137,14 @@ const NavbarTop = ({ hideJobSearch = false }) => {
             <button className="jobSearchBtn" onFocus={handleSearchFocus}>
               جست و جوی مشاغل
             </button>
+          )}
+
+          {!hideRepotBtn && (
+            <div className="jobSearchBtn">
+              <button>
+                <Link to="/ReportForm">گزارش تخلف</Link>
+              </button>
+            </div>
           )}
         </div>
       </div>

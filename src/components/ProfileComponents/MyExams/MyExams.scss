@@ -61,9 +61,16 @@
         text-align: center;
       }
 
-      .result.fail {
+      .result.failed {
         background-color: #f44336d1; // قرمز
         color: white;
+        padding: 5px;
+        border-radius: 4px;
+        text-align: center;
+      }
+      .result.absent {
+        background-color: #ebe8e8d1; // قرمز
+        color: rgb(0, 0, 0);
         padding: 5px;
         border-radius: 4px;
         text-align: center;
