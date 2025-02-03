@@ -1,16 +1,38 @@
 .examCardPart-Container {
+  width: 98%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 30px 0 80px 0;
+  margin: 30px 0 80px ;
+  background-color: #578e7e8e;
+  border-radius: 0 50px 50px 0;
+  padding: 20px 0;
   .examCardPart-Title {
-    margin: 30px 0;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 20%;
+    button{
+      background: 0;
+      border: 0;
+      font-size: 18px;
+      display: flex;
+      gap: 3px;
+      align-items: center;
+      cursor: pointer;
+      color: #04364a;
+      &:hover{
+        color: #e55604;
+      }
+    }
     h1 {
       text-align: center;
+      color: #04364a;
     }
   }
   .examCards {
-    width: 100%;
+    width: 80%;
   }
 }

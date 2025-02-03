@@ -19,14 +19,14 @@ const Banner = () => {
             موجود طراحی اساسا مورد استفاده قرار گیرد.
           </p>
         </div>
-        <div className="sloganBtns">
+        {/* <div className="sloganBtns">
           <button>
             <Link to="/EmploymentTests">دسترسی به آزمون‌های استخدامی</Link>
           </button>
           <button>
             <Link to="/Announcements">اطلاعیه‌های آزمون‌های  استخدامی</Link>
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

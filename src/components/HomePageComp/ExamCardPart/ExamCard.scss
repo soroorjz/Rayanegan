@@ -1,5 +1,5 @@
 .examCard-Container {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   display: flex;
   gap: 10px;
@@ -15,11 +15,12 @@
       }
     }
 
-    .examCard {
+    .examCards {
       width: 100%;
       height: 100%;
       padding: 10px;
       border-radius: 10px;
+      background-color: #fff;
       display: flex;
       justify-content: space-around;
       flex-direction: column;

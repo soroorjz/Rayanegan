@@ -9,6 +9,7 @@ import Footer from "./Footer/Footer";
 import NavbarTop from "./NavbarTop/NavbarTop";
 import FaqHeader from "./Faq/FaqHeader/FaqHeader";
 import { FaArrowUp } from "react-icons/fa";
+import EmploymentTests from "../../pages/EmploymentTests/EmploymentTests";
 const HomePage = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
 
@@ -37,6 +38,8 @@ const HomePage = () => {
       </div>
       <div id="ExamCardPart">
         <ExamCardPart />
+        {/* <EmploymentTests /> */}
+
       </div>
       <div id="ExamForm">
         <ExamForm />

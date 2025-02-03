@@ -3,6 +3,11 @@ $tablet-resize: 900px;
 .homeContainer {
   width: 100%;
   position: relative;
+  #ExamCardPart {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   .scrollToTopBtn {
     position: fixed;
     bottom: 90px;

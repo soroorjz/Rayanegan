@@ -14,8 +14,10 @@ const ExamCard = () => {
     <div className="examCard-Container">
       <Swiper
         slidesPerView={3}
-        spaceBetween={30}
+        spaceBetween={10}
+        loop={true}
         navigation={true}
+        loopAdditionalSlides={examCards.length}
         modules={[Navigation]}
         className="examSwiper"
         breakpoints={{
@@ -35,7 +37,7 @@ const ExamCard = () => {
       >
         {examCards.map((examCard) => (
           <SwiperSlide key={examCard.id}>
-            <div className="examCard">
+            <div className="examCards">
               <div className="examCardTop">
                 <div className="examCard-Logo">
                   <img src={examCard.logo} alt="" />
