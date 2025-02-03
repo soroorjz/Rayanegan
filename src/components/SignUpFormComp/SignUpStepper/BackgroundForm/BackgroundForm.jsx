@@ -27,7 +27,7 @@ const schema = yup.object().shape({
     .required("لطفاً میزان سابقه کار را وارد کنید"),
 });
 
-const BackgroundForm = ({ onFinalSubmit }) => {
+const BackgroundForm = ({ onFinalSubmit, handlePreviousStep }) => {
   const {
     register,
     handleSubmit,
@@ -101,6 +101,9 @@ const BackgroundForm = ({ onFinalSubmit }) => {
       <br />
       <button type="submit" className="submit-btn">
         تکمیل ثبت‌نام
+      </button>
+      <button onClick={handlePreviousStep} className="submit-btn">
+        مرحله قبل
       </button>
     </form>
   );

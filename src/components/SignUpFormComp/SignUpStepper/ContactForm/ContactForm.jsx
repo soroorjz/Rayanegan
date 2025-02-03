@@ -18,7 +18,7 @@ const schema = yup.object().shape({
   address: yup.string().required("آدرس را وارد کنید"),
 });
 
-const ContactForm = ({ onNext }) => {
+const ContactForm = ({ onNext, handlePreviousStep }) => {
   const {
     register,
     handleSubmit,
@@ -71,6 +71,9 @@ const ContactForm = ({ onNext }) => {
       <br />
       <button type="submit" className="contactSubmit-btn">
         ثبت اطلاعات
+      </button>
+      <button onClick={handlePreviousStep} className="submit-btn">
+        مرحله قبل
       </button>
     </form>
   );

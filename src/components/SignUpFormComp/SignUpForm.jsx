@@ -25,7 +25,6 @@ const SignUpForm = ({ onNext }) => {
   });
   const [errors, setErrors] = useState({});
   const [isChildrenEnabled, setIsChildrenEnabled] = useState(false);
-
   const isPersianText = (text) => /^[\u0600-\u06FF\s]+$/.test(text);
   const isValidMobile = (mobile) => /^09\d{9}$/.test(mobile);
   const isValidIdNumber = (idNumber) => {
@@ -33,9 +32,35 @@ const SignUpForm = ({ onNext }) => {
   };
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked, files } = e.target;
 
-    if (type === "radio") {
+    if (type === "file") {
+      const file = files[0];
+      if (file) {
+        const validFormats = [
+          "image/jpeg",
+          "image/png",
+          "image/gif",
+          "image/webp",
+        ];
+        if (!validFormats.includes(file.type)) {
+          setErrors((prev) => ({
+            ...prev,
+            profileImage: "فرمت تصویر معتبر نیست.",
+          }));
+          return;
+        }
+        if (file.size > 2 * 1024 * 1024) {
+          setErrors((prev) => ({
+            ...prev,
+            profileImage: "حجم تصویر نباید بیشتر از ۲ مگابایت باشد.",
+          }));
+          return;
+        }
+        setErrors((prev) => ({ ...prev, profileImage: "" }));
+        setFormData((prev) => ({ ...prev, profileImage: file }));
+      }
+    } else if (type === "radio") {
       setFormData({
         ...formData,
         [name]: value,
@@ -54,6 +79,7 @@ const SignUpForm = ({ onNext }) => {
       });
     }
   };
+
   const isValidIranianNationalCode = (nationalCode) => {
     if (!/^\d{10}$/.test(nationalCode)) return false; // بررسی ۱۰ رقمی بودن
 
@@ -96,6 +122,10 @@ const SignUpForm = ({ onNext }) => {
 
     if (!isValidIdNumber(formData.idNumber)) {
       newErrors.idNumber = "شماره شناسنامه نامعتبر است.";
+    }
+
+    if (!formData.profileImage) {
+      newErrors.profileImage = "لطفاً یک تصویر پرسنلی آپلود کنید.";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -144,7 +174,10 @@ const SignUpForm = ({ onNext }) => {
             errors={errors}
             isChildrenEnabled={isChildrenEnabled}
           />
-          <FileInput handleChange={handleChange} />
+          <FileInput
+            handleChange={handleChange}
+            fileError={errors.profileImage}
+          />
         </div>
 
         <button type="submit" className="submit-button">

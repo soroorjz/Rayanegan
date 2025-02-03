@@ -17,6 +17,12 @@ const SignUpStepper = () => {
     }
   };
 
+  const handlePreviousStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
   const handleFinalSubmit = () => {
     setShowModal(true);
     setTimeout(() => {
@@ -31,19 +37,28 @@ const SignUpStepper = () => {
       case 2:
         return (
           <div>
-            <EducationForm onNext={handleNextStep} />
+            <EducationForm
+              handlePreviousStep={handlePreviousStep}
+              onNext={handleNextStep}
+            />
           </div>
         );
       case 3:
         return (
           <div>
-            <ContactForm onNext={handleNextStep} />
+            <ContactForm
+              handlePreviousStep={handlePreviousStep}
+              onNext={handleNextStep}
+            />
           </div>
         );
       case 4:
         return (
           <div>
-            <BackgroundForm onFinalSubmit={handleFinalSubmit} />
+            <BackgroundForm
+              handlePreviousStep={handlePreviousStep}
+              onFinalSubmit={handleFinalSubmit}
+            />
           </div>
         );
       default:

@@ -1,8 +1,13 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import * as React from "react";
 import { useState } from "react";
+import DatePicker from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
 import "./EducationForm.scss";
+
 const schema = yup.object().shape({
   degree: yup.string().required("مقطع تحصیلی را انتخاب کنید"),
   fieldOfStudy: yup.string().required("رشته تحصیلی را وارد کنید"),
@@ -17,10 +22,11 @@ const schema = yup.object().shape({
     .required("معدل را وارد کنید"),
 });
 
-const EducationForm = ({ onNext }) => {
+const EducationForm = ({ onNext,handlePreviousStep }) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -45,6 +51,7 @@ const EducationForm = ({ onNext }) => {
         <label>مقطع تحصیلی:</label>
         <select {...register("degree")}>
           <option value="">انتخاب کنید</option>
+          <option value="Associate">کاردانی</option>
           <option value="bachelor">کارشناسی</option>
           <option value="master">کارشناسی ارشد</option>
           <option value="phd">دکتری</option>
@@ -63,7 +70,8 @@ const EducationForm = ({ onNext }) => {
         <select {...register("universityType")}>
           <option value="">انتخاب کنید</option>
           <option value="public">دولتی</option>
-          <option value="private">غیرانتفاعی</option>
+          <option value="Non-profit">غیرانتفاعی</option>
+          <option value="private">آزاد</option>
         </select>
         {errors.universityType && <span>{errors.universityType.message}</span>}
       </div>
@@ -76,7 +84,14 @@ const EducationForm = ({ onNext }) => {
 
       <div className="form-group">
         <label>تاریخ فارغ‌التحصیلی:</label>
-        <input type="date" {...register("graduationDate")} />
+        <DatePicker
+          calendar={persian}
+          locale={persian_fa}
+          inputClass="custom-date-input"
+          style={{ width: "100%" }}
+          placeholder="تاریخ فارغ‌التحصیلی را انتخاب کنید"
+          onChange={(value) => setValue("graduationDate", value?.format("YYYY-MM-DD"))}
+        />
         {errors.graduationDate && <span>{errors.graduationDate.message}</span>}
       </div>
 
@@ -102,9 +117,13 @@ const EducationForm = ({ onNext }) => {
         {errors.gpa && <span>{errors.gpa.message}</span>}
       </div>
       <br />
+      <button onClick={handlePreviousStep} className="submit-btn">
+        مرحله قبل
+      </button>
       <button type="submit" className="submit-btn">
         مرحله بعد
       </button>
+      
     </form>
   );
 };
