@@ -14,9 +14,6 @@ const ReportModal = ({ trackingCode, onClose }) => {
         <Link to="/" className="home-button">
           صفحه آغازین
         </Link>
-        <button className="close-button" onClick={onClose}>
-          بستن
-        </button>
       </div>
     </div>
   );

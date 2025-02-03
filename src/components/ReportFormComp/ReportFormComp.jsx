@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ReportFormComp.scss";
-import ReportModal from "./ReportModal/ReportModal";
 import provinces_cities from "../../jsonFiles/provinces_cities.json";
+import ReportModal from "./ReportModal/ReportModal";
 const ReportFormComp = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -15,7 +15,6 @@ const ReportFormComp = () => {
     examState: "",
     violationType: "",
     description: "",
-    captcha: "",
   });
   const [errors, setErrors] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -76,7 +75,6 @@ const ReportFormComp = () => {
 
     Object.keys(formData).forEach((key) => {
       if (!formData[key] && key !== "phone") {
-        // اگر فیلد phone خالی بود مشکلی نداره
         newErrors[key] = "تکمیل این فیلد الزامی است.";
       }
     });
@@ -94,7 +92,13 @@ const ReportFormComp = () => {
       return;
     }
 
-    alert("فرم ارسال شد!");
+    // تولید یک کد پیگیری تصادفی (مثلا ۸ رقمی)
+    const generatedTrackingCode = Math.floor(
+      10000000 + Math.random() * 90000000
+    ).toString();
+
+    setTrackingCode(generatedTrackingCode);
+    setIsModalOpen(true);
   };
 
   return (

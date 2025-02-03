@@ -105,3 +105,13 @@ $tablet-resize: 900px;
     margin-top: 5px;
   }
 }
+.modal {
+  display: flex; /* یا block */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(247, 4, 4);
+  padding: 20px;
+  z-index: 1000;
+}
