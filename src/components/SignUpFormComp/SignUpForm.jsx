@@ -25,36 +25,49 @@ const SignUpForm = ({ onNext }) => {
   });
   const [errors, setErrors] = useState({});
   const [isChildrenEnabled, setIsChildrenEnabled] = useState(false);
+
   const isPersianText = (text) => /^[\u0600-\u06FF\s]+$/.test(text);
   const isValidMobile = (mobile) => /^09\d{9}$/.test(mobile);
   const isValidIdNumber = (idNumber) => {
     return /^\d{1,10}$/.test(idNumber) && !/^0+$/.test(idNumber);
   };
 
+  // const handleChange = (e) => {
+  //   const { name, value, type, checked } = e.target;
+
+  //   if (type === "radio") {
+  //     setFormData({
+  //       ...formData,
+  //       [name]: value,
+  //     });
+
+  //     if (name === "maritalStatus") {
+  //       setIsChildrenEnabled(value !== "single");
+  //       if (value === "single") {
+  //         setFormData((prev) => ({ ...prev, children: 0 }));
+  //       }
+  //     }
+  //   } else {
+  //     setFormData({
+  //       ...formData,
+  //       [name]: type === "checkbox" ? checked : value,
+  //     });
+  //   }
+  // };
+  
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
 
     if (type === "file") {
       const file = files[0];
       if (file) {
-        const validFormats = [
-          "image/jpeg",
-          "image/png",
-          "image/gif",
-          "image/webp",
-        ];
+        const validFormats = ["image/jpeg", "image/png", "image/gif", "image/webp"];
         if (!validFormats.includes(file.type)) {
-          setErrors((prev) => ({
-            ...prev,
-            profileImage: "فرمت تصویر معتبر نیست.",
-          }));
+          setErrors((prev) => ({ ...prev, profileImage: "فرمت تصویر معتبر نیست." }));
           return;
         }
         if (file.size > 2 * 1024 * 1024) {
-          setErrors((prev) => ({
-            ...prev,
-            profileImage: "حجم تصویر نباید بیشتر از ۲ مگابایت باشد.",
-          }));
+          setErrors((prev) => ({ ...prev, profileImage: "حجم تصویر نباید بیشتر از ۲ مگابایت باشد." }));
           return;
         }
         setErrors((prev) => ({ ...prev, profileImage: "" }));
@@ -80,6 +93,7 @@ const SignUpForm = ({ onNext }) => {
     }
   };
 
+  
   const isValidIranianNationalCode = (nationalCode) => {
     if (!/^\d{10}$/.test(nationalCode)) return false; // بررسی ۱۰ رقمی بودن
 
@@ -174,10 +188,7 @@ const SignUpForm = ({ onNext }) => {
             errors={errors}
             isChildrenEnabled={isChildrenEnabled}
           />
-          <FileInput
-            handleChange={handleChange}
-            fileError={errors.profileImage}
-          />
+          <FileInput handleChange={handleChange} fileError={errors.profileImage} />
         </div>
 
         <button type="submit" className="submit-button">

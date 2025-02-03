@@ -20,7 +20,7 @@ $tablet-resize: 900px;
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
-    
+
     label {
       font-size: 14px;
       margin-bottom: 8px;
@@ -56,10 +56,12 @@ $tablet-resize: 900px;
     background: #04364a;
     color: #fff;
     border: none;
-    border-radius:10px;
+    border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
     transition: background 0.3s ease;
+    align-self: flex-end;
+    justify-self: left;
 
     &:hover {
       background: #e55604;

@@ -69,12 +69,10 @@ $tablet-resize: 900px;
       padding: 20px;
       border: 1px solid #ddd;
       border-radius: 10px;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+      border-radius: 10px;
       background-color: #f9f9f9;
       row-gap: 20px;
-      border-top-right-radius: 0;
-      border-top-left-radius: 0;
+     
       @include responsive($tablet-resize) {
         width: 60%;
         padding: 40px 20px;

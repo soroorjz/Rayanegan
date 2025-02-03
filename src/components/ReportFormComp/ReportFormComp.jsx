@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./ReportFormComp.scss";
 import ReportModal from "./ReportModal/ReportModal";
+import provinces_cities from "../../jsonFiles/provinces_cities.json";
 const ReportFormComp = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -20,6 +21,23 @@ const ReportFormComp = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [trackingCode, setTrackingCode] = useState("");
 
+  const provinces = [
+    ...new Set(provinces_cities.map((item) => item.provinceName)),
+  ];
+
+  const isValidIranianNationalId = (nationalId) => {
+    if (!/^\d{10}$/.test(nationalId)) return false;
+
+    const check = +nationalId[9];
+    const sum = nationalId
+      .split("")
+      .slice(0, 9)
+      .reduce((acc, digit, index) => acc + +digit * (10 - index), 0);
+    const remainder = sum % 11;
+
+    return remainder < 2 ? check === remainder : check === 11 - remainder;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     let newErrors = { ...errors };
@@ -27,6 +45,14 @@ const ReportFormComp = () => {
     if (name === "mobile") {
       if (!/^09\d{0,9}$/.test(value)) {
         newErrors[name] = "شماره تلفن معتبر نیست.";
+      } else {
+        delete newErrors[name];
+      }
+    }
+
+    if (name === "nationalId") {
+      if (value.length === 10 && !isValidIranianNationalId(value)) {
+        newErrors[name] = "کد ملی معتبر نیست.";
       } else {
         delete newErrors[name];
       }
@@ -49,13 +75,18 @@ const ReportFormComp = () => {
     let newErrors = {};
 
     Object.keys(formData).forEach((key) => {
-      if (!formData[key]) {
+      if (!formData[key] && key !== "phone") {
+        // اگر فیلد phone خالی بود مشکلی نداره
         newErrors[key] = "تکمیل این فیلد الزامی است.";
       }
     });
 
     if (formData.mobile && !/^09\d{9}$/.test(formData.mobile)) {
       newErrors.mobile = "شماره تلفن معتبر نیست.";
+    }
+
+    if (formData.nationalId && !isValidIranianNationalId(formData.nationalId)) {
+      newErrors.nationalId = "کد ملی معتبر نیست.";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -78,7 +109,6 @@ const ReportFormComp = () => {
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
-              required
             />
             {errors.firstName && (
               <small className="error">{errors.firstName}</small>
@@ -91,7 +121,6 @@ const ReportFormComp = () => {
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
-              required
             />
             {errors.lastName && (
               <small className="error">{errors.lastName}</small>
@@ -104,9 +133,11 @@ const ReportFormComp = () => {
               name="nationalId"
               value={formData.nationalId}
               onChange={handleChange}
-              required
               maxLength="10"
             />
+            {errors.nationalId && (
+              <small className="error">{errors.nationalId}</small>
+            )}
           </div>
         </div>
 
@@ -118,9 +149,9 @@ const ReportFormComp = () => {
               name="mobile"
               value={formData.mobile}
               onChange={handleChange}
-              required
               maxLength="11"
             />
+            {errors.mobile && <small className="error">{errors.mobile}</small>}
           </div>
           <div className="form-group">
             <label>شماره تلفن ثابت</label>
@@ -154,13 +185,18 @@ const ReportFormComp = () => {
               <option value="کنکور">کنکور</option>
               <option value="کارشناسی ارشد">کارشناسی ارشد</option>
             </select>
+            {errors.examType && (
+              <small className="error">{errors.examType}</small>
+            )}
           </div>
 
           <div className="form-group">
             <label>آزمون</label>
             <select name="exam" value={formData.exam} onChange={handleChange}>
               <option value="">چیزی انتخاب نشده است</option>
+              <option value="A"> آزمون A</option>
             </select>
+            {errors.exam && <small className="error">{errors.exam}</small>}
           </div>
           <div className="form-group">
             <label>استان محل آزمون</label>
@@ -170,9 +206,15 @@ const ReportFormComp = () => {
               onChange={handleChange}
             >
               <option value="">----</option>
-              <option value="تهران">تهران</option>
-              <option value="اصفهان">اصفهان</option>
+              {provinces.map((province, index) => (
+                <option key={index} value={province}>
+                  {province}
+                </option>
+              ))}
             </select>
+            {errors.examState && (
+              <small className="error">{errors.examState}</small>
+            )}
           </div>
         </div>
 
@@ -187,6 +229,9 @@ const ReportFormComp = () => {
             <option value="">----</option>
             <option value="تقلب">تقلب در آزمون کتبی</option>
           </select>
+          {errors.violationType && (
+            <small className="error">{errors.violationType}</small>
+          )}
         </div>
 
         <div className="form-group">
@@ -197,6 +242,9 @@ const ReportFormComp = () => {
             onChange={handleChange}
             rows="4"
           ></textarea>
+          {errors.description && (
+            <small className="error">{errors.description}</small>
+          )}
         </div>
 
         <div className="form-group">

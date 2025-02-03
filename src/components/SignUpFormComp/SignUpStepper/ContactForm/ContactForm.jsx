@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import provinces_cities from "../../../../jsonFiles/provinces_cities.json";
 import "./ContactForm.scss";
 const schema = yup.object().shape({
   phone: yup
@@ -26,6 +27,26 @@ const ContactForm = ({ onNext, handlePreviousStep }) => {
     resolver: yupResolver(schema),
   });
 
+  const [selectedProvince, setSelectedProvince] = useState(""); // ذخیره استان انتخاب‌شده
+  const [filteredCities, setFilteredCities] = useState([]);
+
+  // استخراج لیست یکتای استان‌ها
+  const provinces = [
+    ...new Set(provinces_cities.map((item) => item.provinceName)),
+  ];
+
+  // فیلتر کردن شهرها بر اساس استان انتخاب‌شده
+  const handleProvinceChange = (e) => {
+    const province = e.target.value;
+    setSelectedProvince(province);
+
+    const cities = provinces_cities
+      .filter((item) => item.provinceName === province)
+      .map((item) => item.cityName);
+
+    setFilteredCities(cities); // فیلتر شهرها و ذخیره کردن در state
+  };
+
   const onSubmit = (data) => {
     onNext();
   };
@@ -46,19 +67,27 @@ const ContactForm = ({ onNext, handlePreviousStep }) => {
 
       <div className="form-group">
         <label>استان:</label>
-        <select {...register("province")}>
+        <select {...register("province")} onChange={handleProvinceChange}>
           <option value="">انتخاب کنید</option>
-          <option value="تهران">تهران</option>
-          <option value="اصفهان">اصفهان</option>
-          <option value="شیراز">شیراز</option>
-          <option value="مشهد">مشهد</option>
+          {provinces.map((province, index) => (
+            <option key={index} value={province}>
+              {province}
+            </option>
+          ))}
         </select>
         {errors.province && <span>{errors.province.message}</span>}
       </div>
 
       <div className="form-group">
         <label>شهر:</label>
-        <input type="text" {...register("city")} />
+        <select {...register("city")} disabled={!selectedProvince}>
+          <option value="">انتخاب کنید</option>
+          {filteredCities.map((city, index) => (
+            <option key={index} value={city}>
+              {city}
+            </option>
+          ))}
+        </select>
         {errors.city && <span>{errors.city.message}</span>}
       </div>
 
@@ -68,12 +97,16 @@ const ContactForm = ({ onNext, handlePreviousStep }) => {
         {errors.address && <span>{errors.address.message}</span>}
       </div>
       <br />
-      <button type="submit" className="contactSubmit-btn">
-        ثبت اطلاعات
-      </button>
-      <button onClick={handlePreviousStep} className="submit-btn">
+       <button
+        onClick={handlePreviousStep}
+        className="submit-btn contactSubmit-btn"
+      >
         مرحله قبل
       </button>
+      <button type="submit" className="contactSubmit-btn">
+        مرحله بعد
+      </button>
+     
     </form>
   );
 };

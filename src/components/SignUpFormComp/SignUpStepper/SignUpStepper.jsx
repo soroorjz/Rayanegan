@@ -9,7 +9,7 @@ const SignUpStepper = () => {
   const [showModal, setShowModal] = useState(false);
   const persianNumbers = ["۱", "۲", "۳", "۴"];
 
-  const steps = [" اطلاعات فردی", "اطلاعات تحصیلی ", "مرحله سوم", "پایان"];
+  const steps = [" اطلاعات فردی", "اطلاعات تحصیلی ", " اطلاعات محل سکونت", "پایان"];
 
   const handleNextStep = () => {
     if (currentStep < steps.length) {

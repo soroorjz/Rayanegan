@@ -99,11 +99,12 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep }) => {
       </div>
 
       <br />
-      <button type="submit" className="submit-btn">
-        تکمیل ثبت‌نام
-      </button>
+
       <button onClick={handlePreviousStep} className="submit-btn">
         مرحله قبل
+      </button>
+      <button type="submit" className="submit-btn">
+        تکمیل ثبت‌نام
       </button>
     </form>
   );
