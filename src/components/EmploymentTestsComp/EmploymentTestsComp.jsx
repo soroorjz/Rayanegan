@@ -4,18 +4,29 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "./EmploymentTestsComp.scss";
 
-
-const EmploymentTestsComp = ({examData,title}) => {
+const EmploymentTestsComp = ({ examData, title }) => {
   return (
     <div className="active-exams-sj">
-      <div className="active-exams-header-sj">
-        {title}
-        </div>
+      <div className="active-exams-header-sj">{title}</div>
       <Swiper
         spaceBetween={15}
         slidesPerView={"auto"}
         centeredSlides={false}
         loop={true}
+        breakpoints={{
+          900: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+          426: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          0: {
+            slidesPerView: 1,
+            spaceBetween: 5,
+          },
+        }}
         className="active-exams-slider-sj"
       >
         {examData.map((exam) => (

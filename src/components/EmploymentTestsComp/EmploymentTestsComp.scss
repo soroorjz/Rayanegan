@@ -1,9 +1,15 @@
+@import "../../styles/responsive.scss";
+$tablet-resize: 900px;
+
 .active-exams-sj {
   background-color: #f5f5f5;
-  padding: 20px;
+  padding: 20px 0;
   border-radius: 10px;
   overflow: hidden; // جلوگیری از خروج اسلایدر از محدوده
+@include responsive($tablet-resize){
+  padding: 20px;
 
+}
   .active-exams-header-sj {
     font-size: 26px;
     font-weight: bold;
@@ -13,7 +19,7 @@
   }
 
   .active-exams-slider-sj {
-    padding-right: 50px; 
+    padding-right: 50px;
     .exam-card-sj {
       background: white;
       padding: 15px;
