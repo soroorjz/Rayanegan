@@ -1,7 +1,7 @@
 .EmploymentTestsIcons-Container {
   width: 60%;
-  padding: 20px 0;
-  margin: 100px auto 0;
+  padding: 10px 0;
+  margin: 0 auto;
   align-items: center;
   justify-content: center;
   gap: 80px;
@@ -13,53 +13,58 @@
     align-items: center;
     justify-content: center;
     border: 0;
-    width: 100px;
-    height: 100px;
-    padding: 10px;
+    width:120px;
+    height:120px;
+    padding: 5px;
     border-radius: 50%;
     background: 0;
-    font-size: 14px;
+    font-size: 16px;
     background-color: #fff;
-    color: #000000;
+    color: #04364a;
     font-weight: bold;
+    border: 2px solid #04364a;
     cursor: pointer;
     svg {
-      font-size: 16px;
+      font-size: 20px;
+    }
+    &:hover{
+      border-color: #e55604;
+      color: #e55604;
     }
   }
-  .Registering {
-    border: 1px solid #029a49;
-    color: #029a49;
-    &:hover {
-      background-color: #029a4959;
-    }
-  }
-  .InProgress {
-    border: 1px solid #e55604;
-    color: #e55604;
-    &:hover {
-      background-color: #e5560468;
-    }
-  }
-  .Active {
-    border: 1px solid #64ccc5;
-    color: #64ccc5;
-    &:hover {
-      background-color: #64ccc53c;
-    }
-  }
-  .Announcing {
-    border: 1px solid #04364a;
-    color: #04364a;
-    &:hover {
-      background-color: #04364a4c;
-    }
-  }
-  .Expired {
-    border: 1px solid #d3d3d3;
-    color: #00000076;
-    &:hover {
-      background-color: #d3d3d38f;
-    }
-  }
+  // .Registering {
+  //   border: 1px solid #029a49;
+  //   color: #029a49;
+  //   &:hover {
+  //     background-color: #029a4959;
+  //   }
+  // }
+  // .InProgress {
+  //   border: 1px solid #e55604;
+  //   color: #e55604;
+  //   &:hover {
+  //     background-color: #e5560468;
+  //   }
+  // }
+  // .Active {
+  //   border: 1px solid #64ccc5;
+  //   color: #64ccc5;
+  //   &:hover {
+  //     background-color: #64ccc53c;
+  //   }
+  // }
+  // .Announcing {
+  //   border: 1px solid #04364a;
+  //   color: #04364a;
+  //   &:hover {
+  //     background-color: #04364a4c;
+  //   }
+  // }
+  // .Expired {
+  //   border: 1px solid #d3d3d3;
+  //   color: #00000076;
+  //   &:hover {
+  //     background-color: #d3d3d38f;
+  //   }
+  // }
 }
