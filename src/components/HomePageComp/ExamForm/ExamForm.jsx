@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import "./ExamForm.scss";
+import { motion } from "framer-motion";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { useAuth } from "../../../AuthContext"; // دریافت وضعیت ورود
+import ExamFormResult from "./ExamFormResult/ExamFormResult";
 
 const ExamForm = () => {
   const { user } = useAuth(); // دریافت کاربر لاگین شده
   const [workExperience, setWorkExperience] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [showList, setShowList] = useState(false);
+
+  const handleSearch = () => {
+    setShowList(true);
+  };
 
   const handleToggle = () => {
     setWorkExperience(!workExperience);
@@ -112,7 +119,9 @@ const ExamForm = () => {
           </div>
         )}
 
-        <div className={`searchForm-side ${user ? "searchForm-side-single" : ""}`}>
+        <div
+          className={`searchForm-side ${user ? "searchForm-side-single" : ""}`}
+        >
           <h2>آزمون خود را پیدا کنید. </h2>
           <p>
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
@@ -122,11 +131,24 @@ const ExamForm = () => {
             حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود
             طراحی اساسا مورد استفاده قرار گیرد.
           </p>
-          <button type="submit" className="search-button">
+          <button
+            type="button"
+            className="search-button"
+            onClick={handleSearch}
+          >
             جستجو
           </button>
         </div>
       </form>
+      {showList && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <ExamFormResult />
+        </motion.div>
+      )}
     </div>
   );
 };

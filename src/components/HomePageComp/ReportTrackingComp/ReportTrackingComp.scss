@@ -1,41 +1,75 @@
-.user-reports {
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 8px;
-  
-    h2 {
-      font-size: 20px;
-      margin-bottom: 15px;
+.tracking-container {
+  width: 50%;
+  margin: 100px auto 0;
+  padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  justify-content: space-around;
+  .title {
+    text-align: center;
+    color: #04364a;
+    font-size: 34px;
+    margin-bottom: 15px;
+  }
+
+  .tracking-input {
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    input {
+      flex-grow: 1;
+      padding: 10px 8px;
+      border: 2px solid #ccc;
+      border-radius: 0 10px 10px 0;
+      border-left: 0;
     }
-  
-    ul {
-      list-style: none;
-      padding: 0;
-  
-      .report-item {
-        background: #fff;
-        padding: 15px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
-        .report-title {
-          font-size: 18px;
-          font-weight: bold;
-        }
-  
-        .report-date,
-        .report-status,
-        .report-description {
-          font-size: 14px;
-          margin: 5px 0;
-        }
-  
-        .report-status {
-          font-weight: bold;
-          color: #d35400;
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      background-color: #04364a;
+      color: white;
+      border-radius: 10px 0 0 10px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+
+  .error {
+    color: red;
+    font-size: 0.875rem;
+  }
+
+  .report-box {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin-top: 15px;
+
+    h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin: 5px 0;
+
+      &.status {
+        font-weight: bold;
+
+        span {
+          color: orange;
         }
       }
     }
   }
-  
+}

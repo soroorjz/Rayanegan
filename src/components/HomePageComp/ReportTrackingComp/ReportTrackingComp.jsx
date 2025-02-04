@@ -1,44 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ReportTrackingComp.scss";
-const userReports = [
-  {
-    id: 1,
-    title: " تقلب در آزمون کتبی ",
-    date: "۱۴۰۳/۰۲/۰۵",
-    status: "در حال بررسی",
-    description: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ",
-  },
-  {
-    id: 2,
-    title: "خطا در سوالات آزمون",
-    date: "۱۴۰۳/۰۲/۰۵",
-    status: "بررسی شده",
-    description: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ",
-  },
-  {
-    id: 3,
-    title: "رفتار نامناسب ناظر",
-    date: "۱۴۰۳/۰۲/۰۵",
-    status: "رد شده",
-    description: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ",
-  },
-];
+
 const ReportTrackingComp = () => {
+  const [trackingCode, setTrackingCode] = useState("");
+  const [reportData, setReportData] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleCheckReport = () => {
+    if (trackingCode === "123456") {
+      setReportData({
+        title: "تقلب در آزمون کتبی",
+        date: "1403/02/05",
+        status: "در حال بررسی",
+        description: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
+      });
+      setError(null);
+    } else {
+      setReportData(null);
+      setError("کد پیگیری نامعتبر است.");
+    }
+  };
+
   return (
-    <div className="user-reports">
-      <h2>پیگیری گزارشات</h2>
-      <ul>
-        {userReports.map((report) => (
-          <li key={report.id} className="report-item">
-            <h3 className="report-title">{report.title}</h3>
-            <p className="report-date">تاریخ: {report.date}</p>
-            <p className="report-status">وضعیت: {report.status}</p>
-            <p className="report-description">{report.description}</p>
-          </li>
-        ))}
-      </ul>
+    <div className="tracking-container">
+      <h2 className="title">پیگیری گزارش</h2>
+      <div className="tracking-input">
+        <input
+          type="text"
+          placeholder="کد پیگیری را وارد کنید"
+          value={trackingCode}
+          onChange={(e) => setTrackingCode(e.target.value)}
+        />
+        <button onClick={handleCheckReport}>بررسی</button>
+      </div>
+      {error && <small className="error">{error}</small>}
+      {reportData && (
+        <div className="report-box">
+          <h3>{reportData.title}</h3>
+          <p><strong>تاریخ:</strong> {reportData.date}</p>
+          <p className="status">وضعیت: <span>{reportData.status}</span></p>
+          <p>{reportData.description}</p>
+        </div>
+      )}
     </div>
   );
 };
-
 export default ReportTrackingComp;

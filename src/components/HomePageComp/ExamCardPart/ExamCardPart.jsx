@@ -7,7 +7,7 @@ const ExamCardPart = () => {
   return (
     <div className="examCardPart-Container">
       <div className="examCardPart-Title">
-        <h1> آزمون‌های فعال</h1>
+        <h1> آزمون‌های استخدامی</h1>
         <Link to="/EmploymentTests">
           <button>
             مشاهده‌ همه

@@ -6,10 +6,9 @@ $tablet-resize: 900px;
   padding: 20px 0;
   border-radius: 10px;
   overflow: hidden; // جلوگیری از خروج اسلایدر از محدوده
-@include responsive($tablet-resize){
-  padding: 20px;
-
-}
+  @include responsive($tablet-resize) {
+    padding: 20px;
+  }
   .active-exams-header-sj {
     font-size: 26px;
     font-weight: bold;
@@ -34,7 +33,7 @@ $tablet-resize: 900px;
       }
       .exam-Logo-sj {
         img {
-          width: 100%;
+          width: 50%;
           height: 220px;
         }
       }

@@ -21,8 +21,8 @@ $tablet-resize: 900px;
     .searchForm-side {
       padding: 40px 20px;
       width: 100%;
-      // background-color: #04364add;
-      background-color: #e55604d6;
+      background-color: #04364add;
+      // background-color: #e55604d6;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -51,7 +51,8 @@ $tablet-resize: 900px;
         display: block;
         margin: 20px auto;
         padding: 0.7rem;
-        background-color: #04364a;
+        // background-color: #04364a;
+        background-color: #e55604;
         color: #dafffb;
         border: none;
         border-radius: 10px;
@@ -61,20 +62,20 @@ $tablet-resize: 900px;
         margin-top: 50px;
 
         &:hover {
-          background-color: #e55604;
+          background-color: #e55604d6;
+          color: #fff;
         }
       }
     }
-    .searchForm-side-single{
+    .searchForm-side-single {
       width: 80%;
       border-radius: 10px;
-      padding: 40px ;
+      padding: 40px;
       text-align: center;
-      
+
       h2 {
         text-align: center;
       }
-
     }
     .formContent {
       width: 100%;
@@ -84,7 +85,7 @@ $tablet-resize: 900px;
       border-radius: 10px;
       background-color: #f9f9f9;
       row-gap: 20px;
-     
+
       @include responsive($tablet-resize) {
         width: 60%;
         padding: 40px 20px;
@@ -160,10 +161,10 @@ $tablet-resize: 900px;
         }
       }
 
-      .Experience{
+      .Experience {
         align-self: flex-end;
       }
-      
+
       .form-grid {
         display: flex;
         flex-direction: column;

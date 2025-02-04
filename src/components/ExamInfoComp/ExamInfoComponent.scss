@@ -26,7 +26,7 @@ $tablet-resize: 900px;
       border-bottom-left-radius: 0;
       background-color: #04364a;
       color: #cdd0d1;
-      @include responsive($tablet-resize){
+      @include responsive($tablet-resize) {
         width: unset;
       }
       &:hover {
@@ -35,7 +35,10 @@ $tablet-resize: 900px;
       }
     }
   }
-
+  .exam-InfoTab-Active {
+    background-color: #e55604 !important;
+    color: #fff !important;
+  }
   .exam-section-sj {
     border-bottom: 1px solid $nav-border;
     width: 95%;
