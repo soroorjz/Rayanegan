@@ -1,23 +1,30 @@
 import React from "react";
 import { Link } from "react-router";
-import "./ReportModal.scss";
-const ReportModal = ({ trackingCode, onClose }) => {
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>کد پیگیری تخلف</h2>
-        <p className="tracking-code">{trackingCode}</p>
-        <p className="tracking-desc">
-          اطلاعات شما با موفقیت ثبت گردید. در صورت لزوم با شما تماس گرفته
-          می‌شود.
-        </p>
-        <Link to="/" className="home-button">
-          صفحه آغازین
-        </Link>
-        
-      </div>
-    </div>
-  );
+// import "./ReportModal.scss";
+import Swal from "sweetalert2";
+const ReportModal = ({ trackingCode }) => {
+  Swal.fire({
+    title: "کد پیگیری تخلف",
+    html: `
+      <p class="tracking-code">${trackingCode}</p>
+      <p class="tracking-desc">اطلاعات شما با موفقیت ثبت گردید. در صورت لزوم با شما تماس گرفته می‌شود.</p>
+      <a href="/" class="home-button" style="
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 10px;
+      ">صفحه آغازین</a>
+    `,
+    icon: "success",
+    showConfirmButton: false,
+    allowOutsideClick: true,
+    customClass:{
+      popup:"swal-custom-popup"
+    }
+  });
 };
 
 export default ReportModal;
