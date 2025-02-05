@@ -3,24 +3,30 @@ import "./LogInMain.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import LootieAnime from "../../lootie/loginanim.lottie";
-import { useAuth } from "../../AuthContext"; // ✅ اضافه کردن useAuth
+import { useAuth } from "../../AuthContext";
 
 const LogInMain = () => {
-  const { login } = useAuth(); // ✅ دریافت تابع login از AuthContext
+  const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showAnimation, setShowAnimation] = useState(false);
+  const [animationKey, setAnimationKey] = useState(0); // برای رفرش لوتی
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // اطلاعات پیش‌فرض برای لاگین
     const correctUsername = "testuser";
     const correctPassword = "123456";
 
     if (username === correctUsername && password === correctPassword) {
-      login(username); // ✅ استفاده از تابع login به‌جای تغییر مستقیم localStorage
-      navigate("/");
+      setShowAnimation(true);
+      setAnimationKey((prevKey) => prevKey + 1); // تغییر کلید برای اجرای مجدد
+
+      setTimeout(() => {
+        login(username);
+        navigate("/");
+      }, 3000);
     } else {
       alert("نام کاربری یا رمز عبور اشتباه است!");
     }
@@ -37,6 +43,7 @@ const LogInMain = () => {
             className="form-input"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            disabled={showAnimation}
           />
           <input
             type="password"
@@ -44,6 +51,7 @@ const LogInMain = () => {
             className="form-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={showAnimation}
           />
           <div className="form-options">
             <Link className="forgot-password" to="/ForgotPassword">
@@ -51,8 +59,8 @@ const LogInMain = () => {
             </Link>
           </div>
 
-          <button type="submit" className="login-button">
-            ورود
+          <button type="submit" className="login-button" disabled={showAnimation}>
+            {showAnimation ? "در حال ورود..." : "ورود"}
           </button>
         </form>
         <div className="login-divider">یا</div>
@@ -66,13 +74,18 @@ const LogInMain = () => {
       </div>
       <div className="login-right">
         <div>
-          <DotLottieReact
-            id="loginAnim"
-            src={LootieAnime}
-            onError={(error) =>
-              console.error("Error loading animation:", error)
-            }
-          />
+          {showAnimation && (
+            <DotLottieReact
+              key={animationKey} // کلید جدید برای رفرش
+              id="loginAnim"
+              src={LootieAnime}
+              autoplay={true}
+              loop={false}
+              onError={(error) =>
+                console.error("Error loading animation:", error)
+              }
+            />
+          )}
         </div>
         <h1>خوش آمدید!</h1>
         <h3>برای ورود به حساب کاربری خود، اطلاعات را وارد کنید.</h3>
