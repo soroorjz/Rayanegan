@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./CountDown.scss";
 const Countdown = ({ registrationDeadline }) => {
+  const toPersianNumbers = (num) => num.toLocaleString("fa-IR");
   const [timeLeft, setTimeLeft] = useState(null);
 
   const calculateTimeLeft = () => {
+
+  
+
     const difference = new Date(registrationDeadline) - new Date();
     if (difference > 0) {
       return {
@@ -37,27 +41,27 @@ const Countdown = ({ registrationDeadline }) => {
 
   return (
     <div className="countdown">
-      <h2>مهلت ثبت‌نام در آزمون:</h2>
-      <div className="countdown-timer">
-        <div className="countdown-item">
-          <span className="countdown-value">{timeLeft.days}</span>
-          <span className="countdown-label">روز</span>
-        </div>
-        <div className="countdown-item">
-          <span className="countdown-value">{timeLeft.hours}</span>
-          <span className="countdown-label">ساعت</span>
-        </div>
-        <div className="countdown-item">
-          <span className="countdown-value">{timeLeft.minutes}</span>
-          <span className="countdown-label">دقیقه</span>
-        </div>
-        <div className="countdown-item">
-          <span className="countdown-value">{timeLeft.seconds}</span>
-          <span className="countdown-label">ثانیه</span>
-        </div>
-      </div>
-      <button className="examSignUpbtn">ثبت ‌نام</button>
+  <h2>مهلت ثبت‌نام در آزمون:</h2>
+  <div className="countdown-timer">
+    <div className="countdown-item">
+      <span className="countdown-value">{toPersianNumbers(timeLeft.days)}</span>
+      <span className="countdown-label">روز</span>
     </div>
+    <div className="countdown-item">
+      <span className="countdown-value">{toPersianNumbers(timeLeft.hours)}</span>
+      <span className="countdown-label">ساعت</span>
+    </div>
+    <div className="countdown-item">
+      <span className="countdown-value">{toPersianNumbers(timeLeft.minutes)}</span>
+      <span className="countdown-label">دقیقه</span>
+    </div>
+    <div className="countdown-item">
+      <span className="countdown-value">{toPersianNumbers(timeLeft.seconds)}</span>
+      <span className="countdown-label">ثانیه</span>
+    </div>
+  </div>
+  <button className="examSignUpbtn">ثبت ‌نام</button>
+</div>
   );
 };
 

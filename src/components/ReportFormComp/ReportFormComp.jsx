@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import "./ReportFormComp.scss";
 import provinces_cities from "../../jsonFiles/provinces_cities.json";
 import ReportModal from "./ReportModal/ReportModal";

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import "./EmploymentTests.scss";
 import { IoMdHome } from "react-icons/io";
 import EmploymentTestsComp from "../../components/EmploymentTestsComp/EmploymentTestsComp";

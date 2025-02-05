@@ -3,7 +3,6 @@ import ProfileMain from "../../components/ProfileComponents/ProfileMain";
 import "./ProfilePage.scss";
 import ProfileSideBar from "../../components/ProfileComponents/ProfileSideBar/ProfileSideBar";
 import ProfileHeader from "../../components/ProfileComponents/ProfileHeader/ProfileHeader";
-import ResponsiveSidebar from "../../components/ProfileComponents/ProfileSideBar/ResponsiveSidebar/ResponsiveSidebar";
 const ProfilePage = () => {
   const [selectedComponent, setSelectedComponent] = useState("personal");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);

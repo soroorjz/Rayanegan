@@ -26,11 +26,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signUpForm" element={<ExamSignUpForm />} />
-        {/* <Route
+        <Route
           path="/examInfo"
           element={<ExamInfo registrationData={registrationData} />}
-        /> */}
-         <Route path="/examInfo/:id" element={<ExamInfo registrationData={registrationData} />} />
+        />
+        <Route
+          path="/examInfo/:id"
+          element={<ExamInfo registrationData={registrationData} />}
+        />
         <Route path="/logIn" element={<LogIn />} />
         <Route path="/ForgotPassword" element={<ForgotPasswordPage />} />
         <Route path="/ResetPass" element={<ResetPassPage />} />

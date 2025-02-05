@@ -67,6 +67,7 @@ const ExamCard = () => {
                 <button className="btn3">
                   <Link to="/examInfo">بیشتر</Link>
                 </button>
+
               </div>
             </div>
           </SwiperSlide>

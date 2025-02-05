@@ -27,7 +27,7 @@ const ExamFormResult = () => {
           <span className="ResultExam-date">{exam.date}</span>
           <a
             className="ResultExam-more"
-            href={`/examInfo/${exam.id}`}
+            href={`/examInfo/${exam.name}`}
             target="_blank"
             rel="noopener noreferrer"
           >
