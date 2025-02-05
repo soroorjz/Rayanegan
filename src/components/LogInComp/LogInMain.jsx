@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import "./LogInMain.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import LootieAnime from "../../lootie/loginanim.lottie";
+import LootieAnime from "../../lootie/loginanim.lottie"; // انیمیشن اصلی
 import { useAuth } from "../../AuthContext";
 
 const LogInMain = () => {
   const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showAnimation, setShowAnimation] = useState(false);
-  const [animationKey, setAnimationKey] = useState(0); // برای رفرش لوتی
+  const [animationType, setAnimationType] = useState("default"); // نوع انیمیشن: پیش‌فرض، موفق یا خطا
+  const [animationKey, setAnimationKey] = useState(0);
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -20,15 +20,20 @@ const LogInMain = () => {
     const correctPassword = "123456";
 
     if (username === correctUsername && password === correctPassword) {
-      setShowAnimation(true);
-      setAnimationKey((prevKey) => prevKey + 1); // تغییر کلید برای اجرای مجدد
+      setAnimationType("success");
+      setAnimationKey((prevKey) => prevKey + 1);
 
       setTimeout(() => {
         login(username);
         navigate("/");
       }, 3000);
     } else {
-      alert("نام کاربری یا رمز عبور اشتباه است!");
+      setAnimationType("error");
+      setAnimationKey((prevKey) => prevKey + 1);
+
+      setTimeout(() => {
+        setAnimationType("default");
+      }, 2000); // بازگشت به انیمیشن پیش‌فرض بعد از ۲ ثانیه
     }
   };
 
@@ -43,7 +48,7 @@ const LogInMain = () => {
             className="form-input"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            disabled={showAnimation}
+            disabled={animationType === "success"}
           />
           <input
             type="password"
@@ -51,7 +56,7 @@ const LogInMain = () => {
             className="form-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            disabled={showAnimation}
+            disabled={animationType === "success"}
           />
           <div className="form-options">
             <Link className="forgot-password" to="/ForgotPassword">
@@ -59,8 +64,12 @@ const LogInMain = () => {
             </Link>
           </div>
 
-          <button type="submit" className="login-button" disabled={showAnimation}>
-            {showAnimation ? "در حال ورود..." : "ورود"}
+          <button
+            type="submit"
+            className="login-button"
+            disabled={animationType === "success"}
+          >
+            {animationType === "success" ? "در حال ورود..." : "ورود"}
           </button>
         </form>
         <div className="login-divider">یا</div>
@@ -74,18 +83,19 @@ const LogInMain = () => {
       </div>
       <div className="login-right">
         <div>
-          {showAnimation && (
-            <DotLottieReact
-              key={animationKey} // کلید جدید برای رفرش
-              id="loginAnim"
-              src={LootieAnime}
-              autoplay={true}
-              loop={false}
-              onError={(error) =>
-                console.error("Error loading animation:", error)
-              }
-            />
-          )}
+          <DotLottieReact
+            key={animationKey}
+            id="loginAnim"
+            src={
+              animationType === "success"
+                ? LootieAnime // انیمیشن موفق
+                : animationType === "error"
+                ? "https://lottie.host/89138cb4-e80f-4771-ab37-f8749d088e25/Uky1oW3Iz3.lottie" // انیمیشن خطا
+                : LootieAnime // انیمیشن پیش‌فرض (لوتی اصلی)
+            }
+            autoplay={animationType !== "default"} // انیمیشن فقط در صورت موفقیت یا خطا پخش می‌شود
+            loop={animationType !== "default"} // انیمیشن فقط یکبار پخش شود
+          />
         </div>
         <h1>خوش آمدید!</h1>
         <h3>برای ورود به حساب کاربری خود، اطلاعات را وارد کنید.</h3>
