@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./LogInMain.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import LootieAnime from "../../lootie/loginanim.lottie"; // انیمیشن اصلی
+import LootieAnime from "../../Lootie/loginanim.lottie"; // انیمیشن اصلی
 import { useAuth } from "../../AuthContext";
 
 const LogInMain = () => {

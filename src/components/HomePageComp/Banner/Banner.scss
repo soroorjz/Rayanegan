@@ -13,7 +13,8 @@ $tablet-resize: 900px;
   }
   @include responsive($laptop) {
     width: 80%;
-    padding: 160px 0 100px;
+    padding: 160px 0 100px; 
+    height: 100vh;
   }
 
   .banner_ImagePart {

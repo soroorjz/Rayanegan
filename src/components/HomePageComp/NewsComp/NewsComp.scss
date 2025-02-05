@@ -6,6 +6,9 @@ $tablet-resize: 900px;
   // height: 100vh;
   margin: 100px 0;
   position: relative;
+  @include responsive($tablet-resize){
+    margin: 0;
+  }
   .news-Title {
     margin-bottom: 50px;
     h1 {

@@ -3,11 +3,11 @@ $tablet-resize: 900px;
 
 .exam-form {
   width: 100%;
-  // height: 100vh;
+  min-height:80vh;
   .search-form {
     width: 90%;
     margin: 0 auto;
-    // height: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column-reverse;
     justify-content: center;
@@ -19,7 +19,7 @@ $tablet-resize: 900px;
       flex-direction: row;
     }
     .searchForm-side {
-      padding: 40px 20px;
+     padding: 40px 20px;
       width: 100%;
       background-color: #04364add;
       // background-color: #e55604d6;
@@ -28,7 +28,7 @@ $tablet-resize: 900px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       @include responsive($tablet-resize) {
         width: 40%;
-        height: 80%;
+        //height: 80%;
         border-radius: 10px;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
