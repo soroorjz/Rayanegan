@@ -14,16 +14,20 @@ const ExamCard = () => {
     <div className="examCard-Container">
       <Swiper
         slidesPerView={3}
-        spaceBetween={10}
+        spaceBetween={8}
         loop={true}
         navigation={true}
         loopAdditionalSlides={examCards.length}
         modules={[Navigation]}
         className="examSwiper"
         breakpoints={{
-          900: {
+          1025: {
             slidesPerView: 3,
-            spaceBetween: 30,
+            spaceBetween: 10,
+          },
+          900: {
+            slidesPerView: 2,
+            spaceBetween: 10,
           },
           426: {
             slidesPerView: 1,

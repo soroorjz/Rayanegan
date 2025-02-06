@@ -1,5 +1,8 @@
+@import "../../../styles/responsive.scss";
+$tablet-resize: 900px;
+
 .examCard-Container {
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
   display: flex;
   gap: 10px;
@@ -14,7 +17,11 @@
         font-size: 35px;
       }
     }
-
+    .swiper-button-next {
+      @include responsive($tablet-resize) {
+        display: none;
+      }
+    }
     .examCards {
       width: 100%;
       height: 100%;
