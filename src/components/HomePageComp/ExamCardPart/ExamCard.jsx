@@ -27,7 +27,7 @@ const ExamCard = () => {
           },
           900: {
             slidesPerView: 2,
-            spaceBetween: 10,
+            spaceBetween: 5,
           },
           426: {
             slidesPerView: 1,
@@ -41,7 +41,7 @@ const ExamCard = () => {
       >
         {examCards.map((examCard) => (
           <SwiperSlide key={examCard.id}>
-            <div className="examCards">
+            <div className="examCards-swiper">
               <div className="examCardTop">
                 <div className="examCard-Logo">
                   <img src={examCard.logo} alt="" />
