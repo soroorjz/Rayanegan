@@ -23,7 +23,10 @@ const ReportTrackingComp = () => {
 
   return (
     <div className="tracking-container">
-      <h2 className="title">پیگیری گزارش</h2>
+      <h2 className="tracking-title">پیگیری گزارش</h2>
+      <p className="tracking-desc">
+        کد پیگیری گزارش خود را در کادر زیر وارد کنید .
+      </p>
       <div className="tracking-input">
         <input
           type="text"

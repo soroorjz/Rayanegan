@@ -8,7 +8,7 @@ import { IoMdHome } from "react-icons/io";
 const LogIn = () => {
   return (
     <div className="logInContainer">
-      <NavbarTop />
+      <NavbarTop hideJobSearch={true} />
       <LogInMain />
       <button className="homeBtn">
         <Link to="/">

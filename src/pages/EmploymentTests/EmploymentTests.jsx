@@ -10,7 +10,7 @@ import { Link } from "react-router";
 const EmploymentTests = () => {
   return (
     <div className="EmploymentTests">
-      <NavbarTop />
+      <NavbarTop hideJobSearch={true} />
       <div className="EmploymentTestsBanner">
         <EmploymentTestsBanner />
       </div>

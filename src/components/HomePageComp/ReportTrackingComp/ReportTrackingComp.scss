@@ -1,26 +1,35 @@
 .tracking-container {
   width: 50%;
   margin: 100px auto 0;
-  padding: 20px;
-  border: 2px solid #ddd;
+  padding-bottom: 20px;
+  border: 1px solid #ddd;
+  border-top: 0;
   border-radius: 10px;
   background-color: #fff;
   height: 50%;
   display: flex;
   flex-direction: column;
   // align-items: center;
-  justify-content: space-around;
-  .title {
+  // justify-content: space-between;
+  .tracking-title {
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    padding: 10px 0;
     text-align: center;
-    color: #04364a;
+    color:  #dafffb;
     font-size: 34px;
     margin-bottom: 15px;
+    background-color: #04364a;
   }
-
+.tracking-desc{
+  width: 80%; 
+  margin:40px auto 0;
+  color: #6f6f6f;
+}
   .tracking-input {
     display: flex;
     width: 80%;
-    margin: 0 auto;
+    margin:40px auto 0;
     input {
       flex-grow: 1;
       padding: 10px 8px;
@@ -30,30 +39,37 @@
     }
 
     button {
-      padding: 8px 12px;
+      padding: 8px 20px;
+      font-size: 16px;
       border: none;
       background-color: #04364a;
       color: white;
       border-radius: 10px 0 0 10px;
       cursor: pointer;
-
+      transition: all 0.3s ease-in-out;
       &:hover {
-        background-color: #0056b3;
+        background-color: #e55604;
       }
     }
   }
 
   .error {
-    color: red;
+    color: #e55604;
     font-size: 0.875rem;
-  }
-
-  .report-box {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #f9f9f9;
-    margin-top: 15px;
+    margin: 45px auto 0;
+  }
+
+  .report-box {
+    width: 80%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin: 45px auto 0;
 
     h3 {
       margin: 0;

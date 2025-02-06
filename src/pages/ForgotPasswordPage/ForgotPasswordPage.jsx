@@ -7,7 +7,7 @@ import { IoMdHome } from "react-icons/io";
 const ForgotPasswordPage = () => {
   return (
     <div>
-      <NavbarTop />
+      <NavbarTop hideJobSearch={true}/>
       <ForgotPassword />
       <button className="homeBtn">
         <Link to="/">
