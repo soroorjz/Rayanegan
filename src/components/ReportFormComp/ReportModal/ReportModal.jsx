@@ -1,5 +1,4 @@
-import React from "react";
-import { Link } from "react-router";
+
 // import "./ReportModal.scss";
 import Swal from "sweetalert2";
 const ReportModal = ({ trackingCode }) => {
