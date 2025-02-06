@@ -134,3 +134,84 @@
   cursor: pointer;
   text-align: center;
 }
+
+.close-chat{
+  position: absolute;
+  left: 10px;
+  background: 0;
+  border: 0;
+  color: #04364a;
+  cursor: pointer;
+  &:hover{
+  color: #e55604;
+
+  }
+}
+
+.message-form {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  position: fixed;
+  right: 80px;
+  bottom: 20px;
+  width: 300px;
+  direction: rtl;
+  
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    textarea {
+      height: 80px;
+      resize: none;
+    }
+    
+    .department {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      label {
+        font-size: 14px;
+      }
+    }
+
+    .submit-btn {
+      background: #f5a623;
+      color: white;
+      font-size: 16px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+}

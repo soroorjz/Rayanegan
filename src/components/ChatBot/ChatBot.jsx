@@ -1,24 +1,66 @@
 import { motion } from "framer-motion";
-import { FaPhone, FaEnvelope, FaPaperPlane, FaInstagram, FaWhatsapp, FaTimes, FaComment } from "react-icons/fa";
+import {
+  FaPhone,
+  FaEnvelope,
+  FaPaperPlane,
+  FaInstagram,
+  FaWhatsapp,
+  FaTimes,
+  FaComment,
+} from "react-icons/fa";
 import "./ChatBot.scss";
 import { useState } from "react";
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [hoveredItem, setHoveredItem] = useState(null); // استیت برای هاور کردن
+  const [hoveredItem, setHoveredItem] = useState(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isMessageFormOpen, setIsMessageFormOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    message: "",
+    phone: "",
+    department: "پشتیبانی",
+  });
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+    if (!isOpen) {
+      setIsChatOpen(false);
+      setIsMessageFormOpen(false);
+    }
+  };
+
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+    setIsMessageFormOpen(false);
+  };
+
+  const toggleMessageForm = () => {
+    setIsMessageFormOpen(!isMessageFormOpen);
+    setIsChatOpen(false);
+  };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const menuItems = [
+    {
+      icon: <FaComment />,
+      key: "chat",
+      label: "چت آنلاین",
+      action: toggleChat,
+    },
+    {
+      icon: <FaEnvelope />,
+      key: "message",
+      label: "ارسال پیام",
+      action: toggleMessageForm,
+    },
     { icon: <FaPhone />, key: "phone", label: "تماس" },
-    { icon: <FaEnvelope />, key: "email", label: "ایمیل" },
     { icon: <FaPaperPlane />, key: "telegram", label: "تلگرام" },
     { icon: <FaInstagram />, key: "instagram", label: "اینستاگرام" },
     { icon: <FaWhatsapp />, key: "whatsapp", label: "واتساپ" },
-    { icon: <FaEnvelope />, key: "second-email", label: "ایمیل دوم" },
-    { icon: <FaComment />, key: "chat", label: "چت" }
   ];
 
   return (
@@ -44,11 +86,11 @@ const ChatBot = () => {
               animate={{ opacity: isOpen ? 1 : 0, y: isOpen ? 0 : 10 }}
               transition={{ duration: 0.3, delay: isOpen ? index * 0.1 : 0 }}
               className="menu-item"
+              onClick={item.action ? item.action : undefined}
             >
               {item.icon}
             </motion.button>
 
-            {/* نمایش توضیحات در صورت هاور */}
             {hoveredItem === item.key && (
               <motion.div
                 className="tooltip"
@@ -63,19 +105,91 @@ const ChatBot = () => {
         ))}
       </div>
 
-      {isOpen && (
-        <motion.div 
+      {/* ✅ کامپوننت چت */}
+      {isChatOpen && (
+        <motion.div
           className="chat-box"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3 }}
         >
           <div className="chat-header">شروع گفتگو</div>
+          <button className="close-chat" onClick={toggleChat}>
+            <FaTimes size={16} />
+          </button>
           <div className="chat-body">
             <p>متاسفانه فعلاً آنلاین نیستیم. پیام خود را ثبت کنید.</p>
           </div>
           <button className="chat-submit">لطفاً پیام بگذارید</button>
         </motion.div>
+      )}
+
+      {/* ✅ کامپوننت فرم ارسال پیام */}
+      {isMessageFormOpen && (
+        // <motion.div
+        //   className="chat-box message"
+        //   initial={{ opacity: 0, scale: 0.9 }}
+        //   animate={{ opacity: 1, scale: 1 }}
+        //   transition={{ duration: 0.3 }}
+        // >
+        //   <div className="chat-header">ارسال پیام</div>
+        //   <button className="close-chat" onClick={toggleMessageForm}>
+        //     <FaTimes size={16} />
+        //   </button>
+        //   <div className="chat-body">
+        //     <textarea
+        //       className="message-input"
+        //       placeholder="پیام خود را وارد کنید..."
+        //     />
+        //   </div>
+        //   <button className="chat-submit">ارسال پیام</button>
+        // </motion.div>
+        <motion.div
+        className="message-form"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="form-header">
+          پشتیبانی پیامکی پشتیبانی گویا
+          <button className="close-btn" onClick={toggleChat}>
+            <FaTimes size={16} />
+          </button>
+        </div>
+        <form className="form-body">
+          <input
+            type="text"
+            name="name"
+            placeholder="نام شما"
+            value={formData.name}
+            onChange={handleChange}
+          />
+          <textarea
+            name="message"
+            placeholder="سوال شما"
+            value={formData.message}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="phone"
+            placeholder="شماره تلفن"
+            value={formData.phone}
+            onChange={handleChange}
+          />
+          <div className="department">
+            <label>دپارتمان:</label>
+            <select name="department" value={formData.department} onChange={handleChange}>
+              <option value="پشتیبانی">پشتیبانی</option>
+              <option value="فروش">فروش</option>
+              <option value="مالی">مالی</option>
+            </select>
+          </div>
+          <button type="submit" className="submit-btn">
+            لطفا پیام بگذارید
+          </button>
+        </form>
+      </motion.div>
       )}
     </div>
   );
