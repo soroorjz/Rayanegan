@@ -4,7 +4,7 @@ $tablet-resize: 900px;
   .sidebarNav {
     position: fixed;
     z-index: 99999999;
-    top: 220px;
+    top: calc(50% - 150px);
     left: 0;
     color: #fff;
     display: flex;
