@@ -7,10 +7,12 @@ $tablet-resize: 900px;
     display: flex;
     justify-content: flex-end;
     @include responsive ($tablet-resize){
-      height: 100vh;
+      // height: 70vh;
     }
   }
-
+  #NewsComp{
+  margin-top: 40px;
+}
   .scrollToTopBtn {
     position: fixed;
     bottom: 90px;

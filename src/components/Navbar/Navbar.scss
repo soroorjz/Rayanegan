@@ -57,9 +57,9 @@ $tablet-resize: 900px;
         line-height: 42px;
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
-        &:hover {
-          background-color: #e55604;
-        }
+        // &:hover {
+        //   background-color: #e55604;
+        // }
       }
 
       &:hover .menu-text {
@@ -67,6 +67,10 @@ $tablet-resize: 900px;
         visibility: visible;
         transform: translateX(0);
       }
+      
+    }
+    .active{
+      background-color: #578e7e;
     }
   }
 

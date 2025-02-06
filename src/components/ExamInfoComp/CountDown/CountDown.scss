@@ -17,7 +17,7 @@ $tablet-resize: 900px;
     width: 70%;
   }
   @include responsive($tablet-resize) {
-    position: absolute;
+    position: fixed;
     left: 20px;
     top: 100px;
     margin: 0;

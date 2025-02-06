@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./NavbarTop.scss";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link } from "react-router-dom"; // ✅ تغییر ایمپورت به react-router-dom
+import { Link } from "react-router-dom"; //  تغییر ایمپورت به react-router-dom
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
 import { useAuth } from "../../../AuthContext";
 
@@ -10,7 +10,7 @@ const NavbarTop = ({
   hideRepotBtn = false,
   showReportTrackingBtn = false,
 }) => {
-  const { user, logout } = useAuth(); // ✅ دریافت user و logout از AuthContext
+  const { user, logout } = useAuth(); //  دریافت user و logout از AuthContext
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 

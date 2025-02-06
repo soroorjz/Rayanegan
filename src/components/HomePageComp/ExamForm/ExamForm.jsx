@@ -145,6 +145,7 @@ const ExamForm = () => {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
+          className="result-container"
         >
           <ExamFormResult />
         </motion.div>

@@ -6,13 +6,16 @@ import {
   FaNewspaper,
   FaQuestionCircle,
   FaPhone,
+
 } from "react-icons/fa";
+import { IoHome } from "react-icons/io5";
 const Navbar = () => {
   const [activeIndex, setActiveIndex] = useState(null);
 
   // Use useMemo to memoize the menuItems array
   const menuItems = useMemo(
     () => [
+      { icon: <IoHome  />, text: "خانه", target: "home" },
       { icon: <FaTasks />, text: "آزمون‌ها", target: "ExamCardPart" },
       { icon: <FaSearch />, text: "آزمون‌یاب", target: "ExamForm" },
       { icon: <FaNewspaper />, text: "اخبار", target: "NewsComp" },
