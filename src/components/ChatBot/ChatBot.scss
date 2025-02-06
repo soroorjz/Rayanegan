@@ -1,56 +1,136 @@
-@import "../../styles/responsive.scss";
-$tablet-resize: 900px;
-
-.chatBoxContainer{
-    position: fixed;
-    // border:  1px solid red;
-    bottom:50px;
-    right: 40px;
-    display: flex;
-    width: 10%;
-    align-items: center;
-    z-index: 9999;
-   .chatBoxDesc{
-//     position: fixed;
-//     bottom: 27px;
-//     right: 66px;
-    color: white;
-    background-color: #04364a;
-    padding: 5px;
-    border-radius: 10px;
-   opacity: 0;
-   transition: opacity 0.3s ease-in-out;
-
-  } 
-  .chatBoxBtn {
-//     position: fixed;
-//     bottom:100px;
-//     right: 20px;
-    background-color: #578e7e;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    height: 57px;
-    width: 57px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: opacity 0.3s ease-in-out;
-    @include responsive($tablet) {
-      bottom: 20px;
-      background-color: #04364a;
-    }
-
-  }
-&:hover{
-    .chatBoxDesc{
-        opacity:1;
-    }
+.floating-menu {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 10px;
+  z-index: 50;
 }
+
+.menu-toggle {
+  background-color: #04364a;
+  color: white;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.menu-toggle.active {
+  background-color: #e55604;
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-item-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.menu-item {
+  background-color: #578e7e;
+  color: white;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+
+  svg {
+    font-size: 22px;
+  }
   
+}
+
+/* 🔹 استایل برای تولتیپ (توضیحات کنار آیکون) */
+.tooltip {
+  position: absolute;
+  right: 60px; /* فاصله از آیکون */
+  background-color: #f5a623;
+  z-index: 99;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: bold;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent transparent #f5a623; /* فلش کنار توضیح */
+  }
+}
+
+/* 🔹 نمایش تولتیپ هنگام هاور */
+.menu-item-container:hover .tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.chat-box {
+  position: fixed;
+  right: 80px;
+  bottom: 20px;
+  width: 300px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.chat-header {
+  font-size: 18px;
+  font-weight: bold;
+  color: #04364a;
+  margin-bottom: 10px;
+}
+
+.chat-body {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.chat-submit {
+  background-color: #04364a;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
 }
