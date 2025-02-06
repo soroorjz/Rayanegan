@@ -151,7 +151,7 @@ const NavbarTop = ({
           )}
 
           {!hideRepotBtn && (
-            <div className="jobSearchBtn">
+            <div className="sideBar-JobSearchBtn">
               <button>
                 <Link to="/ReportForm">گزارش تخلف</Link>
               </button>

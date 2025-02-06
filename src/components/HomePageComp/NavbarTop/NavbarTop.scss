@@ -329,3 +329,28 @@ a {
     }
   }
 }
+.sideBar-JobSearchBtn{
+  button{
+    border-radius: 10px;
+      width: 100%;
+      border: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      background-color: #dafffb;
+      font-size: 14px;
+      padding: 12px 15px;
+      text-align: center;
+      width: 100% !important;
+      cursor: pointer;
+      transition: background 0.3s;
+      &:hover {
+        background-color: #e55604;
+      }
+    a{
+      color: #04364a !important;
+      text-align: center !important;
+    }
+  }
+}
