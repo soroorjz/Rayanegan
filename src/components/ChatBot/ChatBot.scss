@@ -1,0 +1,56 @@
+@import "../../styles/responsive.scss";
+$tablet-resize: 900px;
+
+.chatBoxContainer{
+    position: fixed;
+    // border:  1px solid red;
+    bottom:50px;
+    right: 40px;
+    display: flex;
+    width: 10%;
+    align-items: center;
+    z-index: 9999;
+   .chatBoxDesc{
+//     position: fixed;
+//     bottom: 27px;
+//     right: 66px;
+    color: white;
+    background-color: #04364a;
+    padding: 5px;
+    border-radius: 10px;
+   opacity: 0;
+   transition: opacity 0.3s ease-in-out;
+
+  } 
+  .chatBoxBtn {
+//     position: fixed;
+//     bottom:100px;
+//     right: 20px;
+    background-color: #578e7e;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    height: 57px;
+    width: 57px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease-in-out;
+    @include responsive($tablet) {
+      bottom: 20px;
+      background-color: #04364a;
+    }
+
+  }
+&:hover{
+    .chatBoxDesc{
+        opacity:1;
+    }
+}
+  
+}

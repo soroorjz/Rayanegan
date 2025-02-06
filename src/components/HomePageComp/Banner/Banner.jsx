@@ -29,6 +29,12 @@ const Banner = () => {
         </div> */}
       </div>
     </div>
+    // <div className="bannerPartB">
+    //   <div className="banner_ImagePartB">
+    //      <img src="/assets/images/Examing2.jpg" alt="" />
+    //    </div>
+    //    <div className="bannerCoverB"></div>
+    // </div>
   );
 };
 

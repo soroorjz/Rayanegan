@@ -9,7 +9,7 @@ $tablet-resize: 900px;
   align-items: center;
   @include responsive($tablet-resize){
   min-height:90vh;
-  align-items: center;
+  justify-content: center;
     
   }
   .search-form {

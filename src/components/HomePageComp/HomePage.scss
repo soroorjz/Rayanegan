@@ -7,7 +7,7 @@ $tablet-resize: 900px;
     display: flex;
     justify-content: flex-end;
     @include responsive ($tablet-resize){
-      // height: 70vh;
+      height: 70vh;
     }
   }
   #NewsComp{
@@ -15,10 +15,9 @@ $tablet-resize: 900px;
 }
   .scrollToTopBtn {
     position: fixed;
-    bottom: 90px;
+    bottom:100px;
     right: 20px;
     background-color: #578e7e;
-
     color: white;
     border: none;
     border-radius: 50%;
@@ -27,7 +26,7 @@ $tablet-resize: 900px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 28px;
     z-index: 9999;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

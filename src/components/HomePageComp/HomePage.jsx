@@ -9,6 +9,8 @@ import Footer from "./Footer/Footer";
 import NavbarTop from "./NavbarTop/NavbarTop";
 import FaqHeader from "./Faq/FaqHeader/FaqHeader";
 import { FaArrowUp } from "react-icons/fa";
+// import { TiMessages } from "react-icons/ti";
+import ChatBot from "../ChatBot/ChatBot";
 const HomePage = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
 
@@ -50,11 +52,14 @@ const HomePage = () => {
       <div id="footer">
         <Footer />
       </div>
-      {showScrollButton && (
+      {/* {showScrollButton && (
         <button className="scrollToTopBtn" onClick={scrollToTop}>
-          <FaArrowUp />
+          <TiMessages />
         </button>
-      )}
+      )} */}
+
+        <ChatBot/>
+
     </div>
   );
 };

@@ -10,6 +10,7 @@ const ForgotPassword = () => {
   };
 
   return (
+    <div className="forgotpassContainer">
     <div className="forgotPassword-Container">
       <div className="forgotPass">
         <h1>بازیابی رمز عبور</h1>
@@ -41,6 +42,7 @@ const ForgotPassword = () => {
           رمز عبور می فرستیم.
         </p>
       </div>
+    </div>
     </div>
   );
 };
