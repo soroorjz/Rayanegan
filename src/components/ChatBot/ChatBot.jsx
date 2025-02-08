@@ -98,22 +98,22 @@ const ChatBot = () => {
     <div className="floating-menu">
       <motion.button
         onClick={toggleMenu}
-        className={`menu-toggle ${isOpen ? "active" : ""}`}
+        className={`chatBotMenu-toggle ${isOpen ? "active" : ""}`}
         whileTap={{ scale: 0.9 }}
       >
         {isOpen ? <FaTimes size={24} /> : <FaEnvelope size={24} />}
       </motion.button>
-
+      {isOpen && (
       <MenuItems
         menuItems={menuItems}
         setHoveredItem={setHoveredItem}
         isOpen={isOpen}
         hoveredItem={hoveredItem}
       />
-
-      {/* ✅ کامپوننت چت */}
+    )}
+      
       {isChatOpen && <ChatBox toggleChat={toggleChat} />}
-      {/* ✅ کامپوننت فرم ارسال پیام */}
+
       {isMessageFormOpen && (
         <MessageForm
           toggleMessageForm={toggleMessageForm}

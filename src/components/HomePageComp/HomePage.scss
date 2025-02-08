@@ -13,35 +13,35 @@ $tablet-resize: 900px;
   #NewsComp{
   margin-top: 40px;
 }
-  .scrollToTopBtn {
-    position: fixed;
-    bottom:100px;
-    right: 20px;
-    background-color: #578e7e;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    z-index: 9999;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: opacity 0.3s ease-in-out;
-    @include responsive($tablet) {
-      bottom: 20px;
-      background-color: #04364a;
-    }
-  }
+  // .scrollToTopBtn {
+  //   position: fixed;
+  //   bottom:100px;
+  //   right: 20px;
+  //   background-color: #578e7e;
+  //   color: white;
+  //   border: none;
+  //   border-radius: 50%;
+  //   width: 50px;
+  //   height: 50px;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   font-size: 28px;
+  //   z-index: 9999;
+  //   cursor: pointer;
+  //   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  //   transition: opacity 0.3s ease-in-out;
+  //   @include responsive($tablet) {
+  //     bottom: 20px;
+  //     background-color: #04364a;
+  //   }
+  // }
 
-  .scrollToTopBtn:hover {
-    background-color: #e55604;
-  }
+  // .scrollToTopBtn:hover {
+  //   background-color: #e55604;
+  // }
 
-  .scrollToTopBtn:active {
-    transform: scale(0.9);
-  }
+  // .scrollToTopBtn:active {
+  //   transform: scale(0.9);
+  // }
 }
