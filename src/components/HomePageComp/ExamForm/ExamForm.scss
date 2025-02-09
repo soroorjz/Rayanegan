@@ -8,6 +8,7 @@ $tablet-resize: 900px;
   flex-direction: column;
   align-items: center;
   @include responsive($tablet-resize){
+    margin-top: 100px;
   min-height:90vh;
   justify-content: center;
     
@@ -78,11 +79,12 @@ $tablet-resize: 900px;
     .searchForm-side-single {
       width: 100%;
       display: flex;
+      flex-direction: column;
       gap: 60px;
       border-radius: 10px;
       padding: 40px;
       align-self: center;
-      height: 70vh;
+      // height: 70vh;
       h2 {
         // text-align: center;
         font-size: 30px;

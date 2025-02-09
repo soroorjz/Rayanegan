@@ -7,12 +7,6 @@ const ExamInfoComponent = () => {
 
   return (
     <div className="exam-info-sj">
-      {/* <nav className="exam-info-nav-sj">
-          <button onClick={() => setActiveSection("introduction")}>معرفی آزمون</button>
-          <button onClick={() => setActiveSection("booklet")}>دفترچه</button>
-          <button onClick={() => setActiveSection("announcements")}>اطلاعیه‌ها</button>
-          <button onClick={() => setActiveSection("jobs")}>جست و جوی مشاغل</button>
-        </nav> */}
       <nav className="exam-info-nav-sj">
         <button
           onClick={() => setActiveSection("introduction")}

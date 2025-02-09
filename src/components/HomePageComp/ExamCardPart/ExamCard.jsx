@@ -4,7 +4,7 @@ import { Navigation } from "swiper/modules";
 import { useAuth } from "../../../AuthContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import "./ExamCard.scss";
 const ExamCard = () => {
   const { user } = useAuth();
   const [examCards, setExamCards] = useState([]);
@@ -46,6 +46,8 @@ const ExamCard = () => {
       setError("خطا در دریافت اطلاعات آزمون‌ها!");
     } finally {
       setLoading(false);
+      
+
     }
   }, []);
 
@@ -86,6 +88,7 @@ const ExamCard = () => {
                 <div className="examCard-details">
                   <p className="examCard-Status detail">
                     وضعیت آزمون: <span>{examCard.examStatusRef}</span>
+                    
                   </p>
                   <p className="examCard-Capacity detail">ظرفیت درخواستی:</p>
                 </div>
