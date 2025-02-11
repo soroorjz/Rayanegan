@@ -8,13 +8,12 @@ import "./ExamCard.scss";
 const ExamCard = () => {
   const { user } = useAuth();
   const [examCards, setExamCards] = useState([]);
+  const [examStatuses, setExamStatuses] = useState(null); // مقدار اولیه null برای تشخیص آماده‌بودن
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchExams = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-
+  // دریافت و ذخیره‌ی توکن
+  const fetchToken = useCallback(async () => {
     try {
       const response = await fetch("http://localhost/api/auth", {
         headers: {
@@ -22,40 +21,83 @@ const ExamCard = () => {
           "RAYAN-PASSWORD": "1156789",
         },
         method: "post",
-      }).then(async (val) => {
-        localStorage.setItem("RayanToken", (await val.json())["token"]);
       });
+      const data = await response.json();
+      localStorage.setItem("RayanToken", data.token);
     } catch (err) {
-      console.error("Error fetching exams:", err);
-      setError("خطا در دریافت اطلاعات آزمون‌ها!");
-    } finally {
-      setLoading(false);
+      console.error("Error fetching token:", err);
+      setError("خطا در دریافت توکن!");
     }
+  }, []);
+
+  // دریافت وضعیت‌های آزمون و تبدیل آن‌ها به یک Map
+  const fetchExamStatuses = useCallback(async () => {
+    try {
+      const response = await axios.get("http://localhost/api/examStatus/examStatuses", {
+        headers: {
+          "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
+        },
+      });
+
+      const statusMap = response.data.reduce((acc, status) => {
+        acc[status.examStatusId] = status.examStatusName;
+         // examStatusId → examStatusName
+        return acc;
+      }, {});
+
+      console.log(" Exam Statuses:", statusMap); // بررسی مقدار دریافت شده
+
+      setExamStatuses(statusMap);
+    } catch (err) {
+      console.error("Error fetching exam statuses:", err);
+      setError("خطا در دریافت وضعیت آزمون‌ها!");
+    }
+  }, []);
+
+ 
+  const fetchExams = useCallback(async () => {
+    if (!examStatuses) return; // اگر وضعیت‌ هنوز آماده نیست
+    setLoading(true);
+    setError(null);
 
     try {
       const response = await axios.get("http://localhost/api/exam/exams", {
         headers: {
-          "RAYAN-TOKEN": window.localStorage.RayanToken,
+          "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
         },
       });
-      console.log("Received Exams:", response.data);
 
-      setExamCards(response.data);
+      const updatedExams = response.data.map((exam) => ({
+        ...exam,
+        examStatusRef: examStatuses[exam.examStatusRef] || "نامشخص", // تبدیل عدد به متن
+      }));
+
+      console.log(" Updated Exams:", updatedExams); 
+
+      setExamCards(updatedExams);
     } catch (err) {
       console.error("Error fetching exams:", err);
       setError("خطا در دریافت اطلاعات آزمون‌ها!");
     } finally {
       setLoading(false);
-      
-
     }
+  }, [examStatuses]); 
+  // اجرای توابع به ترتیب مناسب
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchToken();
+      await fetchExamStatuses();
+    };
+
+    fetchData();
   }, []);
 
+  // وقتی examStatuses مقدار گرفت، fetchExams اجرا شود
   useEffect(() => {
-    if (examCards.length === 0) {
+    if (examStatuses) {
       fetchExams();
     }
-  }, [fetchExams, examCards.length]);
+  }, [examStatuses]); // منتظر examStatuses می‌ماند
 
   return (
     <div className="examCard-Container">
@@ -88,7 +130,6 @@ const ExamCard = () => {
                 <div className="examCard-details">
                   <p className="examCard-Status detail">
                     وضعیت آزمون: <span>{examCard.examStatusRef}</span>
-                    
                   </p>
                   <p className="examCard-Capacity detail">ظرفیت درخواستی:</p>
                 </div>
@@ -118,5 +159,6 @@ const ExamCard = () => {
     </div>
   );
 };
+
 
 export default ExamCard;
