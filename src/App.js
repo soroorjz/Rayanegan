@@ -14,26 +14,13 @@ import EmploymentTests from "./pages/EmploymentTests/EmploymentTests";
 import ReportTracking from "./pages/ReportTracking/ReportTracking";
 
 function App() {
-  const registrationData = {
-    startDate: "2025-01-01T00:00:00",
-    endDate: "2025-02-15T23:59:59",
-    cardIssueDate: "2025-02-20T00:00:00",
-    eventDate: "2025-03-01T09:00:00",
-  };
-
   return (
     <AuthProvider>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signUpForm" element={<ExamSignUpForm />} />
-        <Route
-          path="/examInfo"
-          element={<ExamInfo registrationData={registrationData} />}
-        />
-        <Route
-          path="/examInfo/:id"
-          element={<ExamInfo registrationData={registrationData} />}
-        />
+        <Route path="/examInfo" element={<ExamInfo />} />
+        <Route path="/examInfo/:id" element={<ExamInfo />} />
         <Route path="/logIn" element={<LogIn />} />
         <Route path="/ForgotPassword" element={<ForgotPasswordPage />} />
         <Route path="/ResetPass" element={<ResetPassPage />} />

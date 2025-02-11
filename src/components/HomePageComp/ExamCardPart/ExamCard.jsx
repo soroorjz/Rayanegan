@@ -33,19 +33,22 @@ const ExamCard = () => {
   // دریافت وضعیت‌های آزمون و تبدیل آن‌ها به یک Map
   const fetchExamStatuses = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost/api/examStatus/examStatuses", {
-        headers: {
-          "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
-        },
-      });
+      const response = await axios.get(
+        "http://localhost/api/examStatus/examStatuses",
+        {
+          headers: {
+            "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
+          },
+        }
+      );
 
       const statusMap = response.data.reduce((acc, status) => {
         acc[status.examStatusId] = status.examStatusName;
-         // examStatusId → examStatusName
+        // examStatusId → examStatusName
         return acc;
       }, {});
 
-      console.log(" Exam Statuses:", statusMap); 
+      console.log(" Exam Statuses:", statusMap);
 
       setExamStatuses(statusMap);
     } catch (err) {
@@ -54,9 +57,8 @@ const ExamCard = () => {
     }
   }, []);
 
- 
   const fetchExams = useCallback(async () => {
-    if (!examStatuses) return; 
+    if (!examStatuses) return;
     setLoading(true);
     setError(null);
 
@@ -72,7 +74,7 @@ const ExamCard = () => {
         examStatusRef: examStatuses[exam.examStatusRef] || "نامشخص", // تبدیل عدد به متن
       }));
 
-      console.log(" Updated Exams:", updatedExams); 
+      console.log(" Updated Exams:", updatedExams);
 
       setExamCards(updatedExams);
     } catch (err) {
@@ -81,7 +83,7 @@ const ExamCard = () => {
     } finally {
       setLoading(false);
     }
-  }, [examStatuses]); 
+  }, [examStatuses]);
   // اجرای توابع به ترتیب مناسب
   useEffect(() => {
     const fetchData = async () => {
@@ -92,12 +94,11 @@ const ExamCard = () => {
     fetchData();
   }, []);
 
-
   useEffect(() => {
     if (examStatuses) {
       fetchExams();
     }
-  }, [examStatuses]); 
+  }, [examStatuses]);
 
   return (
     <div className="examCard-Container">
@@ -143,7 +144,10 @@ const ExamCard = () => {
                   )}
                   <button className="btn2">دفترچه</button>
                   <button className="btn3">
-                    <Link to="/examInfo" key={`examInfo-${examCard.examId}`}>
+                    <Link
+                      to={`/examInfo/${examCard.examId}`}
+                      key={`examInfo-${examCard.examId}`}
+                    >
                       بیشتر
                     </Link>
                   </button>
@@ -159,6 +163,5 @@ const ExamCard = () => {
     </div>
   );
 };
-
 
 export default ExamCard;

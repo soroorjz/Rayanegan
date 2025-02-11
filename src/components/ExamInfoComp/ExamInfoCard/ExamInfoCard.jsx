@@ -1,5 +1,5 @@
 import "./ExamInfoCard.scss";
-import moment from "moment-jalaali";
+
 const ExamInfoCard = ({ startDate, endDate, cardIssueDate, eventDate }) => {
   return (
     <div className="registration-card">
@@ -7,22 +7,25 @@ const ExamInfoCard = ({ startDate, endDate, cardIssueDate, eventDate }) => {
       <ul className="registration-card-list">
         <li>
           <strong>تاریخ شروع ثبت‌نام:</strong>
-          {moment(startDate, "jYYYY/jMM/jDD").locale("fa").format("jYYYY/jMM/jDD")}
+          {startDate?.isValid() ? startDate.format("jYYYY/jMM/jDD") : "نامشخص"}
         </li>
         <li>
           <strong>تاریخ پایان ثبت‌نام:</strong>
-          {moment(endDate, "jYYYY/jMM/jDD").locale("fa").format("jYYYY/jMM/jDD")}
+          {endDate?.isValid() ? endDate.format("jYYYY/jMM/jDD") : "نامشخص"}
         </li>
         <li>
           <strong>تاریخ دریافت کارت:</strong>
-          {moment(cardIssueDate, "jYYYY/jMM/jDD").locale("fa").format("jYYYY/jMM/jDD")}
+          {cardIssueDate?.isValid()
+            ? cardIssueDate.format("jYYYY/jMM/jDD")
+            : "نامشخص"}
         </li>
         <li>
           <strong>تاریخ برگزاری آزمون:</strong>
-          {moment(eventDate, "jYYYY/jMM/jDD").locale("fa").format("jYYYY/jMM/jDD")}
+          {eventDate?.isValid() ? eventDate.format("jYYYY/jMM/jDD") : "نامشخص"}
         </li>
       </ul>
     </div>
   );
 };
+
 export default ExamInfoCard;

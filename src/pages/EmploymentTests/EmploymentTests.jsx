@@ -20,13 +20,13 @@ const EmploymentTests = () => {
       <div id="Registering" className="EmploymentTestsComp">
         <EmploymentTestsComp
           examData={activeExams}
-          title="آزمون‌های درحال نام‌نویسی "
+          title="آزمون‌های درحال ثبت‌نام "
         />
       </div>
       <div id="InProgress" className="EmploymentTestsComp">
         <EmploymentTestsComp
           examData={activeExams}
-          title="آزمون‌های در جریان"
+          title="آزمون‌های در انتظار"
         />
       </div>
       <div id="Active" className="EmploymentTestsComp">
@@ -41,7 +41,7 @@ const EmploymentTests = () => {
       <div id="Expired" className="EmploymentTestsComp expiredExams">
         <EmploymentTestsComp
           examData={activeExams}
-          title="آزمون‌های منقضی شده   "
+          title="آزمون‌های  پایان یافته   "
         />
       </div>
       <button className="homeBtn">
