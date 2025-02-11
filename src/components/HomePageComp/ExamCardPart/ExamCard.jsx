@@ -45,7 +45,7 @@ const ExamCard = () => {
         return acc;
       }, {});
 
-      console.log(" Exam Statuses:", statusMap); // بررسی مقدار دریافت شده
+      console.log(" Exam Statuses:", statusMap); 
 
       setExamStatuses(statusMap);
     } catch (err) {
@@ -56,7 +56,7 @@ const ExamCard = () => {
 
  
   const fetchExams = useCallback(async () => {
-    if (!examStatuses) return; // اگر وضعیت‌ هنوز آماده نیست
+    if (!examStatuses) return; 
     setLoading(true);
     setError(null);
 
@@ -92,12 +92,12 @@ const ExamCard = () => {
     fetchData();
   }, []);
 
-  // وقتی examStatuses مقدار گرفت، fetchExams اجرا شود
+
   useEffect(() => {
     if (examStatuses) {
       fetchExams();
     }
-  }, [examStatuses]); // منتظر examStatuses می‌ماند
+  }, [examStatuses]); 
 
   return (
     <div className="examCard-Container">
