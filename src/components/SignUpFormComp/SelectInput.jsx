@@ -30,7 +30,6 @@ const SelectInput = ({ formData, handleChange, errors }) => {
           onChange={handleChange}
         >
           <option value="">انتخاب نمایید</option>
-
           <option value="اسلام">اسلام</option>
           <option value="مسیحیت">مسیحیت</option>
           <option value="کلیمی">کلیمی</option>

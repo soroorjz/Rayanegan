@@ -31,30 +31,7 @@ const SignUpForm = ({ onNext }) => {
   const isValidIdNumber = (idNumber) => {
     return /^\d{1,10}$/.test(idNumber) && !/^0+$/.test(idNumber);
   };
-
-  // const handleChange = (e) => {
-  //   const { name, value, type, checked } = e.target;
-
-  //   if (type === "radio") {
-  //     setFormData({
-  //       ...formData,
-  //       [name]: value,
-  //     });
-
-  //     if (name === "maritalStatus") {
-  //       setIsChildrenEnabled(value !== "single");
-  //       if (value === "single") {
-  //         setFormData((prev) => ({ ...prev, children: 0 }));
-  //       }
-  //     }
-  //   } else {
-  //     setFormData({
-  //       ...formData,
-  //       [name]: type === "checkbox" ? checked : value,
-  //     });
-  //   }
-  // };
-  
+ 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
 

@@ -8,11 +8,13 @@ import { IoMdHome } from "react-icons/io";
 import NavbarTop from "../../components/HomePageComp/NavbarTop/NavbarTop";
 import Countdown from "../../components/ExamInfoComp/CountDown/CountDown";
 import ExamInfoCard from "../../components/ExamInfoComp/ExamInfoCard/ExamInfoCard";
+import { useAuth } from "../../AuthContext";
 
 import "./ExamInfo.scss";
 
 const ExamInfo = () => {
   const { id } = useParams();
+  const { token, fetchToken } = useAuth(); 
   const [examData, setExamData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,43 +23,49 @@ const ExamInfo = () => {
     return num.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
   };
 
+  const fetchExamInfo = async () => {
+    if (!token) {
+      setError("توکن یافت نشد. لطفاً دوباره وارد شوید.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await axios.get(`http://localhost/api/exam/exams/`, {
+        headers: { "RAYAN-TOKEN": token },
+      });
+
+      console.log("Exam Data (Full List):", response.data);
+
+      const selectedExam = response.data.find(
+        (exam) => Number(exam.examId) === Number(id)
+      );
+
+      if (!selectedExam) {
+        setError("آزمون موردنظر یافت نشد.");
+      } else {
+        setExamData(selectedExam);
+        console.log("Selected Exam Data:", selectedExam);
+      }
+    } catch (err) {
+      console.error("Error fetching exam details:", err);
+      setError("خطا در دریافت اطلاعات آزمون!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchExamInfo = async () => {
-      const token = localStorage.getItem("RayanToken");
+    if (!token) {
+      fetchToken(); // اگر توکن موجود نبود، ابتدا آن را دریافت کن
+    }
+  }, [token, fetchToken]);
 
-      if (!token) {
-        setError("توکن یافت نشد. لطفاً دوباره وارد شوید.");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const response = await axios.get(`http://localhost/api/exam/exams/`, {
-          headers: { "RAYAN-TOKEN": token },
-        });
-
-        console.log("Exam Data (Full List):", response.data);
-
-        const selectedExam = response.data.find(
-          (exam) => Number(exam.examId) === Number(id)
-        );
-
-        if (!selectedExam) {
-          setError("آزمون موردنظر یافت نشد.");
-        } else {
-          setExamData(selectedExam);
-          console.log("Selected Exam Data:", selectedExam);
-        }
-      } catch (err) {
-        console.error("Error fetching exam details:", err);
-        setError("خطا در دریافت اطلاعات آزمون!");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchExamInfo();
-  }, [id]);
+  useEffect(() => {
+    if (token) {
+      fetchExamInfo(); // بعد از دریافت توکن، اطلاعات آزمون را دریافت کن
+    }
+  }, [token, id]);
 
   if (loading) return <p>در حال بارگذاری...</p>;
   if (error) return <p className="error-text">{error}</p>;

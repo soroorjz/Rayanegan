@@ -1,15 +1,34 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("RayanToken") || "");
 
   // بررسی ورود کاربر هنگام بارگذاری صفحه
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  // دریافت توکن از API
+  const fetchToken = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost/api/auth", {
+        headers: {
+          "RAYAN-USERNAME": "S.JAMEIE",
+          "RAYAN-PASSWORD": "1156789",
+        },
+        method: "POST",
+      });
+      const data = await response.json();
+      setToken(data.token);
+      localStorage.setItem("RayanToken", data.token);
+    } catch (err) {
+      console.error("خطا در دریافت توکن:", err);
     }
   }, []);
 
@@ -23,15 +42,17 @@ export const AuthProvider = ({ children }) => {
   // خروج کاربر
   const logout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("RayanToken");
     setUser(null);
+    setToken("");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, fetchToken }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// هوک اختصاصی برای استفاده راحت‌تر از AuthContext
+// هوک اختصاصی AuthContext
 export const useAuth = () => useContext(AuthContext);
