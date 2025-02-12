@@ -17,6 +17,10 @@ const ExamInfo = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const toPersianDigits = (num) => {
+    return num.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+  };
+
   useEffect(() => {
     const fetchExamInfo = async () => {
       const token = localStorage.getItem("RayanToken");
@@ -28,16 +32,12 @@ const ExamInfo = () => {
       }
 
       try {
-        const response = await axios.get(
-          `http://localhost/api/exam/exams/`, // اینجا دیگه id نمی‌فرستیم چون لیست برمی‌گردونه
-          {
-            headers: { "RAYAN-TOKEN": token },
-          }
-        );
+        const response = await axios.get(`http://localhost/api/exam/exams/`, {
+          headers: { "RAYAN-TOKEN": token },
+        });
 
-        console.log("Exam Data (Full List):", response.data); // چک کن کل لیست چیه
+        console.log("Exam Data (Full List):", response.data);
 
-        // 🔥 فیلتر کردن آزمونی که ID موردنظر رو داره
         const selectedExam = response.data.find(
           (exam) => Number(exam.examId) === Number(id)
         );
@@ -63,16 +63,23 @@ const ExamInfo = () => {
   if (error) return <p className="error-text">{error}</p>;
   if (!examData) return <p>اطلاعاتی یافت نشد</p>;
 
+  const formatPersianDate = (date) => {
+    if (!date) return "نامشخص";
+    const momentDate = moment(date, "jYYYY/jMM/jDD");
+    if (!momentDate.isValid()) return "تاریخ نامعتبر";
+    return toPersianDigits(momentDate.format("jYYYY/jMM/jDD"));
+  };
+
   const startDate = moment(examData.examRegisterStartDate, "jYYYY/jMM/jDD");
   const endDate = moment(examData.examRegisterEndDate, "jYYYY/jMM/jDD");
   const cardIssueDate = moment(examData.examWithdrawCard, "jYYYY/jMM/jDD");
   const eventDate = moment(examData.examDate, "jYYYY/jMM/jDD");
 
   console.log("Parsed Dates:", {
-    startDate: startDate.format("jYYYY/jMM/jDD"),
-    endDate: endDate.format("jYYYY/jMM/jDD"),
-    cardIssueDate: cardIssueDate.format("jYYYY/jMM/jDD"),
-    eventDate: eventDate.format("jYYYY/jMM/jDD"),
+    startDate,
+    endDate,
+    cardIssueDate,
+    eventDate,
   });
 
   return (
@@ -85,6 +92,7 @@ const ExamInfo = () => {
         endDate={endDate}
         cardIssueDate={cardIssueDate}
         eventDate={eventDate}
+        toPersianDigits={toPersianDigits} // تابع را به کامپوننت ارسال کن
       />
 
       <ExamInfoComponent />
@@ -97,4 +105,5 @@ const ExamInfo = () => {
     </div>
   );
 };
+
 export default ExamInfo;

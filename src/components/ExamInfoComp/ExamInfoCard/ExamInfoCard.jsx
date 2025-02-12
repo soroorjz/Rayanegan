@@ -1,27 +1,31 @@
 import "./ExamInfoCard.scss";
 
-const ExamInfoCard = ({ startDate, endDate, cardIssueDate, eventDate }) => {
+const ExamInfoCard = ({
+  startDate,
+  endDate,
+  cardIssueDate,
+  eventDate,
+  toPersianDigits,
+}) => {
   return (
     <div className="registration-card">
-      <h2>اطلاعات آزمون</h2>
+      <h2>اطلاعات آزمون </h2>
       <ul className="registration-card-list">
         <li>
           <strong>تاریخ شروع ثبت‌نام:</strong>
-          {startDate?.isValid() ? startDate.format("jYYYY/jMM/jDD") : "نامشخص"}
+          {toPersianDigits(startDate.format("jYYYY/jMM/jDD"))}
         </li>
         <li>
           <strong>تاریخ پایان ثبت‌نام:</strong>
-          {endDate?.isValid() ? endDate.format("jYYYY/jMM/jDD") : "نامشخص"}
+          {toPersianDigits(endDate.format("jYYYY/jMM/jDD"))}
         </li>
         <li>
           <strong>تاریخ دریافت کارت:</strong>
-          {cardIssueDate?.isValid()
-            ? cardIssueDate.format("jYYYY/jMM/jDD")
-            : "نامشخص"}
+          {toPersianDigits(cardIssueDate.format("jYYYY/jMM/jDD"))}
         </li>
         <li>
           <strong>تاریخ برگزاری آزمون:</strong>
-          {eventDate?.isValid() ? eventDate.format("jYYYY/jMM/jDD") : "نامشخص"}
+          {toPersianDigits(eventDate.format("jYYYY/jMM/jDD"))}
         </li>
       </ul>
     </div>
