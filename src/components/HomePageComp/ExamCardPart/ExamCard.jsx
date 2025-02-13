@@ -1,65 +1,84 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import { useAuth } from "../../../AuthContext"; // گرفتن توکن از AuthContext
+import { useAuth } from "../../../AuthContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./ExamCard.scss";
-
 const ExamCard = () => {
-  const { user, token, fetchToken } = useAuth(); // گرفتن توکن و تابع دریافت توکن
+  const { user } = useAuth();
   const [examCards, setExamCards] = useState([]);
-  const [examStatuses, setExamStatuses] = useState(null);
+  const [examStatuses, setExamStatuses] = useState(null); // مقدار اولیه null برای تشخیص آماده‌بودن
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // دریافت وضعیت‌های آزمون
-  const fetchExamStatuses = useCallback(async () => {
-    if (!token) return; // منتظر دریافت توکن می‌مانیم
+  // دریافت و ذخیره‌ی توکن
+  const fetchToken = useCallback(async () => {
+    try {
+      const response = await fetch("https://smp.devrayan.ir/api/auth", {
+        headers: {
+          "RAYAN-USERNAME": "S.JAMEIE",
+          "RAYAN-PASSWORD": "1156789",
+        },
+        method: "post",
+      });
+      const data = await response.json();
+      localStorage.setItem("RayanToken", data.token);
+    } catch (err) {
+      console.error("Error fetching token:", err);
+      setError("خطا در دریافت توکن!");
+    }
+  }, []);
 
+  // دریافت وضعیت‌های آزمون و تبدیل آن‌ها به یک Map
+  const fetchExamStatuses = useCallback(async () => {
     try {
       const response = await axios.get(
-        "http://localhost/api/examStatus/examStatuses",
+        "https://smp.devrayan.ir/api/examStatus/examStatuses",
         {
           headers: {
-            "RAYAN-TOKEN": token, // استفاده از توکن ذخیره‌شده
+            "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
           },
         }
       );
 
       const statusMap = response.data.reduce((acc, status) => {
         acc[status.examStatusId] = status.examStatusName;
+        // examStatusId → examStatusName
         return acc;
       }, {});
 
       console.log(" Exam Statuses:", statusMap);
+
       setExamStatuses(statusMap);
     } catch (err) {
       console.error("Error fetching exam statuses:", err);
       setError("خطا در دریافت وضعیت آزمون‌ها!");
     }
-  }, [token]);
+  }, []);
 
-  // دریافت اطلاعات آزمون‌ها
   const fetchExams = useCallback(async () => {
-    if (!examStatuses || !token) return;
-
+    if (!examStatuses) return;
     setLoading(true);
     setError(null);
 
     try {
-      const response = await axios.get("http://localhost/api/exam/exams", {
-        headers: {
-          "RAYAN-TOKEN": token, // استفاده از توکن ذخیره‌شده
-        },
-      });
+      const response = await axios.get(
+        "https://smp.devrayan.ir/api/exam/exams",
+        {
+          headers: {
+            "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
+          },
+        }
+      );
 
       const updatedExams = response.data.map((exam) => ({
         ...exam,
-        examStatusRef: examStatuses[exam.examStatusRef] || "نامشخص",
+        examStatusRef: examStatuses[exam.examStatusRef] || "نامشخص", // تبدیل عدد به متن
       }));
 
       console.log(" Updated Exams:", updatedExams);
+
       setExamCards(updatedExams);
     } catch (err) {
       console.error("Error fetching exams:", err);
@@ -67,26 +86,22 @@ const ExamCard = () => {
     } finally {
       setLoading(false);
     }
-  }, [examStatuses, token]);
-
-  // دریافت توکن و سپس اطلاعات آزمون‌ها
+  }, [examStatuses]);
+  // اجرای توابع به ترتیب مناسب
   useEffect(() => {
-    if (!token) {
-      fetchToken(); // اگر توکن نداریم، ابتدا دریافت شود
-    }
-  }, [token, fetchToken]);
+    const fetchData = async () => {
+      await fetchToken();
+      await fetchExamStatuses();
+    };
 
-  useEffect(() => {
-    if (token) {
-      fetchExamStatuses();
-    }
-  }, [token, fetchExamStatuses]);
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (examStatuses) {
       fetchExams();
     }
-  }, [examStatuses, fetchExams]);
+  }, [examStatuses]);
 
   return (
     <div className="examCard-Container">
@@ -134,6 +149,7 @@ const ExamCard = () => {
                   <button className="btn3">
                     <Link
                       to={`/examInfo/${examCard.examId}`}
+                      state={{ exam: examCard }}
                       key={`examInfo-${examCard.examId}`}
                     >
                       بیشتر

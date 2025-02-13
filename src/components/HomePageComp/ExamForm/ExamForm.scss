@@ -181,7 +181,9 @@ $tablet-resize: 900px;
       }
 
       .Experience {
-        align-self: flex-end;
+        @include responsive($tablet-resize) {
+          align-self: flex-end;
+        }
       }
 
       .form-grid {
