@@ -3,15 +3,14 @@ $tablet-resize: 900px;
 
 .exam-form {
   width: 100%;
-  min-height:65vh;
+  min-height: 65vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  @include responsive($tablet-resize){
+  @include responsive($tablet-resize) {
     margin-top: 100px;
-  min-height:90vh;
-  justify-content: center;
-    
+    min-height: 90vh;
+    justify-content: center;
   }
   .search-form {
     width: 90%;
@@ -28,7 +27,7 @@ $tablet-resize: 900px;
       flex-direction: row;
     }
     .searchForm-side {
-     padding: 40px 20px;
+      padding: 40px 20px;
       width: 100%;
       background-color: #04364add;
       border-top-left-radius: 10px;
@@ -88,12 +87,11 @@ $tablet-resize: 900px;
       h2 {
         // text-align: center;
         font-size: 30px;
-
       }
-      p{
+      p {
         width: 90%;
       }
-      .search-button{
+      .search-button {
         width: 20%;
         align-self: self-start;
       }
@@ -102,14 +100,14 @@ $tablet-resize: 900px;
       width: 100%;
       padding: 20px;
       border: 1px solid #ddd;
-      border-radius: 10px;
-      border-radius: 10px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
       background-color: #f9f9f9;
       row-gap: 20px;
-
       @include responsive($tablet-resize) {
         width: 60%;
         padding: 40px 20px;
+        border-top-right-radius: 10px;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -237,8 +235,7 @@ $tablet-resize: 900px;
       }
     }
   }
-  .result-container{
+  .result-container {
     width: 100%;
-
   }
 }
