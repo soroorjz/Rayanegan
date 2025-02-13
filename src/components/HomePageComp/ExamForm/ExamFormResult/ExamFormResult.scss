@@ -1,8 +1,14 @@
+@import "../../../../styles/responsive.scss";
+$tablet-resize: 900px;
+
 .ResultExam-list {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
+  @include responsive($tablet) {
+    width: 80%;
+  }
   .ResultExam-item {
     display: flex;
     justify-content: space-between;
@@ -18,8 +24,11 @@
     }
     .ResultExam-name {
       font-weight: bold;
-      width: 50%;
+      width: 40%;
       color: #333;
+      @include responsive($tablet) {
+        width: 50%;
+      }
     }
 
     .ResultExam-date {
@@ -29,14 +38,15 @@
     }
 
     .ResultExam-more {
-      width: 10%;
       background-color: #04364a;
       color: white;
       border: none;
       border-radius: 10px;
       cursor: pointer;
       transition: background-color 0.2s;
-
+      @include responsive($tablet) {
+        width: 10%;
+      }
       &:hover {
         background-color: #255162;
       }
