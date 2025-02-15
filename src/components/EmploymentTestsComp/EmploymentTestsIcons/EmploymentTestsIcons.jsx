@@ -23,6 +23,11 @@ const EmploymentTestsIcons = () => {
 
   const handleSelect = (id) => {
     setSelected(selected === id ? null : id);
+    
+    const targetElement = document.getElementById(id);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   };
 
   const scroll = (direction) => {
