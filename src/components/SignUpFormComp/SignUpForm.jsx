@@ -22,17 +22,16 @@ const SignUpForm = ({ onNext, setGender }) => {
     children: 0,
   });
 
-
   const [errors, setErrors] = useState({});
-    const [workExperience, setWorkExperience] = useState(false);
-  
+  const [workExperience, setWorkExperience] = useState(false);
+
   const [isChildrenEnabled, setIsChildrenEnabled] = useState(false);
 
   const isPersianText = (text) => /^[\u0600-\u06FF\s]+$/.test(text);
   const isValidIdNumber = (idNumber) => {
     return /^\d{1,10}$/.test(idNumber) && !/^0+$/.test(idNumber);
   };
- 
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -114,7 +113,6 @@ const SignUpForm = ({ onNext, setGender }) => {
     setWorkExperience(!workExperience);
   };
 
-  
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
@@ -142,28 +140,23 @@ const SignUpForm = ({ onNext, setGender }) => {
             errors={errors}
           />
           <SelectInput
-
             formData={formData}
             handleChange={handleChange}
             errors={errors}
           />
           <RadioGroup
-          setGender={setGender}
+            setGender={setGender}
             formData={formData}
             handleChange={handleChange}
             errors={errors}
             isChildrenEnabled={isChildrenEnabled}
           />
           <div className="form-group">
-                <div className="toggle-container" onClick={handleToggle}>
-                  <div
-                    className={`toggle ${workExperience ? "active" : ""}`}
-                  ></div>
-                  <span>
-                    {workExperience ? "چپ دست  " : " راست دست"}
-                  </span>
-                </div>
-              </div>
+            <div className="toggle-container" onClick={handleToggle}>
+              <div className={`toggle ${workExperience ? "active" : ""}`}></div>
+              <span>{workExperience ? "چپ دست  " : " راست دست"}</span>
+            </div>
+          </div>
         </div>
 
         <button type="submit" className="submit-button">
