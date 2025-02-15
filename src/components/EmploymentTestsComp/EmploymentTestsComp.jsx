@@ -7,8 +7,8 @@ import { Link } from "react-router";
 import { useAuth } from "../../AuthContext";
 
 const EmploymentTestsComp = ({ examData, title }) => {
-    const { user } = useAuth();
-  
+  const { user } = useAuth();
+
   return (
     <div className="active-exams-sj">
       <div className="active-exams-header-sj">{title}</div>
@@ -42,20 +42,23 @@ const EmploymentTestsComp = ({ examData, title }) => {
               <div className="exam-title-sj">{exam.examName}</div>
               <div className="exam-deadline-sj">{exam.examDate}</div>
               <div className="examCard-Footer">
-                  {!user && (
-                    <button className="btn1">
-                      <Link to="/signUpForm" key="signup">
-                        ثبت‌نام
-                      </Link>
-                    </button>
-                  )}
-                  <button className="btn2">دفترچه</button>
-                  <button className="btn3">
-                    <Link to="/examInfo" key={`examInfo-${examData.examId}`}>
-                      بیشتر
+                {!user && (
+                  <button className="btn1">
+                    <Link to="/signUpForm" key="signup">
+                      ثبت‌نام
                     </Link>
                   </button>
-                </div>
+                )}
+                <button className="btn2">دفترچه</button>
+                <button className="btn3">
+                  <Link
+                    to={`/examInfo/${exam.examId}`}
+                    key={`examInfo-${exam.examId}`}
+                  >
+                    بیشتر
+                  </Link>
+                </button>
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>

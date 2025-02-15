@@ -147,7 +147,10 @@ const ExamCard = () => {
                   )}
                   <button className="btn2">دفترچه</button>
                   <button className="btn3">
-                    <Link to="/examInfo" key={`examInfo-${examCard.examId}`}>
+                    <Link
+                      to={`/examInfo/${examCard.examId}`}
+                      key={`examInfo-${examCard.examId}`}
+                    >
                       بیشتر
                     </Link>
                   </button>
