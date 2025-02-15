@@ -4,13 +4,15 @@ $tablet-resize: 900px;
 .active-exams-sj {
   background-color: #f5f5f5;
   padding: 20px 0;
-  border-radius: 10px;
-  overflow: hidden; // جلوگیری از خروج اسلایدر از محدوده
+  overflow: hidden; 
+  border-bottom: 1px solid #ccc;
+
+ 
   @include responsive($tablet-resize) {
     padding: 20px;
   }
   .active-exams-header-sj {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: bold;
     text-align: right;
     margin: 25px;
@@ -50,39 +52,66 @@ $tablet-resize: 900px;
         margin-bottom: 15px;
       }
 
-      .exam-buttons-sj {
+      // .exam-buttons-sj {
+      //   display: flex;
+      //   justify-content: space-between;
+      //   gap: 10px;
+
+      //   .exam-btn-sj {
+      //     flex: 1;
+      //     padding: 8px 10px;
+      //     border: none;
+      //     border-radius: 5px;
+      //     font-size: 14px;
+      //     cursor: pointer;
+      //     transition: background 0.3s ease-in-out;
+
+      //     &.download {
+      //       background: #007bff;
+      //       color: white;
+
+      //       &:hover {
+      //         background: #0056b3;
+      //       }
+      //     }
+
+      //     &.register {
+      //       background: #28a745;
+      //       color: white;
+
+      //       &:hover {
+      //         background: #1e7e34;
+      //       }
+      //     }
+      //   }
+      // }
+      .examCard-Footer {
+        height: 13%;
+        margin: 50px 0 20px 0;
+        width: 100%;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         gap: 10px;
-
-        .exam-btn-sj {
-          flex: 1;
-          padding: 8px 10px;
-          border: none;
-          border-radius: 5px;
-          font-size: 14px;
+        button {
+          width: 25%;
+          padding: 10px;
+          border-radius: 10px;
+          border: 0;
+          background-color: #578e7e;
           cursor: pointer;
-          transition: background 0.3s ease-in-out;
-
-          &.download {
-            background: #007bff;
-            color: white;
-
-            &:hover {
-              background: #0056b3;
-            }
+          color: #fff;
+          a {
+            text-decoration: none;
+            color: #fff;
           }
-
-          &.register {
-            background: #28a745;
-            color: white;
-
-            &:hover {
-              background: #1e7e34;
-            }
+          &:hover {
+            background-color: #e55604;
           }
         }
       }
     }
+  }
+  .no-exam-message{
+    color: #949393;
   }
 }
