@@ -4,6 +4,7 @@ import { Navigation } from "swiper/modules";
 import { useAuth } from "../../../AuthContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
+// import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import "./ExamCard.scss";
 const ExamCard = () => {
   const { user } = useAuth();
@@ -105,7 +106,13 @@ const ExamCard = () => {
 
   return (
     <div className="examCard-Container">
-      {loading && <p className="loading-text">در حال دریافت اطلاعات...</p>}
+      {/* {loading && 
+         <DotLottieReact
+         src="https://lottie.host/fb5afe17-432b-4979-857e-b278c24604b5/4VhaR9IkTz.lottie"
+         loop
+         autoplay
+       />
+      } */}
       {error && <p className="error-text">{error}</p>}
       {!loading && !error && examCards.length > 0 && (
         <Swiper
@@ -146,6 +153,7 @@ const ExamCard = () => {
                     </button>
                   )}
                   <button className="btn2">دفترچه</button>
+                  
                   <button className="btn3">
                     <Link
                       to={`/examInfo/${examCard.examId}`}

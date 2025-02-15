@@ -5,11 +5,13 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@fullpage/react-fullpage": "^0.1.48",
     "@hookform/resolvers": "^3.10.0",
     "@lottiefiles/dotlottie-react": "^0.12.2",
     "@mui/material": "^6.4.2",
     "axios": "^1.7.9",
     "framer-motion": "^12.0.11",
+    "gsap": "^3.12.7",
     "moment-jalaali": "^0.10.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

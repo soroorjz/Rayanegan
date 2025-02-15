@@ -11,6 +11,7 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import ReportForm from "./pages/ReportForm/ReportForm";
 import EmploymentTests from "./pages/EmploymentTests/EmploymentTests";
 import ReportTracking from "./pages/ReportTracking/ReportTracking";
+import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 
 function App() {
   return (
@@ -18,15 +19,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signUpForm" element={<ExamSignUpForm />} />
-        {/* <Route path="/examInfo/:id" component={ExamInfo} /> */}
         <Route path="/examInfo/:id" element={<ExamInfo />} />
         <Route path="/logIn" element={<LogIn />} />
-        <Route path="/ForgotPassword" element={<ForgotPasswordPage />} />
-        <Route path="/ResetPass" element={<ResetPassPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/ReportForm" element={<ReportForm />} />
         <Route path="/EmploymentTests" element={<EmploymentTests />} />
         <Route path="/ReportTracking" element={<ReportTracking />} />
+        <Route path="/RegistrationPage" element={<RegistrationPage />} />
+        {/* <Route path="/" element={<RegistrationPage />} /> */}
       </Routes>
     </AuthProvider>
   );

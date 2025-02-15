@@ -1,35 +1,42 @@
 import { useEffect, useMemo, useState } from "react";
 import "./Navbar.scss";
+import gsap from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import {
   FaTasks,
   FaSearch,
   FaNewspaper,
   FaQuestionCircle,
   FaPhone,
-
 } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
+
+gsap.registerPlugin(ScrollToPlugin);
+
 const Navbar = () => {
   const [activeIndex, setActiveIndex] = useState(null);
 
-  // Use useMemo to memoize the menuItems array
   const menuItems = useMemo(
     () => [
-      { icon: <IoHome  />, text: "خانه", target: "home" },
+      { icon: <IoHome />, text: "خانه", target: "home" },
       { icon: <FaTasks />, text: "آزمون‌ها", target: "ExamCardPart" },
       { icon: <FaSearch />, text: "آزمون‌یاب", target: "ExamForm" },
       { icon: <FaNewspaper />, text: "اخبار", target: "NewsComp" },
       { icon: <FaQuestionCircle />, text: "سوالات متداول", target: "Faq" },
       { icon: <FaPhone />, text: "تماس با ما", target: "footer" },
     ],
-    [] // Dependency array ensures this only recalculates once
+    []
   );
 
   const handleScroll = (targetId, index) => {
-    setActiveIndex(index); // Set the clicked menu item as active
+    setActiveIndex(index);
     const element = document.getElementById(targetId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      gsap.to(window, {
+        duration: 1.2,
+        scrollTo: { y: element, offsetY: 50 },
+        ease: "power1.inOut",
+      });
     }
   };
 
@@ -39,12 +46,11 @@ const Navbar = () => {
         const element = document.getElementById(item.target);
         if (element) {
           const rect = element.getBoundingClientRect();
-          // Check if the section is in the middle of the viewport
           if (
             rect.top <= window.innerHeight / 2 &&
             rect.bottom >= window.innerHeight / 2
           ) {
-            setActiveIndex(index); // Update the activeIndex state
+            setActiveIndex(index);
           }
         }
       });
@@ -58,7 +64,6 @@ const Navbar = () => {
 
   return (
     <div className="navbar-container">
-      {/* Sidebar for larger screens */}
       <div className="sidebarNav">
         {menuItems.map((item, index) => (
           <li
@@ -78,7 +83,6 @@ const Navbar = () => {
         ))}
       </div>
 
-      {/* Bottom navigation for smaller screens */}
       <div className="bottomNav">
         {menuItems.map((item, index) => (
           <li
@@ -100,4 +104,5 @@ const Navbar = () => {
     </div>
   );
 };
+
 export default Navbar;

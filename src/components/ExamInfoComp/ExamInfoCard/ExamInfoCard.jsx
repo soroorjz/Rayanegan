@@ -6,10 +6,11 @@ const ExamInfoCard = ({
   cardIssueDate,
   eventDate,
   toPersianDigits,
+  examName,
 }) => {
   return (
     <div className="registration-card">
-      <h2>اطلاعات آزمون </h2>
+      <h2> {examName} </h2>
       <ul className="registration-card-list">
         <li>
           <strong>تاریخ شروع ثبت‌نام:</strong>

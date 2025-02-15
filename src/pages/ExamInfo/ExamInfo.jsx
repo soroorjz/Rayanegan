@@ -22,51 +22,6 @@ const ExamInfo = () => {
   const toPersianDigits = (num) => {
     return num.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
   };
-
-  // const fetchExamInfo = async () => {
-  //   if (!token) {
-  //     setError("توکن یافت نشد. لطفاً دوباره وارد شوید.");
-  //     setLoading(false);
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await axios.get(`https://smp.devrayan.ir/api/exam/exams/`, {
-  //       headers: { "RAYAN-TOKEN": token },
-  //     });
-
-  //     console.log("Exam Data (Full List):", response.data);
-
-  //     const selectedExam = response.data.find(
-  //       (exam) => Number(exam.examId) === Number(id)
-  //     );
-
-  //     if (!selectedExam) {
-  //       setError("آزمون موردنظر یافت نشد.");
-  //     } else {
-  //       setExamData(selectedExam);
-  //       console.log("Selected Exam Data:", selectedExam);
-  //     }
-  //   } catch (err) {
-  //     console.error("Error fetching exam details:", err);
-  //     setError("خطا در دریافت اطلاعات آزمون!");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (!token) {
-  //     fetchToken(); // اگر توکن موجود نبود، ابتدا آن را دریافت کن
-  //   }
-  // }, [token, fetchToken]);
-
-  // useEffect(() => {
-  //   if (token) {
-  //     fetchExamInfo(); // بعد از دریافت توکن، اطلاعات آزمون را دریافت کن
-  //   }
-  // }, [token, id]);
-
   useEffect(() => {
     const fetchExamInfo = async () => {
       const token = localStorage.getItem("RayanToken");
@@ -141,6 +96,7 @@ const ExamInfo = () => {
         cardIssueDate={cardIssueDate}
         eventDate={eventDate}
         toPersianDigits={toPersianDigits} // تابع را به کامپوننت ارسال کن
+        examName={examData.examName}
       />
 
       <ExamInfoComponent />

@@ -123,7 +123,6 @@ const EmploymentTests = () => {
       <div className="EmploymentTestsIcons">
         <EmploymentTestsIcons />
       </div>
-
       <div id="InProgress" className="EmploymentTestsComp">
         <EmploymentTestsComp
           examData={getFilteredExams( "در انتظار")}

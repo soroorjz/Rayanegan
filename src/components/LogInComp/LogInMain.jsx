@@ -58,11 +58,11 @@ const LogInMain = () => {
             onChange={(e) => setPassword(e.target.value)}
             disabled={animationType === "success"}
           />
-          <div className="form-options">
+          {/* <div className="form-options">
             <Link className="forgot-password" to="/ForgotPassword">
               رمز عبورتان را فراموش کرده‌اید؟
             </Link>
-          </div>
+          </div> */}
 
           <button
             type="submit"
@@ -72,7 +72,7 @@ const LogInMain = () => {
             {animationType === "success" ? "در حال ورود..." : "ورود"}
           </button>
         </form>
-        <div className="login-divider">یا</div>
+        {/* <div className="login-divider">یا</div> */}
 
         <div className="register-link">
           <p>
