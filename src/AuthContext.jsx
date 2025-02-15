@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 
 const AuthContext = createContext();
 
@@ -17,18 +23,18 @@ export const AuthProvider = ({ children }) => {
   // دریافت توکن از API
   const fetchToken = useCallback(async () => {
     try {
-      const response = await fetch("http://localhost/api/auth", {
+      const response = await fetch("https://smp.devrayan.ir/api/auth", {
         headers: {
           "RAYAN-USERNAME": "S.JAMEIE",
           "RAYAN-PASSWORD": "1156789",
         },
-        method: "POST",
+        method: "post",
       });
       const data = await response.json();
       setToken(data.token);
       localStorage.setItem("RayanToken", data.token);
     } catch (err) {
-      console.error("خطا در دریافت توکن:", err);
+      console.error("Error fetching token:", err);
     }
   }, []);
 

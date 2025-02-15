@@ -19,7 +19,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signUpForm" element={<ExamSignUpForm />} />
-        <Route path="/examInfo" element={<ExamInfo />} />
+        {/* <Route path="/examInfo/:id" component={ExamInfo} /> */}
+
         <Route path="/examInfo/:id" element={<ExamInfo />} />
         <Route path="/logIn" element={<LogIn />} />
         <Route path="/ForgotPassword" element={<ForgotPasswordPage />} />

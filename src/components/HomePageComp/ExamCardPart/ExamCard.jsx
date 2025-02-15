@@ -147,13 +147,11 @@ const ExamCard = () => {
                   )}
                   <button className="btn2">دفترچه</button>
                   <button className="btn3">
-                    <Link
-                      to={`/examInfo/${examCard.examId}`}
-                      state={{ exam: examCard }}
-                      key={`examInfo-${examCard.examId}`}
-                    >
-                      بیشتر
-                    </Link>
+                    <button className="btn3">
+                      <Link to="/examInfo" key={`examInfo-${examCard.examId}`}>
+                        بیشتر
+                      </Link>
+                    </button>
                   </button>
                 </div>
               </div>

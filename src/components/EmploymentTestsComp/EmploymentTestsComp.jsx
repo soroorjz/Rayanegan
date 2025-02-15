@@ -31,11 +31,11 @@ const EmploymentTestsComp = ({ examData, title }) => {
       >
         {examData.map((exam) => (
           <SwiperSlide key={exam.id} className="exam-card-sj">
-            <div className="exam-Logo-sj">
+            {/* <div className="exam-Logo-sj">
               <img src={exam.img} alt="" />
-            </div>
-            <div className="exam-title-sj">{exam.title}</div>
-            <div className="exam-deadline-sj">{exam.deadline}</div>
+            </div> */}
+            <div className="exam-title-sj">{exam.examName}</div>
+            <div className="exam-deadline-sj">{exam.examDate}</div>
             <div className="exam-buttons-sj">
               <button className="exam-btn-sj download">دریافت دفترچه</button>
               <button className="exam-btn-sj register">ثبت‌نام</button>
