@@ -53,60 +53,63 @@ const ContactForm = ({ onNext, handlePreviousStep }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="contact-form-sj">
-      <div className="form-group">
-        <label>تلفن همراه:</label>
-        <input type="text" {...register("phone")} />
-        {errors.phone && <span>{errors.phone.message}</span>}
+      <div className="contact-formWrapper">
+        <div className="form-group">
+          <label>تلفن همراه:</label>
+          <input type="text" {...register("phone")} />
+          {errors.phone && <span>{errors.phone.message}</span>}
+        </div>
+
+        <div className="form-group">
+          <label>کد پستی:</label>
+          <input type="text" {...register("postalCode")} />
+          {errors.postalCode && <span>{errors.postalCode.message}</span>}
+        </div>
+
+        <div className="form-group">
+          <label>استان:</label>
+          <select {...register("province")} onChange={handleProvinceChange}>
+            <option value="">انتخاب کنید</option>
+            {provinces.map((province, index) => (
+              <option key={index} value={province}>
+                {province}
+              </option>
+            ))}
+          </select>
+          {errors.province && <span>{errors.province.message}</span>}
+        </div>
+
+        <div className="form-group">
+          <label>شهر:</label>
+          <select {...register("city")} disabled={!selectedProvince}>
+            <option value="">انتخاب کنید</option>
+            {filteredCities.map((city, index) => (
+              <option key={index} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
+          {errors.city && <span>{errors.city.message}</span>}
+        </div>
+
+        <div className="form-group">
+          <label>آدرس:</label>
+          <textarea {...register("address")} rows="3"></textarea>
+          {errors.address && <span>{errors.address.message}</span>}
+        </div>
       </div>
 
-      <div className="form-group">
-        <label>کد پستی:</label>
-        <input type="text" {...register("postalCode")} />
-        {errors.postalCode && <span>{errors.postalCode.message}</span>}
+      <div className="contactSubmitBtns">
+        <button
+          onClick={handlePreviousStep}
+          className="submit-btn contactSubmit-btn"
+        >
+          مرحله قبل
+        </button>
+        <button type="submit" className="contactSubmit-btn">
+          مرحله بعد
+        </button>
       </div>
-
-      <div className="form-group">
-        <label>استان:</label>
-        <select {...register("province")} onChange={handleProvinceChange}>
-          <option value="">انتخاب کنید</option>
-          {provinces.map((province, index) => (
-            <option key={index} value={province}>
-              {province}
-            </option>
-          ))}
-        </select>
-        {errors.province && <span>{errors.province.message}</span>}
-      </div>
-
-      <div className="form-group">
-        <label>شهر:</label>
-        <select {...register("city")} disabled={!selectedProvince}>
-          <option value="">انتخاب کنید</option>
-          {filteredCities.map((city, index) => (
-            <option key={index} value={city}>
-              {city}
-            </option>
-          ))}
-        </select>
-        {errors.city && <span>{errors.city.message}</span>}
-      </div>
-
-      <div className="form-group">
-        <label>آدرس:</label>
-        <textarea {...register("address")} rows="3"></textarea>
-        {errors.address && <span>{errors.address.message}</span>}
-      </div>
-      <br />
-       <button
-        onClick={handlePreviousStep}
-        className="submit-btn contactSubmit-btn"
-      >
-        مرحله قبل
-      </button>
-      <button type="submit" className="contactSubmit-btn">
-        مرحله بعد
-      </button>
-     
     </form>
   );
 };

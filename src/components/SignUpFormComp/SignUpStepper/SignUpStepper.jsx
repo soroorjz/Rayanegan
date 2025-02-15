@@ -4,12 +4,14 @@ import SignUpForm from "../SignUpForm";
 import EducationForm from "./EducationForm/EducationForm";
 import ContactForm from "./ContactForm/ContactForm";
 import BackgroundForm from "./BackgroundForm/BackgroundForm";
+import FileInput from "../FileInput";
 const SignUpStepper = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  const persianNumbers = ["۱", "۲", "۳", "۴"];
+  const [gender, setGender] = useState(null);
+  const persianNumbers = ["۱", "۲", "۳", "۴","۵"];
 
-  const steps = [" اطلاعات فردی", "اطلاعات تحصیلی ", " اطلاعات محل سکونت", "پایان"];
+  const steps = [" اطلاعات فردی", "اطلاعات تحصیلی ", " اطلاعات محل سکونت","بارگذاری تصاویر", "پایان"];
 
   const handleNextStep = () => {
     if (currentStep < steps.length) {
@@ -33,7 +35,7 @@ const SignUpStepper = () => {
   const renderContent = () => {
     switch (currentStep) {
       case 1:
-        return <SignUpForm onNext={handleNextStep} />;
+        return <SignUpForm onNext={handleNextStep} setGender={setGender} />;
       case 2:
         return (
           <div>
@@ -55,9 +57,19 @@ const SignUpStepper = () => {
       case 4:
         return (
           <div>
+            <FileInput
+              handlePreviousStep={handlePreviousStep}
+              onNext={handleNextStep}
+            />
+          </div>
+        );
+      case 5:
+        return (
+          <div>
             <BackgroundForm
               handlePreviousStep={handlePreviousStep}
               onFinalSubmit={handleFinalSubmit}
+              gender={gender}
             />
           </div>
         );

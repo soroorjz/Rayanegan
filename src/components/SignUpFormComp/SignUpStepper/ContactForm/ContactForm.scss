@@ -7,63 +7,64 @@ $tablet-resize: 900px;
   padding: 30px 40px 50px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
+
   @include responsive($tablet) {
     width: 90%;
   }
+  .contact-formWrapper {
+    display: grid;
+    // grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
 
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
+      label {
+        font-size: 14px;
+        margin-bottom: 8px;
+        color: #555;
+      }
 
-    label {
-      font-size: 14px;
-      margin-bottom: 8px;
-      color: #555;
-    }
+      input,
+      select,
+      textarea {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
 
-    input,
-    select,
-    textarea {
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 14px;
+        &:focus {
+          border-color: #e55604;
+          outline: none;
+          box-shadow: 0 0 4px rgba(0, 86, 179, 0.3);
+        }
+      }
 
-      &:focus {
-        border-color: #e55604;
-        outline: none;
-        box-shadow: 0 0 4px rgba(0, 86, 179, 0.3);
+      span {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
       }
     }
-
-    span {
-      color: red;
-      font-size: 14px;
-      margin-top: 5px;
-    }
   }
-
-  .contactSubmit-btn {
-    width: 40%;
-    display: block;
-    margin:  0;
-    padding: 0;
-    background: #04364a;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    height: 50px;
-    font-size: 16px;
-    cursor: pointer;
-    align-self: flex-end;
-    justify-self: left;
-    transition: background 0.3s ease;
-    contactSubmit-btn &:hover {
-      background: #e55604;
+  .contactSubmitBtns {
+    display: flex;
+    gap: 15px;
+    .contactSubmit-btn {
+      padding: 12px;
+      background: #04364a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      height: 50px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      &:hover {
+        background: #e55604;
+      }
     }
   }
 }

@@ -10,7 +10,7 @@ const ExamSignUpForm = () => {
   return (
     <div className="examSignUpForm-Contaner">
       <NavbarTop hideJobSearch={true} />
-      <h2>فرم ثبت نام داوطلبان</h2>
+      <h2> ساخت حساب کاربری داوطلبان</h2>
       <SignUpStepper />
       <button className="homeBtn">
         <Link to="/">

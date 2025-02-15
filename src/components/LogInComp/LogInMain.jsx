@@ -76,8 +76,8 @@ const LogInMain = () => {
 
         <div className="register-link">
           <p>
-            عضو نیستید؟
-            <Link to="/signUpForm"> ثبت‌نام کنید</Link>
+            حساب کاربری ندارید؟
+            <Link to="/signUpForm"> ساخت حساب کاربری </Link>
           </p>
         </div>
       </div>

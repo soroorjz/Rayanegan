@@ -1,25 +1,50 @@
 .file-input-container {
+  display: grid;
+  grid-template-columns: repeat(3, 2fr); 
+  grid-template-rows: repeat(2, auto); 
+  gap: 15px;
+  width: 100%;
+}
+
+.file-upload-section {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  min-height: 120px;
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: #888;
+  }
+
   .upload-icon {
-    // width: 50px;
-    // height: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end; 
+    justify-content: center;
     font-size: 14px;
     color: #555;
     cursor: pointer;
+  }
 
+  .uploaded-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
   }
 
   .image-preview {
     position: relative;
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
+    margin-top: 10px;
 
     img {
       width: 100%;
@@ -49,5 +74,30 @@
   .error {
     color: red;
     font-size: 12px;
+    margin-top: 5px;
   }
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  width: 100%;
+  justify-content: flex-start;
+
+  .prev-button,
+  .next-button {
+    padding: 12px;
+    background: #04364a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    &:hover {
+      background: #e55604;
+    }
+  }
+
 }

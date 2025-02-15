@@ -27,7 +27,7 @@ const schema = yup.object().shape({
     .required("لطفاً میزان سابقه کار را وارد کنید"),
 });
 
-const BackgroundForm = ({ onFinalSubmit, handlePreviousStep }) => {
+const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
   const {
     register,
     handleSubmit,
@@ -66,31 +66,38 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep }) => {
           )}
         </div>
       )}
+      {gender === "male" && (
+        <>
+          <div className="form-group">
+            <label>وضعیت نظام وظیفه:</label>
+            <select {...register("militaryStatus")}>
+              <option value="">انتخاب کنید</option>
+              <option value="completed">پایان خدمت</option>
+              <option value="exempted">معاف</option>
+              <option value="not_completed">در حال خدمت</option>
+            </select>
+            {errors.militaryStatus && (
+              <span>{errors.militaryStatus.message}</span>
+            )}
+          </div>
 
-      <div className="form-group">
-        <label>وضعیت نظام وظیفه:</label>
-        <select {...register("militaryStatus")}>
-          <option value="">انتخاب کنید</option>
-          <option value="completed">پایان خدمت</option>
-          <option value="exempted">معاف</option>
-          <option value="not_completed">در حال خدمت</option>
-        </select>
-        {errors.militaryStatus && <span>{errors.militaryStatus.message}</span>}
-      </div>
+          <div className="form-group">
+            <label>میزان خدمت (ماه):</label>
+            <input type="number" {...register("serviceDuration")} />
+            {errors.serviceDuration && (
+              <span>{errors.serviceDuration.message}</span>
+            )}
+          </div>
 
-      <div className="form-group">
-        <label>میزان خدمت (ماه):</label>
-        <input type="number" {...register("serviceDuration")} />
-        {errors.serviceDuration && (
-          <span>{errors.serviceDuration.message}</span>
-        )}
-      </div>
-
-      <div className="form-group">
-        <label>تاریخ پایان خدمت:</label>
-        <input type="date" {...register("serviceEndDate")} />
-        {errors.serviceEndDate && <span>{errors.serviceEndDate.message}</span>}
-      </div>
+          <div className="form-group">
+            <label>تاریخ پایان خدمت:</label>
+            <input type="date" {...register("serviceEndDate")} />
+            {errors.serviceEndDate && (
+              <span>{errors.serviceEndDate.message}</span>
+            )}
+          </div>
+        </>
+      )}
 
       <div className="form-group">
         <label>میزان سابقه کار (ماه):</label>

@@ -1,6 +1,12 @@
 import React from "react";
 
-const RadioGroup = ({isChildrenEnabled, formData, handleChange, errors }) => {
+const RadioGroup = ({isChildrenEnabled, formData, handleChange,setGender, errors }) => {
+
+  const handleGenderChange = (e) => {
+    handleChange(e); // مقدار را در formData ذخیره می‌کند
+    setGender(e.target.value); // مقدار را در SignUpStepper ذخیره می‌کند
+  };
+
   return (
     <>
       <div className="form-group">
@@ -12,7 +18,7 @@ const RadioGroup = ({isChildrenEnabled, formData, handleChange, errors }) => {
               name="maritalStatus"
               value="single"
               checked={formData.maritalStatus === "single"}
-              onChange={handleChange}
+              onChange={handleGenderChange}
             />
             مجرد
           </label>
@@ -22,7 +28,7 @@ const RadioGroup = ({isChildrenEnabled, formData, handleChange, errors }) => {
               name="maritalStatus"
               value="married"
               checked={formData.maritalStatus === "married"}
-              onChange={handleChange}
+              onChange={handleGenderChange}
             />
             متأهل
           </label>

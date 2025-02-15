@@ -93,7 +93,7 @@ const NavbarTop = ({
           ) : (
             <div className="logInPart">
               <button>
-                <Link to="/logIn">ورود/ ثبت‌نام</Link>
+                <Link to="/logIn">ورود به حساب کاربری</Link>
               </button>
             </div>
           )}
@@ -140,7 +140,7 @@ const NavbarTop = ({
             </div>
           ) : (
             <button className="sidebar-login-button">
-              <Link to="/logIn">ورود/ ثبت‌نام</Link>
+              <Link to="/logIn">ورود به حساب کاربری</Link>
             </button>
           )}
 
