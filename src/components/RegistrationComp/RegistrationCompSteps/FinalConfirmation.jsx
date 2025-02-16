@@ -7,13 +7,16 @@ const FinalConfirmation = () => {
 
   return (
     <div className="exam-payment-form">
+        <div className="examPaymenTitle">
+            <h1>تایید نهایی و پرداخت</h1>
+        </div>
       <div className="exam-info">
         <h2>
-          نام آزمون:
-          <span></span>
+          عنوان آزمون:
+          <span>استخدام شرکت توزیع نیروی برق استان بوشهر</span>
         </h2>
         <h2>
-          هزینه آزمون: <span></span>
+          هزینه ثبت‌نام در آزمون: <span>۴,۰۰۰,۰۰۰ ریال</span>
         </h2>
       </div>
       <div className="checkbox-group">
@@ -23,7 +26,7 @@ const FinalConfirmation = () => {
             checked={agreeInfo}
             onChange={() => setAgreeInfo(!agreeInfo)}
           />
-          مشخصات، شغل، ملیت و نام آزمون را تایید می‌کنم.
+          مشخصات، شغل محل و نام آزمون را تایید می‌کنم.
         </label>
         <label>
           <input
