@@ -67,7 +67,7 @@ const FinalConfirmation = ({ handlePreviousStep }) => {
           className={`submit-button ${isDisabled ? "disabled-button" : ""}`}
           disabled={isDisabled}
         >
-          پرداخت
+          <a href="/src/behpardakht-Ui-main/index.html">پرداخت</a>
         </button>
       </div>
     </div>

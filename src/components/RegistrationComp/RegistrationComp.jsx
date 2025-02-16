@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import ConfirmInfo from "./RegistrationCompSteps/ConfirmInfo";
 import SelectRegion from "./RegistrationCompSteps/SelectRegion";
 import FinalConfirmation from "./RegistrationCompSteps/FinalConfirmation";
-import "./RegistrationComp.scss"
+import "./RegistrationComp.scss";
 import JobLocSelect from "./RegistrationCompSteps/JobLocSelect";
 const RegistrationComp = () => {
   const [currentStep, setCurrentStep] = useState(1);
