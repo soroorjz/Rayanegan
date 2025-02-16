@@ -12,7 +12,10 @@ const Footer = () => {
 
         <div className="newsletter-section">
           <h3>خبرنامه ما</h3>
-          <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ.</p>
+          <p>
+            با عضویت در خبرنامه، جدیدترین اخبار و اطلاعیه‌های آزمون‌های استخدامی
+            را مستقیماً در ایمیل خود دریافت کنید.
+          </p>
           <input type="email" placeholder="ایمیل" className="input email" />
           <br />
           <button className="submit-btn">عضویت</button>

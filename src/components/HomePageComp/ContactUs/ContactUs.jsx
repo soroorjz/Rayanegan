@@ -13,7 +13,7 @@ const ContactUs = () => {
           <div className="info-card">
             <div className="infoCardTitle">
               <span className="icon"> ایمیل: ✉️</span>
-              <span className="text">mail@influenca.id</span>
+              <span className="text">info@rayanegan.com</span>
             </div>
           </div>
           <div className="info-card">

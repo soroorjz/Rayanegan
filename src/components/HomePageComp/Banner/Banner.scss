@@ -12,8 +12,7 @@ $tablet-resize: 900px;
     gap: 20px;
   }
   @include responsive($laptop) {
-    width: 80%;
-    padding: 160px 0 100px; 
+    padding: 160px 0 100px;
     height: 100vh;
   }
 
@@ -26,7 +25,6 @@ $tablet-resize: 900px;
     img {
       width: 100%;
       border-radius: 10px;
-     
     }
     @include responsive($tablet-resize) {
       width: 60%;
@@ -44,16 +42,21 @@ $tablet-resize: 900px;
       width: 50%;
     }
     .sloganTitle {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center;
       h1 {
         font-size: 27px;
         line-height: 35px;
+        margin-bottom: 15px;
       }
       p {
-        margin: 25px 0;
+        // margin: 25px 0;
         line-height: 27px;
-        text-align: justify;
+        // text-align: justify;
+        font-size: 18px;
         @include responsive($tablet) {
-          margin: 25px 0;
           line-height: 30px;
         }
       }
