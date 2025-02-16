@@ -1,7 +1,7 @@
 .exam-payment-form {
   width: 85%;
   height: 70vh;
-  margin: 100px auto 0;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -78,21 +78,33 @@
       }
     }
   }
-  .submit-button {
-    width: 20%;
-    display: block;
-    margin: 20px 0;
-    padding: 12px;
-    background: #04364a;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+  .exam-paymentBtns {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    .submit-button {
+      width: 20%;
+      display: block;
+      margin: 20px 0;
+      padding: 12px;
+      background: #04364a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
 
-    &:hover {
-      background: #e55604;
+      &:hover {
+        background: #e55604;
+      }
+    }
+    .disabled-button {
+      background: #04364ac9;
+      cursor: not-allowed;
+      &:hover {
+        background-color: #555555a4;
+      }
     }
   }
 }

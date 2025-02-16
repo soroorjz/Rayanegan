@@ -1,8 +1,6 @@
 .job-selection {
   width: 80%;
-  margin: 100px auto 0;
-  font-family: Arial, sans-serif;
-
+  margin: 0 auto;
   .tabs {
     display: flex;
     justify-content: center;
@@ -29,7 +27,6 @@
       border-bottom-left-radius: 10px;
     }
   }
-
   .table-container {
     text-align: center;
 
@@ -47,21 +44,28 @@
       }
     }
   }
-  .JobLocSelectBtn{
+  .JobLocSelectBtn {
     width: 20%;
-      display: block;
-      margin: 20px 0;
-      padding: 12px;
-      background: #04364a;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s ease;
+    display: block;
+    margin: 20px 0;
+    padding: 12px;
+    background: #04364a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
 
-      &:hover {
-        background: #e55604;
-      }
+    &:hover {
+      background: #e55604;
+    }
+  }
+  .disabled-btn {
+    background: #04364ac9;
+    cursor: not-allowed;
+    &:hover {
+      background-color: #555555a4;
+    }
   }
 }

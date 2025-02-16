@@ -119,11 +119,11 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
       )}
 
       <div className="SelectRegionSubmitBtns">
-        <button className="RegionSubmitBtn" onClick={onNext}>
-          مرحله بعد
-        </button>
         <button className="RegionPrevBtn" onClick={handlePreviousStep}>
           مرحله قبل
+        </button>
+        <button className="RegionSubmitBtn" onClick={onNext}>
+          مرحله بعد
         </button>
       </div>
     </div>

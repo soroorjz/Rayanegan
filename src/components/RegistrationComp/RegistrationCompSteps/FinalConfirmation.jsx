@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import "./FinalConfirmation.scss";
-const FinalConfirmation = () => {
+const FinalConfirmation = ({ handlePreviousStep }) => {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [agreeInfo, setAgreeInfo] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("online");
 
+  const isDisabled = !(agreeTerms && agreeInfo);
+
   return (
     <div className="exam-payment-form">
-        <div className="examPaymenTitle">
-            <h1>تایید نهایی و پرداخت</h1>
-        </div>
+      <div className="examPaymenTitle">
+        <h1>تایید نهایی و پرداخت</h1>
+      </div>
       <div className="exam-info">
         <h2>
           عنوان آزمون:
@@ -57,7 +59,17 @@ const FinalConfirmation = () => {
           />
         </label>
       </div>
-      <button className="submit-button">پرداخت</button>
+      <div className="exam-paymentBtns">
+        <button className="submit-button" onClick={handlePreviousStep}>
+          مرحله قبل
+        </button>
+        <button
+          className={`submit-button ${isDisabled ? "disabled-button" : ""}`}
+          disabled={isDisabled}
+        >
+          پرداخت
+        </button>
+      </div>
     </div>
   );
 };

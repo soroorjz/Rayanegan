@@ -11,26 +11,47 @@ const jobs = [
   { id: 3, code: "1003", title: "حسابدار", location: "اصفهان - شمالی" },
 ];
 
-const JobLocSelect = ({onNext}) => {
+const JobLocSelect = ({ onNext }) => {
   const [selectedTab, setSelectedTab] = useState("manual");
   const [selectedJob, setSelectedJob] = useState(null);
+  const [error, setError] = useState(false);
+
+  const handleTabChange = (tab) => {
+    setSelectedTab(tab);
+    if (tab === "manual") {
+      setSelectedJob(null); // پاک کردن انتخاب قبلی
+    } else {
+      setSelectedJob(jobs[0]?.id || null); // انتخاب اولین شغل هنگام تغییر به "smart"
+    }
+    setError(false);
+  };
+
+  const handleNext = () => {
+    if (selectedTab === "manual" && !selectedJob) {
+      setError(true);
+    } else {
+      setError(false);
+      onNext();
+    }
+  };
 
   return (
     <div className="job-selection">
       <div className="tabs">
         <button
           className={selectedTab === "manual" ? "manual active" : "manual"}
-          onClick={() => setSelectedTab("manual")}
+          onClick={() => handleTabChange("manual")}
         >
           انتخاب شغل محل توسط داوطلب
         </button>
         <button
-          className={selectedTab === "smart" ? " smart active" : "smart"}
-          onClick={() => setSelectedTab("smart")}
+          className={selectedTab === "smart" ? "smart active" : "smart"}
+          onClick={() => handleTabChange("smart")}
         >
-           انتخاب هوشمند شغل محل بر اساس مشخصات داوطلب
+          انتخاب هوشمند شغل محل بر اساس مشخصات داوطلب
         </button>
       </div>
+
       <div className="table-container">
         {selectedTab === "manual" ? (
           <table className="job-table">
@@ -53,7 +74,10 @@ const JobLocSelect = ({onNext}) => {
                       type="radio"
                       name="job"
                       checked={selectedJob === job.id}
-                      onChange={() => setSelectedJob(job.id)}
+                      onChange={() => {
+                        setSelectedJob(job.id);
+                        setError(false);
+                      }}
                     />
                   </td>
                 </tr>
@@ -71,16 +95,26 @@ const JobLocSelect = ({onNext}) => {
             </thead>
             <tbody>
               <tr>
-                <td>{jobs[0].code}</td>
-                <td>{jobs[0].title}</td>
-                <td>{jobs[0].location}</td>
+                <td>{jobs[0]?.code}</td>
+                <td>{jobs[0]?.title}</td>
+                <td>{jobs[0]?.location}</td>
               </tr>
             </tbody>
           </table>
         )}
       </div>
 
-      <button className="JobLocSelectBtn" onClick={onNext}>
+      {error && (
+        <p className="error-message">لطفاً شغل محل خود را انتخاب کنید.</p>
+      )}
+
+      <button
+        className={`JobLocSelectBtn ${
+          selectedTab === "manual" && !selectedJob ? "disabled-btn" : ""
+        }`}
+        onClick={handleNext}
+        disabled={selectedTab === "manual" && !selectedJob}
+      >
         مرحله بعد
       </button>
     </div>
