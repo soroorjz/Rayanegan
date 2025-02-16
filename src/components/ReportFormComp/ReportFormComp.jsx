@@ -255,7 +255,7 @@ const ReportFormComp = () => {
           <p>کد کپچا</p>
         </div>
 
-        <button type="submit">تایید و دریافت کد پیگیری</button>
+        <button type="submit">تأیید و دریافت کد پیگیری</button>
       </form>
 
       {isModalOpen && (

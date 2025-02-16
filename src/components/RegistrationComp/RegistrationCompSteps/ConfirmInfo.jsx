@@ -1,10 +1,114 @@
-import React from "react";
-import "./ConfirmInfo.scss"
-const ConfirmInfo = ({ onNext }) => {
+import React, { useState } from "react";
+import { FaUser, FaGraduationCap, FaHome, FaBriefcase } from "react-icons/fa";
+import "./ConfirmInfo.scss";
+import { Link } from "react-router";
+
+const sections = [
+  {
+    id: 1,
+    title: "اطلاعات فردی",
+    icon: <FaUser />,
+    fields: {
+      نام: "علی",
+      "نام خانوادگی": "رضایی",
+      "نام پدر": "محمد",
+      "کد ملی": "1234567890",
+      "شماره شناسنامه": "9876543210",
+      "تاریخ تولد": "1375/05/12",
+      دین: "اسلام",
+      "استان محل تولد": "تهران",
+      "شهرستان محل تولد": "تهران",
+      "وضعیت تاهل": "مجرد",
+      "تعداد فرزندان": "0",
+      جنسیت: "مرد",
+    },
+  },
+  {
+    id: 2,
+    title: "اطلاعات تحصیلی",
+    icon: <FaGraduationCap />,
+    fields: {
+      "مقطع تحصیلی": "کارشناسی",
+      "رشته تحصیلی": "مهندسی نرم‌افزار",
+      "نوع دانشگاه": "سراسری",
+      "نام دانشگاه": "دانشگاه تهران",
+      "تاریخ فارغ‌التحصیلی": "1400/06/30",
+      معدل: "17.5",
+    },
+  },
+  {
+    id: 3,
+    title: "اطلاعات محل سکونت",
+    icon: <FaHome />,
+    fields: {
+      "تلفن همراه": "09123456789",
+      "کد پستی": "1234567890",
+      استان: "تهران",
+      شهر: "تهران",
+      آدرس: "خیابان آزادی، پلاک 10",
+    },
+  },
+  {
+    id: 4,
+    title: "سوابق",
+    icon: <FaBriefcase />,
+    fields: {
+      سهمیه: "ندارد",
+      "وضعیت نظام وظیفه": "پایان خدمت",
+      "میزان خدمت (ماه)": "24",
+      "تاریخ پایان خدمت": "1402/01/01",
+    },
+  },
+];
+
+const ConfirmInfo = ({ onNext, handlePreviousStep }) => {
+  const [isChecked, setIsChecked] = useState(false);
   return (
-    <div className="confirm-infoContainer">
-      <div className="confirm-Desc">asdexughc Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus esse, ab ex architecto facere repudiandae fuga provident. Provident possimus aliquid consectetur quod, exercitationem facere blanditiis vel eveniet delectus aliquam eum!</div>
-      <button onClick={onNext}>بعدی</button>
+    <div className="timeline-container">
+      {sections.map((section, index) => (
+        <div
+          key={section.id}
+          className={`timeline-item ${
+            index === sections.length - 1 ? "last-item" : ""
+          }`}
+        >
+          <div className="timelineTitlePart">
+            <div className="icon-container">{section.icon}</div>
+            <h3 className="section-title">{section.title}</h3>
+          </div>
+          <div className="ConfirmInfoForm-container">
+            <div className="section-form">
+              {Object.entries(section.fields).map(([label, value], i) => (
+                <div key={i} className="form-group">
+                  <span className="form-label">{label}:</span>
+                  <span className="form-value">{value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+      <label className="infoConfirmed">
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={(e) => setIsChecked(e.target.checked)}
+        />
+        مشخصات فوق مورد تأیید است.
+      </label>
+      <div className="ConfirmInfoBtns">
+        <button>
+          <Link to="/profile">ویرایش اطلاعات </Link>
+        </button>
+        <button onClick={handlePreviousStep}>صفحه قبل</button>
+        <button
+          className={`submit-button ${!isChecked ? "disabled-button" : ""}`}
+          disabled={!isChecked}
+          onClick={onNext}
+        >
+          صفحه بعد
+        </button>
+      </div>
     </div>
   );
 };

@@ -10,7 +10,7 @@ const FinalConfirmation = ({ handlePreviousStep }) => {
   return (
     <div className="exam-payment-form">
       <div className="examPaymenTitle">
-        <h1>تایید نهایی و پرداخت</h1>
+        <h1>تأیید نهایی و پرداخت</h1>
       </div>
       <div className="exam-info">
         <h2>
@@ -28,7 +28,7 @@ const FinalConfirmation = ({ handlePreviousStep }) => {
             checked={agreeInfo}
             onChange={() => setAgreeInfo(!agreeInfo)}
           />
-          مشخصات، شغل محل و نام آزمون را تایید می‌کنم.
+          مشخصات، شغل محل و نام آزمون را تأیید می‌کنم.
         </label>
         <label>
           <input

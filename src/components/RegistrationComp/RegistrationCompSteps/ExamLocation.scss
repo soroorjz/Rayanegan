@@ -1,0 +1,90 @@
+.location-container {
+  width: 80%;
+  display: flex;
+  height: 75%;
+  margin: 0 auto;
+  text-align: right;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #04364a;
+  }
+  .ExamLocation-selections {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    .selection-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 10px;
+
+      label {
+        font-size: 16px;
+        margin-left: 10px;
+      }
+
+      .select-box {
+        width: 150px;
+        padding: 5px;
+        border: 1px solid #000;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .info-list {
+    margin-top: 15px;
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      margin-bottom: 5px;
+
+      .icon {
+        margin-left: 8px;
+        color: #e55604;
+      }
+    }
+  }
+
+  .ExamLocationSubmitBtns {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+    button {
+      width: 20%;
+      display: block;
+      margin: 20px 0;
+      padding: 12px;
+      background: #04364a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: #e55604;
+      }
+    }
+    .disabled-button {
+      background: #04364ac9;
+      cursor: not-allowed;
+      &:hover {
+        background-color: #555555a4;
+      }
+    }
+  }
+}
