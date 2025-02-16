@@ -14,7 +14,6 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
 
     if (!file) return;
 
-    // چک کردن فرمت فایل
     const allowedFormats = [
       "image/jpeg",
       "image/png",
@@ -28,7 +27,6 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
       return;
     }
 
-    // چک کردن حجم فایل (حداکثر 2 مگابایت)
     const maxSize = 2 * 1024 * 1024;
     if (file.size > maxSize) {
       setError("حجم فایل بیش از 2 مگابایت است!");
@@ -42,8 +40,10 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
   const removeFile = () => {
     setSelectedFile(null);
     setError("");
-    document.getElementById("file-upload").value = ""; // ریست کردن مقدار ورودی فایل
+    document.getElementById("file-upload").value = "";
   };
+
+  const isNextDisabled = residency === "بومی" && !selectedFile;
 
   return (
     <div className="job-selection-residency">
@@ -85,7 +85,11 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
 
       {residency === "بومی" && (
         <div className="boomi-options">
-          <a href="#" className="download-link">
+          <a
+            href="/assets/forms/native_form2.pdf"
+            className="download-link"
+            download
+          >
             <FaDownload /> دریافت فرم استشهادنامه محلی
           </a>
 
@@ -122,7 +126,11 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
         <button className="RegionPrevBtn" onClick={handlePreviousStep}>
           مرحله قبل
         </button>
-        <button className="RegionSubmitBtn" onClick={onNext}>
+        <button
+          className={`RegionSubmitBtn ${isNextDisabled ? "disabled-btn" : ""}`}
+          onClick={onNext}
+          disabled={isNextDisabled}
+        >
           مرحله بعد
         </button>
       </div>

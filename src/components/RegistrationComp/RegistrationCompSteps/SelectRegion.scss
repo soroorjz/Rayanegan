@@ -124,5 +124,12 @@
         background: #e55604;
       }
     }
+    .disabled-btn {
+      background: #04364ac9;
+      cursor: not-allowed;
+      &:hover {
+        background-color: #555555a4;
+      }
+    }
   }
 }
