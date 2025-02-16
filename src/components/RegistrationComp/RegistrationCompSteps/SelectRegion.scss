@@ -1,0 +1,128 @@
+.job-selection-residency {
+  width: 80%;
+  height: auto;
+  margin: 100px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .rules {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    color: #505050;
+  }
+
+  .selection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    svg {
+      color: #e55604;
+    }
+
+    .residency-select {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  }
+
+  .boomi-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .download-link {
+      color: #505050;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      svg {
+        margin-left: 3px;
+      }
+
+      &:hover {
+        color: #000;
+      }
+    }
+
+    .upload-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border: 2px dashed #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      width: max-content;
+
+      .upload-label {
+        font-size: 14px;
+        color: #505050;
+        cursor: pointer;
+      }
+      .error-message {
+        color: red;
+        font-size: 12px;
+      }
+
+      .preview {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        position: relative;
+        .preview-image {
+          width: 50px;
+          height: 50px;
+          border-radius: 5px;
+          object-fit: cover;
+        }
+
+        .remove-preview {
+          background-color: #e74c3c;
+          color: #fff;
+          width: 20px;
+          height: 20px;
+          border: none;
+          padding: 4px;
+          top: 0;
+          left: 0;
+          position: absolute;
+          border-radius: 50%;
+          cursor: pointer;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .SelectRegionSubmitBtns {
+    display: flex;
+    gap: 15px;
+    button {
+      width: 20%;
+      display: block;
+      margin: 20px 0;
+      padding: 12px;
+      background: #04364a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: #e55604;
+      }
+    }
+  }
+}

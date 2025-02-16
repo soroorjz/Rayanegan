@@ -26,7 +26,6 @@ function App() {
         <Route path="/EmploymentTests" element={<EmploymentTests />} />
         <Route path="/ReportTracking" element={<ReportTracking />} />
         <Route path="/RegistrationPage" element={<RegistrationPage />} />
-        {/* <Route path="/" element={<RegistrationPage />} /> */}
       </Routes>
     </AuthProvider>
   );

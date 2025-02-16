@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./ExamInfoComponent.scss";
 import { examSections } from "./examInfoData";
 import ExamForm from "../HomePageComp/ExamForm/ExamForm";
+import { Link } from "react-router";
 const ExamInfoComponent = () => {
   const [activeSection, setActiveSection] = useState("introduction");
 
@@ -61,6 +62,7 @@ const ExamInfoComponent = () => {
         <section id="announcements" className="exam-section-sj">
           <h2>اطلاعیه‌ها</h2>
           <p>اطلاعات مربوط به اطلاعیه‌ها در این بخش قرار می‌گیرد.</p>
+          <Link to="/RegistrationPage">ثبت نام</Link>
         </section>
       )}
 

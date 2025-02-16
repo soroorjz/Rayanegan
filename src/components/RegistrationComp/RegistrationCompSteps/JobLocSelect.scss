@@ -1,0 +1,67 @@
+.job-selection {
+  width: 80%;
+  margin: 100px auto 0;
+  font-family: Arial, sans-serif;
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      width: 40%;
+      background-color: #04364a;
+      color: white;
+
+      cursor: pointer;
+      &.active {
+        background-color: #e55604;
+      }
+    }
+    .manual {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+    .smart {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+  }
+
+  .table-container {
+    text-align: center;
+
+    .job-table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      th {
+        background-color: #f4f4f4;
+      }
+    }
+  }
+  .JobLocSelectBtn{
+    width: 20%;
+      display: block;
+      margin: 20px 0;
+      padding: 12px;
+      background: #04364a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: #e55604;
+      }
+  }
+}
