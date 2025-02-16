@@ -48,6 +48,9 @@ const ExamInfoComponent = () => {
               <p className="description">{item.description}</p>
             </div>
           ))}
+          <button className="RegistrationPageBtn">
+          <Link to="/RegistrationPage">ثبت نام</Link>
+          </button>
         </section>
       )}
 
@@ -62,7 +65,7 @@ const ExamInfoComponent = () => {
         <section id="announcements" className="exam-section-sj">
           <h2>اطلاعیه‌ها</h2>
           <p>اطلاعات مربوط به اطلاعیه‌ها در این بخش قرار می‌گیرد.</p>
-          <Link to="/RegistrationPage">ثبت نام</Link>
+          {/* <Link to="/RegistrationPage">ثبت نام</Link> */}
         </section>
       )}
 

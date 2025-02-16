@@ -3,13 +3,21 @@ import SelectRegion from "./RegistrationCompSteps/SelectRegion";
 import FinalConfirmation from "./RegistrationCompSteps/FinalConfirmation";
 import "./RegistrationComp.scss";
 import JobLocSelect from "./RegistrationCompSteps/JobLocSelect";
+import ConfirmInfo from "./RegistrationCompSteps/ConfirmInfo";
+import ExamLocation from "./RegistrationCompSteps/ExamLocation";
 const RegistrationComp = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [gender, setGender] = useState(null);
   const persianNumbers = ["۱", "۲", "۳", "۴", "۵"];
 
-  const steps = ["انتخاب شغل محل", "وضعیت محل آزمون ", "تایید نهایی و پرداخت"];
+  const steps = [
+    "انتخاب شغل محل",
+    "وضعیت محل آزمون ",
+    "وضعیت محل سکونت",
+    "تایید مشخصات",
+    "تایید نهایی و پرداخت",
+  ];
 
   const handleNextStep = () => {
     if (currentStep < steps.length) {
@@ -36,13 +44,27 @@ const RegistrationComp = () => {
         return <JobLocSelect onNext={handleNextStep} setGender={setGender} />;
       case 2:
         return (
+          <ExamLocation
+            onNext={handleNextStep}
+            handlePreviousStep={handlePreviousStep}
+          />
+        );
+      case 3:
+        return (
           <SelectRegion
             onNext={handleNextStep}
             handlePreviousStep={handlePreviousStep}
           />
         );
+      case 4:
+        return (
+          <ConfirmInfo
+            onNext={handleNextStep}
+            handlePreviousStep={handlePreviousStep}
+          />
+        );
 
-      case 3:
+      case 5:
         return (
           <FinalConfirmation
             onFinalSubmit={handleFinalSubmit}

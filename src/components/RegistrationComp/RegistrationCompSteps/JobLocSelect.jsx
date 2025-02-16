@@ -3,12 +3,12 @@ import "./JobLocSelect.scss";
 const jobs = [
   {
     id: 1,
-    code: "1001",
+    code: "۱۰۰۱",
     title: "دبیر تربیت بدنی",
     location: "آذربایجان شرقی - میانه",
   },
-  { id: 2, code: "1002", title: "مهندس کامپیوتر", location: "تهران - مرکزی" },
-  { id: 3, code: "1003", title: "حسابدار", location: "اصفهان - شمالی" },
+  { id: 2, code: "۱۰۰۲", title: "مهندس کامپیوتر", location: "تهران - مرکزی" },
+  { id: 3, code: "۱۰۰۳", title: "حسابدار", location: "اصفهان - شمالی" },
 ];
 
 const JobLocSelect = ({ onNext }) => {
@@ -21,13 +21,13 @@ const JobLocSelect = ({ onNext }) => {
     if (tab === "manual") {
       setSelectedJob(null); // پاک کردن انتخاب قبلی
     } else {
-      setSelectedJob(jobs[0]?.id || null); // انتخاب اولین شغل هنگام تغییر به "smart"
+      setSelectedJob(null); // در ابتدا هیچ شغلی انتخاب نشده باشد
     }
     setError(false);
   };
 
   const handleNext = () => {
-    if (selectedTab === "manual" && !selectedJob) {
+    if (!selectedJob) {
       setError(true);
     } else {
       setError(false);
@@ -91,6 +91,7 @@ const JobLocSelect = ({ onNext }) => {
                 <th>کد شغل محل</th>
                 <th>شغل</th>
                 <th>محل خدمت</th>
+                <th>انتخاب</th>
               </tr>
             </thead>
             <tbody>
@@ -98,6 +99,17 @@ const JobLocSelect = ({ onNext }) => {
                 <td>{jobs[0]?.code}</td>
                 <td>{jobs[0]?.title}</td>
                 <td>{jobs[0]?.location}</td>
+                <td>
+                  <input
+                    type="radio"
+                    name="job"
+                    checked={selectedJob === jobs[0]?.id}
+                    onChange={() => {
+                      setSelectedJob(jobs[0]?.id);
+                      setError(false);
+                    }}
+                  />
+                </td>
               </tr>
             </tbody>
           </table>
@@ -109,16 +121,13 @@ const JobLocSelect = ({ onNext }) => {
       )}
 
       <button
-        className={`JobLocSelectBtn ${
-          selectedTab === "manual" && !selectedJob ? "disabled-btn" : ""
-        }`}
+        className={`JobLocSelectBtn ${!selectedJob ? "disabled-btn" : ""}`}
         onClick={handleNext}
-        disabled={selectedTab === "manual" && !selectedJob}
+        disabled={!selectedJob}
       >
         مرحله بعد
       </button>
     </div>
   );
 };
-
 export default JobLocSelect;

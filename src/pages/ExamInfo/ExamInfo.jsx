@@ -95,7 +95,7 @@ const ExamInfo = () => {
         endDate={endDate}
         cardIssueDate={cardIssueDate}
         eventDate={eventDate}
-        toPersianDigits={toPersianDigits} // تابع را به کامپوننت ارسال کن
+        toPersianDigits={toPersianDigits} 
         examName={examData.examName}
       />
 

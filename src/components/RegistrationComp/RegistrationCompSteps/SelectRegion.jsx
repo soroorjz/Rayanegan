@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import "./SelectRegion.scss";
 import { FaCheckDouble } from "react-icons/fa6";
 import { FaDownload } from "react-icons/fa6";
+import Swal from "sweetalert2";
 import { FaTimes } from "react-icons/fa";
-import { FaUpload } from "react-icons/fa6";
+import { GoQuestion } from "react-icons/go";
 const SelectRegion = ({ onNext, handlePreviousStep }) => {
   const [residency, setResidency] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -35,6 +36,35 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
 
     setSelectedFile(URL.createObjectURL(file));
     setError("");
+  };
+
+  const handleShowOathInfo = () => {
+    Swal.fire({
+      title: "توضیحات استشهاد محلی",
+      html: `
+        <h2>گام اول</h2>
+        <p>
+      فرم را از طریق فایل پیوست قرار داده شده دانلود نمایید.</p>
+          <h2>گام دوم</h2>
+            <p> برگه استشهاد محلی را بصورت چاپ شده تهیه نمایید. (می‌توانید در خانه و یا از طریق کافی‌نت فرم را پرینت بگیرید)</p>
+          <h2>گام سوم</h2>
+          <p> در بخش اول فرم، نام و نام خانوادگی، نام پدر و کد ملی خود را وارد کنید. (امضا و اثر انگشت الزامی است)
+      </p>
+          <h2>گام چهارم</h2>
+          <p>در بخش دوم، سه نفر باید ساکن بودن شما را در شهرستان مورد تقاضا با امضا و اثر انگشت گواهی نمایند.</p>
+          <h2>گام پنجم</h2>
+
+      <p>برای ممهور کردن فرم استشهاد محلی، برگه را به نیروی انتظامی (پاسگاه یا کلانتری محل) یا فرمانداری شهرستان مورد تقاضا مراجعه نموده و تاییدیه لازم را بگیرید.</p>
+        
+      `,
+
+      customClass: {
+        popup: "swalOathInfoPopup",
+        title: "swalOathInfoTitle",
+        confirmButton: "swalOathInfoBtn",
+      },
+      confirmButtonText: "متوجه شدم",
+    });
   };
 
   const removeFile = () => {
@@ -85,6 +115,11 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
 
       {residency === "بومی" && (
         <div className="boomi-options">
+          <p className="OathPart" onClick={handleShowOathInfo}>
+            <GoQuestion className="modalIcon" />
+            توضیحات استشهاد محلی
+          </p>
+
           <a
             href="/assets/forms/native_form2.pdf"
             className="download-link"
@@ -92,7 +127,6 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
           >
             <FaDownload /> دریافت فرم استشهادنامه محلی
           </a>
-
           <div className="upload-wrapper">
             <label htmlFor="file-upload" className="upload-label">
               بارگذاری فرم استشهادنامه محلی

@@ -6,19 +6,22 @@ const exams = [
   {
     id: 1,
     name: "آزمون استخدامی نیروی انسانی سازمان زندان‌ها و اقدامات تامینی و تربیتی کشور",
-    num:"۱۲۰۲۵",
+    jobLoc: "آموزگار ابتدایی (استثنایی) تهران - بهارستان",
+    num: "۱۲۰۲۵",
     date: "۱۴۰۲/۱۰/۱۵",
   },
   {
     id: 2,
     name: "آزمون استخدام نیروی پیمانی مشاغل عملیاتی آتش‌نشانی شهرداری‌های کشور",
-    num:"۱۰۷۲۵",
+    jobLoc: "آموزگار ابتدایی (استثنایی) تهران - بهارستان",
+    num: "۱۰۷۲۵",
     date: "۱۴۰۲/۱۱/۲۰",
   },
   {
     id: 3,
     name: "آزمون استخدامی مشاغل کیفیت‌بخشی وزارت آموزش و پرورش",
-    num:"۱۰۲۵۵",
+    jobLoc: "آموزگار ابتدایی (استثنایی) تهران - بهارستان",
+    num: "۱۰۲۵۵",
     date: "۱۴۰۲/۱۲/۱۰",
   },
 ];
@@ -30,6 +33,7 @@ const ExamFormResult = () => {
           <span className="ResultExam-name">{exam.name}</span>
           <span className="ResultExam-date">{exam.date}</span>
           <span className="ResultExam-date">{exam.num}</span>
+          <span className="ResultExam-jobLoc">{exam.jobLoc}</span>
           <a
             className="ResultExam-more"
             href={`/examInfo/${exam.name}`}

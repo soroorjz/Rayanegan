@@ -81,4 +81,22 @@ $tablet-resize: 900px;
       }
     }
   }
+  .RegistrationPageBtn{
+    width: 20%;
+    display: block;
+    margin: 20px 0;
+    padding: 12px;
+    background: #04364a;
+    justify-self: center;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: #e55604;
+    }
+  }
 }
