@@ -8,6 +8,7 @@ import { examData } from "../MyExams/data";
 import "./ExamEntryCopm.scss";
 import ExamEntryCard from "./ExamEntryCard";
 
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -35,7 +36,10 @@ const ExamEntryCopm = () => {
   return (
     <div className="Entry-list">
       <h2>کارت‌های ورود به آزمون</h2>
-      <div className="Entry-selection">
+      <div
+        className="Entry-selection"
+        style={{ display: "flex", alignItems: "center", gap: "10px" }}
+      >
         <label>انتخاب آزمون:</label>
         <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
           <Select
@@ -72,19 +76,28 @@ const ExamEntryCopm = () => {
             ))}
           </Select>
         </FormControl>
+        {selectedExam &&
+          exams.find((exam) => exam.id === selectedExam)?.status === "card" && (
+            <button className="exam-card-button">دریافت کارت آزمون</button>
+          )}
       </div>
       <div className="Exam-result">
-        {selectedExam && (
-          exams.find((exam) => exam.id === selectedExam)?.status === "card" ? (
+        {selectedExam &&
+          (exams.find((exam) => exam.id === selectedExam)?.status === "card" ? (
             <ExamEntryCard />
-          ) : exams.find((exam) => exam.id === selectedExam)?.status === "not_issued" ? (
-            <p style={{ color: "orange" }}>در حال حاضر کارت آزمون صادر نشده است.</p>
+          ) : exams.find((exam) => exam.id === selectedExam)?.status ===
+            "not_issued" ? (
+            <p style={{ color: "orange" }}>
+              در حال حاضر کارت آزمون صادر نشده است.
+            </p>
           ) : (
-            <p style={{ color: "red" }}>مهلت دریافت کارت آزمون به پایان رسیده است.</p>
-          )
-        )}
+            <p style={{ color: "red" }}>
+              مهلت دریافت کارت آزمون به پایان رسیده است.
+            </p>
+          ))}
       </div>
     </div>
   );
 };
+
 export default ExamEntryCopm;
