@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import "./SupportHelpCenter.scss";
-// import { SlLike } from "react-icons/sl";
-// import { SlDislike } from "react-icons/sl";
 import { categories } from "./SupportHelpCenterData";
 import SupportAptions from "./SupportAptions/SupportAptions";
 
@@ -84,14 +82,12 @@ const SupportHelpCenter = () => {
               onClick={() => handleFeedbackClick("like")}
               className="like-button"
             >
-              {/* <SlLike /> */}
               مفید بود
             </button>
             <button
               onClick={() => handleFeedbackClick("dislike")}
               className="dislike-button"
             >
-              {/* <SlDislike /> */}
               نیاز به راهنمایی بیشتر دارم
             </button>
           </div>
