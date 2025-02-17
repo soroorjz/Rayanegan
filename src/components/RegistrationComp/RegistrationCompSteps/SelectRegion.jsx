@@ -3,13 +3,12 @@ import "./SelectRegion.scss";
 import { FaCheckDouble } from "react-icons/fa6";
 import { FaDownload } from "react-icons/fa6";
 import { FaTimes } from "react-icons/fa";
-import { FaCircle } from "react-icons/fa";
 import { GoQuestion } from "react-icons/go";
 const SelectRegion = ({ onNext, handlePreviousStep }) => {
   const [residency, setResidency] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false); // برای نمایش مودال
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];

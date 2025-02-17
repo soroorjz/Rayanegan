@@ -3,8 +3,10 @@ import "./ExamInfoComponent.scss";
 import { examSections } from "./examInfoData";
 import ExamForm from "../HomePageComp/ExamForm/ExamForm";
 import { Link } from "react-router";
+import { useAuth } from "../../AuthContext";
 const ExamInfoComponent = () => {
   const [activeSection, setActiveSection] = useState("introduction");
+  const { user } = useAuth(); 
 
   return (
     <div className="exam-info-sj">
@@ -38,6 +40,7 @@ const ExamInfoComponent = () => {
           جست و جوی مشاغل
         </button>
       </nav>
+
       {activeSection === "introduction" && (
         <section id="introduction" className="exam-section-sj">
           <h2>معرفی آزمون</h2>
@@ -49,7 +52,9 @@ const ExamInfoComponent = () => {
             </div>
           ))}
           <button className="RegistrationPageBtn">
-          <Link to="/RegistrationPage">ثبت نام</Link>
+            <Link to={user ? "/RegistrationPage" : "/logIn"}>
+              {user ? "ثبت نام" : "ورود به حساب کاربری"}
+            </Link>
           </button>
         </section>
       )}
@@ -65,7 +70,6 @@ const ExamInfoComponent = () => {
         <section id="announcements" className="exam-section-sj">
           <h2>اطلاعیه‌ها</h2>
           <p>اطلاعات مربوط به اطلاعیه‌ها در این بخش قرار می‌گیرد.</p>
-          {/* <Link to="/RegistrationPage">ثبت نام</Link> */}
         </section>
       )}
 
