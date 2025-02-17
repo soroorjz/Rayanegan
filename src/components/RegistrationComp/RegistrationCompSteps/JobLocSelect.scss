@@ -1,6 +1,13 @@
+@import "../../../styles/responsive.scss";
+
+$tablet-resize: 900px;
+
 .job-selection {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
+  @include responsive($tablet) {
+    width: 80%;
+  }
   .tabs {
     display: flex;
     justify-content: center;
@@ -9,9 +16,12 @@
     button {
       padding: 10px 20px;
       border: none;
-      width: 40%;
+      width: 50%;
       background-color: #04364a;
       color: white;
+      @include responsive($tablet) {
+        width: 40%;
+      }
 
       cursor: pointer;
       &.active {
@@ -44,8 +54,17 @@
       }
     }
   }
+  .selected-job-info {
+    margin: 10px 0;
+    color: #e55604;
+    font-size: 14px;
+    strong {
+      color: #555;
+      margin-left: 3px;
+      font-size: 16px;
+    }
+  }
   .JobLocSelectBtn {
-    width: 20%;
     display: block;
     margin: 20px 0;
     padding: 12px;
@@ -56,9 +75,11 @@
     font-size: 16px;
     cursor: pointer;
     transition: background 0.3s ease;
-
     &:hover {
       background: #e55604;
+    }
+    @include responsive($tablet) {
+      width: 20%;
     }
   }
   .disabled-btn {

@@ -1,11 +1,16 @@
+@import "../../../styles/responsive.scss";
+$tablet-resize: 900px;
+
 .job-selection-residency {
-  width: 80%;
+  width: 100%;
   height: auto;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 15px;
-
+  @include responsive($tablet) {
+    width: 80%;
+  }
   .rules {
     display: flex;
     flex-direction: column;
@@ -20,15 +25,18 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    p {
+      svg {
+        color: #e55604;
+        margin-left: 3px;
+      }
 
-    svg {
-      color: #e55604;
-    }
-
-    .residency-select {
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      .residency-select {
+        padding: 5px;
+        margin: 0 3px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
     }
   }
 
@@ -113,7 +121,9 @@
     display: flex;
     gap: 15px;
     button {
-      width: 20%;
+      @include responsive($tablet) {
+        width: 20%;
+      }
       display: block;
       margin: 20px 0;
       padding: 12px;
@@ -137,6 +147,7 @@
       }
     }
   }
-
-  
+  .swalOathInfoBtn {
+    background-color: #04364a;
+  }
 }

@@ -1,10 +1,15 @@
+@import "../../../styles/responsive.scss";
+$tablet-resize: 900px;
 .exam-payment-form {
-  width: 85%;
-  height: 70vh;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  @include responsive($tablet) {
+    width: 85%;
+    height: 70vh;
+  }
   .examPaymenTitle {
     text-align: center;
     color: #04364a;
@@ -33,6 +38,12 @@
       align-items: center;
       gap: 3px;
     }
+    span {
+      .bookletDownload {
+        color: #e55604;
+        font-size: 12px;
+      }
+    }
   }
   .payment-method {
     width: 80%;
@@ -54,6 +65,7 @@
       min-height: 4.5rem;
       padding: 0px 1rem;
       justify-content: space-between;
+
       .rightPart {
         display: flex;
         align-items: center;
@@ -83,7 +95,9 @@
     align-items: center;
     gap: 15px;
     .submit-button {
-      width: 20%;
+      @include responsive($tablet) {
+        width: 20%;
+      }
       display: block;
       margin: 20px 0;
       padding: 12px;

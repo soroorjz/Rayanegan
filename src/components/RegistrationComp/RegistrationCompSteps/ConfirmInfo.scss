@@ -1,21 +1,29 @@
+@import "../../../styles/responsive.scss";
+
+$tablet-resize: 900px;
+
 .timeline-container {
   width: 100%;
   position: relative;
   height: 100%;
-  margin: 100px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   overflow: auto;
-
+  @include responsive($tablet) {
+    margin: 100px auto;
+  }
   .timeline-item {
     position: relative;
     background: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 80%;
+    width: 100%;
+    @include responsive($tablet) {
+      width: 80%;
+    }
 
     .timelineTitlePart {
       display: flex;
@@ -37,9 +45,12 @@
     .ConfirmInfoForm-container {
       .section-form {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 15px;
         padding: 10px 0;
+        grid-template-columns: repeat(auto-fit, minmax(127px, 3fr));
+        @include responsive($tablet) {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
 
         .form-group {
           display: flex;
@@ -84,14 +95,23 @@
   }
   .ConfirmInfoBtns {
     display: flex;
-    width: 77%;
+    width: 100%;
     align-items: center;
-    justify-content: flex-end;
-    gap: 15px;
+    justify-content: flex-start;
+    gap: 5px;
+    @include responsive($tablet) {
+      justify-content: flex-end;
+      width: 77%;
+      gap: 15px;
+    }
     button {
-      width: 20%;
-      display: block;
+      @include responsive($tablet) {
+        width: 20%;
       margin: 20px 0;
+
+      }
+      display: block;
+      margin: 10px 0 70px;
       padding: 12px;
       background: #04364a;
       color: white;
@@ -106,12 +126,12 @@
       }
     }
     .disabled-button {
-        background: #04364ac9;
-        cursor: not-allowed;
-        &:hover {
-          background-color: #555555a4;
-        }
+      background: #04364ac9;
+      cursor: not-allowed;
+      &:hover {
+        background-color: #555555a4;
       }
+    }
   }
 
   &::-webkit-scrollbar {

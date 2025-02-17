@@ -18,11 +18,7 @@ const JobLocSelect = ({ onNext }) => {
 
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
-    if (tab === "manual") {
-      setSelectedJob(null); // پاک کردن انتخاب قبلی
-    } else {
-      setSelectedJob(null); // در ابتدا هیچ شغلی انتخاب نشده باشد
-    }
+    setSelectedJob(null); // پاک کردن انتخاب قبلی
     setError(false);
   };
 
@@ -73,9 +69,9 @@ const JobLocSelect = ({ onNext }) => {
                     <input
                       type="radio"
                       name="job"
-                      checked={selectedJob === job.id}
+                      checked={selectedJob?.id === job.id}
                       onChange={() => {
-                        setSelectedJob(job.id);
+                        setSelectedJob(job); 
                         setError(false);
                       }}
                     />
@@ -103,9 +99,9 @@ const JobLocSelect = ({ onNext }) => {
                   <input
                     type="radio"
                     name="job"
-                    checked={selectedJob === jobs[0]?.id}
+                    checked={selectedJob?.id === jobs[0]?.id}
                     onChange={() => {
-                      setSelectedJob(jobs[0]?.id);
+                      setSelectedJob(jobs[0]); // ذخیره کل شیء شغل
                       setError(false);
                     }}
                   />
@@ -115,6 +111,13 @@ const JobLocSelect = ({ onNext }) => {
           </table>
         )}
       </div>
+
+      {/* نمایش اطلاعات شغل انتخاب‌شده */}
+      {selectedJob && (
+        <p className="selected-job-info">
+          <strong>شغل محل انتخابی :</strong> {selectedJob.title} - {selectedJob.location}
+        </p>
+      )}
 
       {error && (
         <p className="error-message">لطفاً شغل محل خود را انتخاب کنید.</p>
@@ -130,4 +133,5 @@ const JobLocSelect = ({ onNext }) => {
     </div>
   );
 };
+
 export default JobLocSelect;

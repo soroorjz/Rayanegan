@@ -30,14 +30,20 @@ const FinalConfirmation = ({ handlePreviousStep }) => {
           />
           مشخصات، شغل محل و نام آزمون را تأیید می‌کنم.
         </label>
-        <label>
+        <label className="secAgreeTerms">
           <input
             type="checkbox"
             checked={agreeTerms}
             onChange={() => setAgreeTerms(!agreeTerms)}
           />
-          با قوانین و مقررات سامانه موافقم.
+          قوانین و مقررات مندرج در دفترچه آزمون را مطالعه کرده‌ام و مورد پذیرش
+          اینجانب است.
         </label>
+        <span>
+          <a href="" download className="bookletDownload">
+            (دانلود دفترچه آزمون)
+          </a>
+        </span>
       </div>
       <div className="payment-method">
         <p className="payment-method-Title">روش پرداخت:</p>

@@ -6,7 +6,7 @@ $tablet-resize: 900px;
   // height: 100vh;
   margin: 100px 0;
   position: relative;
-  @include responsive($tablet-resize){
+  @include responsive($tablet-resize) {
     margin: 0;
   }
   .news-Title {
@@ -41,6 +41,7 @@ $tablet-resize: 900px;
           }
           img {
             width: 100%;
+            max-height: 398px;
             border-radius: 10px;
           }
         }
@@ -52,6 +53,8 @@ $tablet-resize: 900px;
           .tilePart {
             .newsDate {
               margin: 10px 0;
+              color: #555;
+              font-size: 14px;
             }
           }
           .newsDesc {
