@@ -4,8 +4,8 @@ $tablet-resize: 900px;
 .exam-entry-card {
   background: #f9f9f9;
   width: 90%;
-  max-height: 80vh;
-  margin: 80px auto 0;
+  max-height: 60vh;
+  margin: 10px auto 0;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -14,14 +14,14 @@ $tablet-resize: 900px;
   // direction: ltr;
 
   @include responsive($tablet-resize) {
-    width: 80%;
+    width: 100%;
   }
   &::-webkit-scrollbar {
-    width: 5px; // عرض اسکرول‌بار را کاهش می‌دهیم
+    width: 5px; 
   }
 
   &::-webkit-scrollbar-track {
-    background: transparent; // پس‌زمینه‌ی ترک اسکرول‌بار
+    background: transparent; 
   }
 
   &::-webkit-scrollbar-thumb {

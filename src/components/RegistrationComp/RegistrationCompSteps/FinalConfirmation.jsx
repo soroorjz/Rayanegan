@@ -73,7 +73,7 @@ const FinalConfirmation = ({ handlePreviousStep }) => {
           className={`submit-button ${isDisabled ? "disabled-button" : ""}`}
           disabled={isDisabled}
         >
-          <a href="/src/behpardakht-Ui-main/index.html">پرداخت</a>
+          <a href="../../../behpardakht-Ui-main/index.html">پرداخت</a>
         </button>
       </div>
     </div>

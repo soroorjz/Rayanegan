@@ -24,7 +24,7 @@ const ProfileMain = ({ selectedComponent }) => {
       content = <ExamEntryCopm />;
       break;
     case "news":
-      content = <NoEntryCard />;
+      content = <ExamEntryCopm />;
       break;
     default:
       content = <PersonalDetails />;
