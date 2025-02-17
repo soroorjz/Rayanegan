@@ -4,10 +4,10 @@ $tablet-resize: 900px;
 .support-help-center {
   width: 100%;
   border-radius: 10px;
-  padding:30px 20px;
+  padding: 30px 20px;
   margin: 0 auto;
   @include responsive($tablet-resize) {
-    width:70%;
+    width: 70%;
   }
   .categories,
   .questions,
@@ -23,14 +23,20 @@ $tablet-resize: 900px;
   .answer {
     width: 80%;
     margin: 0 auto;
-    text-align: right;
+    text-align: center;
     p {
-      margin-bottom: 50px;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    h2 {
+      font-size: 20px;
     }
     .feedback-buttons {
       display: flex;
       justify-content: center;
       gap: 20px;
+      margin: 0 auto;
+      width: 60%;
       button {
         width: 50%;
       }
@@ -46,7 +52,7 @@ $tablet-resize: 900px;
     width: 80%;
     padding: 10px;
     margin: 5px 0;
-    font-size: 1em;
+    font-size: 18px;
     cursor: pointer;
     border: none;
     border-radius: 5px;
@@ -56,8 +62,7 @@ $tablet-resize: 900px;
       //   background-color: #04364a;
       color: #04364a;
       //   background: 0;
-      text-align: right;
-   
+      text-align: center;
     }
 
     &.back-button {
@@ -69,23 +74,23 @@ $tablet-resize: 900px;
       }
     }
 
-    &.like-button {
-      background-color: #578e7e;
-      color: #fff;
+    // &.like-button {
+    //   background-color: #578e7e;
+    //   color: #fff;
 
-      &:hover {
-        background-color: #218838;
-      }
-    }
+    //   &:hover {
+    //     background-color: #218838;
+    //   }
+    // }
 
-    &.dislike-button {
-      background-color: #ff5a5f;
-      color: #fff;
+    // &.dislike-button {
+    //   background-color: #ff5a5f;
+    //   color: #fff;
 
-      &:hover {
-        background-color: #c82333;
-      }
-    }
+    //   &:hover {
+    //     background-color: #c82333;
+    //   }
+    // }
 
     &.submit-button {
       background-color: #17a2b8;
@@ -96,7 +101,7 @@ $tablet-resize: 900px;
       }
     }
   }
-  
+
   textarea {
     width: 100%;
     height: 100px;
@@ -110,7 +115,7 @@ $tablet-resize: 900px;
       outline: none;
     }
   }
-  .back-button{
+  .back-button {
     width: 250px;
     padding: 10px;
     margin: 20px auto 0;
@@ -122,5 +127,19 @@ $tablet-resize: 900px;
     background-color: #04364a !important;
     align-items: center;
     justify-content: center;
+  }
+
+  .exam-selection {
+    justify-content: center;
+    flex-direction: column;
+    justify-content: space-around;
+    h2 {
+      font-size: 20px;
+    }
+    select {
+      padding: 10px;
+      border: 1px solid #ced4da;
+      border-radius: 10px;
+    }
   }
 }

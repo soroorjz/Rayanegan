@@ -81,7 +81,7 @@ const SupportAptions = ({ onSelectOption, resetState }) => {
         className="SupportAptions-back-button"
         onClick={handleReturnToHelpCenter}
       >
-        بازگشت ⬅
+        بازگشت
       </button>
     </div>
   );

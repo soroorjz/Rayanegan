@@ -69,6 +69,7 @@ $tablet-resize: 900px;
     }
 
     .content-area {
+      min-height: 60vh;
       .faq-content,
       .offline-support-content {
         font-size: 16px;
