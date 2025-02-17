@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import "./SelectRegion.scss";
 import { FaCheckDouble } from "react-icons/fa6";
 import { FaDownload } from "react-icons/fa6";
-import Swal from "sweetalert2";
 import { FaTimes } from "react-icons/fa";
+import { FaCircle } from "react-icons/fa";
 import { GoQuestion } from "react-icons/go";
 const SelectRegion = ({ onNext, handlePreviousStep }) => {
   const [residency, setResidency] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false); // برای نمایش مودال
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-
     if (!file) return;
 
     const allowedFormats = [
@@ -38,28 +38,6 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
     setError("");
   };
 
-  const handleShowOathInfo = () => {
-    Swal.fire({
-      title: "توضیحات استشهاد محلی",
-      html: `
-       
-          <p>فرم را از طریق فایل پیوست قرار داده شده دانلود نمایید.</p>
-          <p> برگه استشهاد محلی را بصورت چاپ شده تهیه نمایید. (می‌توانید در خانه و یا از طریق کافی‌نت فرم را پرینت بگیرید)</p>
-          <p> در بخش اول فرم، نام و نام خانوادگی، نام پدر و کد ملی خود را وارد کنید. (امضا و اثر انگشت الزامی است) </p>
-          <p>در بخش دوم، سه نفر باید ساکن بودن شما را در شهرستان مورد تقاضا با امضا و اثر انگشت گواهی نمایند.</p>
-          <p>برای ممهور کردن فرم استشهاد محلی، برگه را به نیروی انتظامی (پاسگاه یا کلانتری محل) یا فرمانداری شهرستان مورد تقاضا مراجعه نموده و تأییدیه لازم را بگیرید.</p>
-        
-      `,
-
-      customClass: {
-        popup: "swalOathInfoPopup",
-        title: "swalOathInfoTitle",
-        confirmButton: "swalOathInfoBtn",
-      },
-      confirmButtonText: "متوجه شدم",
-    });
-  };
-
   const removeFile = () => {
     setSelectedFile(null);
     setError("");
@@ -76,14 +54,14 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
           افرادی كه حداقل دارای یكی از ویژگی‌های زیر باشند، داوطلب بومی محسوب
           می‌شوند:
         </p>
-        <p>1- شهرستان محل تولد داوطلب با شهرستان محل مورد تقاضا یکی باشد.</p>
-        <p>2- محل سکونت فعلی داوطلب با شهرستان محل مورد تقاضا یکی باشد.</p>
+        <p>۱- شهرستان محل تولد داوطلب با شهرستان محل مورد تقاضا یکی باشد.</p>
+        <p>۲- محل سکونت فعلی داوطلب با شهرستان محل مورد تقاضا یکی باشد.</p>
         <p>
-          3- حداقل چهار سال از سنوات تحصیلی در شهرستان یا استان مورد تقاضا طی
+          ۳- حداقل چهار سال از سنوات تحصیلی در شهرستان یا استان مورد تقاضا طی
           شده باشد.
         </p>
         <p>
-          4- حداقل چهار سال سابقه پرداخت بیمه در شهرستان مورد تقاضا وجود داشته
+          ۴- حداقل چهار سال سابقه پرداخت بیمه در شهرستان مورد تقاضا وجود داشته
           باشد.
         </p>
         <p>
@@ -110,11 +88,10 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
 
       {residency === "بومی" && (
         <div className="boomi-options">
-          <p className="OathPart" onClick={handleShowOathInfo}>
+          <p className="OathPart" onClick={() => setIsModalOpen(true)}>
             <GoQuestion className="modalIcon" />
             توضیحات استشهاد محلی
           </p>
-
           <a
             href="/assets/forms/native_form2.pdf"
             className="download-link"
@@ -163,8 +140,40 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
           مرحله بعد
         </button>
       </div>
+
+      {/* مودال */}
+      {isModalOpen && (
+        <div className="modal-container show">
+          <div className="modal-content">
+            <button className="close-btn" onClick={() => setIsModalOpen(false)}>
+              <FaTimes />
+            </button>
+            <h2>توضیحات استشهاد محلی</h2>
+
+            <div className="SelectRegionModalContent">
+              <p>◼️ فرم را از طریق فایل پیوست قرار داده شده دانلود نمایید.</p>
+              <p>
+                ◼️ برگه استشهاد محلی را بصورت چاپ شده تهیه نمایید. (می‌توانید در
+                خانه و یا از طریق کافی‌نت فرم را پرینت بگیرید)
+              </p>
+              <p>
+                ◼️ در بخش اول فرم، نام و نام خانوادگی، نام پدر و کد ملی خود را
+                وارد کنید. (امضا و اثر انگشت الزامی است){" "}
+              </p>
+              <p>
+                ◼️ در بخش دوم، سه نفر باید ساکن بودن شما را در شهرستان مورد
+                تقاضا با امضا و اثر انگشت گواهی نمایند.
+              </p>
+              <p>
+                ◼️ برای ممهور کردن فرم استشهاد محلی، برگه را به نیروی انتظامی
+                (پاسگاه یا کلانتری محل) یا فرمانداری شهرستان مورد تقاضا مراجعه
+                نموده و تأییدیه لازم را بگیرید.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
-
 export default SelectRegion;
