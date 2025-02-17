@@ -16,8 +16,8 @@ const LogInMain = () => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    const correctUsername = "testuser";
-    const correctPassword = "123456";
+    const correctUsername = "admin";
+    const correctPassword = "1156789";
 
     if (username === correctUsername && password === correctPassword) {
       setAnimationType("success");
