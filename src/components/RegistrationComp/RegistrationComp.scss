@@ -102,6 +102,7 @@ $primary-color: #e55604;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     @include responsive($tablet) {
       margin-top: 80px;
+      height: 85vh;
       padding: 20px;
     }
   }

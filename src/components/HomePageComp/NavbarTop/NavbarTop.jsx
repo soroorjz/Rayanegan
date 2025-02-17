@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./NavbarTop.scss";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link } from "react-router-dom"; //  تغییر ایمپورت به react-router-dom
+import { Link } from "react-router-dom";
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
 import { useAuth } from "../../../AuthContext";
+import { FaCircleUser } from "react-icons/fa6";
 
 const NavbarTop = ({
   hideJobSearch = false,
@@ -69,20 +70,20 @@ const NavbarTop = ({
           {user ? (
             <div className="userProfile">
               <div className="user-info">
-                <img
-                  src="/assets/images/photo_2022-03-23_18-31-12.jpg"
+                {/* <img
+                  src="/assets/images/logo2.png"
                   alt="User Avatar"
                   className="user-avatar"
-                />
+                /> */}
+                <FaCircleUser className="user-avatar" />
                 <div className="user-details">
                   <span className="user-name">{user.username}</span>
-                  <span className="user-role">Admin</span>
                 </div>
               </div>
 
               <div className="dropdown-menu">
                 <Link to="/profile">
-                  <FaUser /> پروفایل
+                  <FaUser /> حساب کاربری
                 </Link>
 
                 <button className="exit" onClick={logout}>
@@ -118,11 +119,13 @@ const NavbarTop = ({
           {user ? (
             <div className="responsive-userProfile">
               <div className="responsive-user-info">
-                <img
+                {/* <img
                   src="/assets/images/photo_2022-03-23_18-31-12.jpg"
                   alt="User Avatar"
                   className="responsive-user-avatar"
-                />
+                /> */}
+                <FaCircleUser className="responsive-user-avatar" />
+
                 <div className="responsive-user-details">
                   <span className="responsive-user-name">{user.username}</span>
                 </div>
