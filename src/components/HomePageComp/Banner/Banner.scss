@@ -27,7 +27,7 @@ $tablet-resize: 900px;
       border-radius: 10px;
     }
     @include responsive($tablet-resize) {
-      width: 60%;
+      width: 50%;
       margin: 0;
       justify-content: flex-end;
     }
@@ -46,21 +46,37 @@ $tablet-resize: 900px;
       flex-direction: column;
       height: 100%;
       justify-content: center;
+      @include responsive($laptop){
+          
+      }
       h1 {
-        font-size: 27px;
+        font-size: 31px;
         line-height: 35px;
-        margin-bottom: 15px;
+        margin-bottom: 66px;
+        color: #04364a;
+        text-align: center;
       }
       p {
-        // margin: 25px 0;
-        line-height: 27px;
-        // text-align: justify;
-        font-size: 18px;
-        @include responsive($tablet) {
-          line-height: 30px;
+        display: flex;
+        gap: 3px;
+        line-height: 30px;
+        color: #04364ad0;
+        margin: 22px 0;
+        font-size: 22px;
+        // text-align: center;
+        justify-content: center;
+        font-weight: 900;
+        @include responsive($laptop){
+
         }
+        svg {
+          color: #e55604;
+          font-size: 18px;
+        }
+
       }
     }
+
     .sloganBtns {
       display: flex;
       gap: 20px;

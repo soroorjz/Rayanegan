@@ -34,7 +34,7 @@ const ExamInfo = () => {
 
       try {
         const response = await axios.get(
-          `https://smp.devrayan.ir/api/exam/exams/`,
+          `http://smp.devrayan.ir:8000/api/exam/exams/`,
           {
             headers: { "RAYAN-TOKEN": token },
           }
@@ -95,7 +95,7 @@ const ExamInfo = () => {
         endDate={endDate}
         cardIssueDate={cardIssueDate}
         eventDate={eventDate}
-        toPersianDigits={toPersianDigits} 
+        toPersianDigits={toPersianDigits}
         examName={examData.examName}
       />
 

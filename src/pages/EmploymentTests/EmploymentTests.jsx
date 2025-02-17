@@ -16,7 +16,7 @@ const EmploymentTests = () => {
   // دریافت و ذخیره‌ی توکن
   const fetchToken = useCallback(async () => {
     try {
-      const response = await fetch("https://smp.devrayan.ir/api/auth", {
+      const response = await fetch("http://smp.devrayan.ir:8000/api/auth", {
         headers: {
           "RAYAN-USERNAME": "S.JAMEIE",
           "RAYAN-PASSWORD": "1156789",
@@ -35,7 +35,7 @@ const EmploymentTests = () => {
   const fetchExamStatuses = useCallback(async () => {
     try {
       const response = await axios.get(
-        "https://smp.devrayan.ir/api/examStatus/examStatuses",
+        "http://smp.devrayan.ir:8000/api/examStatus/examStatuses",
         {
           headers: {
             "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
@@ -62,24 +62,24 @@ const EmploymentTests = () => {
     if (!examStatuses) return;
     setLoading(true);
     setError(null);
-  
+
     try {
       const response = await axios.get(
-        "https://smp.devrayan.ir/api/exam/exams",
+        "http://smp.devrayan.ir:8000/api/exam/exams",
         {
           headers: {
             "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
           },
         }
       );
-  
+
       const updatedExams = response.data.map((exam) => ({
         ...exam,
         examStatusRef: Number(exam.examStatusRef), // حفظ مقدار عددی وضعیت
       }));
-  
+
       console.log(" Updated Exams:", updatedExams);
-  
+
       setExamCards(updatedExams);
     } catch (err) {
       console.error("Error fetching exams:", err);
@@ -88,7 +88,7 @@ const EmploymentTests = () => {
       setLoading(false);
     }
   }, [examStatuses]);
-  
+
   // اجرای توابع به ترتیب مناسب
   useEffect(() => {
     const fetchData = async () => {
@@ -112,7 +112,6 @@ const EmploymentTests = () => {
     );
     return examCards.filter((exam) => exam.examStatusRef === Number(statusId));
   };
-  
 
   return (
     <div className="EmploymentTests">
@@ -125,8 +124,8 @@ const EmploymentTests = () => {
       </div>
       <div id="InProgress" className="EmploymentTestsComp">
         <EmploymentTestsComp
-          examData={getFilteredExams( "در انتظار")}
-          title= "در انتظار"
+          examData={getFilteredExams("در انتظار")}
+          title="در انتظار"
         />
       </div>
       <div id="Registering" className="EmploymentTestsComp">

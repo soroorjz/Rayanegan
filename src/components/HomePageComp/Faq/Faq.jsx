@@ -45,6 +45,12 @@ const Faq = () => {
         >
           شرکت در آزمون
         </button>
+        <button
+          className={selectedCategory === "نتایج" ? "categoryActive" : ""}
+          onClick={() => filterQuestionsByCategory("نتایج")}
+        >
+          نتایج
+        </button>
       </div>
       <div className="faq-container">
         <div className="faq-list">
