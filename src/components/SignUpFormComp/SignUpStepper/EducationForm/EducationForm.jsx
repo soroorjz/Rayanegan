@@ -7,6 +7,9 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import gregorian from "react-date-object/calendars/gregorian";
 import "./EducationForm.scss";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 const schema = yup.object().shape({
   degree: yup.string().required("مقطع تحصیلی را انتخاب کنید"),
@@ -27,10 +30,81 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const [degrees, setDegrees] = useState([]);
+  const [universityTypes, setUniversityTypes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // مشاهده مقدار انتخاب شده برای مقطع و نوع دانشگاه
+  const selectedDegree = watch("degree");
+  const selectedUniversityType = watch("universityType");
+
+  const fetchToken = async () => {
+    try {
+      const response = await fetch("http://smp.devrayan.ir:2052/api/auth", {
+        headers: {
+          "RAYAN-USERNAME": "S.JAMEIE",
+          "RAYAN-PASSWORD": "1156789",
+        },
+        method: "POST",
+      });
+      const data = await response.json();
+      localStorage.setItem("RayanToken", data.token);
+    } catch (err) {
+      console.error("Error fetching token:", err);
+    }
+  };
+
+  const fetchDegrees = async () => {
+    try {
+      const token = localStorage.getItem("RayanToken");
+      const response = await axios.get(
+        "http://smp.devrayan.ir:2052/api/grade/grades",
+        {
+          headers: { "RAYAN-TOKEN": token },
+        }
+      );
+      setDegrees(response.data);
+    } catch (err) {
+      console.error("Error fetching degrees:", err);
+    }
+  };
+
+  const fetchUniversityTypes = async () => {
+    try {
+      const token = localStorage.getItem("RayanToken");
+      const response = await axios.get(
+        "http://smp.devrayan.ir:2052/api/universitytype/universitytypes",
+        {
+          headers: { "RAYAN-TOKEN": token },
+        }
+      );
+      setUniversityTypes(response.data);
+    } catch (err) {
+      console.error("Error fetching university types:", err);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchToken();
+      const token = localStorage.getItem("RayanToken");
+
+      if (token) {
+        await fetchDegrees();
+        await fetchUniversityTypes();
+        setLoading(false);
+      } else {
+        console.error("Token not found in localStorage");
+      }
+    };
+    fetchData();
+  }, []);
 
   const onSubmit = (data) => {
     onNext();
@@ -42,17 +116,26 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
         <label>مقطع تحصیلی:</label>
         <select {...register("degree")}>
           <option value="">انتخاب کنید</option>
-          <option value="Associate">کاردانی</option>
-          <option value="bachelor">کارشناسی</option>
-          <option value="master">کارشناسی ارشد</option>
-          <option value="phd">دکتری</option>
+          {loading ? (
+            <option>در حال دریافت...</option>
+          ) : (
+            degrees?.map((degree) => (
+              <option key={degree.gradeId} value={degree.gradeId}>
+                {degree.gradeTitle}
+              </option>
+            ))
+          )}
         </select>
         {errors.degree && <span>{errors.degree.message}</span>}
       </div>
 
       <div className="form-group">
         <label>رشته تحصیلی:</label>
-        <input type="text" {...register("fieldOfStudy")} />
+        <input
+          type="text"
+          {...register("fieldOfStudy")}
+          disabled={!selectedDegree}
+        />
         {errors.fieldOfStudy && <span>{errors.fieldOfStudy.message}</span>}
       </div>
 
@@ -60,16 +143,26 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
         <label>نوع دانشگاه:</label>
         <select {...register("universityType")}>
           <option value="">انتخاب کنید</option>
-          <option value="public">دولتی</option>
-          <option value="Non-profit">غیرانتفاعی</option>
-          <option value="private">آزاد</option>
+          {loading ? (
+            <option>در حال دریافت...</option>
+          ) : (
+            universityTypes?.map((uniType) => (
+              <option key={uniType.id} value={uniType.id}>
+                {uniType.universityTypeName}
+              </option>
+            ))
+          )}
         </select>
         {errors.universityType && <span>{errors.universityType.message}</span>}
       </div>
 
       <div className="form-group">
         <label>نام دانشگاه:</label>
-        <input type="text" {...register("universityName")} />
+        <input
+          type="text"
+          {...register("universityName")}
+          disabled={!selectedUniversityType}
+        />
         {errors.universityName && <span>{errors.universityName.message}</span>}
       </div>
 
@@ -83,7 +176,7 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
           placeholder="تاریخ فارغ‌التحصیلی را انتخاب کنید"
           onChange={(value) => {
             if (value) {
-              const gregorianDate = value.convert(gregorian).toDate(); // تبدیل به Date میلادی
+              const gregorianDate = value.convert(gregorian).toDate();
               setValue("graduationDate", gregorianDate, {
                 shouldValidate: true,
               });
@@ -98,7 +191,6 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
         <input type="number" step="0.01" {...register("gpa")} />
         {errors.gpa && <span>{errors.gpa.message}</span>}
       </div>
-
 
       <button onClick={handlePreviousStep} className="submit-btn">
         مرحله قبل

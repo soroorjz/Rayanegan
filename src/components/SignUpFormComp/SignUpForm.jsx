@@ -85,7 +85,7 @@ const SignUpForm = ({ onNext, setGender }) => {
       }
     });
 
-    ["firstName", "lastName", "fatherName", "religion"].forEach((field) => {
+    ["firstName", "lastName", "fatherName"].forEach((field) => {
       if (formData[field] && !isPersianText(formData[field])) {
         newErrors[field] = `لطفاً با حروف فارسی نوشته شود.`;
       }

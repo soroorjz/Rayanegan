@@ -17,11 +17,12 @@ const ExamCard = () => {
   const fetchToken = useCallback(async () => {
     try {
       const response = await fetch("http://smp.devrayan.ir:2052/api/auth", {
+        
         headers: {
           "RAYAN-USERNAME": "S.JAMEIE",
           "RAYAN-PASSWORD": "1156789",
         },
-        method: "post",
+        method: "POST",
       });
       const data = await response.json();
       localStorage.setItem("RayanToken", data.token);

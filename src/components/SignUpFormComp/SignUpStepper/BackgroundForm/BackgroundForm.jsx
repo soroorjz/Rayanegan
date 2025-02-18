@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -6,21 +6,94 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import "./BackgroundForm.scss";
+import axios from "axios";
 
 const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
+  const [quotaOptions, setQuotaOptions] = useState([]);
+  const [militaryOptions, setMilitaryOptions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchToken = async () => {
+    try {
+      const response = await fetch("http://smp.devrayan.ir:2052/api/auth", {
+        headers: {
+          "RAYAN-USERNAME": "S.JAMEIE",
+          "RAYAN-PASSWORD": "1156789",
+        },
+        method: "POST",
+      });
+      const data = await response.json();
+      localStorage.setItem("RayanToken", data.token);
+    } catch (err) {
+      console.error("Error fetching token:", err);
+      setError("خطا در دریافت توکن!");
+    }
+  };
+
+  const fetchQuotas = async () => {
+    try {
+      const token = localStorage.getItem("RayanToken");
+      const response = await axios.get(
+        "http://smp.devrayan.ir:2052/api/quota/quotas",
+        {
+          headers: {
+            "RAYAN-TOKEN": token,
+          },
+        }
+      );
+
+      // فیلتر کردن سهمیه‌هایی که quotaParent آنها null است
+      const filteredQuotas = response.data.filter(
+        (quota) => quota.quotaParent === null
+      );
+      setQuotaOptions(filteredQuotas);
+    } catch (err) {
+      console.error("Error fetching quotas:", err);
+      setError("خطا در دریافت سهمیه‌ها!");
+    }
+  };
+  const fetchMilitaryStatuses = async () => {
+    try {
+      const token = localStorage.getItem("RayanToken");
+      const response = await axios.get(
+        "http://smp.devrayan.ir:2052/api/dutystatus/dutystatuses",
+        {
+          headers: { "RAYAN-TOKEN": token },
+        }
+      );
+      setMilitaryOptions(response.data);
+    } catch (err) {
+      console.error("Error fetching military statuses:", err);
+      setError("خطا در دریافت وضعیت نظام وظیفه!");
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchToken();
+      await fetchQuotas();
+      if (gender === "male") {
+        await fetchMilitaryStatuses();
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, [gender]);
+
   const schema = yup.object().shape({
     quota: yup.string().required("لطفاً نوع سهمیه را انتخاب کنید"),
     disabilityType: yup.string().when("quota", {
       is: (val) => val === "disability",
       then: yup.string().required("لطفاً نوع معلولیت را مشخص کنید"),
     }),
-  
+
     // اعتبارسنجی نظام وظیفه فقط برای مردان
     militaryStatus: yup.string().when("gender", {
       is: "male",
       then: yup.string().required("لطفاً وضعیت نظام وظیفه را انتخاب کنید"),
     }),
-  
+
     serviceDuration: yup
       .number()
       .typeError("مدت خدمت باید عدد باشد")
@@ -29,12 +102,12 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
         is: "male",
         then: yup.number().required("لطفاً میزان خدمت را به ماه وارد کنید"),
       }),
-  
+
     serviceEndDate: yup.string().when("gender", {
       is: "male",
       then: yup.string().required("لطفاً تاریخ پایان خدمت را وارد کنید"),
     }),
-  
+
     workExperience: yup
       .number()
       .typeError("میزان سابقه باید عدد باشد")
@@ -44,7 +117,6 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
         then: yup.number().required("لطفاً میزان سابقه کار را وارد کنید"),
       }),
   });
-  
 
   const {
     register,
@@ -80,7 +152,7 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
     const newValue = !workExperienceEnabled;
     setWorkExperienceEnabled(newValue);
     setValue("workExperienceEnabled", newValue);
-   setValue("workExperience", newValue ? 0 : 0);
+    setValue("workExperience", newValue ? 0 : 0);
   };
 
   return (
@@ -88,12 +160,20 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
       <div className="backgroundFormWrapper">
         <div className="form-group">
           <label>سهمیه:</label>
-          <select {...register("quota")}>
-            <option value="">انتخاب کنید</option>
-            <option value="none">بدون سهمیه</option>
-            <option value="martyr">ایثارگران</option>
-            <option value="disability">معلولیت</option>
-          </select>
+          {loading ? (
+            <p>در حال بارگذاری...</p>
+          ) : error ? (
+            <p>{error}</p>
+          ) : (
+            <select {...register("quota")}>
+              <option value="">انتخاب کنید</option>
+              {quotaOptions.map((quota) => (
+                <option key={quota.quotaId} value={quota.quotaTitle}>
+                  {quota.quotaTitle}
+                </option>
+              ))}
+            </select>
+          )}
           {errors.quota && <span>{errors.quota.message}</span>}
         </div>
 
@@ -111,12 +191,23 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
           <>
             <div className="form-group">
               <label>وضعیت نظام وظیفه:</label>
-              <select {...register("militaryStatus")}>
-                <option value="">انتخاب کنید</option>
-                <option value="completed">پایان خدمت</option>
-                <option value="exempted">معاف</option>
-                <option value="not_completed">در حال خدمت</option>
-              </select>
+              {loading ? (
+                <p>در حال بارگذاری...</p>
+              ) : error ? (
+                <p>{error}</p>
+              ) : (
+                <select {...register("militaryStatus")}>
+                  <option value="">انتخاب کنید</option>
+                  {militaryOptions.map((status) => (
+                    <option
+                      key={status.dutyStatusId}
+                      value={status.dutyStatusName}
+                    >
+                      {status.dutyStatusName}
+                    </option>
+                  ))}
+                </select>
+              )}
               {errors.militaryStatus && (
                 <span>{errors.militaryStatus.message}</span>
               )}
