@@ -16,7 +16,7 @@ const ExamCard = () => {
   // دریافت و ذخیره‌ی توکن
   const fetchToken = useCallback(async () => {
     try {
-      const response = await fetch("http://smp.devrayan.ir:8000/api/auth", {
+      const response = await fetch("http://smp.devrayan.ir:2052/api/auth", {
         headers: {
           "RAYAN-USERNAME": "S.JAMEIE",
           "RAYAN-PASSWORD": "1156789",
@@ -35,7 +35,7 @@ const ExamCard = () => {
   const fetchExamStatuses = useCallback(async () => {
     try {
       const response = await axios.get(
-        "http://smp.devrayan.ir:8000/api/examStatus/examStatuses",
+        "http://smp.devrayan.ir:2052/api/examStatus/examStatuses",
         {
           headers: {
             "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
@@ -65,7 +65,7 @@ const ExamCard = () => {
 
     try {
       const response = await axios.get(
-        "http://smp.devrayan.ir:8000/api/exam/exams",
+        "http://smp.devrayan.ir:2052/api/exam/exams",
         {
           headers: {
             "RAYAN-TOKEN": localStorage.getItem("RayanToken"),

@@ -34,7 +34,7 @@ const ExamInfo = () => {
 
       try {
         const response = await axios.get(
-          `http://smp.devrayan.ir:8000/api/exam/exams/`,
+          `http://smp.devrayan.ir:2052/api/exam/exams/`,
           {
             headers: { "RAYAN-TOKEN": token },
           }
