@@ -25,7 +25,7 @@ function App() {
               title="ساخت حساب کاربری "
               showNavbar={true}
               successMessage="ثبت نام با موفقیت انجام شد!"
-              redirectAfterSubmit={true}
+              // redirectAfterSubmit={true}
             />
           }
         />

@@ -6,7 +6,7 @@ import ContactForm from "./ContactForm/ContactForm";
 import BackgroundForm from "./BackgroundForm/BackgroundForm";
 import FileInput from "../FileInput";
 import { useNavigate } from "react-router";
-const SignUpStepper = ({ successMessage }) => {
+const SignUpStepper = ({ successMessage,redirectAfterSubmit = true   }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [gender, setGender] = useState(null);
@@ -36,6 +36,9 @@ const SignUpStepper = ({ successMessage }) => {
     setShowModal(true);
     setTimeout(() => {
       setShowModal(false);
+      if (redirectAfterSubmit) {
+        navigate("/logIn"); // فقط اگر prop فعال بود، هدایت شود
+      }
     }, 3000);
   };
 
