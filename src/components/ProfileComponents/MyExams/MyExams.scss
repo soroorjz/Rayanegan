@@ -5,31 +5,22 @@
   padding: 20px;
   background: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  .exam-selection {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin: 10px 0;
-    .css-mn20wp-MuiFormControl-root{
-      margin: 0;
-      width: 235px;
-
-    }
-   
-    .filters {
-      padding: 20px 0;
-      display: flex;
-      // align-items: center;
-      gap: 5px;
-    }
+  .exam-select {
+    height: 36px;
+    font-size: 14px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
   }
+
   .filters {
     padding: 20px 0;
     display: flex;
     align-items: center;
     gap: 5px;
   }
-
   h2 {
     text-align: center;
     margin-bottom: 15px;

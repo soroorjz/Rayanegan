@@ -15,16 +15,17 @@ $tablet-resize: 900px;
     position: relative;
     z-index: 90;
     width: 100%;
-    justify-content: center;
+    margin-top: 50px;
+    justify-content: flex-start;
     // margin: 0 auto;
     display: flex;
     flex-direction: column;
     height: 100vh;
     background: #fff;
-    border-radius: 50px 0;
+    // border-radius: 50px 0;
     width: 90%;
     @include responsive($tablet-resize) {
-      border-radius: 50px 0 0 50px;
+      // border-radius: 50px 0 0 50px;
     }
   }
 }

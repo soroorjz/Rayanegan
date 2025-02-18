@@ -6,12 +6,12 @@ import { IoMdHome } from "react-icons/io";
 import { Link } from "react-router";
 
 
-const ExamSignUpForm = () => {
+const ExamSignUpForm = ({title, showNavbar = true,successMessage, redirectAfterSubmit}) => {
   return (
     <div className="examSignUpForm-Contaner">
-      <NavbarTop hideJobSearch={true} />
-      <h2> ساخت حساب کاربری داوطلبان</h2>
-      <SignUpStepper />
+       {showNavbar && <NavbarTop hideJobSearch={true} />}
+      <h2> {title}</h2>
+      <SignUpStepper successMessage={successMessage}  redirectAfterSubmit={redirectAfterSubmit} />
       <button className="homeBtn">
         <Link to="/">
           <IoMdHome />

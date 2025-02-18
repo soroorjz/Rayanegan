@@ -1,9 +1,10 @@
 .ProfileHeader {
   width: 90%;
   background-color: #fff;
-  border-radius: 50px 50px 0 0;
+  // border-radius: 50px 50px 0 0;
   position: fixed;
-  top: 10px;
+  top: 0;
+  z-index: 1;
 
   .ProfileHeader-Wrapper {
     width: 95%;

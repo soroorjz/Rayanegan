@@ -18,7 +18,17 @@ function App() {
     <AuthProvider>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signUpForm" element={<ExamSignUpForm />} />
+        <Route
+          path="/signUpForm"
+          element={
+            <ExamSignUpForm
+              title="ساخت حساب کاربری "
+              showNavbar={true}
+              successMessage="ثبت نام با موفقیت انجام شد!"
+              redirectAfterSubmit={true}
+            />
+          }
+        />
         <Route path="/examInfo/:id" element={<ExamInfo />} />
         <Route path="/logIn" element={<LogIn />} />
         <Route path="/profile" element={<ProfilePage />} />

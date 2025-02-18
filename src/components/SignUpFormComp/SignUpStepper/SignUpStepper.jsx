@@ -5,13 +5,20 @@ import EducationForm from "./EducationForm/EducationForm";
 import ContactForm from "./ContactForm/ContactForm";
 import BackgroundForm from "./BackgroundForm/BackgroundForm";
 import FileInput from "../FileInput";
-const SignUpStepper = () => {
+import { useNavigate } from "react-router";
+const SignUpStepper = ({ successMessage }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [gender, setGender] = useState(null);
-  const persianNumbers = ["۱", "۲", "۳", "۴","۵"];
-
-  const steps = [" اطلاعات فردی", "اطلاعات تحصیلی ", " اطلاعات محل سکونت","بارگذاری تصاویر", "پایان"];
+  const persianNumbers = ["۱", "۲", "۳", "۴", "۵"];
+  const navigate = useNavigate();
+  const steps = [
+    " اطلاعات فردی",
+    "اطلاعات تحصیلی ",
+    " اطلاعات محل سکونت",
+    "بارگذاری تصاویر",
+    "سوابق",
+  ];
 
   const handleNextStep = () => {
     if (currentStep < steps.length) {
@@ -95,7 +102,7 @@ const SignUpStepper = () => {
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <p>ثبت نام با موفقیت انجام شد!</p>
+            <p>{successMessage}</p>
           </div>
         </div>
       )}

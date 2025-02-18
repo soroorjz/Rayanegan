@@ -7,33 +7,45 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import "./BackgroundForm.scss";
 
-// اسکیما با رفع مشکل وابستگی چرخشی
-const schema = yup.object().shape({
-  quota: yup.string().required("لطفاً نوع سهمیه را انتخاب کنید"),
-  disabilityType: yup.string().when("quota", {
-    is: (val) => val === "disability",
-    then: yup.string().required("لطفاً نوع معلولیت را مشخص کنید"),
-  }),
-
-  militaryStatus: yup.string().required("لطفاً وضعیت نظام وظیفه را انتخاب کنید"),
-  serviceDuration: yup
-    .number()
-    .typeError("مدت خدمت باید عدد باشد")
-    .min(0, "مدت خدمت نمی‌تواند کمتر از 0 ماه باشد")
-    .required("لطفاً میزان خدمت را به ماه وارد کنید"),
-  serviceEndDate: yup.string().required("لطفاً تاریخ پایان خدمت را وارد کنید"),
-
-  workExperience: yup
-    .number()
-    .typeError("میزان سابقه باید عدد باشد")
-    .min(0, "میزان سابقه نمی‌تواند کمتر از 0 ماه باشد")
-    .test("work-experience-required", "لطفاً میزان سابقه کار را وارد کنید", function (value) {
-      const { workExperienceEnabled } = this.parent;
-      return !workExperienceEnabled || (value !== undefined && value !== null && value !== "");
-    }),
-});
-
 const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
+  const schema = yup.object().shape({
+    quota: yup.string().required("لطفاً نوع سهمیه را انتخاب کنید"),
+    disabilityType: yup.string().when("quota", {
+      is: (val) => val === "disability",
+      then: yup.string().required("لطفاً نوع معلولیت را مشخص کنید"),
+    }),
+  
+    // اعتبارسنجی نظام وظیفه فقط برای مردان
+    militaryStatus: yup.string().when("gender", {
+      is: "male",
+      then: yup.string().required("لطفاً وضعیت نظام وظیفه را انتخاب کنید"),
+    }),
+  
+    serviceDuration: yup
+      .number()
+      .typeError("مدت خدمت باید عدد باشد")
+      .min(0, "مدت خدمت نمی‌تواند کمتر از 0 ماه باشد")
+      .when("gender", {
+        is: "male",
+        then: yup.number().required("لطفاً میزان خدمت را به ماه وارد کنید"),
+      }),
+  
+    serviceEndDate: yup.string().when("gender", {
+      is: "male",
+      then: yup.string().required("لطفاً تاریخ پایان خدمت را وارد کنید"),
+    }),
+  
+    workExperience: yup
+      .number()
+      .typeError("میزان سابقه باید عدد باشد")
+      .min(0, "میزان سابقه نمی‌تواند کمتر از 0 ماه باشد")
+      .when("workExperienceEnabled", {
+        is: true,
+        then: yup.number().required("لطفاً میزان سابقه کار را وارد کنید"),
+      }),
+  });
+  
+
   const {
     register,
     handleSubmit,
@@ -68,7 +80,7 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
     const newValue = !workExperienceEnabled;
     setWorkExperienceEnabled(newValue);
     setValue("workExperienceEnabled", newValue);
-    setValue("workExperience", newValue ? "" : 0); // مقدار را بر اساس وضعیت تغییر می‌دهیم
+   setValue("workExperience", newValue ? 0 : 0);
   };
 
   return (
@@ -89,7 +101,9 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
           <div className="form-group">
             <label>نوع معلولیت:</label>
             <input type="text" {...register("disabilityType")} />
-            {errors.disabilityType && <span>{errors.disabilityType.message}</span>}
+            {errors.disabilityType && (
+              <span>{errors.disabilityType.message}</span>
+            )}
           </div>
         )}
 
@@ -103,13 +117,17 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
                 <option value="exempted">معاف</option>
                 <option value="not_completed">در حال خدمت</option>
               </select>
-              {errors.militaryStatus && <span>{errors.militaryStatus.message}</span>}
+              {errors.militaryStatus && (
+                <span>{errors.militaryStatus.message}</span>
+              )}
             </div>
 
             <div className="form-group">
               <label>میزان خدمت (ماه):</label>
               <input type="number" {...register("serviceDuration")} />
-              {errors.serviceDuration && <span>{errors.serviceDuration.message}</span>}
+              {errors.serviceDuration && (
+                <span>{errors.serviceDuration.message}</span>
+              )}
             </div>
 
             <div className="form-group">
@@ -122,15 +140,21 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
                 inputClass="custom-date-input"
                 placeholder="تاریخ پایان خدمت را انتخاب کنید"
               />
-              {errors.serviceEndDate && <span>{errors.serviceEndDate.message}</span>}
+              {errors.serviceEndDate && (
+                <span>{errors.serviceEndDate.message}</span>
+              )}
             </div>
           </>
         )}
 
         <div className="form-group Experience">
           <div className="toggle-container" onClick={handleToggle}>
-            <div className={`toggle ${workExperienceEnabled ? "active" : ""}`}></div>
-            <p className="workExperienceP">{workExperienceEnabled ? "سابقه کار دارم" : "سابقه کار ندارم"}</p>
+            <div
+              className={`toggle ${workExperienceEnabled ? "active" : ""}`}
+            ></div>
+            <p className="workExperienceP">
+              {workExperienceEnabled ? "سابقه کار دارم" : "سابقه کار ندارم"}
+            </p>
           </div>
         </div>
 
@@ -141,7 +165,9 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
             {...register("workExperience")}
             disabled={!workExperienceEnabled}
           />
-          {errors.workExperience && <span>{errors.workExperience.message}</span>}
+          {errors.workExperience && (
+            <span>{errors.workExperience.message}</span>
+          )}
         </div>
       </div>
 

@@ -13,7 +13,17 @@ const ProfileMain = ({ selectedComponent }) => {
   let content;
   switch (selectedComponent) {
     case "personal":
-      // content = <ExamSignUpForm />;
+      content = (
+        <div className="profilePersonalDetails">
+          <ExamSignUpForm
+            title="ویرایش اطلاعات "
+            showNavbar={false}
+            successMessage="اطلاعات به روز شد!"
+            redirectAfterSubmit={false}
+          />
+          ;
+        </div>
+      );
       // content = <PersonalDetails />;
       break;
     case "exams":

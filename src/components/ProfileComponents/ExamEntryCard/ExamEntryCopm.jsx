@@ -8,18 +8,6 @@ import { examData } from "../MyExams/data";
 import "./ExamEntryCopm.scss";
 import ExamEntryCard from "./ExamEntryCard";
 
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 220,
-    },
-  },
-};
-
 const ExamEntryCopm = () => {
   const [selectedExam, setSelectedExam] = useState("");
 
@@ -30,52 +18,29 @@ const ExamEntryCopm = () => {
   ];
 
   const handleChange = (event) => {
-    setSelectedExam(event.target.value);
+    setSelectedExam(Number(event.target.value));
   };
 
   return (
     <div className="Entry-list">
       <h2>کارت‌های ورود به آزمون</h2>
-      <div
-        className="Entry-selection"
-        style={{ display: "flex", alignItems: "center", gap: "10px" }}
-      >
-        <label>انتخاب آزمون:</label>
-        <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
-          <Select
-            displayEmpty
-            value={selectedExam}
-            onChange={handleChange}
-            input={
-              <OutlinedInput
-                sx={{ height: 36, fontSize: "12px", padding: "5px" }}
-              />
-            }
-            renderValue={(selected) =>
-              selected ? (
-                <span style={{ fontFamily: "Vazirmatn", fontSize: "15px" }}>
-                  {exams.find((exam) => exam.id === selected)?.name}
-                </span>
-              ) : (
-                <em style={{ fontFamily: "Vazirmatn", fontSize: "15px" }}>
-                  آزمون مورد نظر را انتخاب کنید
-                </em>
-              )
-            }
-            inputProps={{ "aria-label": "Without label" }}
-          >
-            <MenuItem disabled value="">
-              <em style={{ fontFamily: "Vazirmatn", fontSize: "15px" }}>
-                آزمون مورد نظر را انتخاب کنید
-              </em>
-            </MenuItem>
-            {exams.map((exam) => (
-              <MenuItem key={exam.id} value={exam.id}>
-                {exam.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+      <div className="Entry-selection">
+        <label htmlFor="exam-select">انتخاب آزمون:</label>
+        <select
+          id="exam-select"
+          value={selectedExam}
+          onChange={handleChange}
+          className="exam-select"
+        >
+          <option value="" disabled>
+            آزمون مورد نظر را انتخاب کنید
+          </option>
+          {exams.map((exam) => (
+            <option key={exam.id} value={exam.id}>
+              {exam.name}
+            </option>
+          ))}
+        </select>
         {selectedExam &&
           exams.find((exam) => exam.id === selectedExam)?.status === "card" && (
             <button className="exam-card-button">دریافت کارت آزمون</button>
@@ -99,5 +64,4 @@ const ExamEntryCopm = () => {
     </div>
   );
 };
-
 export default ExamEntryCopm;
