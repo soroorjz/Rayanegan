@@ -1,9 +1,17 @@
+@import "../../styles/responsive.scss";
+$tablet-resize: 900px;
+
 .file-input-container {
   display: grid;
-  grid-template-columns: repeat(3, 2fr); 
-  grid-template-rows: repeat(2, auto); 
+  grid-template-columns: repeat(1, 2fr);
+  grid-template-rows: repeat(2, auto);
   gap: 15px;
   width: 100%;
+  @include responsive($tablet) {
+    width: 90%;
+    grid-template-columns: repeat(3, 2fr);
+    grid-template-rows: repeat(2, auto);
+  }
 }
 
 .file-upload-section {
@@ -93,11 +101,11 @@
     border: none;
     border-radius: 6px;
     font-size: 16px;
+    width: 100%;
     cursor: pointer;
     transition: background 0.3s ease;
     &:hover {
       background: #e55604;
     }
   }
-
 }

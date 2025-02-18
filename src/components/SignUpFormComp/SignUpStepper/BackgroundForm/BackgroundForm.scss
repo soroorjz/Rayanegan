@@ -92,7 +92,9 @@ $tablet-resize: 900px;
   }
   .backgroundFormBtns {
     display: flex;
-    width: 25%;
+    @include responsive($tablet) {
+      width: 25%;
+    }
     margin-top: 20px;
     gap: 15px;
     .submit-btn {

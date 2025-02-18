@@ -14,8 +14,12 @@ $tablet-resize: 900px;
   .contact-formWrapper {
     display: grid;
     // grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     gap: 16px;
+    @include responsive($tablet) {
+      width: 90%;
+      grid-template-columns: repeat(2, 1fr);
+    }
     .form-group {
       display: flex;
       flex-direction: column;

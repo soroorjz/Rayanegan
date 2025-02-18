@@ -5,7 +5,7 @@ $tablet-resize: 900px;
   background: #f9f9f9;
   width: 90%;
   // max-height: 60vh;
-  margin: 20px auto ;
+  margin: 20px auto;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -17,11 +17,11 @@ $tablet-resize: 900px;
     width: 100%;
   }
   &::-webkit-scrollbar {
-    width: 5px; 
+    width: 5px;
   }
 
   &::-webkit-scrollbar-track {
-    background: transparent; 
+    background: transparent;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -49,8 +49,7 @@ $tablet-resize: 900px;
       justify-content: space-between;
       border-bottom: 1px solid #ccc;
       @include responsive($tablet-resize) {
-      flex-direction: row-reverse;
-       
+        flex-direction: row-reverse;
       }
       .exam-entry-card__profile {
         display: flex;
@@ -73,7 +72,6 @@ $tablet-resize: 900px;
         }
       }
 
-      
       .exam-entry-card__qr {
         margin: 10px 0;
         img {
@@ -86,11 +84,15 @@ $tablet-resize: 900px;
       height: 100%;
       text-align: right;
       display: grid;
-      grid-template-rows: repeat(6, auto);
+      grid-template-rows: repeat(13, auto);
+      grid-template-columns: repeat(1, 1fr);
       grid-auto-flow: column;
       gap: 10px 20px;
       p {
         margin: 0;
+      }
+      @include responsive($tablet) {
+        grid-template-rows: repeat(6, auto);
       }
     }
     .signingPart {
@@ -100,7 +102,7 @@ $tablet-resize: 900px;
       width: 100%;
       justify-content: space-around;
       align-items: center;
-      @include responsive($tablet-resize){
+      @include responsive($tablet-resize) {
         flex-direction: row;
       }
       .fingerPrint,

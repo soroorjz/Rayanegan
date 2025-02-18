@@ -107,7 +107,6 @@ $tablet-resize: 900px;
     }
 
     .submit-button {
-      width: 20%;
       display: block;
       margin: 20px 0;
       padding: 12px;
@@ -118,6 +117,9 @@ $tablet-resize: 900px;
       font-size: 16px;
       cursor: pointer;
       transition: background 0.3s ease;
+      @include responsive($tablet) {
+        width: 20%;
+      }
 
       &:hover {
         background: #e55604;

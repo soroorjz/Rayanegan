@@ -8,7 +8,7 @@ $tablet-resize: 900px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 16px;
 
   @include responsive($tablet) {
@@ -63,7 +63,9 @@ $tablet-resize: 900px;
   }
 
   .submit-btn {
-    width: 40%;
+    @include responsive($tablet) {
+      width: 40%;
+    }
     padding: 12px;
     background: #04364a;
     color: #fff;

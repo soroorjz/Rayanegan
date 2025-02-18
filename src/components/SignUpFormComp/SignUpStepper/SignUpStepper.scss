@@ -6,8 +6,11 @@ $primary-color: #e55604;
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  padding: 20px;
-  width: 100%;
+  width: 96%;
+  margin: 0 auto;
+  @include responsive ($tablet){
+
+  }
 }
 
 .stepper {
@@ -61,8 +64,11 @@ $primary-color: #e55604;
 
 .step-content {
   border-radius: 8px;
-  padding: 20px;
-  width: 100%;
+  width: 96%;
+  margin: 0 auto;
+  @include responsive ($tablet){
+
+  }
 }
 
 .modal-overlay {
