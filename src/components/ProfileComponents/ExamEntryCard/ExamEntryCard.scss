@@ -4,13 +4,13 @@ $tablet-resize: 900px;
 .exam-entry-card {
   background: #f9f9f9;
   width: 90%;
-  max-height: 60vh;
-  margin: 10px auto 0;
+  // max-height: 60vh;
+  margin: 20px auto ;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  overflow: auto;
+  // overflow: auto;
   // direction: ltr;
 
   @include responsive($tablet-resize) {
