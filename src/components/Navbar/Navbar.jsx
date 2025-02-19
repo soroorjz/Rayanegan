@@ -67,6 +67,7 @@ const Navbar = () => {
       <div className="sidebarNav">
         {menuItems.map((item, index) => (
           <li
+            id={`menuItem-${index}`}
             key={index}
             className={`menu-item ${activeIndex === index ? "active" : ""}`}
             onClick={() => handleScroll(item.target, index)}

@@ -6,12 +6,80 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { useAuth } from "../../../AuthContext"; // دریافت وضعیت ورود
 import ExamFormResult from "./ExamFormResult/ExamFormResult";
+import introJs from "intro.js";
+import "intro.js/introjs.css";
+import { FaQuestionCircle } from "react-icons/fa";
 
 const ExamForm = () => {
   const { user } = useAuth(); // دریافت کاربر لاگین شده
   const [workExperience, setWorkExperience] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showList, setShowList] = useState(false);
+
+  const startTour = () => {
+    const steps = user
+      ? [
+          {
+            element: ".search-button",
+            intro:
+              "با کلیک روی این دکمه، با توجه به اطلاعات ثبت شده شما در حساب کاربری، مناسب‌ترین آزمون‌ها را پیشنهاد خواهیم داد.",
+          },
+        ]
+      : [
+          {
+            element: ".Level",
+            intro: "لطفاً مقطع تحصیلی خود را انتخاب کنید.",
+          },
+          {
+            element: ".field",
+            intro: "رشته تحصیلی خود را مشخص کنید.",
+          },
+          {
+            element: ".birthDay",
+            intro: "تاریخ تولد خود را وارد کنید.",
+          },
+          {
+            element: ".birthLoc",
+            intro: "استان تولد خود را انتخاب کنید.",
+          },
+          {
+            element: ".fond",
+            intro: "وضعیت سهمیه خود را انتخاب کنید.",
+          },
+          {
+            element: ".gender-radio",
+            intro: "جنسیت خود را مشخص کنید.",
+          },
+          {
+            element: ".maritalRadio",
+            intro: "وضعیت تاهل خود را مشخص کنید.",
+          },
+          {
+            element: ".Experience",
+            intro: "در صورت داشتن سابقه، این گزینه را فعال کنید.",
+          },
+          {
+            element: ".search-button",
+            intro:
+              "با کلیک روی این دکمه، با توجه به اطلاعات وارد شده، مناسب‌ترین آزمون‌ها را به شما نمایش خواهیم داد.",
+          },
+        ];
+
+    introJs()
+      .setOptions({
+        steps: steps,
+        showBullets: false,
+        tooltipClass: "ExamFormTooltip-IntroJs",
+        highlightClass: "ExamFormHighlight-IntroJs",
+        showProgress: false,
+        disableInteraction: true,
+        nextLabel: "بعدی",
+        prevLabel: "قبلی",
+        doneLabel: " متوجه شدم",
+        // skipLabel: "⏭ رد کردن",
+      })
+      .start();
+  };
 
   const handleSearch = () => {
     setShowList(true);
@@ -24,6 +92,9 @@ const ExamForm = () => {
   return (
     <div className="exam-form">
       <form className="search-form">
+        <div className="tutorial-icon" onClick={startTour}>
+          <FaQuestionCircle size={24} />
+        </div>
         {!user && ( // اگر کاربر لاگین نکرده باشد، فرم ورودی نمایش داده شود
           <div className="formContent">
             <div className="form-grid">

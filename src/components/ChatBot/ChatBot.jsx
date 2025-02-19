@@ -100,6 +100,7 @@ const ChatBot = () => {
         onClick={toggleMenu}
         className={`chatBotMenu-toggle ${isOpen ? "active" : ""}`}
         whileTap={{ scale: 0.9 }}
+        id="chatBotMainBtn"
       >
         {isOpen ? <FaTimes size={24} /> : <FaEnvelope size={24} />}
       </motion.button>

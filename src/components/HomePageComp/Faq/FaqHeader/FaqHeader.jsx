@@ -23,10 +23,10 @@ const FaqHeader = () => {
           onClick={handleToggle}
           style={{ cursor: user ? "pointer" : "not-allowed" }} // دکمه غیرفعال شده در صورت عدم ورود
         >
-          <span className={`option faq ${!isFaqSelected ? "inactive" : ""}`}>
+          <span id="faqOptionBtn" className={`option faq ${!isFaqSelected ? "inactive" : ""}`}>
             سوالات متداول
           </span>
-          <span
+          <span id="offlineSupportOptionBtn"
             className={`option support ${isFaqSelected ? "inactive" : ""} ${
               !user ? "disabled" : ""
             }`}

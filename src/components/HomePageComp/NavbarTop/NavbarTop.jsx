@@ -6,6 +6,7 @@ import { FaUser, FaSignOutAlt } from "react-icons/fa";
 import { useAuth } from "../../../AuthContext";
 import { FaCircleUser } from "react-icons/fa6";
 
+
 const NavbarTop = ({
   hideJobSearch = false,
   hideRepotBtn = false,
@@ -14,6 +15,7 @@ const NavbarTop = ({
   const { user, logout } = useAuth(); //  دریافت user و logout از AuthContext
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,13 +49,13 @@ const NavbarTop = ({
 
         <div className="navbarLeftPart">
           {!hideJobSearch && ( // بررسی مقدار hideJobSearch
-            <div className="jobSearchBtn">
+            <div className="jobSearchBtn" id="jobSearchBtn">
               <button onFocus={handleSearchFocus}>جست و جوی مشاغل</button>
             </div>
           )}
 
           {!hideRepotBtn && (
-            <div className="jobSearchBtn">
+            <div className="jobSearchBtn" id="reportBtn">
               <button>
                 <Link to="/ReportForm">گزارش تخلف</Link>
               </button>
