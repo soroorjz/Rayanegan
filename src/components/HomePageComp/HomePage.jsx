@@ -71,6 +71,7 @@ const HomePage = () => {
           prevLabel: "قبلی",
           doneLabel: "تمام",
           showProgress: false,
+          showPrevButton: false,
           showBullets: false,
           disableInteraction: true,
           tooltipClass: "homeTooltip-IntroJs",
