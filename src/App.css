@@ -139,3 +139,6 @@
   right: 70px;
   top: -42px !important;
 }
+.top-middle {
+  transform: rotate(90deg) !important;
+}

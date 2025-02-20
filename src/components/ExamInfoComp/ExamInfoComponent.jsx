@@ -16,12 +16,14 @@ const ExamInfoComponent = () => {
           className={
             activeSection === "introduction" ? "exam-InfoTab-Active" : ""
           }
+          id="ExamIntroduction"
         >
           معرفی آزمون
         </button>
         <button
           onClick={() => setActiveSection("booklet")}
           className={activeSection === "booklet" ? "exam-InfoTab-Active" : ""}
+          id="bookletBtn"
         >
           دفترچه
         </button>
@@ -30,12 +32,14 @@ const ExamInfoComponent = () => {
           className={
             activeSection === "announcements" ? "exam-InfoTab-Active" : ""
           }
+          id="announcementsBtn"
         >
           اطلاعیه‌ها
         </button>
         <button
           onClick={() => setActiveSection("jobs")}
           className={activeSection === "jobs" ? "exam-InfoTab-Active" : ""}
+          id="InfojobSearchBtn"
         >
           جست و جوی مشاغل
         </button>

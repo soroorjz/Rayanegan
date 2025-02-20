@@ -72,6 +72,7 @@ const Countdown = ({ registrationDeadline }) => {
       <Link
         to={user ? "/RegistrationPage" : "/logIn"}
         className="examSignUpbtn"
+        id="RegistrationBtn"
       >
         ثبت ‌نام
       </Link>

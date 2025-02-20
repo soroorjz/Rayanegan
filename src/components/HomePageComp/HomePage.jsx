@@ -73,11 +73,11 @@ const HomePage = () => {
                 element: "#chatBotMainBtn",
                 intro: "راه پشتیبانی موردنظرتان را از این قسمت، انتخاب کنید",
               },
-              {
-                element: "#faqOptionBtn",
-                intro: "پاسخ به سوالات متداول در این قسمت قرار دارد",
-                position: "bottom",
-              },
+              // {
+              //   element: "#faqOptionBtn",
+              //   intro: "پاسخ به سوالات متداول در این قسمت قرار دارد",
+              //   position: "bottom",
+              // },
               {
                 element: "#offlineSupportOptionBtn",
                 intro:

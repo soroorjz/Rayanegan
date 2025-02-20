@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import moment from "moment-jalaali";
+import introJs from "intro.js";
+import "intro.js/introjs.css";
 
 import ExamInfoComponent from "../../components/ExamInfoComp/ExamInfoComponent";
 import { IoMdHome } from "react-icons/io";
@@ -22,6 +24,68 @@ const ExamInfo = () => {
   const toPersianDigits = (num) => {
     return num.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
   };
+
+  const startTutorial = () => {
+    const intro = introJs();
+
+    // مراحل پیش‌فرض توتاریال
+    const steps = [
+      {
+        element: "#RegistrationBtn",
+        intro: "برای ثبت‌نام در آزمون، این دکمه را فشار دهید.",
+        position: "bottom",
+      },
+      {
+        element: "#ExamIntroduction",
+        intro: "در این قسمت، توضیحات آزمون را مشاهده خواهید کرد.",
+        position: "right",
+      },
+      {
+        element: "#bookletBtn",
+        intro: "برای دریافت دفترچه راهنما، این دکمه را کلیک کنید.",
+        position: "left",
+        // tooltipClass: "bookletBtn-intro",
+      },
+      {
+        element: "#announcementsBtn",
+        intro: "اطلاعیه‌های مهم مربوط به آزمون را در این قسمت ببینید.",
+        position: "top",
+      },
+      {
+        element: "#InfojobSearchBtn",
+        intro: "در این قسمت می‌توانید اطلاعات شغل‌های مرتبط را جستجو کنید.",
+        position: "left",
+      },
+    ];
+
+    // بررسی وجود دکمه #RegistrationBtn و حذف مرحله مربوط به آن در صورت عدم وجود
+    const registrationBtn = document.getElementById("RegistrationBtn");
+    if (!registrationBtn) {
+      // حذف مرحله مربوط به #RegistrationBtn از مراحل توتاریال
+      const registrationStepIndex = steps.findIndex(
+        (step) => step.element === "#RegistrationBtn"
+      );
+      if (registrationStepIndex !== -1) {
+        steps.splice(registrationStepIndex, 1);
+      }
+    }
+
+    intro.setOptions({
+      steps: steps,
+      nextLabel: "بعدی",
+      prevLabel: "قبلی",
+      doneLabel: "تمام",
+      showProgress: false,
+      showPrevButton: false,
+      showBullets: false,
+      disableInteraction: true,
+      tooltipClass: "examTooltip-IntroJs",
+      highlightClass: "examHighlight-IntroJs",
+    });
+
+    intro.start();
+  };
+
   useEffect(() => {
     const fetchExamInfo = async () => {
       const token = localStorage.getItem("RayanToken");
@@ -40,8 +104,6 @@ const ExamInfo = () => {
           }
         );
 
-        console.log("Exam Data (Full List):", response.data);
-
         const selectedExam = response.data.find(
           (exam) => Number(exam.examId) === Number(id)
         );
@@ -50,10 +112,8 @@ const ExamInfo = () => {
           setError("آزمون موردنظر یافت نشد.");
         } else {
           setExamData(selectedExam);
-          console.log("Selected Exam Data:", selectedExam);
         }
       } catch (err) {
-        console.error("Error fetching exam details:", err);
         setError("خطا در دریافت اطلاعات آزمون!");
       } finally {
         setLoading(false);
@@ -63,9 +123,17 @@ const ExamInfo = () => {
     fetchExamInfo();
   }, [id]);
 
+  useEffect(() => {
+    if (examData) {
+      // زمانی که examData لود شد، توتاریال را شروع کن
+      startTutorial();
+    }
+  }, [examData]);
+
   if (loading) return <p>در حال بارگذاری...</p>;
   if (error) return <p className="error-text">{error}</p>;
   if (!examData) return <p>اطلاعاتی یافت نشد</p>;
+
   const formatPersianDate = (date) => {
     if (!date) return "نامشخص";
     const momentDate = moment(date, "jYYYY/jMM/jDD");
