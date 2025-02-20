@@ -125,3 +125,14 @@ color: #e55604;
   top: 170px !important;
   transform: rotate(285deg) !important;
 }
+.ExamInfo-tutorialBtn {
+  background: 0;
+  border: 0;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  font-size: 25px;
+  z-index: 9999;
+  color: #ccc;
+  cursor: pointer;
+}

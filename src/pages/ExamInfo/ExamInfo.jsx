@@ -4,6 +4,7 @@ import axios from "axios";
 import moment from "moment-jalaali";
 import introJs from "intro.js";
 import "intro.js/introjs.css";
+import { RiQuestionFill } from "react-icons/ri";
 
 import ExamInfoComponent from "../../components/ExamInfoComp/ExamInfoComponent";
 import { IoMdHome } from "react-icons/io";
@@ -27,8 +28,6 @@ const ExamInfo = () => {
 
   const startTutorial = () => {
     const intro = introJs();
-
-    // مراحل پیش‌فرض توتاریال
     const steps = [
       {
         element: "#RegistrationBtn",
@@ -44,7 +43,6 @@ const ExamInfo = () => {
         element: "#bookletBtn",
         intro: "برای دریافت دفترچه راهنما، این دکمه را کلیک کنید.",
         position: "left",
-        // tooltipClass: "bookletBtn-intro",
       },
       {
         element: "#announcementsBtn",
@@ -61,7 +59,6 @@ const ExamInfo = () => {
     // بررسی وجود دکمه #RegistrationBtn و حذف مرحله مربوط به آن در صورت عدم وجود
     const registrationBtn = document.getElementById("RegistrationBtn");
     if (!registrationBtn) {
-      // حذف مرحله مربوط به #RegistrationBtn از مراحل توتاریال
       const registrationStepIndex = steps.findIndex(
         (step) => step.element === "#RegistrationBtn"
       );
@@ -126,8 +123,12 @@ const ExamInfo = () => {
 
   useEffect(() => {
     if (examData) {
-      // زمانی که examData لود شد، توتاریال را شروع کن
-      startTutorial();
+      const hasSeenTutorial = localStorage.getItem("hasSeenExamTutorial");
+
+      if (!hasSeenTutorial) {
+        startTutorial();
+        localStorage.setItem("hasSeenExamTutorial", "true");
+      }
     }
   }, [examData]);
 
@@ -146,13 +147,6 @@ const ExamInfo = () => {
   const endDate = moment(examData.examRegisterEndDate, "jYYYY/jMM/jDD");
   const cardIssueDate = moment(examData.examWithdrawCard, "jYYYY/jMM/jDD");
   const eventDate = moment(examData.examDate, "jYYYY/jMM/jDD");
-
-  console.log("Parsed Dates:", {
-    startDate,
-    endDate,
-    cardIssueDate,
-    eventDate,
-  });
 
   return (
     <div className="examInfoContainer">
@@ -174,6 +168,11 @@ const ExamInfo = () => {
         <Link to="/">
           <IoMdHome />
         </Link>
+      </button>
+
+      {/* دکمه نمایش توتاریال */}
+      <button className="ExamInfo-tutorialBtn" onClick={startTutorial}>
+        <RiQuestionFill />
       </button>
     </div>
   );
