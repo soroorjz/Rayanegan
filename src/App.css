@@ -57,22 +57,23 @@
 .introjs-tooltiptext {
   font-family: Vazirmatn !important;
   padding: 0 !important;
-  text-shadow: 1px 0px 20px rgba(0, 0, 0, 0.6);
+  text-shadow: none !important;
+
   text-align: center !important;
 }
 .introjs-tooltipbuttons {
   border: 0 !important;
   padding: 0 !important;
+  border-radius: 10px !important;
 }
 .introjs-button {
   font-family: Vazirmatn !important;
-  border-radius: 50% !important;
-  padding: 15px !important;
+  border-radius: 10px !important;
+  text-shadow: none !important;
+
+  padding: 10px !important;
 }
 
-.introjs-tooltip-header {
-  /* display: none; */
-}
 .introjs-arrow {
   content: "";
   position: absolute;
@@ -93,43 +94,48 @@
   display: none;
 }
 .introjs-nextbutton {
-  margin: 10px 45px 0 0 !important;
+  margin: 0 !important;
   border: 0 !important;
-  text-shadow: 0 !important;
-  font-size: 16px !important;
+  text-shadow: none !important;
+  background-color: #616161 !important;
+  /* background-color: #04364a !important; */
+  font-size: 14px !important;
   font-weight: 900;
+  /* color: #dafffb !important; */
+  
+  border-radius: 0 !important;
 }
 .introjs-nextbutton:focus {
   border-color: #e55604 !important ;
   border: none !important ;
   outline: none !important;
-  color: #000 !important;
+  text-shadow: none !important;
+  color: #fff !important;
   box-shadow: none !important;
 }
+.introjs-nextbutton:hover{
+  color: #e55604;
+  }
 .introjs-prevbutton {
   display: none !important;
 }
-.introjs-skipbutton {
-  display: none !important;
-}
 
+.introjs-skipbutton{
+  transition: all 0.3s ease-in-out !important;
+  font-weight: 400;
+}
+.introjs-skipbutton:hover{
+  color: #e55604 !important;
+}
 .homeHighlight-IntroJs {
   box-shadow: rgb(33 33 33 / 3%) 0px 0px 1px 2px,
     rgb(33 33 33 / 84%) 0px 0px 0px 5000px !important;
   border-radius: 10px !important;
 }
-/* .introjs-arrow.bottom-right {
-  top: unset !important;
-  right: unset !important;
-  border-top-color: #fff;
-  left: 138px;
-  bottom: -47px !important;
-  transform: rotate(0deg);
-} */
+
 .introjs-arrow.right-bottom {
   top: unset !important;
   right: 17px !important;
-  border-top-color: #fff;
   left: 0;
   bottom: 32px !important;
   transform: rotate(0deg);
@@ -142,3 +148,4 @@
 .top-middle {
   transform: rotate(90deg) !important;
 }
+

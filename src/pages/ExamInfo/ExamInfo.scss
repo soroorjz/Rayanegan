@@ -14,6 +14,7 @@
   color: #fff !important;
   border-radius: 8px;
   font-size: 17px;
+
   font-weight: 900;
   padding: 0 !important;
   box-shadow: none !important;
@@ -25,7 +26,7 @@
 .introjs-tooltiptext {
   font-family: Vazirmatn !important;
   padding: 0 !important;
-  text-shadow: 1px 0px 20px rgba(0, 0, 0, 0.6);
+  text-shadow: none !important;
   text-align: center !important;
 }
 .introjs-tooltipbuttons {
@@ -34,8 +35,9 @@
 }
 .introjs-button {
   font-family: Vazirmatn !important;
-  border-radius: 50% !important;
-  padding: 15px !important;
+  border-radius: 10px !important;
+  text-shadow: none !important;
+  padding: 10px !important;
 }
 
 .introjs-tooltip-header {
@@ -61,24 +63,36 @@
   display: none;
 }
 .introjs-nextbutton {
-  margin: 10px 45px 0 0 !important;
+  margin: 0 !important;
   border: 0 !important;
-  text-shadow: 0 !important;
-  font-size: 16px !important;
+  text-shadow: none !important;
+  color: #fff !important;
+  // color: #dafffb !important;
+
+  font-size: 14px !important;
   font-weight: 900;
 }
 .introjs-nextbutton:focus {
   border-color: #e55604 !important ;
   border: none !important ;
   outline: none !important;
-  color: #000 !important;
+  text-shadow: none !important;
+  color: #fff !important;
   box-shadow: none !important;
+}
+.introjs-nextbutton:hover{
+color: #e55604;
 }
 .introjs-prevbutton {
   display: none !important;
 }
 .introjs-skipbutton {
-  display: none !important;
+  // display: none !important;
+  right: unset;
+  left:100px;
+  :hover{
+    color: #e55604 !important;
+  }
 }
 
 .examHighlight-IntroJs {
@@ -103,13 +117,11 @@
 .top-middle {
   transform: rotate(90deg) !important;
 }
-.introjs-arrow.right{
+.introjs-arrow.right {
   transform: rotate(90deg) !important;
-
 }
 
 .introjs-arrow.bottom {
   top: 170px !important;
   transform: rotate(285deg) !important;
-
 }

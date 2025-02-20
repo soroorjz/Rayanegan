@@ -72,9 +72,10 @@ const ExamInfo = () => {
 
     intro.setOptions({
       steps: steps,
-      nextLabel: "بعدی",
+      nextLabel: "متوجه شدم!",
       prevLabel: "قبلی",
-      doneLabel: "تمام",
+      skipLabel: "✖",
+      doneLabel: "متوجه شدم!",
       showProgress: false,
       showPrevButton: false,
       showBullets: false,
