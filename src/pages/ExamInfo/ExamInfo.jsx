@@ -26,6 +26,17 @@ const ExamInfo = () => {
     return num.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
   };
 
+  useEffect(() => {
+    if (examData) {
+      const hasSeenTutorial = localStorage.getItem("hasSeenExamTutorial");
+
+      if (!hasSeenTutorial && window.innerWidth > 1025) {
+        startTutorial();
+        localStorage.setItem("hasSeenExamTutorial", "true");
+      }
+    }
+  }, [examData]);
+
   const startTutorial = () => {
     const intro = introJs();
     const steps = [
@@ -71,7 +82,7 @@ const ExamInfo = () => {
       steps: steps,
       nextLabel: "متوجه شدم!",
       prevLabel: "قبلی",
-      skipLabel: "✖",
+      skipLabel: "",
       doneLabel: "متوجه شدم!",
       showProgress: false,
       showPrevButton: false,
