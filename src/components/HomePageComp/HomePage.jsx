@@ -69,7 +69,7 @@ const HomePage = () => {
           position: "bottom",
         },
       ],
-      nextLabel: "بعدی",
+      nextLabel: "متوجه شدم!",
       prevLabel: "قبلی",
       skipLabel: "✖",
       doneLabel: "متوجه شدم!",
