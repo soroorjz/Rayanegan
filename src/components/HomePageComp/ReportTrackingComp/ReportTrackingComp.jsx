@@ -12,7 +12,8 @@ const ReportTrackingComp = () => {
         title: "تقلب در آزمون کتبی",
         date: "1403/02/05",
         status: "در حال بررسی",
-        description: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
+        description:
+          "به محض دریافت پاسخ از سوی مسئولین مربوطه، در این صفحه نمایش داده می شود.",
       });
       setError(null);
     } else {
@@ -40,8 +41,12 @@ const ReportTrackingComp = () => {
       {reportData && (
         <div className="report-box">
           <h3>{reportData.title}</h3>
-          <p><strong>تاریخ:</strong> {reportData.date}</p>
-          <p className="status">وضعیت: <span>{reportData.status}</span></p>
+          <p>
+            <strong>تاریخ:</strong> {reportData.date}
+          </p>
+          <p className="status">
+            وضعیت: <span>{reportData.status}</span>
+          </p>
           <p>{reportData.description}</p>
         </div>
       )}
