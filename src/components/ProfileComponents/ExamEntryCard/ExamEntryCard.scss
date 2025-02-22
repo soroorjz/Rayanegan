@@ -101,9 +101,9 @@ $tablet-resize: 900px;
       flex-direction: column;
       width: 100%;
       justify-content: space-around;
-      align-items: center;
       @include responsive($tablet-resize) {
         flex-direction: row;
+        align-items: center;
       }
       .fingerPrint,
       .sign {

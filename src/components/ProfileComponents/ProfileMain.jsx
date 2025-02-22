@@ -21,7 +21,6 @@ const ProfileMain = ({ selectedComponent }) => {
             successMessage="اطلاعات به روز شد!"
             redirectAfterSubmit={false}
           />
-          ;
         </div>
       );
       // content = <PersonalDetails />;
