@@ -49,7 +49,7 @@ const SupportAptions = ({ onSelectOption, resetState }) => {
       <div className="support-detail">
         {supportComponents[selectedOption]}
         <button className="back-button" onClick={handleBack}>
-          بازگشت⬅
+          بازگشت
         </button>
       </div>
     );

@@ -90,7 +90,10 @@ const SupportHelpCenter = () => {
               </option>
             ))}
           </select>
-          <button onClick={() => setActiveQuestion(null)} className="back-button">
+          <button
+            onClick={() => setActiveQuestion(null)}
+            className="back-button"
+          >
             بازگشت
           </button>
         </div>
