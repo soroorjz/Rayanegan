@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import axios from "axios";
 
 const SelectInput = ({ formData, handleChange, errors }) => {
   const [selectedProvince, setSelectedProvince] = useState("");
@@ -12,19 +13,17 @@ const SelectInput = ({ formData, handleChange, errors }) => {
   // دریافت و ذخیره توکن
   const fetchToken = useCallback(async () => {
     try {
-      const response = await fetch("http://smp.devrayan.ir:2052/api/auth", {
-        method: "POST",
+      const response = await axios.post("http://smp.devrayan.ir:2052/api/auth", null, {
         headers: {
           "RAYAN-USERNAME": "S.JAMEIE",
           "RAYAN-PASSWORD": "1156789",
         },
       });
 
-      if (!response.ok) throw new Error("خطا در دریافت توکن!");
+      if (response.status !== 200) throw new Error("خطا در دریافت توکن!");
 
-      const data = await response.json();
-      localStorage.setItem("RayanToken", data.token);
-      return data.token;
+      localStorage.setItem("RayanToken", response.data.token);
+      return response.data.token;
     } catch (err) {
       console.error("Error fetching token:", err);
       setError("خطا در دریافت توکن!");
@@ -49,7 +48,7 @@ const SelectInput = ({ formData, handleChange, errors }) => {
       const cachedReligionData = localStorage.getItem("ReligionData");
 
       if (cachedGeoData && cachedReligionData) {
-        console.log("📌 داده‌ها از کش خوانده شدند");
+        console.log(" داده‌ها از کش خوانده شدند");
         const geoData = JSON.parse(cachedGeoData);
         const religionData = JSON.parse(cachedReligionData);
         setProvinces(geoData.filter((item) => item.geographyParent === null));
@@ -63,22 +62,20 @@ const SelectInput = ({ formData, handleChange, errors }) => {
 
       // درخواست همزمان برای استان‌ها و دین‌ها
       const [geoResponse, religionResponse] = await Promise.all([
-        fetch("http://smp.devrayan.ir:2052/api/geography/geographies", {
-          method: "GET",
+        axios.get("http://smp.devrayan.ir:2052/api/geography/geographies", {
           headers: { "RAYAN-TOKEN": token },
         }),
-        fetch("http://smp.devrayan.ir:2052/api/religion/religions", {
-          method: "GET",
+        axios.get("http://smp.devrayan.ir:2052/api/religion/religions", {
           headers: { "RAYAN-TOKEN": token },
         }),
       ]);
 
-      if (!geoResponse.ok || !religionResponse.ok) {
+      if (geoResponse.status !== 200 || religionResponse.status !== 200) {
         throw new Error("خطا در دریافت داده‌ها!");
       }
 
-      const geoData = await geoResponse.json();
-      const religionData = await religionResponse.json();
+      const geoData = geoResponse.data;
+      const religionData = religionResponse.data;
 
       // ذخیره داده‌ها در localStorage
       localStorage.setItem("GeoData", JSON.stringify(geoData));

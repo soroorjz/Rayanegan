@@ -80,8 +80,14 @@ $tablet-resize: 900px;
         margin-bottom: 15px;
       }
     }
+    .exam-form {
+      @include responsive($tablet-resize) {
+        margin-top: 0;
+        min-height: 65vh;
+      }
+    }
   }
-  .RegistrationPageBtn{
+  .RegistrationPageBtn {
     width: 20%;
     display: block;
     margin: 20px 0;

@@ -12,6 +12,7 @@ $tablet-resize: 900px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  z-index: 9;
 
   @include responsive($mobile) {
     width: 70%;
