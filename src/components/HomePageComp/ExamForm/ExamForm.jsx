@@ -18,7 +18,7 @@ const ExamForm = () => {
   const [birthProvinces, setBirthProvinces] = useState([]);
   const [quotas, setQuotas] = useState([]);
   const [error, setError] = useState(null);
-
+  const [selectedEducationLevel, setSelectedEducationLevel] = useState("");
   const fetchToken = useCallback(async () => {
     try {
       const response = await axios.post(
@@ -64,7 +64,9 @@ const ExamForm = () => {
       setBirthProvinces(
         geoResponse.data.filter((item) => item.geographyParent === null)
       );
-      setQuotas(quotaResponse.data || []);
+      setQuotas(
+        quotaResponse.data.filter((quota) => quota.quotaParent === null) || []
+      );
     } catch (err) {
       console.error("Error fetching data:", err);
       setError("خطا در دریافت داده‌ها!");
@@ -83,6 +85,10 @@ const ExamForm = () => {
     setWorkExperience(!workExperience);
   };
 
+  const handleEducationLevelChange = (e) => {
+    setSelectedEducationLevel(e.target.value); // تغییر مقطع تحصیلی
+  };
+
   return (
     <div className="exam-form">
       <form className="search-form">
@@ -91,7 +97,12 @@ const ExamForm = () => {
             <div className="form-grid">
               <div className="form-group Level">
                 <label htmlFor="educationLevel">مقطع تحصیلی</label>
-                <select id="educationLevel" name="educationLevel">
+                <select
+                  id="educationLevel"
+                  name="educationLevel"
+                  value={selectedEducationLevel} // مقطع انتخابی
+                  onChange={handleEducationLevelChange}
+                >
                   <option value="">انتخاب کنید</option>
                   {educationLevels.map((level) => (
                     <option key={level.gradeId} value={level.gradeId}>
@@ -108,7 +119,11 @@ const ExamForm = () => {
                   <option value="medicine">پزشکی</option>
                   <option value="law">حقوق</option>
                 </select> */}
-                <input type="text" placeholder="رشته تحصیلی خود را بنویسید" />
+                <input
+                  type="text"
+                  placeholder="رشته تحصیلی خود را بنویسید"
+                  disabled={!selectedEducationLevel}
+                />
               </div>
               <div className="form-group birthDay">
                 <label htmlFor="birthDate">تاریخ تولد</label>
