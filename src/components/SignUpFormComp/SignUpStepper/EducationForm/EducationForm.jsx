@@ -50,6 +50,7 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
         headers: {
           "RAYAN-USERNAME": "S.JAMEIE",
           "RAYAN-PASSWORD": "1156789",
+          "RAYAN-DEBUG": true,
         },
         method: "POST",
       });
