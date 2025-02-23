@@ -107,7 +107,11 @@ const ExamInfo = () => {
 
       try {
         const response = await axios.get(`/api/exam/exams/`, {
-          headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
+          headers: {
+            "RAYAN-TOKEN": token,
+            "RAYAN-DEBUG": true,
+            "RAYAN-NOCATCH": true,
+          },
         });
 
         const selectedExam = response.data.find(

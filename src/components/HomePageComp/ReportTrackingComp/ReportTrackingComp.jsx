@@ -9,7 +9,7 @@ const ReportTrackingComp = () => {
   const handleCheckReport = () => {
     if (trackingCode === "123456") {
       setReportData({
-        title: "تقلب در آزمون کتبی",
+        title: "برخورد نامناسب مراقب آزمون",
         date: "1403/02/05",
         status: "در حال بررسی",
         description:

@@ -57,7 +57,7 @@ const NavbarTop = ({
           {!hideRepotBtn && (
             <div className="jobSearchBtn" id="reportBtn">
               <button>
-                <Link to="/ReportForm">گزارش تخلف</Link>
+                <Link to="/ReportForm">ثبت اعتراض </Link>
               </button>
             </div>
           )}
@@ -65,7 +65,7 @@ const NavbarTop = ({
           {showReportTrackingBtn && (
             <div className="jobSearchBtn">
               <button>
-                <Link to="/ReportTracking">پیگیری گزارشات</Link>
+                <Link to="/ReportTracking">پیگیری اعتراض</Link>
               </button>
             </div>
           )}
@@ -158,7 +158,7 @@ const NavbarTop = ({
           {!hideRepotBtn && (
             <div className="sideBar-JobSearchBtn">
               <button>
-                <Link to="/ReportForm">گزارش تخلف</Link>
+                <Link to="/ReportForm">ثبت اعتراض </Link>
               </button>
             </div>
           )}

@@ -21,6 +21,7 @@ const ExamCard = () => {
           "RAYAN-USERNAME": "S.JAMEIE",
           "RAYAN-PASSWORD": "1156789",
           "RAYAN-DEBUG": true,
+          "RAYAN-NOCATCH": true,
         },
         method: "POST",
       });
@@ -41,6 +42,7 @@ const ExamCard = () => {
           headers: {
             "Rayan-Token": localStorage.getItem("RayanToken"),
             "Rayan-Debug": true,
+            "RAYAN-NOCATCH": true,
           },
         }
       );
@@ -72,6 +74,7 @@ const ExamCard = () => {
           headers: {
             "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
             "RAYAN-DEBUG": true,
+            "RAYAN-NOCATCH": true,
           },
         }
       );
