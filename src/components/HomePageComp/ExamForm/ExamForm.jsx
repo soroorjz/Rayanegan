@@ -22,7 +22,7 @@ const ExamForm = () => {
   const fetchToken = useCallback(async () => {
     try {
       const response = await axios.post(
-        "https://smp.devrayan.ir:2052/api/auth",
+        "https://smp.devrayan.ir:2053/api/auth",
         {},
         {
           headers: {
@@ -50,13 +50,13 @@ const ExamForm = () => {
 
     try {
       const [geoResponse, quotaResponse, gradeResponse] = await Promise.all([
-        axios.get("https://smp.devrayan.ir:2052/api/geography/geographies", {
+        axios.get("https://smp.devrayan.ir:2053/api/geography/geographies", {
           headers: { "RAYAN-TOKEN": token },
         }),
-        axios.get("https://smp.devrayan.ir:2052/api/quota/quotas", {
+        axios.get("https://smp.devrayan.ir:2053/api/quota/quotas", {
           headers: { "RAYAN-TOKEN": token },
         }),
-        axios.get("https://smp.devrayan.ir:2052/api/grade/grades", {
+        axios.get("https://smp.devrayan.ir:2053/api/grade/grades", {
           headers: { "RAYAN-TOKEN": token },
         }),
       ]);

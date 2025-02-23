@@ -14,7 +14,7 @@ const SelectInput = ({ formData, handleChange, errors }) => {
   const fetchToken = useCallback(async () => {
     try {
       const response = await axios.post(
-        "https://smp.devrayan.ir:2052/api/auth",
+        "https://smp.devrayan.ir:2053/api/auth",
         null,
         {
           headers: {
@@ -67,10 +67,10 @@ const SelectInput = ({ formData, handleChange, errors }) => {
 
       // درخواست همزمان برای استان‌ها و دین‌ها
       const [geoResponse, religionResponse] = await Promise.all([
-        axios.get("https://smp.devrayan.ir:2052/api/geography/geographies", {
+        axios.get("https://smp.devrayan.ir:2053/api/geography/geographies", {
           headers: { "RAYAN-TOKEN": token },
         }),
-        axios.get("https://smp.devrayan.ir:2052/api/religion/religions", {
+        axios.get("https://smp.devrayan.ir:2053/api/religion/religions", {
           headers: { "RAYAN-TOKEN": token },
         }),
       ]);

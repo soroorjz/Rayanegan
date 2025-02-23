@@ -16,12 +16,11 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
 
   const fetchToken = async () => {
     try {
-      const response = await fetch("https://smp.devrayan.ir:2052/api/auth", {
+      const response = await fetch("https://smp.devrayan.ir:2053/api/auth", {
         headers: {
           "RAYAN-USERNAME": "S.JAMEIE",
           "RAYAN-PASSWORD": "1156789",
           "RAYAN-TOKEN": true,
-
         },
         method: "POST",
       });
@@ -37,7 +36,7 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
     try {
       const token = localStorage.getItem("RayanToken");
       const response = await axios.get(
-        "https://smp.devrayan.ir:2052/api/quota/quotas",
+        "https://smp.devrayan.ir:2053/api/quota/quotas",
         {
           headers: {
             "RAYAN-TOKEN": token,
@@ -59,7 +58,7 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
     try {
       const token = localStorage.getItem("RayanToken");
       const response = await axios.get(
-        "https://smp.devrayan.ir:2052/api/dutystatus/dutystatuses",
+        "https://smp.devrayan.ir:2053/api/dutystatus/dutystatuses",
         {
           headers: { "RAYAN-TOKEN": token },
         }
