@@ -77,8 +77,7 @@ $tablet-resize: 900px;
         cursor: pointer;
         transition: background-color 0.3s;
         margin-top: 50px;
-     
-            
+
         &:hover {
           background-color: #e55604d6;
           color: #fff;
@@ -90,23 +89,30 @@ $tablet-resize: 900px;
       display: flex;
       flex-direction: column;
       gap: 60px;
+      align-items: center;
       border-radius: 10px;
       padding: 40px;
       align-self: center;
       // height: 70vh;
+      @include responsive($tablet) {
+        padding: 40px 20px;
+      }
       h2 {
         // text-align: center;
         font-size: 30px;
       }
       p {
         width: 90%;
+        @include responsive($tablet) {
+          width: 100%;
+          text-align: center;
+        }
       }
       .search-button {
         width: 30%;
         align-self: self-start;
-        @include responsive($tablet){
+        @include responsive($tablet) {
           width: 20%;
-  
         }
       }
     }
