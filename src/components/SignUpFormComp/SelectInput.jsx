@@ -13,17 +13,13 @@ const SelectInput = ({ formData, handleChange, errors }) => {
   // دریافت و ذخیره توکن
   const fetchToken = useCallback(async () => {
     try {
-      const response = await axios.post(
-        "https://smp.devrayan.ir:2053/api/auth",
-        null,
-        {
-          headers: {
-            "RAYAN-USERNAME": "S.JAMEIE",
-            "RAYAN-PASSWORD": "1156789",
-            "RAYAN-TOKEN": true,
-          },
-        }
-      );
+      const response = await axios.post("/api/auth", null, {
+        headers: {
+          "RAYAN-USERNAME": "S.JAMEIE",
+          "RAYAN-PASSWORD": "1156789",
+          "RAYAN-DEBUG": true,
+        },
+      });
 
       if (response.status !== 200) throw new Error("خطا در دریافت توکن!");
 
@@ -63,15 +59,13 @@ const SelectInput = ({ formData, handleChange, errors }) => {
         return;
       }
 
-      console.log("📡 دریافت داده‌ها از API...");
-
       // درخواست همزمان برای استان‌ها و دین‌ها
       const [geoResponse, religionResponse] = await Promise.all([
-        axios.get("https://smp.devrayan.ir:2053/api/geography/geographies", {
-          headers: { "RAYAN-TOKEN": token },
+        axios.get("/api/geography/geographies", {
+          headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
         }),
-        axios.get("https://smp.devrayan.ir:2053/api/religion/religions", {
-          headers: { "RAYAN-TOKEN": token },
+        axios.get("/api/religion/religions", {
+          headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
         }),
       ]);
 
@@ -94,6 +88,7 @@ const SelectInput = ({ formData, handleChange, errors }) => {
       setError("خطا در دریافت داده‌ها!");
     } finally {
       setLoading(false);
+ 
     }
   }, []);
 

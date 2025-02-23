@@ -16,11 +16,11 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
 
   const fetchToken = async () => {
     try {
-      const response = await fetch("https://smp.devrayan.ir:2053/api/auth", {
+      const response = await fetch("/api/auth", {
         headers: {
           "RAYAN-USERNAME": "S.JAMEIE",
           "RAYAN-PASSWORD": "1156789",
-          "RAYAN-TOKEN": true,
+          "RAYAN-DEBUG": true,
         },
         method: "POST",
       });
@@ -35,14 +35,12 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
   const fetchQuotas = async () => {
     try {
       const token = localStorage.getItem("RayanToken");
-      const response = await axios.get(
-        "https://smp.devrayan.ir:2053/api/quota/quotas",
-        {
-          headers: {
-            "RAYAN-TOKEN": token,
-          },
-        }
-      );
+      const response = await axios.get("/api/quota/quotas", {
+        headers: {
+          "RAYAN-TOKEN": token,
+          "RAYAN-DEBUG": true,
+        },
+      });
 
       // فیلتر کردن سهمیه‌هایی که quotaParent آنها null است
       const filteredQuotas = response.data.filter(
@@ -57,12 +55,9 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
   const fetchMilitaryStatuses = async () => {
     try {
       const token = localStorage.getItem("RayanToken");
-      const response = await axios.get(
-        "https://smp.devrayan.ir:2053/api/dutystatus/dutystatuses",
-        {
-          headers: { "RAYAN-TOKEN": token },
-        }
-      );
+      const response = await axios.get("/api/dutystatus/dutystatuses", {
+        headers: { "RAYAN-TOKEN": token },
+      });
       setMilitaryOptions(response.data);
     } catch (err) {
       console.error("Error fetching military statuses:", err);

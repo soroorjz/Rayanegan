@@ -23,11 +23,11 @@ export const AuthProvider = ({ children }) => {
   // دریافت توکن از API
   const fetchToken = useCallback(async () => {
     try {
-      const response = await fetch("https://smp.devrayan.ir:2053/api/auth", {
+      const response = await fetch("/api/auth", {
         headers: {
           "RAYAN-USERNAME": "S.JAMEIE",
           "RAYAN-PASSWORD": "1156789",
-          "RAYAN-TOKEN": true,
+          "RAYAN-DEBUG": true,
         },
         method: "post",
       });

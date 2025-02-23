@@ -16,11 +16,11 @@ const EmploymentTests = () => {
   // دریافت و ذخیره‌ی توکن
   const fetchToken = useCallback(async () => {
     try {
-      const response = await fetch("https://smp.devrayan.ir:2053/api/auth", {
+      const response = await fetch("/api/auth", {
         headers: {
           "RAYAN-USERNAME": "S.JAMEIE",
           "RAYAN-PASSWORD": "1156789",
-          "RAYAN-TOKEN": true,
+          "RAYAN-DEBUG": true,
         },
         method: "post",
       });
@@ -35,14 +35,12 @@ const EmploymentTests = () => {
   // دریافت وضعیت‌های آزمون و تبدیل آن‌ها به یک Map
   const fetchExamStatuses = useCallback(async () => {
     try {
-      const response = await axios.get(
-        "https://smp.devrayan.ir:2053/api/examStatus/examStatuses",
-        {
-          headers: {
-            "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
-          },
-        }
-      );
+      const response = await axios.get("/api/examStatus/examStatuses", {
+        headers: {
+          "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
+          "RAYAN-DEBUG": true,
+        },
+      });
 
       const statusMap = response.data.reduce((acc, status) => {
         acc[status.examStatusId] = status.examStatusName;
@@ -65,14 +63,12 @@ const EmploymentTests = () => {
     setError(null);
 
     try {
-      const response = await axios.get(
-        "https://smp.devrayan.ir:2053/api/exam/exams",
-        {
-          headers: {
-            "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
-          },
-        }
-      );
+      const response = await axios.get("/api/exam/exams", {
+        headers: {
+          "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
+          "RAYAN-DEBUG": true,
+        },
+      });
 
       const updatedExams = response.data.map((exam) => ({
         ...exam,
@@ -156,13 +152,13 @@ const EmploymentTests = () => {
       <div id="UnderReview" className="EmploymentTestsComp">
         <EmploymentTestsComp
           examData={getFilteredExams("در حال برسسی")}
-          title="در حال برسسی"
+          title="در حال بررسی"
         />
       </div>
       <div id="Expired" className="EmploymentTestsComp expiredExams">
         <EmploymentTestsComp
           examData={getFilteredExams("پایان ازمون")}
-          title="پایان ازمون"
+          title="پایان آزمون"
         />
       </div>
       <button className="homeBtn">

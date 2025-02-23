@@ -106,12 +106,9 @@ const ExamInfo = () => {
       }
 
       try {
-        const response = await axios.get(
-          `https://smp.devrayan.ir:2053/api/exam/exams/`,
-          {
-            headers: { "RAYAN-TOKEN": token },
-          }
-        );
+        const response = await axios.get(`/api/exam/exams/`, {
+          headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
+        });
 
         const selectedExam = response.data.find(
           (exam) => Number(exam.examId) === Number(id)

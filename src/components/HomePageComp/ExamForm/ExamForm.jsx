@@ -22,13 +22,13 @@ const ExamForm = () => {
   const fetchToken = useCallback(async () => {
     try {
       const response = await axios.post(
-        "https://smp.devrayan.ir:2053/api/auth",
+        "/api/auth",
         {},
         {
           headers: {
             "RAYAN-USERNAME": "S.JAMEIE",
             "RAYAN-PASSWORD": "1156789",
-            "RAYAN-TOKEN": true,
+            "RAYAN-DEBUG": true,
           },
         }
       );
@@ -50,14 +50,14 @@ const ExamForm = () => {
 
     try {
       const [geoResponse, quotaResponse, gradeResponse] = await Promise.all([
-        axios.get("https://smp.devrayan.ir:2053/api/geography/geographies", {
-          headers: { "RAYAN-TOKEN": token },
+        axios.get("/api/geography/geographies", {
+          headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
         }),
-        axios.get("https://smp.devrayan.ir:2053/api/quota/quotas", {
-          headers: { "RAYAN-TOKEN": token },
+        axios.get("/api/quota/quotas", {
+          headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
         }),
-        axios.get("https://smp.devrayan.ir:2053/api/grade/grades", {
-          headers: { "RAYAN-TOKEN": token },
+        axios.get("/api/grade/grades", {
+          headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
         }),
       ]);
 

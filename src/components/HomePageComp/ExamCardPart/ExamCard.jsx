@@ -16,11 +16,11 @@ const ExamCard = () => {
   // دریافت و ذخیره‌ی توکن
   const fetchToken = useCallback(async () => {
     try {
-      const response = await fetch("https://smp.devrayan.ir:2053/api/auth", {
+      const response = await fetch("/api/auth", {
         headers: {
           "RAYAN-USERNAME": "S.JAMEIE",
           "RAYAN-PASSWORD": "1156789",
-          "RAYAN-TOKEN": true,
+          "RAYAN-DEBUG": true,
         },
         method: "POST",
       });
@@ -36,10 +36,11 @@ const ExamCard = () => {
   const fetchExamStatuses = useCallback(async () => {
     try {
       const response = await axios.get(
-        "https://smp.devrayan.ir:2053/api/examStatus/examStatuses",
+        "/api/examstatus/examstatuses",
         {
           headers: {
-            "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
+            "Rayan-Token": localStorage.getItem("RayanToken"),
+            "Rayan-Debug": true,
           },
         }
       );
@@ -66,10 +67,11 @@ const ExamCard = () => {
 
     try {
       const response = await axios.get(
-        "https://smp.devrayan.ir:2053/api/exam/exams",
+        "/api/exam/exams",
         {
           headers: {
             "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
+            "RAYAN-DEBUG": true,
           },
         }
       );

@@ -46,7 +46,7 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
 
   const fetchToken = async () => {
     try {
-      const response = await fetch("https://smp.devrayan.ir:2053/api/auth", {
+      const response = await fetch("/api/auth", {
         headers: {
           "RAYAN-USERNAME": "S.JAMEIE",
           "RAYAN-PASSWORD": "1156789",
@@ -64,12 +64,9 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
   const fetchDegrees = async () => {
     try {
       const token = localStorage.getItem("RayanToken");
-      const response = await axios.get(
-        "https://smp.devrayan.ir:2053/api/grade/grades",
-        {
-          headers: { "RAYAN-TOKEN": token },
-        }
-      );
+      const response = await axios.get("/api/grade/grades", {
+        headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
+      });
       setDegrees(response.data);
     } catch (err) {
       console.error("Error fetching degrees:", err);
@@ -79,12 +76,9 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
   const fetchUniversityTypes = async () => {
     try {
       const token = localStorage.getItem("RayanToken");
-      const response = await axios.get(
-        "https://smp.devrayan.ir:2053/api/universitytype/universitytypes",
-        {
-          headers: { "RAYAN-TOKEN": token },
-        }
-      );
+      const response = await axios.get("/api/universitytype/universitytypes", {
+        headers: { "RAYAN-TOKEN": token },
+      });
       setUniversityTypes(response.data);
     } catch (err) {
       console.error("Error fetching university types:", err);
