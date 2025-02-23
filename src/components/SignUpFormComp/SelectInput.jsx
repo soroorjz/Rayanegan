@@ -13,14 +13,17 @@ const SelectInput = ({ formData, handleChange, errors }) => {
   // دریافت و ذخیره توکن
   const fetchToken = useCallback(async () => {
     try {
-      const response = await axios.post("http://smp.devrayan.ir:2052/api/auth", null, {
-        headers: {
-          "RAYAN-USERNAME": "S.JAMEIE",
-          "RAYAN-PASSWORD": "1156789",
-          "RAYAN-TOKEN": true,
-
-        },
-      });
+      const response = await axios.post(
+        "http://smp.devrayan.ir:2052/api/auth",
+        null,
+        {
+          headers: {
+            "RAYAN-USERNAME": "S.JAMEIE",
+            "RAYAN-PASSWORD": "1156789",
+            "RAYAN-TOKEN": true,
+          },
+        }
+      );
 
       if (response.status !== 200) throw new Error("خطا در دریافت توکن!");
 
@@ -86,7 +89,6 @@ const SelectInput = ({ formData, handleChange, errors }) => {
       setProvinces(geoData.filter((item) => item.geographyParent === null));
       setAllGeographies(geoData);
       setReligions(religionData);
-
     } catch (err) {
       console.error("Error fetching data:", err);
       setError("خطا در دریافت داده‌ها!");
@@ -125,7 +127,10 @@ const SelectInput = ({ formData, handleChange, errors }) => {
               <option value="">انتخاب نمایید</option>
               {provinces.length > 0 ? (
                 provinces.map((province) => (
-                  <option key={province.geographyId} value={province.geographyId}>
+                  <option
+                    key={province.geographyId}
+                    value={province.geographyId}
+                  >
                     {province.geographyName}
                   </option>
                 ))
@@ -133,12 +138,19 @@ const SelectInput = ({ formData, handleChange, errors }) => {
                 <option disabled>داده‌ای یافت نشد</option>
               )}
             </select>
-            {errors.province && <small className="error">{errors.province}</small>}
+            {errors.province && (
+              <small className="error">{errors.province}</small>
+            )}
           </div>
 
           <div className="form-group">
             <label htmlFor="city">شهر :</label>
-            <select id="city" name="city" value={formData.city} onChange={handleChange}>
+            <select
+              id="city"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+            >
               <option value="">انتخاب نمایید</option>
               {cities.length > 0 ? (
                 cities.map((city) => (
@@ -155,11 +167,19 @@ const SelectInput = ({ formData, handleChange, errors }) => {
 
           <div className="form-group">
             <label htmlFor="religion">دین :</label>
-            <select id="religion" name="religion" value={formData.religion} onChange={handleChange}>
+            <select
+              id="religion"
+              name="religion"
+              value={formData.religion}
+              onChange={handleChange}
+            >
               <option value="">انتخاب نمایید</option>
               {religions.length > 0 ? (
                 religions.map((religion) => (
-                  <option key={religion.religionId} value={religion.religionName}>
+                  <option
+                    key={religion.religionId}
+                    value={religion.religionName}
+                  >
                     {religion.religionName}
                   </option>
                 ))
@@ -167,7 +187,9 @@ const SelectInput = ({ formData, handleChange, errors }) => {
                 <option disabled>داده‌ای یافت نشد</option>
               )}
             </select>
-            {errors.religion && <small className="error">{errors.religion}</small>}
+            {errors.religion && (
+              <small className="error">{errors.religion}</small>
+            )}
           </div>
         </>
       )}
