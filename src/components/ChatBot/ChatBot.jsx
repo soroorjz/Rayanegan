@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FaPhone,
   FaEnvelope,
@@ -47,51 +47,14 @@ const ChatBot = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const menuItems = [
-    {
-      icon: <FaComment />,
-      key: "chat",
-      label: "چت آنلاین",
-      action: toggleChat,
-    },
-    {
-      icon: <FaEnvelope />,
-      key: "message",
-      label: "ارسال پیام",
-      action: toggleMessageForm,
-    },
-    {
-      icon: <FaPhone />,
-      key: "phone",
-      label: "تماس",
-      action: () => window.open("tel:02634164030"),
-    },
-    {
-      icon: <FaPaperPlane />,
-      key: "telegram",
-      label: "تلگرام",
-      action: () => window.open("https://t.me/rayanegan_support", "_blank"),
-    },
-    {
-      icon: <FaInstagram />,
-      key: "instagram",
-      label: "اینستاگرام",
-      action: () =>
-        window.open(
-          "https://www.instagram.com/accounts/login/?next=https%3A%2F%2Fwww.instagram.com%2Frayanegan_institute%2F&is_from_rle",
-          "_blank"
-        ),
-    },
-    {
-      icon: <FaWhatsapp />,
-      key: "whatsapp",
-      label: "واتساپ",
-      action: () =>
-        window.open(
-          "https://api.whatsapp.com/send?phone=+989018329109",
-          "_blank"
-        ),
-    },
+    { icon: <FaComment />, key: "chat", label: "چت آنلاین", action: toggleChat },
+    { icon: <FaEnvelope />, key: "message", label: "ارسال پیام", action: toggleMessageForm },
+    { icon: <FaPhone />, key: "phone", label: "تماس", action: () => window.open("tel:02634164030") },
+    { icon: <FaPaperPlane />, key: "telegram", label: "تلگرام", action: () => window.open("https://t.me/rayanegan_support", "_blank") },
+    { icon: <FaInstagram />, key: "instagram", label: "اینستاگرام", action: () => window.open("https://www.instagram.com/rayanegan_institute/", "_blank") },
+    { icon: <FaWhatsapp />, key: "whatsapp", label: "واتساپ", action: () => window.open("https://api.whatsapp.com/send?phone=+989018329109", "_blank") },
   ];
 
   return (
@@ -104,24 +67,30 @@ const ChatBot = () => {
       >
         {isOpen ? <FaTimes size={24} /> : <FaEnvelope size={24} />}
       </motion.button>
-      {isOpen && (
-      <MenuItems
-        menuItems={menuItems}
-        setHoveredItem={setHoveredItem}
-        isOpen={isOpen}
-        hoveredItem={hoveredItem}
-      />
-    )}
-      
-      {isChatOpen && <ChatBox toggleChat={toggleChat} />}
 
-      {isMessageFormOpen && (
-        <MessageForm
-          toggleMessageForm={toggleMessageForm}
-          formData={formData}
-          handleChange={handleChange}
-        />
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            key="menu"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <MenuItems menuItems={menuItems} setHoveredItem={setHoveredItem} isOpen={isOpen} hoveredItem={hoveredItem} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isChatOpen && <ChatBox toggleChat={toggleChat} />}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isMessageFormOpen && (
+          <MessageForm toggleMessageForm={toggleMessageForm} formData={formData} handleChange={handleChange} />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
