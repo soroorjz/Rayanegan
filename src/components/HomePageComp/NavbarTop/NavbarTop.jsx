@@ -5,17 +5,16 @@ import { Link } from "react-router-dom";
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
 import { useAuth } from "../../../AuthContext";
 import { FaCircleUser } from "react-icons/fa6";
-
+import ResponsiveNavbarTop from "./ResponsiveNavbarTop";
 
 const NavbarTop = ({
   hideJobSearch = false,
   hideRepotBtn = false,
   showReportTrackingBtn = false,
 }) => {
-  const { user, logout } = useAuth(); //  دریافت user و logout از AuthContext
+  const { user, logout } = useAuth(); //چک کردن ورود و خروج کاربر
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,11 +71,6 @@ const NavbarTop = ({
           {user ? (
             <div className="userProfile">
               <div className="user-info">
-                {/* <img
-                  src="/assets/images/logo2.png"
-                  alt="User Avatar"
-                  className="user-avatar"
-                /> */}
                 <FaCircleUser className="user-avatar" />
                 <div className="user-details">
                   <span className="user-name">{user.username}</span>
@@ -112,58 +106,15 @@ const NavbarTop = ({
           <p>مرکز آموزشی و پژوهشی رایانگان</p>
         </div>
       </div>
-
-      <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
-        <button className="close-sidebar" onClick={toggleSidebar}>
-          &times;
-        </button>
-        <div className="sidebar-content">
-          {user ? (
-            <div className="responsive-userProfile">
-              <div className="responsive-user-info">
-                {/* <img
-                  src="/assets/images/photo_2022-03-23_18-31-12.jpg"
-                  alt="User Avatar"
-                  className="responsive-user-avatar"
-                /> */}
-                <FaCircleUser className="responsive-user-avatar" />
-
-                <div className="responsive-user-details">
-                  <span className="responsive-user-name">{user.username}</span>
-                </div>
-              </div>
-
-              <div className="responsive-dropdown-menu">
-                <Link to="/profile">
-                  <FaUser /> پروفایل
-                </Link>
-
-                <button className="responsive-exit" onClick={logout}>
-                  <FaSignOutAlt /> خروج
-                </button>
-              </div>
-            </div>
-          ) : (
-            <button className="sidebar-login-button">
-              <Link to="/logIn">ورود به حساب کاربری</Link>
-            </button>
-          )}
-
-          {!hideJobSearch && ( // بررسی مقدار hideJobSearch
-            <button className="jobSearchBtn" onFocus={handleSearchFocus}>
-              جست و جوی مشاغل
-            </button>
-          )}
-
-          {!hideRepotBtn && (
-            <div className="sideBar-JobSearchBtn">
-              <button>
-                <Link to="/ReportForm">ثبت اعتراض </Link>
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
+      <ResponsiveNavbarTop
+        isSidebarOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        user={user}
+        logout={logout}
+        hideJobSearch={hideJobSearch}
+        handleSearchFocus={handleSearchFocus}
+        hideRepotBtn={hideRepotBtn}
+      />
     </>
   );
 };
