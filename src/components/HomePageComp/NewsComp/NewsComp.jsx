@@ -24,7 +24,6 @@ const NewsComp = () => {
             delay: 2600,
             disableOnInteraction: false,
           }}
-          // navigation={true}
           speed={2200}
           modules={[Navigation, Autoplay, Pagination]}
           className="NewsSwiper"

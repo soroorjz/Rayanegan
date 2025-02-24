@@ -4,7 +4,6 @@ import { Navigation } from "swiper/modules";
 import { useAuth } from "../../../AuthContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
-// import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import "./ExamCard.scss";
 const ExamCard = () => {
   const { user } = useAuth();

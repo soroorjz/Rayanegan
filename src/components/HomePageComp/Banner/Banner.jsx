@@ -1,7 +1,6 @@
 import React from "react";
 import "./Banner.scss";
 import { FaCheck } from "react-icons/fa";
-import { Link } from "react-router";
 const Banner = () => {
   return (
     <div className="bannerPart">
@@ -24,7 +23,6 @@ const Banner = () => {
             <FaCheck />
             ثبت‌نام آسان و سریع با اطلاعات به‌روز و دقیق
             
-            {/* در سامانه جامع آزمون های استخدامی دستگاه های اجرایی کشور */}
           </p>
         </div>
       </div>

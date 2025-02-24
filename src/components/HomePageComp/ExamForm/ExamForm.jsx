@@ -114,12 +114,6 @@ const ExamForm = () => {
               </div>
               <div className="form-group field">
                 <label htmlFor="fieldOfStudy">رشته تحصیلی</label>
-                {/* <select id="fieldOfStudy" name="fieldOfStudy">
-                  <option value="">انتخاب کنید</option>
-                  <option value="engineering">مهندسی</option>
-                  <option value="medicine">پزشکی</option>
-                  <option value="law">حقوق</option>
-                </select> */}
                 <input
                   type="text"
                   placeholder="رشته تحصیلی خود را بنویسید"
