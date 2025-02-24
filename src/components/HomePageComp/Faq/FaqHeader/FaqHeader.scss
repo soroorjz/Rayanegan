@@ -82,3 +82,25 @@ $tablet-resize: 900px;
     min-height: 100vh;
   }
 }
+.SupportHelpCenter-confirm-button,
+.SupportHelpCenter-cancel-button {
+  display: block;
+  margin: 20px 2.5px;
+  padding: 12px;
+  background: #04364a;
+  color: white;
+  border: none !important;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &:focus-visible {
+    outline: none !important;
+  }
+}
+.SupportHelpCenter-cancel-button {
+  background: #e55604;
+}
+.SupportHelpCenter-custom-popup {
+}
