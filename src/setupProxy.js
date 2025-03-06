@@ -1,10 +1,10 @@
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.use(
-    "/api",  // مسیر درخواست‌ها
+    "/api", // مسیر درخواست‌ها
     createProxyMiddleware({
-      target: "https://smp.devrayan.ir:2053", // سرور مقصد
+      target: "https://smp.devrayan.ir", // سرور مقصد
       changeOrigin: true,
       secure: false, // در صورت مشکل SSL
     })
