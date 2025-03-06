@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./NavbarTop.scss";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
 import { useAuth } from "../../../AuthContext";
 import { FaCircleUser } from "react-icons/fa6";
@@ -12,9 +12,10 @@ const NavbarTop = ({
   hideRepotBtn = false,
   showReportTrackingBtn = false,
 }) => {
-  const { user, logout } = useAuth(); //چک کردن ورود و خروج کاربر
+  const { user, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +37,11 @@ const NavbarTop = ({
     }
   };
 
+  const handleLogout = () => {
+    logout(); // فراخوانی تابع logout از AuthContext
+    navigate("/"); // هدایت به صفحه اصلی پس از خروج
+  };
+
   return (
     <>
       <div className={`navBarTopPart ${isScrolled ? "scrolledNav" : ""}`}>
@@ -47,7 +53,7 @@ const NavbarTop = ({
         </div>
 
         <div className="navbarLeftPart">
-          {!hideJobSearch && ( // بررسی مقدار hideJobSearch
+          {!hideJobSearch && (
             <div className="jobSearchBtn" id="jobSearchBtn">
               <button onFocus={handleSearchFocus}>جست و جوی مشاغل</button>
             </div>
@@ -82,7 +88,7 @@ const NavbarTop = ({
                   <FaUser /> حساب کاربری
                 </Link>
 
-                <button className="exit" onClick={logout}>
+                <button className="exit" onClick={handleLogout}>
                   <FaSignOutAlt /> خروج
                 </button>
               </div>
@@ -110,7 +116,7 @@ const NavbarTop = ({
         isSidebarOpen={isSidebarOpen}
         toggleSidebar={toggleSidebar}
         user={user}
-        logout={logout}
+        logout={handleLogout} // پاس دادن handleLogout به جای logout مستقیم
         hideJobSearch={hideJobSearch}
         handleSearchFocus={handleSearchFocus}
         hideRepotBtn={hideRepotBtn}

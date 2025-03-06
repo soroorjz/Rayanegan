@@ -7,7 +7,7 @@ const ResponsiveNavbarTop = ({
   isSidebarOpen,
   toggleSidebar,
   user,
-  logout,
+  logout, // اینجا از handleLogout که از NavbarTop پاس داده شده استفاده می‌کنیم
   hideJobSearch,
   handleSearchFocus,
   hideRepotBtn,
@@ -15,7 +15,7 @@ const ResponsiveNavbarTop = ({
   return (
     <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
       <button className="close-sidebar" onClick={toggleSidebar}>
-        &times;
+        ×
       </button>
       <div className="sidebar-content">
         {user ? (
@@ -44,7 +44,7 @@ const ResponsiveNavbarTop = ({
           </button>
         )}
 
-        {!hideJobSearch && ( // بررسی مقدار hideJobSearch
+        {!hideJobSearch && (
           <button className="jobSearchBtn" onFocus={handleSearchFocus}>
             جست و جوی مشاغل
           </button>
