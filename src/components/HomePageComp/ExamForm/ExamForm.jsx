@@ -1,16 +1,15 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import "./ExamForm.scss";
 import { motion } from "framer-motion";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import { useAuth } from "../../../AuthContext"; // دریافت وضعیت ورود
+import { useAuth } from "../../../AuthContext";
 import ExamFormResult from "./ExamFormResult/ExamFormResult";
-import { useEffect } from "react";
 import axios from "axios";
 
 const ExamForm = () => {
-  const { user } = useAuth(); // دریافت کاربر لاگین شده
+  const { user } = useAuth();
   const [workExperience, setWorkExperience] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showList, setShowList] = useState(false);
@@ -19,6 +18,7 @@ const ExamForm = () => {
   const [quotas, setQuotas] = useState([]);
   const [error, setError] = useState(null);
   const [selectedEducationLevel, setSelectedEducationLevel] = useState("");
+
   const fetchToken = useCallback(async () => {
     try {
       const response = await axios.post(
@@ -42,6 +42,18 @@ const ExamForm = () => {
   }, []);
 
   const fetchData = useCallback(async () => {
+    // بررسی وجود داده‌ها در localStorage
+    const cachedEducationLevels = localStorage.getItem("educationLevels");
+    const cachedBirthProvinces = localStorage.getItem("birthProvinces");
+    const cachedQuotas = localStorage.getItem("quotas");
+
+    if (cachedEducationLevels && cachedBirthProvinces && cachedQuotas) {
+      setEducationLevels(JSON.parse(cachedEducationLevels));
+      setBirthProvinces(JSON.parse(cachedBirthProvinces));
+      setQuotas(JSON.parse(cachedQuotas));
+      return; // اگر داده‌ها در localStorage بودند، از API درخواست نمی‌کنیم
+    }
+
     let token = localStorage.getItem("RayanToken");
     if (!token) {
       token = await fetchToken();
@@ -61,13 +73,28 @@ const ExamForm = () => {
         }),
       ]);
 
-      setEducationLevels(gradeResponse.data || []);
-      setBirthProvinces(
-        geoResponse.data.filter((item) => item.geographyParent === null)
+      const educationLevelsData = gradeResponse.data || [];
+      const birthProvincesData = geoResponse.data.filter(
+        (item) => item.geographyParent === null
       );
-      setQuotas(
-        quotaResponse.data.filter((quota) => quota.quotaParent === null) || []
+      const quotasData =
+        quotaResponse.data.filter((quota) => quota.quotaParent === null) || [];
+
+      // ذخیره داده‌ها در localStorage
+      localStorage.setItem(
+        "educationLevels",
+        JSON.stringify(educationLevelsData)
       );
+      localStorage.setItem(
+        "birthProvinces",
+        JSON.stringify(birthProvincesData)
+      );
+      localStorage.setItem("quotas", JSON.stringify(quotasData));
+
+      // به‌روزرسانی state
+      setEducationLevels(educationLevelsData);
+      setBirthProvinces(birthProvincesData);
+      setQuotas(quotasData);
     } catch (err) {
       console.error("Error fetching data:", err);
       setError("خطا در دریافت داده‌ها!");
@@ -87,13 +114,13 @@ const ExamForm = () => {
   };
 
   const handleEducationLevelChange = (e) => {
-    setSelectedEducationLevel(e.target.value); // تغییر مقطع تحصیلی
+    setSelectedEducationLevel(e.target.value);
   };
 
   return (
     <div className="exam-form">
       <form className="search-form">
-        {!user && ( // اگر کاربر لاگین نکرده باشد، فرم ورودی نمایش داده شود
+        {!user && (
           <div className="formContent">
             <div className="form-grid">
               <div className="form-group Level">
@@ -101,7 +128,7 @@ const ExamForm = () => {
                 <select
                   id="educationLevel"
                   name="educationLevel"
-                  value={selectedEducationLevel} // مقطع انتخابی
+                  value={selectedEducationLevel}
                   onChange={handleEducationLevelChange}
                 >
                   <option value="">انتخاب کنید</option>
