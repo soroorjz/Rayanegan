@@ -1,32 +1,14 @@
 import React, { useState } from "react";
-import { useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { examData } from "../MyExams/data";
-import "./ExamEntryCopm.scss";
 import ExamEntryCard from "./ExamEntryCard";
+import "./ExamEntryCopm.scss";
 
-const ExamEntryCopm = () => {
+const EvaluationCard = () => {
   const [selectedExam, setSelectedExam] = useState("");
 
   const exams = [
-    {
-      id: 1,
-      name: "آزمون استخدامی سازمان ثبت اسناد و املاک کشور",
-      status: "card",
-    },
-    {
-      id: 2,
-      name: "آزمون استخدامی سازمان اداری و استخدامی کشور",
-      status: "not_issued",
-    },
-    {
-      id: 3,
-      name: "آزمون استخدامی مشاغل کیفیت‌بخشی وزارت آموزش و پرورش",
-      status: "expired",
-    },
+    { id: 1, name: "آزمون استخدامی سازمان ثبت اسناد و املاک کشور", status: "card" },
+    { id: 2, name: "آزمون استخدامی سازمان اداری و استخدامی کشور", status: "not_issued" },
+    { id: 3, name: "آزمون استخدامی مشاغل کیفیت‌بخشی وزارت آموزش و پرورش", status: "expired" },
   ];
 
   const handleChange = (event) => {
@@ -35,7 +17,7 @@ const ExamEntryCopm = () => {
 
   return (
     <div className="Entry-list">
-      <h2>کارت‌های ورود به آزمون کتبی</h2>
+      <h2>کارت‌های ورود به ارزیابی تکمیلی</h2>
       <div className="Entry-selection">
         <label htmlFor="exam-select">انتخاب آزمون:</label>
         <select
@@ -65,17 +47,18 @@ const ExamEntryCopm = () => {
           ) : exams.find((exam) => exam.id === selectedExam)?.status ===
             "not_issued" ? (
             <p style={{ color: "orange" }}>
-              در حال حاضر کارت ورود به آزمون استخدامی سازمان اداری و استخدامی
-              کشور صادر نشده است.
+              در حال حاضر کارت ورود به ارزیابی تکمیلی آزمون استخدامی سازمان اداری و استخدامی کشور صادر
+              نشده است.
             </p>
           ) : (
             <p style={{ color: "red" }}>
-              مهلت دریافت کارت ورود به آزمون استخدامی مشاغل کیفیت‌بخشی وزارت
-              آموزش و پرورش به پایان رسیده است.
+              مهلت دریافت کارت ورود به ارزیابی تکمیلی آزمون استخدامی مشاغل کیفیت‌بخشی وزارت آموزش و پرورش به پایان
+              رسیده است.
             </p>
           ))}
       </div>
     </div>
   );
 };
-export default ExamEntryCopm;
+
+export default EvaluationCard;

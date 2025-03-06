@@ -8,6 +8,7 @@ import { IoMdHome } from "react-icons/io";
 import ExamSignUpForm from "../../pages/ExamSignUpForm/ExamSignUpForm";
 import { Link } from "react-router";
 import ExamEntryCopm from "./ExamEntryCard/ExamEntryCopm";
+import EvaluationCard from "./ExamEntryCard/EvaluationCard";
 
 const ProfileMain = ({ selectedComponent }) => {
   let content;
@@ -33,7 +34,7 @@ const ProfileMain = ({ selectedComponent }) => {
       content = <ExamEntryCopm />;
       break;
     case "news":
-      content = <ExamEntryCopm />;
+      content = <EvaluationCard  />;
       break;
     default:
       content = <PersonalDetails />;
