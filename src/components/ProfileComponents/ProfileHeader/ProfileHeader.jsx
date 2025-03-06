@@ -42,7 +42,7 @@ const ProfileHeader = () => {
         <div className="ProfileHeader-rightPart">
           <Link to="/">
             <img
-              src="/assets/images/IMG-20250126-WA0000-removebg-preview.png"
+              src="/assets/images/logo2.png"
               alt=""
             />
           </Link>
