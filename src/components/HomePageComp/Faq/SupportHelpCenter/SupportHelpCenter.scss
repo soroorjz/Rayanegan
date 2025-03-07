@@ -4,10 +4,12 @@ $tablet-resize: 900px;
 .support-help-center {
   width: 100%;
   border-radius: 10px;
-  padding: 30px 20px;
+  padding: 30px 0;
   margin: 0 auto;
   @include responsive($tablet-resize) {
     width: 70%;
+  padding: 30px 20px;
+
   }
   .categories,
   .questions,
@@ -21,9 +23,13 @@ $tablet-resize: 900px;
     }
   }
   .answer {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     text-align: center;
+    @include responsive($tablet-resize){
+    width: 80%;
+
+    }
     p {
       margin-bottom: 30px;
       color: #333;
@@ -34,9 +40,14 @@ $tablet-resize: 900px;
     .feedback-buttons {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 10px;
       margin: 0 auto;
+      width: 100%;
+      @include responsive($tablet-resize){
       width: 60%;
+      gap: 20px;
+
+      }
       button {
         width: 50%;
       }
@@ -49,14 +60,17 @@ $tablet-resize: 900px;
   .dislike-button,
   .submit-button {
     // display: block;
-    width: 80%;
+    width: 90%;
     padding: 10px;
     margin: 5px 0;
     font-size: 18px;
     cursor: pointer;
     border: none;
     border-radius: 5px;
+@include responsive($tablet-resize){
+  width: 80%;
 
+}
     &.category-button,
     &.question-button {
       //   background-color: #04364a;
@@ -74,23 +88,23 @@ $tablet-resize: 900px;
       }
     }
 
-    // &.like-button {
-    //   background-color: #578e7e;
-    //   color: #fff;
+    &.like-button {
+      background-color: #578e7e;
+      color: #fff;
 
-    //   &:hover {
-    //     background-color: #218838;
-    //   }
-    // }
+      &:hover {
+        background-color: #218838;
+      }
+    }
 
-    // &.dislike-button {
-    //   background-color: #ff5a5f;
-    //   color: #fff;
+    &.dislike-button {
+      background-color: #ff5a5f;
+      color: #fff;
 
-    //   &:hover {
-    //     background-color: #c82333;
-    //   }
-    // }
+      &:hover {
+        background-color: #c82333;
+      }
+    }
 
     &.submit-button {
       background-color: #17a2b8;
@@ -143,8 +157,12 @@ $tablet-resize: 900px;
     }
 
     .exam-dropdown{
-      width: 60%;
+      width: 75%;
       margin: 0 auto;
+      @include responsive($tablet-resize){
+      width: 60%;
+
+      }
     }
   }
 }

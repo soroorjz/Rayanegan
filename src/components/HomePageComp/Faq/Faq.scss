@@ -22,12 +22,16 @@ $white-color: #fff;
     }
     button {
       width: 25%;
-      margin: 10px;
+      margin: 10px 0;
       border: 0;
       background: 0;
       cursor: pointer;
       font-size: 16px;
       color: #dafffb;
+      @include responsive($tablet-resize){
+      margin: 10px;
+
+      }
     }
     .categoryActive {
       color: #f2784b;
