@@ -23,13 +23,14 @@ $tablet-resize: 900px;
     height: 100vh;
     background: #fff;
     // border-radius: 50px 0;
-    width: 90%;
+    width: 85%;
     max-height: 100vh;
     overflow: auto;
     @include responsive($tablet-resize) {
       // border-radius: 50px 0 0 50px;
     max-height:unset;
     overflow:unset;
+    width: 90%;
 
     }
   }

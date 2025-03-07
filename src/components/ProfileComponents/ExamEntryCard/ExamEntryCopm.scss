@@ -8,7 +8,7 @@ $tablet-resize: 900px;
   padding: 20px;
   background: #fff;
   border-radius: 10px;
-  h2{
+  h2 {
     text-align: center;
   }
   .Entry-selection {
@@ -17,9 +17,9 @@ $tablet-resize: 900px;
     align-items: start;
     gap: 10px;
     @include responsive($tablet) {
+      margin-top: 30px;
       flex-direction: row;
-    align-items: center;
-
+      align-items: center;
     }
 
     label {
@@ -28,6 +28,7 @@ $tablet-resize: 900px;
     }
 
     .exam-select {
+      width: 100%;
       height: 36px;
       font-size: 14px;
       padding: 5px;
@@ -36,6 +37,9 @@ $tablet-resize: 900px;
       background-color: white;
       cursor: pointer;
       margin-bottom: 10px;
+      @include responsive($tablet-resize) {
+        width: unset;
+      }
     }
   }
   .exam-card-button {

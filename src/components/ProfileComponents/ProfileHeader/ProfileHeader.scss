@@ -1,11 +1,17 @@
+@import "../../../styles/responsive.scss";
+$tablet-resize: 900px;
+
 .ProfileHeader {
-  width: 90%;
+  width: 85%;
   background-color: #fff;
   // border-radius: 50px 50px 0 0;
   position: fixed;
   top: 0;
   z-index: 1;
+@include responsive($tablet-resize){
+  width: 90%;
 
+}
   .ProfileHeader-Wrapper {
     width: 95%;
     margin: 0 auto;
