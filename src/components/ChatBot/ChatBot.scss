@@ -114,9 +114,13 @@ $tablet-resize: 900px;
   padding: 20px;
   position: fixed;
   right: 80px;
-  bottom: 20px;
+  bottom: 80px;
   width: 300px;
   direction: rtl;
+  @include responsive($tablet-resize){
+  bottom: 20px;
+
+  }
   
   .form-header {
     display: flex;
