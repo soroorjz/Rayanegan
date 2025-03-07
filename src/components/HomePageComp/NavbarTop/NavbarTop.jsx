@@ -109,7 +109,7 @@ const NavbarTop = ({
           <Link to="/">
             <img src="/assets/images/logo2.png" alt="" />
           </Link>
-          <p>مرکز آموزشی و پژوهشی رایانگان</p>
+          {/* <p>مرکز آموزشی و پژوهشی رایانگان</p> */}
         </div>
       </div>
       <ResponsiveNavbarTop
