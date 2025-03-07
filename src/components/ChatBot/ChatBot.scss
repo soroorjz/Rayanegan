@@ -117,6 +117,7 @@ $tablet-resize: 900px;
   bottom: 80px;
   width: 300px;
   direction: rtl;
+  z-index: 9999;
   @include responsive($tablet-resize){
   bottom: 20px;
 

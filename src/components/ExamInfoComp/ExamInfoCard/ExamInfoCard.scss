@@ -16,20 +16,26 @@ $tablet-resize: 900px;
   // text-align: right;
   @include responsive($tablet) {
     margin: 100px auto 20px;
-  
   }
   @include responsive($tablet-resize) {
     margin-top: 100px;
     width: 50%;
     flex-direction: row;
     margin: 100px 37px 20px;
-
   }
 
   h2 {
     font-size: 1.5rem;
-    width: 50%;
+    width: 100%;
     color: #2c3e50;
+    text-align: center;
+    margin: 20px 0;
+    @include responsive($tablet-resize) {
+      width: 50%;
+      margin: 0;
+    text-align: right;
+
+    }
   }
 
   .registration-card-list {
@@ -52,7 +58,7 @@ $tablet-resize: 900px;
       font-size: 1rem;
       @include responsive($tablet-resize) {
         padding: 10px 15px;
-        width:fit-content;
+        width: fit-content;
       }
 
       strong {

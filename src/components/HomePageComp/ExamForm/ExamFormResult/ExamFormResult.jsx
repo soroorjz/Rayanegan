@@ -44,12 +44,9 @@ const ExamFormResult = () => {
                 <button>ثبت نام</button>
               </Link>
             ) : (
-              <div className="button-group">
-                <Link to="/logIn">
-                  <button>ورود به حساب کاربری</button>
-                </Link>
-                
-              </div>
+              <Link to="/logIn">
+                <button>ورود به حساب کاربری</button>
+              </Link>
             )}
           </div>
         </div>

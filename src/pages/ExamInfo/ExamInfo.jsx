@@ -30,14 +30,41 @@ const ExamInfo = () => {
     if (examData) {
       const hasSeenTutorial = localStorage.getItem("hasSeenExamTutorial");
 
-      if (!hasSeenTutorial && window.innerWidth > 1025) {
-        startTutorial();
-        localStorage.setItem("hasSeenExamTutorial", "true");
+      if (!hasSeenTutorial && window.innerWidth > 728) {
+        setTimeout(() => {
+          const registrationBtn = document.querySelector("#RegistrationBtn");
+          if (registrationBtn) {
+            registrationBtn.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+
+            const rect = registrationBtn.getBoundingClientRect();
+            if (rect.top >= 0 && rect.left >= 0) {
+              startTutorial();
+              localStorage.setItem("hasSeenExamTutorial", "true");
+            } else {
+              console.log(
+                "موقعیت #RegistrationBtn قابل محاسبه نیست، دوباره تلاش می‌کنم..."
+              );
+              setTimeout(() => {
+                startTutorial();
+                localStorage.setItem("hasSeenExamTutorial", "true");
+              }, 300);
+            }
+          } else {
+            console.log("المان #RegistrationBtn هنوز رندر نشده است.");
+          }
+        }, 500);
       }
     }
   }, [examData]);
 
   const startTutorial = () => {
+    if (window.innerWidth <= 728) {
+      return;
+    }
+
     const intro = introJs();
     const steps = [
       {
@@ -110,7 +137,7 @@ const ExamInfo = () => {
           headers: {
             "RAYAN-TOKEN": token,
             "RAYAN-DEBUG": true,
-            "RAYAN-NOCATCH": true,
+            "RAYAN-NOCACHE": true,
           },
         });
 
@@ -137,9 +164,32 @@ const ExamInfo = () => {
     if (examData) {
       const hasSeenTutorial = localStorage.getItem("hasSeenExamTutorial");
 
-      if (!hasSeenTutorial) {
-        startTutorial();
-        localStorage.setItem("hasSeenExamTutorial", "true");
+      if (!hasSeenTutorial && window.innerWidth > 728) {
+        setTimeout(() => {
+          const registrationBtn = document.querySelector("#RegistrationBtn");
+          if (registrationBtn) {
+            registrationBtn.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+
+            const rect = registrationBtn.getBoundingClientRect();
+            if (rect.top >= 0 && rect.left >= 0) {
+              startTutorial();
+              localStorage.setItem("hasSeenExamTutorial", "true");
+            } else {
+              console.log(
+                "موقعیت #RegistrationBtn قابل محاسبه نیست، دوباره تلاش می‌کنم..."
+              );
+              setTimeout(() => {
+                startTutorial();
+                localStorage.setItem("hasSeenExamTutorial", "true");
+              }, 300);
+            }
+          } else {
+            console.log("المان #RegistrationBtn هنوز رندر نشده است.");
+          }
+        }, 500);
       }
     }
   }, [examData]);
