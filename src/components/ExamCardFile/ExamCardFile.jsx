@@ -175,7 +175,7 @@ const ExamCardFile = () => {
             {/* <div className="entryCardSilde">sdgvxd</div> */}
           </div>
           <div className="side">
-            <p>شروع فرایند برگزاری آزمون صبح روز جمعه، 23/12/1403 ساعت 08:30</p>
+            <p>شروع فرایند برگزاری آزمون صبح روز جمعه ۱۴۰۳/۱۲/۲۵ ساعت ۸:۳۰</p>
           </div>
         </div>
 

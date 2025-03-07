@@ -12,6 +12,8 @@ import ReportForm from "./pages/ReportForm/ReportForm";
 import EmploymentTests from "./pages/EmploymentTests/EmploymentTests";
 import ReportTracking from "./pages/ReportTracking/ReportTracking";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
+import ForgotPassword from "./components/LogInComp/ForgotPassword/ForgotPassword";
+import ChangePassword from "./pages/ChangePassword/ChangePassword";
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
         <Route path="/EmploymentTests" element={<EmploymentTests />} />
         <Route path="/ReportTracking" element={<ReportTracking />} />
         <Route path="/RegistrationPage" element={<RegistrationPage />} />
+        <Route path="/ForgotPassword" element={<ForgotPassword />} />
+        <Route path="/ChangePassword" element={<ChangePassword />} />
       </Routes>
     </AuthProvider>
   );

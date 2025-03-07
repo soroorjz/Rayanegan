@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ProfileHeader.scss";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 import { FaSignOutAlt, FaAngleDown } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
@@ -41,16 +42,13 @@ const ProfileHeader = () => {
       <div className="ProfileHeader-Wrapper">
         <div className="ProfileHeader-rightPart">
           <Link to="/">
-            <img
-              src="/assets/images/logo2.png"
-              alt=""
-            />
+            <img src="/assets/images/logo2.png" alt="" />
           </Link>
         </div>
 
         <div className="leftPart" ref={dropdownRef}>
           <button className="user-btn" onClick={toggleDropdown}>
-           ادمین
+            ادمین
             <FaAngleDown
               className={`dropdown-icon ${isDropdownOpen ? "open" : ""}`}
             />
@@ -64,6 +62,13 @@ const ProfileHeader = () => {
               <button className="logout-btn" onClick={handleLogout}>
                 خروج
                 <FaSignOutAlt />
+              </button>
+
+              <button className="logout-btn changePassWord">
+                <Link to="/ChangePassword">
+                  تغییر رمز عبور
+                  <RiLockPasswordLine />
+                </Link>
               </button>
             </div>
           )}
