@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
@@ -8,9 +8,12 @@ import { examData } from "../MyExams/data";
 import "./ExamEntryCopm.scss";
 import ExamEntryCard from "./ExamEntryCard";
 import ExamCardFile from "../../ExamCardFile/ExamCardFile";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const ExamEntryCopm = () => {
   const [selectedExam, setSelectedExam] = useState("");
+  const examCardRef = useRef(null); // برای دسترسی به ExamCardFile
 
   const exams = [
     {
@@ -32,6 +35,20 @@ const ExamEntryCopm = () => {
 
   const handleChange = (event) => {
     setSelectedExam(Number(event.target.value));
+  };
+
+  const handleDownload = () => {
+    const element = examCardRef.current; // المنت ExamCardFile رو می‌گیریم
+    if (element) {
+      html2canvas(element).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
+        const width = pdf.internal.pageSize.getWidth();
+        const height = (canvas.height * width) / canvas.width;
+        pdf.addImage(imgData, "PNG", 0, 0, width, height);
+        pdf.save("exam-card.pdf"); // دانلود فایل PDF
+      });
+    }
   };
 
   return (
@@ -56,13 +73,17 @@ const ExamEntryCopm = () => {
         </select>
         {selectedExam &&
           exams.find((exam) => exam.id === selectedExam)?.status === "card" && (
-            <button className="exam-card-button">دریافت کارت آزمون</button>
+            <button className="exam-card-button" onClick={handleDownload}>
+              دریافت کارت آزمون
+            </button>
           )}
       </div>
       <div className="Exam-result">
         {selectedExam &&
           (exams.find((exam) => exam.id === selectedExam)?.status === "card" ? (
-            <ExamCardFile />
+            <div ref={examCardRef}>
+              <ExamCardFile />
+            </div>
           ) : exams.find((exam) => exam.id === selectedExam)?.status ===
             "not_issued" ? (
             <p style={{ color: "orange" }}>
@@ -79,4 +100,5 @@ const ExamEntryCopm = () => {
     </div>
   );
 };
+
 export default ExamEntryCopm;
