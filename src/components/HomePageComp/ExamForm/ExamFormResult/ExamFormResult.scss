@@ -11,12 +11,18 @@ $tablet-resize: 900px;
   }
   .ResultExam-item {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
     justify-content: space-between;
     align-items: center;
     background-color: #f8f8f8;
     padding: 20px 12px;
     // border-radius: 8px;
     // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    @include responsive($tablet-resize) {
+      flex-direction: row;
+      gap: 0;
+    }
     border-bottom: 1px solid #ddd;
     &:nth-last-child(1) {
       border: 0;
@@ -24,7 +30,8 @@ $tablet-resize: 900px;
     }
     .ResultExam-name {
       font-weight: bold;
-      width: 30%;
+      width: 100%;
+      text-align: center;
       color: #333;
       @include responsive($tablet) {
         width: 40%;
@@ -32,17 +39,27 @@ $tablet-resize: 900px;
     }
 
     .ResultExam-date {
-      width: 5%;
+      width: 100%;
+      text-align: center;
       color: #666;
       font-size: 14px;
+      @include responsive($tablet) {
+        width: 5%;
+      }
     }
     .ResultExam-jobLoc {
       color: #666;
-      width: 30%;
+      width: 100%;
+      text-align: center;
       font-size: 14px;
+      @include responsive($tablet) {
+        width: 30%;
+      }
     }
 
     .ResultExam-more {
+      width: 100%;
+      text-align: center;
       background-color: #04364a;
       color: white;
       border: none;
@@ -63,10 +80,8 @@ $tablet-resize: 900px;
         border: 0;
         color: #fff;
         cursor: pointer;
-        
-
       }
-      .button-group{
+      .button-group {
         margin-top: 0 !important;
       }
     }
