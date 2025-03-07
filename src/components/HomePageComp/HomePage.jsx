@@ -12,18 +12,43 @@ import "intro.js/introjs.css";
 import introJs from "intro.js";
 import ChatBot from "../ChatBot/ChatBot";
 import { RiQuestionFill } from "react-icons/ri";
+
 const HomePage = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
     const hasSeenTutorial = localStorage.getItem("hasSeenTutorial");
     if (!hasSeenTutorial) {
-      startIntro(); // اگر اولین بار است، توتاریال نمایش داده شود
-      localStorage.setItem("hasSeenTutorial", "true"); // ذخیره در لوکال‌استوریج
+      setTimeout(() => {
+        const jobSearchBtn = document.querySelector("#jobSearchBtn");
+        if (jobSearchBtn) {
+          // اسکرول به المان قبل از شروع توتوریال
+          jobSearchBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+
+          // چک کردن موقعیت المان
+          const rect = jobSearchBtn.getBoundingClientRect();
+          if (rect.top >= 0 && rect.left >= 0) {
+            startIntro();
+            localStorage.setItem("hasSeenTutorial", "true");
+          } else {
+            console.log("موقعیت #jobSearchBtn قابل محاسبه نیست، دوباره تلاش می‌کنم...");
+            setTimeout(() => {
+              startIntro();
+              localStorage.setItem("hasSeenTutorial", "true");
+            }, 300); // تلاش دوباره بعد از 300 میلی‌ثانیه
+          }
+        } else {
+          console.log("المان #jobSearchBtn هنوز رندر نشده است.");
+        }
+      }, 500); // تأخیر 500 میلی‌ثانیه برای اطمینان از رندر کامل
     }
   }, []);
 
   const startIntro = () => {
+    if (window.innerWidth <= 728) {
+      return;
+    }
+
     const intro = introJs();
     intro.setOptions({
       steps: [
@@ -90,6 +115,7 @@ const HomePage = () => {
       banner.scrollIntoView({ behavior: "smooth" });
     }
   };
+
   return (
     <div className="homeContainer">
       <NavbarTop />
@@ -112,11 +138,6 @@ const HomePage = () => {
       <div id="footer">
         <Footer />
       </div>
-      {/* {showScrollButton && (
-        <button className="scrollToTopBtn" onClick={scrollToTop}>
-          <TiMessages />
-        </button>
-      )} */}
       <button className="tutorialBtn" onClick={startIntro}>
         <RiQuestionFill />
       </button>
