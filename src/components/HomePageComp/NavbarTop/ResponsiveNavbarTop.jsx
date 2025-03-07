@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
 import { FaCircleUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
@@ -7,58 +7,92 @@ const ResponsiveNavbarTop = ({
   isSidebarOpen,
   toggleSidebar,
   user,
-  logout, // اینجا از handleLogout که از NavbarTop پاس داده شده استفاده می‌کنیم
+  logout,
   hideJobSearch,
   handleSearchFocus,
   hideRepotBtn,
 }) => {
-  return (
-    <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
-      <button className="close-sidebar" onClick={toggleSidebar}>
-        ×
-      </button>
-      <div className="sidebar-content">
-        {user ? (
-          <div className="responsive-userProfile">
-            <div className="responsive-user-info">
-              <FaCircleUser className="responsive-user-avatar" />
+  const sidebarRef = useRef(null);
 
-              <div className="responsive-user-details">
-                <span className="responsive-user-name">{user.username}</span>
+  // بستن سایدبار با کلیک بیرون
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        isSidebarOpen &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target)
+      ) {
+        toggleSidebar();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSidebarOpen, toggleSidebar]);
+
+  // تابع جدید برای مدیریت کلیک دکمه جستجو
+  const handleJobSearchClick = () => {
+    handleSearchFocus();
+    toggleSidebar();
+  };
+
+  return (
+    <>
+      {/* Overlay جداگانه */}
+      <div
+        className={`sidebar-overlay ${isSidebarOpen ? "open" : ""}`}
+        onClick={toggleSidebar}
+      />
+      <div
+        ref={sidebarRef}
+        className={`sidebar ${isSidebarOpen ? "open" : ""}`}
+      >
+        <button className="close-sidebar" onClick={toggleSidebar}>
+          ×
+        </button>
+        <div className="sidebar-content">
+          {user ? (
+            <div className="responsive-userProfile">
+              <div className="responsive-user-info">
+                <FaCircleUser className="responsive-user-avatar" />
+                <div className="responsive-user-details">
+                  <span className="responsive-user-name">{user.username}</span>
+                </div>
+              </div>
+
+              <div className="responsive-dropdown-menu">
+                <Link to="/profile">
+                  <FaUser /> حساب کاربری
+                </Link>
+                <button className="responsive-exit" onClick={logout}>
+                  <FaSignOutAlt /> خروج
+                </button>
               </div>
             </div>
+          ) : (
+            <button className="sidebar-login-button">
+              <Link to="/logIn">ورود به حساب کاربری</Link>
+            </button>
+          )}
 
-            <div className="responsive-dropdown-menu">
-              <Link to="/profile">
-                <FaUser /> حساب کاربری
-              </Link>
+          {!hideJobSearch && (
+            <button className="jobSearchBtn" onClick={handleJobSearchClick}>
+              جست و جوی مشاغل
+            </button>
+          )}
 
-              <button className="responsive-exit" onClick={logout}>
-                <FaSignOutAlt /> خروج
+          {!hideRepotBtn && (
+            <div className="sideBar-JobSearchBtn">
+              <button>
+                <Link to="/ReportForm">ثبت اعتراض </Link>
               </button>
             </div>
-          </div>
-        ) : (
-          <button className="sidebar-login-button">
-            <Link to="/logIn">ورود به حساب کاربری</Link>
-          </button>
-        )}
-
-        {!hideJobSearch && (
-          <button className="jobSearchBtn" onFocus={handleSearchFocus}>
-            جست و جوی مشاغل
-          </button>
-        )}
-
-        {!hideRepotBtn && (
-          <div className="sideBar-JobSearchBtn">
-            <button>
-              <Link to="/ReportForm">ثبت اعتراض </Link>
-            </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
