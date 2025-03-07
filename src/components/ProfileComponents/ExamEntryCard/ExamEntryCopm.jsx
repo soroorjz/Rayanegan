@@ -7,6 +7,7 @@ import Select from "@mui/material/Select";
 import { examData } from "../MyExams/data";
 import "./ExamEntryCopm.scss";
 import ExamEntryCard from "./ExamEntryCard";
+import ExamCardFile from "../../ExamCardFile/ExamCardFile";
 
 const ExamEntryCopm = () => {
   const [selectedExam, setSelectedExam] = useState("");
@@ -61,7 +62,7 @@ const ExamEntryCopm = () => {
       <div className="Exam-result">
         {selectedExam &&
           (exams.find((exam) => exam.id === selectedExam)?.status === "card" ? (
-            <ExamEntryCard />
+            <ExamCardFile />
           ) : exams.find((exam) => exam.id === selectedExam)?.status ===
             "not_issued" ? (
             <p style={{ color: "orange" }}>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ExamEntryCard from "./ExamEntryCard";
 import "./ExamEntryCopm.scss";
+import ExamCardFile from "../../ExamCardFile/ExamCardFile";
 
 const EvaluationCard = () => {
   const [selectedExam, setSelectedExam] = useState("");
@@ -43,7 +44,7 @@ const EvaluationCard = () => {
       <div className="Exam-result">
         {selectedExam &&
           (exams.find((exam) => exam.id === selectedExam)?.status === "card" ? (
-            <ExamEntryCard />
+            <ExamCardFile />
           ) : exams.find((exam) => exam.id === selectedExam)?.status ===
             "not_issued" ? (
             <p style={{ color: "orange" }}>
