@@ -9,7 +9,7 @@ const Receipt = () => {
     <Container fluid>
       <Container className="mt-3 Receipt-card-body">
         <Row className="card-title">
-          <h4>رسید ثبت نام ارزیابی شونده</h4>
+          <h4>رسید ثبت نام داوطلب</h4>
         </Row>
 
         <Card className="header-card">
