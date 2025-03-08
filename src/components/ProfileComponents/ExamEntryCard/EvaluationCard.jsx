@@ -16,7 +16,7 @@ const EvaluationCard = () => {
   const exams = [
     {
       id: 1,
-      name: "آزمون استخدامی سازمان ثبت اسناد و املاک کشور",
+      name: "یازدهمین آزمون مشترک دستگاه های اجرایی",
       status: "card",
     },
     {
@@ -44,16 +44,18 @@ const EvaluationCard = () => {
   const handleDownloadExamCard = () => {
     const element = examCardRef.current;
     if (element) {
-      html2canvas(element, { scale: 2 }).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4");
-        const width = pdf.internal.pageSize.getWidth();
-        const height = (canvas.height * width) / canvas.width;
-        pdf.addImage(imgData, "PNG", 0, 0, width, height);
-        pdf.save("exam-card.pdf");
-      }).catch((error) => {
-        console.error("Error generating exam card PDF:", error);
-      });
+      html2canvas(element, { scale: 2 })
+        .then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          const pdf = new jsPDF("p", "mm", "a4");
+          const width = pdf.internal.pageSize.getWidth();
+          const height = (canvas.height * width) / canvas.width;
+          pdf.addImage(imgData, "PNG", 0, 0, width, height);
+          pdf.save("exam-card.pdf");
+        })
+        .catch((error) => {
+          console.error("Error generating exam card PDF:", error);
+        });
     }
   };
 
@@ -63,18 +65,20 @@ const EvaluationCard = () => {
     setTimeout(() => {
       const element = receiptRef.current;
       if (element) {
-        html2canvas(element, { scale: 2 }).then((canvas) => {
-          const imgData = canvas.toDataURL("image/png");
-          const pdf = new jsPDF("p", "mm", "a4");
-          const width = pdf.internal.pageSize.getWidth();
-          const height = (canvas.height * width) / canvas.width;
-          pdf.addImage(imgData, "PNG", 0, 0, width, height);
-          pdf.save("receipt.pdf");
-          setIsGeneratingReceipt(false); // غیرفعال کردن بعد از تولید
-        }).catch((error) => {
-          console.error("Error generating receipt PDF:", error);
-          setIsGeneratingReceipt(false);
-        });
+        html2canvas(element, { scale: 2 })
+          .then((canvas) => {
+            const imgData = canvas.toDataURL("image/png");
+            const pdf = new jsPDF("p", "mm", "a4");
+            const width = pdf.internal.pageSize.getWidth();
+            const height = (canvas.height * width) / canvas.width;
+            pdf.addImage(imgData, "PNG", 0, 0, width, height);
+            pdf.save("receipt.pdf");
+            setIsGeneratingReceipt(false); // غیرفعال کردن بعد از تولید
+          })
+          .catch((error) => {
+            console.error("Error generating receipt PDF:", error);
+            setIsGeneratingReceipt(false);
+          });
       }
     }, 500); // تأخیر 500 میلی‌ثانیه
   };
@@ -125,7 +129,10 @@ const EvaluationCard = () => {
                 <ExamCardFile handlePrint={handlePrint} />
               </div>
               {isGeneratingReceipt && (
-                <div ref={receiptRef} style={{ position: "absolute", left: "-9999px" }}>
+                <div
+                  ref={receiptRef}
+                  style={{ position: "absolute", left: "-9999px" }}
+                >
                   <Receipt />
                 </div>
               )}
