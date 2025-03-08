@@ -30,7 +30,7 @@ const FinalConfirmation = ({ handlePreviousStep }) => {
         <div className="exam-info">
           <h2>
             عنوان آزمون:
-            <span>استخدام شرکت توزیع نیروی برق استان بوشهر</span>
+            <span>استخدام دوازدهمین آزمون مشترک</span>
           </h2>
           <h2>
             هزینه ثبت‌نام در آزمون: <span>۴,۰۰۰,۰۰۰ ریال</span>
@@ -95,7 +95,10 @@ const FinalConfirmation = ({ handlePreviousStep }) => {
 
       {isModalOpen && (
         <div className="fc-modal-overlay" onClick={closeModal}>
-          <div className="fc-modal-container" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="fc-modal-container"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Receipt onClose={closeModal} />
           </div>
         </div>

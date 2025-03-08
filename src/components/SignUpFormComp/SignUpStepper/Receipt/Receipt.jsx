@@ -19,7 +19,10 @@ const Receipt = () => {
                 <Row className="d-flex justify-content-center">
                   <div className="applicant-code mt-3">
                     <strong className="row d-flex justify-content-center">
-                      نام و نام خانوادگی <span>{candidateData.firstName} {candidateData.lastName}</span>
+                      نام و نام خانوادگی{" "}
+                      <span>
+                        {candidateData.firstName} {candidateData.lastName}
+                      </span>
                     </strong>
                   </div>
                 </Row>
@@ -76,7 +79,7 @@ const Receipt = () => {
           <Col md={3} className="info-div">
             <div className="mt-1">
               <label>
-                شماره شناسنامه: <span>{candidateData.idCard}</span>
+                شماره شناسنامه: <span>{candidateData.BirthCertificate}</span>
               </label>
             </div>
             <div className="mt-1">
@@ -86,7 +89,7 @@ const Receipt = () => {
             </div>
             <div className="mt-1">
               <label>
-                مدرک تحصیلی: <span>{candidateData.degree}</span>
+                مدرک تحصیلی: <span>{candidateData.EducationalLevel}</span>
               </label>
             </div>
             <div className="mt-1">
@@ -96,7 +99,7 @@ const Receipt = () => {
             </div>
             <div className="mt-1">
               <label>
-                وضعیت تاهل: <span>{candidateData.maritalStatus}</span>
+                وضعیت تاهل: <span>{candidateData.Marriage}</span>
               </label>
             </div>
             <div className="mt-1">
@@ -109,45 +112,7 @@ const Receipt = () => {
           <Col md={3} className="info-div">
             <div className="mt-1">
               <label>
-                کد پرسنلی: <span>{candidateData.personnelCode}</span>
-              </label>
-            </div>
-            <div className="mt-1">
-              <label>
-                پست سازمانی: <span>{candidateData.jobTitle}</span>
-              </label>
-            </div>
-            <div className="mt-1">
-              <label>
-                واحد سازمانی: <span>{candidateData.department}</span>
-              </label>
-            </div>
-            <div className="mt-1">
-              <label>
-                محل خدمت: <span>{candidateData.dutyStation}</span>
-              </label>
-            </div>
-            <div className="mt-1">
-              <label>
-                نوع استخدام: <span>{candidateData.employmentType}</span>
-              </label>
-            </div>
-            <div className="mt-1">
-              <label>
-                تاریخ استخدام: <span>{candidateData.dateOfEmployment}</span>
-              </label>
-            </div>
-          </Col>
-
-          <Col md={3} className="info-div">
-            <div className="mt-1">
-              <label>
-                سنوات خدمت به سال: <span>{candidateData.yearsOfService}</span>
-              </label>
-            </div>
-            <div className="mt-1">
-              <label>
-                کد پستی: <span>{candidateData.postalCode}</span>
+                کد پستی: <span>{candidateData.postCode}</span>
               </label>
             </div>
             <div className="mt-1">
@@ -161,8 +126,7 @@ const Receipt = () => {
         <div className="info-div-col">
           <Row>
             <small>
-              ثبت نام شما در سنجش صلاحیت حرفه ای مربی پرورش فکری کودک و نوجوان
-              با موفقیت انجام شد.
+              ثبت نام شما در دوازدهمین آزمون مشترک با موفقیت انجام شد.
             </small>
           </Row>
           <Row>
@@ -176,87 +140,6 @@ const Receipt = () => {
             </label>
           </Row>
         </div>
-
-        <Row className="info-div-col">
-          <Row className="text-center">
-            <h4>نکات مهم</h4>
-          </Row>
-
-          <Col md={6} className="info-div">
-            <div className="mt-1">
-              <label>
-                شروع ثبت نام: <span>{candidateData.startOfRegistration}</span>
-              </label>
-            </div>
-            <div className="mt-1">
-              <label>
-                شروع تکمیل مدارک:{" "}
-                <span>{candidateData.documentCompletion}</span>
-              </label>
-            </div>
-            <div className="mt-1">
-              <label>
-                شروع سنجش: <span>{candidateData.startOfAssessment}</span>
-              </label>
-            </div>
-            <div className="mt-1">
-              <label>
-                محل برگزاری: استان تهران <span>{candidateData.location}</span>
-              </label>
-            </div>
-            <p>
-              شیوه و زمان شرکت در آزمون دانشی: متعاقباً اطلاع‌رسانی خواهد شد
-            </p>
-            <p>مدارک مورد نیاز (در بازه زمانی تکمیل مدارک):</p>
-          </Col>
-
-          <Col md={6} className="info-div">
-            <div className="mt-1">
-              <label>
-                پایان ثبت نام: <span>{candidateData.endOfRegistration}</span>
-              </label>
-            </div>
-            <div className="mt-1">
-              <label>
-                پایان تکمیل مدارک: <span>{candidateData.endOfDocument}</span>
-              </label>
-            </div>
-            <div className="mt-1">
-              <label>
-                پایان سنجش: <span>{candidateData.endOfAssessment}</span>
-              </label>
-            </div>
-            <div className="mt-1">
-              <small>آدرس مرکز آزمون متعاقباً اطلاع‌رسانی خواهد شد</small>
-            </div>
-            <p>
-              شیوه و زمان شرکت در آزمون روانشناختی: متعاقباً اطلاع‌رسانی خواهد
-              شد
-            </p>
-          </Col>
-
-          <Row className="mt-1">
-            <span>
-              از زمان مراجعه حضوری جهت سنجش موارد ذیل را به همراه داشته باشید:
-            </span>
-          </Row>
-          <Col md={6} className="info-div">
-            <div>
-              <label className="mt-1 me-3">1. اصل کارت ملی</label>
-            </div>
-            <div>
-              <label className="mt-1 me-3">2. رسید پرداخت</label>
-            </div>
-          </Col>
-          <Col md={6} className="info-div">
-            <div>
-              <span>3. کارت شناسایی ارزیابی‌شونده</span>
-            </div>
-            <div>
-              <span>4. چک لیست طی مراحل سنجش</span>
-            </div>
-          </Col>
-        </Row>
       </Container>
     </Container>
   );
