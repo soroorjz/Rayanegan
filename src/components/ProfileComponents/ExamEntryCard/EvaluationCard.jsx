@@ -126,7 +126,7 @@ const EvaluationCard = () => {
           (exams.find((exam) => exam.id === selectedExam)?.status === "card" ? (
             <>
               <div ref={examCardRef}>
-                <ExamCardFile handlePrint={handlePrint} />
+                <ExamEntryCard handlePrint={handlePrint} />
               </div>
               {isGeneratingReceipt && (
                 <div

@@ -9,7 +9,7 @@ const ExamCardFile = () => {
   };
 
   return (
-    <div className="exam-entryContainer">
+    <div className="exam-entryContainer ">
       <div className="exam-entry-card">
         <div className="sideWrapper">
           <div className="exam-entry-card-wrapper">
@@ -18,9 +18,7 @@ const ExamCardFile = () => {
                 <img src={candidateData.logo} alt="Logo" className="logo" />
               </div>
               <div className="header-text">
-                <h1>
-                  کارت شرکت در یازدهمین آزمون مشترک دستگاه های اجرایی
-                </h1>
+                <h1>کارت شرکت در یازدهمین آزمون مشترک دستگاه های اجرایی</h1>
                 <h2>تیر ماه سال ۱۴۰۳</h2>
               </div>
               <div className="stamp">

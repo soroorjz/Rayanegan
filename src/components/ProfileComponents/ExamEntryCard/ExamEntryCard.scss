@@ -1,7 +1,8 @@
 @import "../../../styles/responsive.scss";
 $tablet-resize: 900px;
-
-.exam-entry-card {
+.exam-entryContainer {
+}
+.Evaluationexam-entry-card {
   background: #f9f9f9;
   width: 90%;
   // max-height: 60vh;
@@ -65,6 +66,9 @@ $tablet-resize: 900px;
           display: flex;
           align-items: center;
           justify-content: center;
+          .ExamEntryCardImg {
+            width: 100%;
+          }
         }
 
         .exam-entry-card__profile-name {

@@ -1,17 +1,17 @@
 import "./ExamEntryCard.scss";
 
 const user = {
-  fullName: "امیر هراتی",
-  fatherName: "محمد هراتی",
-  nationalCode: "۱۲۳۴۵۶۷۸۹۰",
+  fullName: "محمد معروفی",
+  fatherName: "احمد",
+  nationalCode: "0015838791",
   birthDate: "۱۳۷۵/۰۵/۲۰",
-  religion: "اسلام",
+  religion: "اسلام (شیعه)",
   leftHand: false,
-  preRegisterCode: "ABC12345",
+  preRegisterCode: "1802142",
 };
 
 const exam = {
-  name: "آزمون پنجم ",
+  name: " در یازدهمین آزمون مشترک دستگاه های اجرایی",
   date: "۱۴۰۲/۱۲/۱۵",
   province: "تهران",
   zone: "حوزه ۵",
@@ -23,12 +23,15 @@ const qrCode = "/assets/images/QrCode.png";
 
 const ExamEntryCard = () => {
   return (
-    <div className="exam-entry-card">
-      <h2 className="exam-entry-card__title">کارت ورود به جلسه</h2>
+    <div className="Evaluationexam-entry-card">
+      <h2 className="exam-entry-card__title">کارت ورود به ارزیابی تکمیلی</h2>
       <div className="exam-entry-card__content">
         <div className="exam-entry-card__info">
           <div className="exam-entry-card__profile">
-            <div className="exam-entry-card__profile-image"></div>
+            <div className="exam-entry-card__profile-image">
+
+              <img className="ExamEntryCardImg" src="/assets/images/shxfdb.jpg" alt="" />
+            </div>
             <p className="exam-entry-card__profile-name">{user.fullName}</p>
           </div>
           <p className="exam-entry-card__code">
@@ -53,8 +56,8 @@ const ExamEntryCard = () => {
           <p>نیاز به منشی: {exam.needSecretary ? "بله" : "خیر"}</p>
         </div>
         <div className="signingPart">
-            <div className="fingerPrint">اثر انگشت داوطلب</div>
-            <div className="sign"> امضا داوطلب</div>
+          <div className="fingerPrint">اثر انگشت داوطلب</div>
+          <div className="sign"> امضا داوطلب</div>
         </div>
       </div>
     </div>
