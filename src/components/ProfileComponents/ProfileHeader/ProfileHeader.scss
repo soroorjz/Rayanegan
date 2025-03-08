@@ -53,8 +53,12 @@ $tablet-resize: 900px;
       }
 
       .profileImg {
-        svg {
+        img {
           font-size: 54px;
+          border-radius: 50%;
+          // width: 50px;
+          width: 100%;
+          height: 50px;
         }
       }
 

@@ -54,7 +54,8 @@ const ProfileHeader = () => {
             />
           </button>
           <div className="profileImg">
-            <MdAccountCircle />
+            {/* <MdAccountCircle /> */}
+            <img src="/assets/images/shxfdb.jpg" alt="" />
           </div>
 
           {isDropdownOpen && (

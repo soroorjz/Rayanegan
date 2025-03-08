@@ -59,14 +59,13 @@ const NavbarTop = ({
             </div>
           )}
 
-          {!hideRepotBtn &&
-            user && (
-              <div className="jobSearchBtn" id="reportBtn">
-                <button>
-                  <Link to="/ReportForm">ثبت اعتراض </Link>
-                </button>
-              </div>
-            )}
+          {!hideRepotBtn && user && (
+            <div className="jobSearchBtn" id="reportBtn">
+              <button>
+                <Link to="/ReportForm">ثبت اعتراض </Link>
+              </button>
+            </div>
+          )}
 
           {showReportTrackingBtn && (
             <div className="jobSearchBtn">
@@ -78,7 +77,8 @@ const NavbarTop = ({
           {user ? (
             <div className="userProfile">
               <div className="user-info">
-                <FaCircleUser className="user-avatar" />
+                {/* <FaCircleUser className="user-avatar" /> */}
+                <img src="/assets/images/shxfdb.jpg" alt=""  className="user-avatar"/>
                 <div className="user-details">
                   <span className="user-name">محمد معروفی</span>
                 </div>
