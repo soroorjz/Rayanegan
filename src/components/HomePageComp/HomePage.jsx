@@ -12,6 +12,7 @@ import "intro.js/introjs.css";
 import introJs from "intro.js";
 import ChatBot from "../ChatBot/ChatBot";
 import { RiQuestionFill } from "react-icons/ri";
+import gsap from "gsap"; // برای مدیریت GSAP
 
 const HomePage = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -19,35 +20,42 @@ const HomePage = () => {
   useEffect(() => {
     const hasSeenTutorial = localStorage.getItem("hasSeenTutorial");
     if (!hasSeenTutorial) {
-      setTimeout(() => {
-        const jobSearchBtn = document.querySelector("#jobSearchBtn");
-        if (jobSearchBtn) {
-          // اسکرول به المان قبل از شروع توتوریال
-          jobSearchBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+      const checkAndStartTutorial = () => {
+        const requiredElements = [
+          "#jobSearchBtn",
+          "#reportBtn",
+          "#menuItem-0",
+          "#menuItem-1",
+          "#menuItem-2",
+          "#menuItem-3",
+          "#menuItem-4",
+          "#menuItem-5",
+          "#chatBotMainBtn",
+        ];
+        const allElementsReady = requiredElements.every((selector) =>
+          document.querySelector(selector)
+        );
 
-          // چک کردن موقعیت المان
-          const rect = jobSearchBtn.getBoundingClientRect();
-          if (rect.top >= 0 && rect.left >= 0) {
-            startIntro();
-            localStorage.setItem("hasSeenTutorial", "true");
-          } else {
-            console.log("موقعیت #jobSearchBtn قابل محاسبه نیست، دوباره تلاش می‌کنم...");
-            setTimeout(() => {
-              startIntro();
-              localStorage.setItem("hasSeenTutorial", "true");
-            }, 300); // تلاش دوباره بعد از 300 میلی‌ثانیه
-          }
+        if (allElementsReady) {
+          startIntro();
+          localStorage.setItem("hasSeenTutorial", "true");
         } else {
-          console.log("المان #jobSearchBtn هنوز رندر نشده است.");
+          console.log("بعضی المان‌ها هنوز رندر نشدن، منتظر می‌مانم...");
+          requestAnimationFrame(checkAndStartTutorial);
         }
-      }, 500); // تأخیر 500 میلی‌ثانیه برای اطمینان از رندر کامل
+      };
+      requestAnimationFrame(checkAndStartTutorial);
     }
   }, []);
 
   const startIntro = () => {
     if (window.innerWidth <= 728) {
+      console.log("صفحه در حالت موبایل است، توتوریال اجرا نمی‌شود.");
       return;
     }
+
+    // غیرفعال کردن انیمیشن‌های GSAP برای جلوگیری از تداخل
+    gsap.globalTimeline.pause();
 
     const intro = introJs();
     intro.setOptions({
@@ -104,6 +112,24 @@ const HomePage = () => {
       disableInteraction: true,
       tooltipClass: "homeTooltip-IntroJs",
       highlightClass: "homeHighlight-IntroJs",
+      scrollPadding: 100, // فاصله اضافی برای اسکرول
+    });
+
+    intro.onbeforechange(() => {
+      const currentStep = intro._currentStep;
+      const stepElement = intro._options.steps[currentStep]?.element;
+      if (stepElement) {
+        const element = document.querySelector(stepElement);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
+          // یه تأخیر کوتاه برای اطمینان از اتمام اسکرول
+          return new Promise((resolve) => setTimeout(resolve, 300));
+        }
+      }
+    });
+
+    intro.onexit(() => {
+      gsap.globalTimeline.resume(); // برگرداندن انیمیشن‌های GSAP
     });
 
     intro.start();
@@ -113,6 +139,8 @@ const HomePage = () => {
     const banner = document.getElementById("home");
     if (banner) {
       banner.scrollIntoView({ behavior: "smooth" });
+    } else {
+      console.warn("المان #home پیدا نشد!");
     }
   };
 

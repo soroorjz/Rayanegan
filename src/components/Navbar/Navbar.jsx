@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import "./Navbar.scss";
-import gsap from "gsap";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import {
   FaTasks,
   FaSearch,
@@ -11,10 +9,9 @@ import {
 } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
 
-gsap.registerPlugin(ScrollToPlugin);
-
 const Navbar = () => {
   const [activeIndex, setActiveIndex] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 728);
 
   const menuItems = useMemo(
     () => [
@@ -32,35 +29,44 @@ const Navbar = () => {
     setActiveIndex(index);
     const element = document.getElementById(targetId);
     if (element) {
-      gsap.to(window, {
-        duration: 1.2,
-        scrollTo: { y: element, offsetY: 50 },
-        ease: "power1.inOut",
-      });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      console.warn(`المان با آیدی ${targetId} پیدا نشد!`);
     }
   };
 
-  useEffect(() => {
-    const handleScrollSpy = () => {
-      menuItems.forEach((item, index) => {
-        const element = document.getElementById(item.target);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (
-            rect.top <= window.innerHeight / 2 &&
-            rect.bottom >= window.innerHeight / 2
-          ) {
-            setActiveIndex(index);
-          }
-        }
-      });
-    };
+  // ScrollSpy رو فعلاً حذف می‌کنیم تا سرعت بیشتر بشه
+  // اگه نیاز داری فعالش کنیم، بگو!
+  // useEffect(() => {
+  //   const handleScrollSpy = () => {
+  //     menuItems.forEach((item, index) => {
+  //       const element = document.getElementById(item.target);
+  //       if (element) {
+  //         const rect = element.getBoundingClientRect();
+  //         if (
+  //           rect.top <= window.innerHeight / 2 &&
+  //           rect.bottom >= window.innerHeight / 2
+  //         ) {
+  //           setActiveIndex(index);
+  //         }
+  //       }
+  //     });
+  //   };
 
-    window.addEventListener("scroll", handleScrollSpy);
-    return () => {
-      window.removeEventListener("scroll", handleScrollSpy);
-    };
-  }, [menuItems]);
+  //   window.addEventListener("scroll", handleScrollSpy);
+  //   return () => window.removeEventListener("scroll", handleScrollSpy);
+  // }, [menuItems]);
+
+  // مدیریت ریسپانسیو داینامیک
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 728);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  if (isMobile) {
+    return null; // یا یه نسخه ساده‌تر
+  }
 
   return (
     <div className="navbar-container">
