@@ -4,10 +4,15 @@ import { Container, Row, Col, Card, Image } from "react-bootstrap";
 import "./Receipt.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Receipt = () => {
+const Receipt = ({ onClose }) => {
   return (
-    <Container fluid>
-      <Container className="mt-3 Receipt-card-body">
+    <Container fluid className="receipt-modal">
+      <Container className="mt-3 Receipt-card-body position-relative">
+        {/* دکمه ضربدر */}
+        <button className="close-btn" onClick={onClose}>
+          &times;
+        </button>
+
         <Row className="card-title">
           <h4>رسید ثبت نام داوطلب</h4>
         </Row>
