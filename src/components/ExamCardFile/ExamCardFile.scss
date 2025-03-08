@@ -1,8 +1,26 @@
+@import "../../styles/responsive.scss";
+$tablet-resize: 900px;
+
+.exam-entryContainer {
+  @include responsive-reverse($tablet) {
+    transform: scale(0.5);
+    position: absolute;
+    top: -150px;
+    right: calc(50% - 450px);
+  }
+  @include responsive-reverse($mobile) {
+    transform: scale(0.3);
+    position: absolute;
+    top: -266px;
+    right: calc(50% - 450px);
+  }
+}
+
 .exam-entry-card {
   direction: rtl;
   font-family: "Vazir", sans-serif;
   width: 100%;
-  // max-width: 600px;
+  width: 900px;
   margin: 20px auto;
   border: 1px solid #000;
   padding: 0;
@@ -10,7 +28,7 @@
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-
+  transform-origin: top center;
   @media print {
     width: 210mm;
     height: 297mm;
@@ -230,6 +248,13 @@
     font-size: 15px;
   }
 }
-.examCardeDesc{
+.examCardeDesc {
   padding-bottom: 50px;
+}
+
+@media print {
+  .printBtn,
+  .examCardeDesc {
+    display: none;
+  }
 }

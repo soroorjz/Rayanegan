@@ -3,6 +3,11 @@ import "./ExamCardFile.scss";
 import candidateData from "./data.json";
 
 const ExamCardFile = () => {
+  // تابع برای هندل کردن پرینت
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <div className="exam-entryContainer">
       <div className="exam-entry-card">
@@ -172,7 +177,6 @@ const ExamCardFile = () => {
                 ))}
               </ul>
             </div>
-            {/* <div className="entryCardSilde">sdgvxd</div> */}
           </div>
           <div className="side">
             <p>شروع فرایند برگزاری آزمون صبح روز جمعه ۱۴۰۳/۱۲/۲۵ ساعت ۸:۳۰</p>
@@ -181,7 +185,8 @@ const ExamCardFile = () => {
 
         <div className="separator">**از قسمت مشخص شده برش داده شود**</div>
       </div>
-      <button className="printBtn">
+      {/* اضافه کردن onClick به دکمه */}
+      <button className="printBtn" onClick={handlePrint}>
         <p>چاپ کارت</p>
       </button>
       <h4>توضیحات:</h4>
