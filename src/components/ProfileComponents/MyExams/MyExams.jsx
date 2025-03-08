@@ -22,6 +22,10 @@ const MyExams = () => {
     return <MyExamsMobile />;
   }
 
+  const selectedExamData = examData.find(
+    (exam) => exam.examName === selectedExam
+  );
+
   return (
     <>
       <div className="exam-list">
@@ -58,29 +62,27 @@ const MyExams = () => {
               </tr>
             </thead>
             <tbody>
-              {examData
-                .find((exam) => exam.examName === selectedExam)
-                ?.exams.map((exam, index) => (
-                  <tr key={exam.id}>
-                    <td>{index + 1}</td>
-                    <td>{exam.category}</td>
-                    <td>{exam.date}</td>
-                    <td className={`status ${exam.status}`}>{exam.status}</td>
-                    <td>{exam.score}</td>
-                    <td>{exam.percentage}</td>
-                    <td
-                      className={`result ${
-                        exam.candidateStatus === "قبول شده"
-                          ? "pass"
-                          : exam.candidateStatus === "مردود"
-                          ? "failed"
-                          : "absent"
-                      }`}
-                    >
-                      {exam.candidateStatus}
-                    </td>
-                  </tr>
-                ))}
+              {selectedExamData?.exams.map((exam, index) => (
+                <tr key={exam.id}>
+                  <td>{index + 1}</td>
+                  <td>{exam.category}</td>
+                  <td>{exam.date}</td>
+                  <td className={`status ${exam.status}`}>{exam.status}</td>
+                  <td>{exam.score}</td>
+                  <td>{exam.percentage}</td>
+                  <td
+                    className={`result ${
+                      exam.candidateStatus === "قبول شده"
+                        ? "pass"
+                        : exam.candidateStatus === "مردود"
+                        ? "failed"
+                        : "absent"
+                    }`}
+                  >
+                    {exam.candidateStatus}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -95,10 +97,8 @@ const MyExams = () => {
           >
             <div ref={announceRef}>
               <ExamsAnnounces
-                announcements={
-                  examData.find((exam) => exam.examName === selectedExam)
-                    ?.announcements || []
-                }
+                announcements={selectedExamData?.announcements || []}
+                examData={selectedExamData} // پاس دادن کل دیتای آزمون
               />
             </div>
           </CSSTransition>

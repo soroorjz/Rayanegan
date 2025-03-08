@@ -3,13 +3,8 @@ import "./ExamCardFile.scss";
 import candidateData from "./data.json";
 
 const ExamCardFile = () => {
-  // تابع برای هندل کردن پرینت
-  const handlePrint = () => {
-    window.print();
-  };
-
   return (
-    <div className="exam-entryContainer ">
+    <div className="exam-entryContainer">
       <div className="exam-entry-card">
         <div className="sideWrapper">
           <div className="exam-entry-card-wrapper">
@@ -18,8 +13,10 @@ const ExamCardFile = () => {
                 <img src={candidateData.logo} alt="Logo" className="logo" />
               </div>
               <div className="header-text">
-                <h1>کارت شرکت در یازدهمین آزمون مشترک دستگاه های اجرایی</h1>
-                <h2>تیر ماه سال ۱۴۰۳</h2>
+                <h1>
+                  کارت شرکت در آزمون استخدامی سازمان ثبت اسناد و املاک کشور
+                </h1>
+                <h2>اسفند ماه سال ۱۴۰۳</h2>
               </div>
               <div className="stamp">
                 <img
@@ -175,16 +172,16 @@ const ExamCardFile = () => {
                 ))}
               </ul>
             </div>
+            {/* <div className="entryCardSilde">sdgvxd</div> */}
           </div>
           <div className="side">
-            <p>شروع فرایند برگزاری آزمون صبح روز جمعه ۱۴۰۳/۰۴/۰۸ ساعت ۸:۳۰</p>
+            <p>شروع فرایند برگزاری آزمون صبح روز جمعه ۱۴۰۳/۱۲/۲۵ ساعت ۸:۳۰</p>
           </div>
         </div>
 
         <div className="separator">**از قسمت مشخص شده برش داده شود**</div>
       </div>
-      {/* اضافه کردن onClick به دکمه */}
-      <button className="printBtn" onClick={handlePrint}>
+      <button className="printBtn">
         <p>چاپ کارت</p>
       </button>
       <h4>توضیحات:</h4>
