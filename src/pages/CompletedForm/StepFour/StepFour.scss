@@ -1,0 +1,66 @@
+.step-four-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .file-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    background: #f9f9f9;
+  }
+  
+  .file-input input[type="file"] {
+    display: none; // مخفی کردن ورودی پیش‌فرض فایل
+  }
+  
+  .file-input span {
+    cursor: pointer;
+    color: #04364a;
+    font-size: 14px;
+  }
+  
+  .file-input input[type="file"] + span::before {
+    content: "📄";
+    margin-right: 5px;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .prev-button,
+  .next-button {
+    background-color: #04364a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .prev-button:hover,
+  .next-button:hover {
+    background-color: #03283a;
+  }

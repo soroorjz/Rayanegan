@@ -5,10 +5,12 @@ import MyExams from "./MyExams/MyExams";
 import ExamEntryCard from "./ExamEntryCard/ExamEntryCard";
 import NoEntryCard from "./NoEntryCard/NoEntryCard";
 import { IoMdHome } from "react-icons/io";
-import ExamSignUpForm from "../../pages/ExamSignUpForm/ExamSignUpForm";
+
 import { Link } from "react-router";
 import ExamEntryCopm from "./ExamEntryCard/ExamEntryCopm";
 import EvaluationCard from "./ExamEntryCard/EvaluationCard";
+import ExamSignUpForm from "../../pages/ExamSignUpForm/ExamSignUpForm";
+import CompletedForm from "../../pages/CompletedForm/CompletedForm";
 
 const ProfileMain = ({ selectedComponent }) => {
   let content;
@@ -16,12 +18,13 @@ const ProfileMain = ({ selectedComponent }) => {
     case "personal":
       content = (
         <div className="profilePersonalDetails">
-          <ExamSignUpForm
+          {/* <ExamSignUpForm
             title="ویرایش اطلاعات "
             showNavbar={false}
             successMessage="اطلاعات به روز شد!"
             redirectAfterSubmit={false}
-          />
+          /> */}
+          <CompletedForm/>
         </div>
       );
       // content = <PersonalDetails />;
@@ -34,7 +37,7 @@ const ProfileMain = ({ selectedComponent }) => {
       content = <ExamEntryCopm />;
       break;
     case "news":
-      content = <EvaluationCard  />;
+      content = <EvaluationCard />;
       break;
     default:
       content = <PersonalDetails />;

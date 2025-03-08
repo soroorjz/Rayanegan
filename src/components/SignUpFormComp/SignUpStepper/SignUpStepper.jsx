@@ -9,7 +9,7 @@ import { useNavigate } from "react-router";
 import Receipt from "./Receipt/Receipt";
 import Swal from "sweetalert2"; // اضافه کردن SweetAlert2
 
-const SignUpStepper = ({ successMessage, redirectAfterSubmit = true }) => {
+const SignUpStepper = ({initialData, successMessage, redirectAfterSubmit = true }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [gender, setGender] = useState(null);
@@ -53,7 +53,7 @@ const SignUpStepper = ({ successMessage, redirectAfterSubmit = true }) => {
   const renderContent = () => {
     switch (currentStep) {
       case 1:
-        return <SignUpForm onNext={handleNextStep} setGender={setGender} />;
+        return <SignUpForm initialData={initialData} onNext={handleNextStep} setGender={setGender} />;
       case 2:
         return (
           <div>

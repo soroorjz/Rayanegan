@@ -177,7 +177,7 @@ import DatePickerInput from "./DatePickerInput";
 import { textInputsDatas } from "./data";
 import { fieldLabels } from "./data";
 
-const SignUpForm = ({ onNext, setGender }) => {
+const SignUpForm = ({initialData, onNext, setGender }) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -274,6 +274,7 @@ const SignUpForm = ({ onNext, setGender }) => {
           {textInputsDatas.map((input) => (
             <div key={input.id} className="form-group">
               <label htmlFor={input.id}>{input.label}:</label>
+             
               <input
                 type={input.type}
                 id={input.id}
