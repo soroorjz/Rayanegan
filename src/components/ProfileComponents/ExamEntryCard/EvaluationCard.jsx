@@ -8,6 +8,11 @@ import html2canvas from "html2canvas";
 const EvaluationCard = () => {
   const [selectedExam, setSelectedExam] = useState("");
   const examCardRef = useRef(null); // برای دسترسی به DOM المنت ExamCardFile
+   // تابع برای هندل کردن پرینت
+   const handlePrint = () => {
+    window.print();
+  };
+
 
   const exams = [
     {
@@ -76,7 +81,7 @@ const EvaluationCard = () => {
         {selectedExam &&
           (exams.find((exam) => exam.id === selectedExam)?.status === "card" ? (
             <div ref={examCardRef}>
-              <ExamCardFile />
+              <ExamCardFile  handlePrint={handlePrint} />
             </div>
           ) : exams.find((exam) => exam.id === selectedExam)?.status ===
             "not_issued" ? (

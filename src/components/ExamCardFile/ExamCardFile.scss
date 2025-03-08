@@ -252,9 +252,32 @@ $tablet-resize: 900px;
   padding-bottom: 50px;
 }
 
+// تنظیمات پرینت
 @media print {
+  // مخفی کردن همه چیز به جز exam-entryContainer
+  body * {
+    visibility: hidden;
+  }
+
+  .exam-entryContainer,
+  .exam-entryContainer * {
+    visibility: visible;
+  }
+
+  .exam-entryContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 0;
+  }
+
+  // مطمئن شدن که فقط exam-entry-card پرینت بشه و بقیه مخفی بشن
   .printBtn,
-  .examCardeDesc {
+  .examCardeDesc,
+  h4 {
     display: none;
   }
 }
