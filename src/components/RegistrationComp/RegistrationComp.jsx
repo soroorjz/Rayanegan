@@ -5,6 +5,7 @@ import "./RegistrationComp.scss";
 import JobLocSelect from "./RegistrationCompSteps/JobLocSelect";
 import ConfirmInfo from "./RegistrationCompSteps/ConfirmInfo";
 import ExamLocation from "./RegistrationCompSteps/ExamLocation";
+import Receipt from "../SignUpFormComp/SignUpStepper/Receipt/Receipt";
 const RegistrationComp = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showModal, setShowModal] = useState(false);
@@ -98,7 +99,8 @@ const RegistrationComp = () => {
       {showModal && (
         <div className="registration-modal-overlay">
           <div className="registration-modal-content">
-            <p>ثبت نام با موفقیت انجام شد!</p>
+            {/* <p>ثبت نام با موفقیت انجام شد!</p> */}
+            <Receipt/>
           </div>
         </div>
       )}

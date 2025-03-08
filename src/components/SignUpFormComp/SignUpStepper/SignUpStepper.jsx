@@ -6,7 +6,10 @@ import ContactForm from "./ContactForm/ContactForm";
 import BackgroundForm from "./BackgroundForm/BackgroundForm";
 import FileInput from "../FileInput";
 import { useNavigate } from "react-router";
-const SignUpStepper = ({ successMessage,redirectAfterSubmit = true   }) => {
+import Receipt from "./Receipt/Receipt";
+import Swal from "sweetalert2"; // اضافه کردن SweetAlert2
+
+const SignUpStepper = ({ successMessage, redirectAfterSubmit = true }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [gender, setGender] = useState(null);
@@ -33,13 +36,18 @@ const SignUpStepper = ({ successMessage,redirectAfterSubmit = true   }) => {
   };
 
   const handleFinalSubmit = () => {
-    setShowModal(true);
-    setTimeout(() => {
-      setShowModal(false);
-      if (redirectAfterSubmit) {
-        navigate("/logIn"); // فقط اگر prop فعال بود، هدایت شود
+    // نمایش SweetAlert به جای setTimeout
+    Swal.fire({
+      title: "ثبت نام شما با موفقیت انجام شد",
+      text: "نام کاربری و رمزعبور، کد ملی شما می‌باشد.",
+      icon: "success",
+      confirmButtonText: "تأیید",
+      confirmButtonColor: "#04364a",
+    }).then((result) => {
+      if (result.isConfirmed && redirectAfterSubmit) {
+        navigate("/logIn"); // هدایت به صفحه ورود بعد از تأیید
       }
-    }, 3000);
+    });
   };
 
   const renderContent = () => {
@@ -66,7 +74,7 @@ const SignUpStepper = ({ successMessage,redirectAfterSubmit = true   }) => {
         );
       case 4:
         return (
-          <div>
+          <div className="fileInputPart">
             <FileInput
               handlePreviousStep={handlePreviousStep}
               onNext={handleNextStep}
@@ -102,13 +110,6 @@ const SignUpStepper = ({ successMessage,redirectAfterSubmit = true   }) => {
         ))}
       </div>
       <div className="step-content">{renderContent()}</div>
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <p>{successMessage}</p>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

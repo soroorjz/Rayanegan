@@ -39,7 +39,7 @@ $tablet-resize: 900px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 25%;
+        height: 15%;
         .examCard-Logo {
           img {
             width: 120px;
@@ -50,6 +50,9 @@ $tablet-resize: 900px;
           font-size: 16px;
           margin: 10px 0;
           text-align: center;
+          .examCard-Title-H {
+            font-size: 24px !important;
+          }
         }
       }
       .examCard-details {
@@ -89,6 +92,7 @@ $tablet-resize: 900px;
           background-color: #578e7e;
           cursor: pointer;
           color: #fff;
+          font-size: 14px;
           a {
             text-decoration: none;
             color: #fff;

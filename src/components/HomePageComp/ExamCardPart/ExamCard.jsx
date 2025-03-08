@@ -133,7 +133,7 @@ const ExamCard = () => {
               <div className="examCards-swiper">
                 <div className="examCardTop">
                   <div className="examCard-Title">
-                    <h2>{examCard.examName}</h2>
+                    <h2 className="examCard-Title-H">{examCard.examName}</h2>
                   </div>
                 </div>
                 <div className="examCard-details">
