@@ -151,13 +151,13 @@ const EmploymentTests = () => {
       </div>
       <div id="UnderReview" className="EmploymentTestsComp">
         <EmploymentTestsComp
-          examData={getFilteredExams("در حال برسسی")}
+          examData={getFilteredExams("در حال بررسی")}
           title="در حال بررسی"
         />
       </div>
       <div id="Expired" className="EmploymentTestsComp expiredExams">
         <EmploymentTestsComp
-          examData={getFilteredExams("پایان ازمون")}
+          examData={getFilteredExams("پایان آزمون")}
           title="پایان آزمون"
         />
       </div>

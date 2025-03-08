@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
 import Swal from "sweetalert2"; // وارد کردن SweetAlert2
 import "./ChangePassword.scss";
+import NavbarTop from "../../components/HomePageComp/NavbarTop/NavbarTop";
+import { IoMdHome } from "react-icons/io";
 
 const ChangePassword = () => {
   const { user, logout } = useAuth();
@@ -46,41 +48,49 @@ const ChangePassword = () => {
   }
 
   return (
-    <div className="change-password-container">
-      <h2>تغییر رمز عبور</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <input
-            type="password"
-            placeholder="رمز عبور کنونی"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="input-group">
-          <input
-            type="password"
-            placeholder="رمز عبور جدید"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="input-group">
-          <input
-            type="password"
-            placeholder="تکرار رمز عبور جدید"
-            value={confirmNewPassword}
-            onChange={(e) => setConfirmNewPassword(e.target.value)}
-            required
-          />
-        </div>
-        <Link to="/LogIn" className="submit-button" onClick={handleSubmit}>
-          ثبت رمز عبور جدید
-        </Link>
-      </form>
-    </div>
+    <>
+      <NavbarTop hideJobSearch={true} hideRepotBtn={true} />
+      <div className="change-password-container">
+        <h2>تغییر رمز عبور</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <input
+              type="password"
+              placeholder="رمز عبور کنونی"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <input
+              type="password"
+              placeholder="رمز عبور جدید"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <input
+              type="password"
+              placeholder="تکرار رمز عبور جدید"
+              value={confirmNewPassword}
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
+              required
+            />
+          </div>
+          <Link to="/LogIn" className="submit-button" onClick={handleSubmit}>
+            ثبت رمز عبور جدید
+          </Link>
+        </form>
+      </div>
+      <button className="homeBtn">
+              <Link to="/">
+                <IoMdHome />
+              </Link>
+            </button>
+    </>
   );
 };
 

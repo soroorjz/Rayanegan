@@ -10,6 +10,9 @@ $tablet-resize: 900px;
     margin: 0 auto;
     background-color: #a1c0b7;
     border-radius: 50px 50px 0 0;
+    position: sticky;
+    top: 100px;
+    z-index: 9999;
   }
   .EmploymentTestsComp {
     width: 97%;
