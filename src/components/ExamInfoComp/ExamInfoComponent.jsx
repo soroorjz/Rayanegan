@@ -55,11 +55,11 @@ const ExamInfoComponent = () => {
               <p className="description">{item.description}</p>
             </div>
           ))}
-          <button className="RegistrationPageBtn">
+          {/* <button className="RegistrationPageBtn">
             <Link to={user ? "/RegistrationPage" : "/logIn"}>
               {user ? "ثبت نام" : "ورود به حساب کاربری"}
             </Link>
-          </button>
+          </button> */}
         </section>
       )}
 

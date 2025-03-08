@@ -1,7 +1,7 @@
 import React from "react";
 import "./ExamFormResult.scss";
-import { Link } from "react-router-dom"; // اصلاح وارد کردن Link
-import { useAuth } from "../../../../AuthContext"; // اضافه کردن useAuth برای دریافت وضعیت کاربر
+import { Link } from "react-router-dom";
+import { useAuth } from "../../../../AuthContext";
 
 const exams = [
   {
@@ -28,7 +28,7 @@ const exams = [
 ];
 
 const ExamFormResult = () => {
-  const { user } = useAuth(); // دریافت وضعیت کاربر از AuthContext
+  const { user } = useAuth();
 
   return (
     <div className="ResultExam-list">
@@ -40,7 +40,7 @@ const ExamFormResult = () => {
           <span className="ResultExam-jobLoc">{exam.jobLoc}</span>
           <div className="ResultExam-more">
             {user ? (
-              <Link to="/RegistrationPage">
+              <Link to={`/RegistrationPage?from=exam&examId=${exam.id}`}>
                 <button>ثبت نام</button>
               </Link>
             ) : (

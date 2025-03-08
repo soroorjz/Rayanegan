@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom"; // برای خواندن query parameters
 import SelectRegion from "./RegistrationCompSteps/SelectRegion";
 import FinalConfirmation from "./RegistrationCompSteps/FinalConfirmation";
 import "./RegistrationComp.scss";
@@ -6,8 +7,14 @@ import JobLocSelect from "./RegistrationCompSteps/JobLocSelect";
 import ConfirmInfo from "./RegistrationCompSteps/ConfirmInfo";
 import ExamLocation from "./RegistrationCompSteps/ExamLocation";
 import Receipt from "../SignUpFormComp/SignUpStepper/Receipt/Receipt";
+
 const RegistrationComp = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search); // خواندن پارامترهای URL
+  const fromExam = queryParams.get("from") === "exam"; // بررسی اینکه آیا از ExamFormResult آمده است
+  const examId = queryParams.get("examId"); // دریافت examId در صورت نیاز
+
+  const [currentStep, setCurrentStep] = useState(fromExam ? 2 : 1); // شروع از مرحله 2 اگر از ExamFormResult باشد
   const [showModal, setShowModal] = useState(false);
   const [gender, setGender] = useState(null);
   const persianNumbers = ["۱", "۲", "۳", "۴", "۵"];
@@ -64,7 +71,6 @@ const RegistrationComp = () => {
             handlePreviousStep={handlePreviousStep}
           />
         );
-
       case 5:
         return (
           <FinalConfirmation
@@ -99,12 +105,12 @@ const RegistrationComp = () => {
       {showModal && (
         <div className="registration-modal-overlay">
           <div className="registration-modal-content">
-            {/* <p>ثبت نام با موفقیت انجام شد!</p> */}
-            <Receipt/>
+            <Receipt />
           </div>
         </div>
       )}
     </div>
   );
 };
+
 export default RegistrationComp;
