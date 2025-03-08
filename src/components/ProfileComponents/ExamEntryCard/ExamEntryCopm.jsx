@@ -1,19 +1,15 @@
-import React, { useState, useRef } from "react";
-import { useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { examData } from "../MyExams/data";
+import React, { useState, useRef, useEffect } from "react";
 import "./ExamEntryCopm.scss";
-import ExamEntryCard from "./ExamEntryCard";
 import ExamCardFile from "../../ExamCardFile/ExamCardFile";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import Receipt from "../../SignUpFormComp/SignUpStepper/Receipt/Receipt";
 
 const ExamEntryCopm = () => {
   const [selectedExam, setSelectedExam] = useState("");
-  const examCardRef = useRef(null); // برای دسترسی به ExamCardFile
+  const [isGeneratingReceipt, setIsGeneratingReceipt] = useState(false); // برای کنترل رندر رسید
+  const examCardRef = useRef(null);
+  const receiptRef = useRef(null);
 
   const exams = [
     {
@@ -37,18 +33,48 @@ const ExamEntryCopm = () => {
     setSelectedExam(Number(event.target.value));
   };
 
-  const handleDownload = () => {
-    const element = examCardRef.current; // المنت ExamCardFile رو می‌گیریم
+  // دانلود کارت آزمون
+  const handleDownloadExamCard = () => {
+    const element = examCardRef.current;
     if (element) {
-      html2canvas(element).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4");
-        const width = pdf.internal.pageSize.getWidth();
-        const height = (canvas.height * width) / canvas.width;
-        pdf.addImage(imgData, "PNG", 0, 0, width, height);
-        pdf.save("exam-card.pdf"); // دانلود فایل PDF
-      });
+      html2canvas(element, { scale: 2 })
+        .then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          const pdf = new jsPDF("p", "mm", "a4");
+          const width = pdf.internal.pageSize.getWidth();
+          const height = (canvas.height * width) / canvas.width;
+          pdf.addImage(imgData, "PNG", 0, 0, width, height);
+          pdf.save("exam-card.pdf");
+        })
+        .catch((error) => {
+          console.error("Error generating exam card PDF:", error);
+        });
     }
+  };
+
+  // دانلود رسید ثبت‌نام
+  const handleDownloadReceipt = () => {
+    setIsGeneratingReceipt(true); // فعال کردن رندر رسید
+    setTimeout(() => {
+      // تأخیر برای اطمینان از رندر
+      const element = receiptRef.current;
+      if (element) {
+        html2canvas(element, { scale: 2 })
+          .then((canvas) => {
+            const imgData = canvas.toDataURL("image/png");
+            const pdf = new jsPDF("p", "mm", "a4");
+            const width = pdf.internal.pageSize.getWidth();
+            const height = (canvas.height * width) / canvas.width;
+            pdf.addImage(imgData, "PNG", 0, 0, width, height);
+            pdf.save("receipt.pdf");
+            setIsGeneratingReceipt(false); // غیرفعال کردن بعد از تولید
+          })
+          .catch((error) => {
+            console.error("Error generating receipt PDF:", error);
+            setIsGeneratingReceipt(false);
+          });
+      }
+    }, 500); // تأخیر 500 میلی‌ثانیه
   };
 
   return (
@@ -73,17 +99,38 @@ const ExamEntryCopm = () => {
         </select>
         {selectedExam &&
           exams.find((exam) => exam.id === selectedExam)?.status === "card" && (
-            <button className="exam-card-button" onClick={handleDownload}>
-              دریافت کارت آزمون
-            </button>
+            <div className="cardDetailBtn">
+              <button
+                className="exam-card-button"
+                onClick={handleDownloadExamCard}
+              >
+                دریافت کارت آزمون
+              </button>
+              <button
+                className="exam-card-button"
+                onClick={handleDownloadReceipt}
+              >
+                دریافت رسید ثبت‌نام
+              </button>
+            </div>
           )}
       </div>
       <div className="Exam-result">
         {selectedExam &&
           (exams.find((exam) => exam.id === selectedExam)?.status === "card" ? (
-            <div ref={examCardRef}>
-              <ExamCardFile />
-            </div>
+            <>
+              <div ref={examCardRef}>
+                <ExamCardFile />
+              </div>
+              {isGeneratingReceipt && (
+                <div
+                  ref={receiptRef}
+                  style={{ position: "absolute", left: "-9999px" }}
+                >
+                  <Receipt />
+                </div>
+              )}
+            </>
           ) : exams.find((exam) => exam.id === selectedExam)?.status ===
             "not_issued" ? (
             <p style={{ color: "orange" }}>
