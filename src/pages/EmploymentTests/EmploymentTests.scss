@@ -3,6 +3,7 @@ $tablet-resize: 900px;
 
 .EmploymentTests {
   width: 100%;
+  position: relative;
   background-color: #f5f5f5;
   .EmploymentTestsIcons {
     width: 100%;
@@ -13,7 +14,7 @@ $tablet-resize: 900px;
   .EmploymentTestsComp {
     width: 97%;
     margin: 0 auto;
-   
+  
   }
   .expiredExams {
     .active-exams-slider-sj {

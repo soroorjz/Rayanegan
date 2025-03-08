@@ -48,7 +48,7 @@ const ProfileHeader = () => {
 
         <div className="leftPart" ref={dropdownRef}>
           <button className="user-btn" onClick={toggleDropdown}>
-            ادمین
+            محمد معروفی
             <FaAngleDown
               className={`dropdown-icon ${isDropdownOpen ? "open" : ""}`}
             />

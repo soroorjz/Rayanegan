@@ -1,7 +1,8 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import "./ReportFormComp.scss";
 import provinces_cities from "../../jsonFiles/provinces_cities.json";
 import ReportModal from "./ReportModal/ReportModal";
+
 const ReportFormComp = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -71,26 +72,26 @@ const ReportFormComp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let newErrors = {};
+    // let newErrors = {};
 
-    Object.keys(formData).forEach((key) => {
-      if (!formData[key] && key !== "phone") {
-        newErrors[key] = "تکمیل این فیلد الزامی است.";
-      }
-    });
+    // Object.keys(formData).forEach((key) => {
+    //   if (!formData[key] && key !== "phone") {
+    //     newErrors[key] = "تکمیل این فیلد الزامی است.";
+    //   }
+    // });
 
-    if (formData.mobile && !/^09\d{9}$/.test(formData.mobile)) {
-      newErrors.mobile = "شماره تلفن معتبر نیست.";
-    }
+    // if (formData.mobile && !/^09\d{9}$/.test(formData.mobile)) {
+    //   newErrors.mobile = "شماره تلفن معتبر نیست.";
+    // }
 
-    if (formData.nationalId && !isValidIranianNationalId(formData.nationalId)) {
-      newErrors.nationalId = "کد ملی معتبر نیست.";
-    }
+    // if (formData.nationalId && !isValidIranianNationalId(formData.nationalId)) {
+    //   newErrors.nationalId = "کد ملی معتبر نیست.";
+    // }
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+    // if (Object.keys(newErrors).length > 0) {
+    //   setErrors(newErrors);
+    //   return;
+    // }
 
     // تولید یک کد پیگیری تصادفی (مثلا ۸ رقمی)
     const generatedTrackingCode = Math.floor(
@@ -103,7 +104,7 @@ const ReportFormComp = () => {
 
   return (
     <div className="report-container">
-      <h2 className="title">گزارش تخلف</h2>
+      <h2 className="title">گزارش اعتراض</h2>
       <form onSubmit={handleSubmit} className="report-form">
         <div className="row">
           <div className="form-group">
@@ -114,9 +115,9 @@ const ReportFormComp = () => {
               value={formData.firstName}
               onChange={handleChange}
             />
-            {errors.firstName && (
+            {/* {errors.firstName && (
               <small className="error">{errors.firstName}</small>
-            )}
+            )} */}
           </div>
           <div className="form-group">
             <label>نام خانوادگی</label>
@@ -126,9 +127,9 @@ const ReportFormComp = () => {
               value={formData.lastName}
               onChange={handleChange}
             />
-            {errors.lastName && (
+            {/* {errors.lastName && (
               <small className="error">{errors.lastName}</small>
-            )}
+            )} */}
           </div>
           <div className="form-group">
             <label>کد ملی</label>
@@ -139,9 +140,9 @@ const ReportFormComp = () => {
               onChange={handleChange}
               maxLength="10"
             />
-            {errors.nationalId && (
+            {/* {errors.nationalId && (
               <small className="error">{errors.nationalId}</small>
-            )}
+            )} */}
           </div>
         </div>
 
@@ -155,7 +156,7 @@ const ReportFormComp = () => {
               onChange={handleChange}
               maxLength="11"
             />
-            {errors.mobile && <small className="error">{errors.mobile}</small>}
+            {/* {errors.mobile && <small className="error">{errors.mobile}</small>} */}
           </div>
           <div className="form-group">
             <label>شماره تلفن ثابت</label>
@@ -189,9 +190,9 @@ const ReportFormComp = () => {
               <option value="کنکور">کنکور</option>
               <option value="کارشناسی ارشد">کارشناسی ارشد</option>
             </select>
-            {errors.examType && (
+            {/* {errors.examType && (
               <small className="error">{errors.examType}</small>
-            )}
+            )} */}
           </div>
 
           <div className="form-group">
@@ -200,7 +201,7 @@ const ReportFormComp = () => {
               <option value="">چیزی انتخاب نشده است</option>
               <option value="A"> آزمون A</option>
             </select>
-            {errors.exam && <small className="error">{errors.exam}</small>}
+            {/* {errors.exam && <small className="error">{errors.exam}</small>} */}
           </div>
           <div className="form-group">
             <label>استان محل آزمون</label>
@@ -216,9 +217,9 @@ const ReportFormComp = () => {
                 </option>
               ))}
             </select>
-            {errors.examState && (
+            {/* {errors.examState && (
               <small className="error">{errors.examState}</small>
-            )}
+            )} */}
           </div>
         </div>
 
@@ -233,9 +234,9 @@ const ReportFormComp = () => {
             <option value="">----</option>
             <option value="تقلب">تقلب در آزمون کتبی</option>
           </select>
-          {errors.violationType && (
+          {/* {errors.violationType && (
             <small className="error">{errors.violationType}</small>
-          )}
+          )} */}
         </div>
 
         <div className="form-group">
@@ -246,13 +247,9 @@ const ReportFormComp = () => {
             onChange={handleChange}
             rows="4"
           ></textarea>
-          {errors.description && (
+          {/* {errors.description && (
             <small className="error">{errors.description}</small>
-          )}
-        </div>
-
-        <div className="form-group">
-          <p>کد کپچا</p>
+          )} */}
         </div>
 
         <button type="submit">تأیید و دریافت کد پیگیری</button>

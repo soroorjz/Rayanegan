@@ -40,7 +40,7 @@ const EmploymentTestsComp = ({ examData, title }) => {
                 <img src={exam.img} alt="" />
               </div> */}
               <div className="exam-title-sj">{exam.examName}</div>
-              <div className="exam-deadline-sj">{exam.examDate}</div>
+              <div className="exam-deadline-sj">تاریخ برگزاری آزمون: {exam.examDate}</div>
               <div className="examCard-Footer">
                 {!user && (
                   <button className="btn1">

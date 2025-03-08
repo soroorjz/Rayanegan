@@ -79,7 +79,7 @@ const NavbarTop = ({
               <div className="user-info">
                 <FaCircleUser className="user-avatar" />
                 <div className="user-details">
-                  <span className="user-name">{user.username}</span>
+                  <span className="user-name">محمد معروفی</span>
                 </div>
               </div>
 

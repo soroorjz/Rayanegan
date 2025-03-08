@@ -3,7 +3,7 @@
 import Swal from "sweetalert2";
 const ReportModal = ({ trackingCode }) => {
   Swal.fire({
-    title: "کد پیگیری تخلف",
+    title: "کد پیگیری اعتراض",
     html: `
       <p class="tracking-code">${trackingCode}</p>
       <p class="tracking-desc">اطلاعات شما با موفقیت ثبت گردید. در صورت لزوم با شما تماس گرفته می‌شود.</p>

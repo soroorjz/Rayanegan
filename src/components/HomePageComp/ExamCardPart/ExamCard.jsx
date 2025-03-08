@@ -140,7 +140,7 @@ const ExamCard = () => {
                   <p className="examCard-Status detail">
                     وضعیت آزمون: <span>{examCard.examStatusRef}</span>
                   </p>
-                  <p className="examCard-Capacity detail">ظرفیت درخواستی:</p>
+                  {/* <p className="examCard-Capacity detail">ظرفیت درخواستی:</p> */}
                 </div>
                 <div className="examCard-Footer">
                   {!user && (
