@@ -18,7 +18,7 @@ const notifications = [
   {
     date: "1402-11-17",
     timeAgo: "5 ماه پیش",
-    title: "اطلاحیه دفترچه راهنمای آزمون منتشر شد.",
+    title: "اصلاحیه دفترچه راهنمای آزمون منتشر شد.",
     isImportant: true,
     downloadLink: "/assets/pdfs/medu_notifications_1.pdf",
   },

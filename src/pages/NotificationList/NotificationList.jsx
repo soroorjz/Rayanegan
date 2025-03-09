@@ -20,7 +20,7 @@ const NotificationList = ({ notifications, endDate, examName }) => {
     timeAgo: "به تازگی",
     title: examPassed
       ? `نتایج ${examName} کتبی اعلام شد.`
-      : `اطلاعیه دفترچه راهنمای ${examName} منتشر شد.`,
+      : `ثبت‌نام  ${examName} آغاز شد.`,
     isImportant: true,
   };
 
