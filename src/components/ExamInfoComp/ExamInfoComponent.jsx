@@ -7,14 +7,7 @@ import { useAuth } from "../../AuthContext";
 import NotificationList from "../../pages/NotificationList/NotificationList";
 
 const notifications = [
-
-  {
-    date: "1403-07-08",
-    timeAgo: "5 ماه پیش",
-    title: "فرآیند ثبت‌نام در آزمون آغاز شد.",
-    isImportant: false,
-    downloadLink: null,
-  },
+  
   {
     date: "1402-11-17",
     timeAgo: "5 ماه پیش",
@@ -89,13 +82,18 @@ const ExamInfoComponent = ({
       {activeSection === "introduction" && (
         <section id="introduction" className="exam-section-sj">
           <h2>معرفی آزمون</h2>
-          {examSections.map((item, index) => (
-            <div key={index} className="introduction-item">
-              <p className="date">{item.date}</p>
-              <h3 className="title">{item.title}</h3>
-              <p className="description">{item.description}</p>
-            </div>
-          ))}
+          {activeSection === "introduction" && (
+            <section id="introduction" className="exam-section-sj">
+              {/* <h2>معرفی آزمون</h2> */}
+              {examSections.map((item, index) => (
+                <div key={index} className="introduction-item">
+                  <p className="date">{item.date}</p>
+                  <h3 className="title">{item.title}</h3>
+                  <p className="description">{item.description}</p>
+                </div>
+              ))}
+            </section>
+          )}
         </section>
       )}
 
