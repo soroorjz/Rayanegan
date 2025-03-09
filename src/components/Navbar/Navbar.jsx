@@ -48,7 +48,8 @@ const Navbar = () => {
       {!isMobile && (
         <div className="sidebarNav">
           {menuItems.map((item, index) => (
-            <li
+            <li 
+            id={`menuItem-${index}`}
               key={index}
               className={`menu-item ${activeIndex === index ? "active" : ""}`}
               onClick={() => handleScroll(item.target, index)}
@@ -91,3 +92,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
