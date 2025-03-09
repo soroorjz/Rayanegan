@@ -53,7 +53,7 @@ const CompletedForm = () => {
 
   return (
     <div className="completed-form-container">
-      <div className="stepper">
+      <div className="completed-stepper">
         {steps.map((step, index) => (
           <div key={index} className={`step ${index <= currentStep ? "completed" : ""}`}>
             <div className="step-number">{persianNumbers[index]}</div>
