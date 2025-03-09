@@ -56,9 +56,10 @@ const ResponsiveNavbarTop = ({
           {user ? (
             <div className="responsive-userProfile">
               <div className="responsive-user-info">
-                <FaCircleUser className="responsive-user-avatar" />
+                {/* <FaCircleUser className="responsive-user-avatar" /> */}
+                <img src="/assets/images/shxfdb.jpg" alt=""  className="responsive-user-avatar"/>
                 <div className="responsive-user-details">
-                  <span className="responsive-user-name">{user.username}</span>
+                  <span className="responsive-user-name">محمد معروفی</span>
                 </div>
               </div>
 

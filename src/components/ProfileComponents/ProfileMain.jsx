@@ -40,7 +40,7 @@ const ProfileMain = ({ selectedComponent }) => {
       content = <EvaluationCard />;
       break;
     default:
-      content = <PersonalDetails />;
+      content =<CompletedForm/>;
   }
 
   return (

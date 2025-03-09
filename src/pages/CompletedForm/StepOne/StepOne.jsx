@@ -3,7 +3,6 @@ import "./StepOne.scss";
 
 const StepOne = ({ onNext }) => {
   const [formData, setFormData] = useState(() => {
-    // ابتدا از localStorage می‌خوانیم، اگر چیزی نبود از مقادیر پیش‌فرض استفاده می‌کنیم
     const savedData = localStorage.getItem("formData");
     return savedData
       ? JSON.parse(savedData)

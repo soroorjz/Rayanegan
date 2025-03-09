@@ -9,11 +9,11 @@ import StepFive from "./StepFive/StepFive";
 const CompletedForm = () => {
   const persianNumbers = ["۱", "۲", "۳", "۴", "۵"];
   const steps = [
-    "مرحله اول: اطلاعات اولیه",
-    "مرحله دوم: اطلاعات تحصیلی",
-    "مرحله سوم: تأیید محل",
-    "مرحله چهارم: مدارک", // تطابق با محتوای StepFour
-    "مرحله پنجم: نهایی‌سازی",
+    "اطلاعات اولیه",
+    "اطلاعات تحصیلی",
+    "محل سکونت",
+    "تصویر مدارک", 
+    "سوابق",
   ];
 
   const [currentStep, setCurrentStep] = useState(0); // گام فعلی (0 برای StepOne)

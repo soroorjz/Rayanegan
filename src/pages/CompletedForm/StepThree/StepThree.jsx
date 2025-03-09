@@ -57,15 +57,16 @@ const StepThree = ({ onNext, onPrevious }) => {
   return (
     <div className="step3-container">
       <form className="formThree" onSubmit={handleNext}>
+        
         <div className="step3-form-group">
-          <label>کد پستی:</label>
+          <label>استان:</label>
           <input
             type="text"
-            name="postalCode"
-            value={formData.postalCode}
+            name="province"
+            value={formData.province}
             onChange={handleChange}
             readOnly={!isEditable}
-            placeholder="کد پستی خود را وارد کنید"
+            placeholder="استان خود را وارد کنید"
           />
         </div>
 
@@ -92,6 +93,17 @@ const StepThree = ({ onNext, onPrevious }) => {
             placeholder="آدرس خود را وارد کنید"
           />
         </div>
+        <div className="step3-form-group">
+          <label>کد پستی:</label>
+          <input
+            type="text"
+            name="postalCode"
+            value={formData.postalCode}
+            onChange={handleChange}
+            readOnly={!isEditable}
+            placeholder="کد پستی خود را وارد کنید"
+          />
+        </div>
 
         <div className="step3-form-group">
           <label>تلفن همراه:</label>
@@ -105,17 +117,7 @@ const StepThree = ({ onNext, onPrevious }) => {
           />
         </div>
 
-        <div className="step3-form-group">
-          <label>استان:</label>
-          <input
-            type="text"
-            name="province"
-            value={formData.province}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="استان خود را وارد کنید"
-          />
-        </div>
+        
 
         <div className="step3-form-actions">
           <button

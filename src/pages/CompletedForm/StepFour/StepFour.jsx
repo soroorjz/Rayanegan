@@ -118,7 +118,7 @@ const StepFour = ({ onNext, onPrevious }) => {
         </div>
 
         <div className="step4-form-group">
-          <label>تصویر سایر صفحات شناسنامه:</label>
+          <label>عکس پرسنلی:</label>
           <div className="step4-file-preview">
             <img src={formData.birthCertOtherPages} alt="عکس پرسنلی" />
             {isEditable && (

@@ -90,14 +90,17 @@ const StepTwo = ({ onNext, onPrevious }) => {
 
         <div className="step2-form-group">
           <label>نوع دانشگاه:</label>
-          <input
+          <select
             name="uniKind"
             value={formData.uniKind}
             onChange={handleChange}
             disabled={!isEditable}
-          />
-            
-          
+          >
+            <option value="دولتی">دولتی</option>
+            <option value="آزاد">آزاد</option>
+            <option value="غیرانتفاعی">غیرانتفاعی</option>
+            <option value="پیام نور">پیام نور</option>
+          </select>
         </div>
 
         <div className="step2-form-group">
