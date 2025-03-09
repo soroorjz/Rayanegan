@@ -207,7 +207,7 @@ const StepOne = ({ onNext }) => {
 
         <div className="step1-form-actions">
           <button type="submit" className="step1-next-button">
-            تأیید
+            مرحله بعد
           </button>
           <button
             type="button"

@@ -1,93 +1,167 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./StepFour.scss";
 
 const StepFour = ({ onNext, onPrevious }) => {
-  const [formData] = useState({
-    file1: "https://example.com/image1.jpg", // آدرس پیش‌فرض برای تصویر مدرک شناسایی
-    file2: "https://example.com/image2.jpg", // آدرس پیش‌فرض برای تصویر مدرک تحصیلی
-    file3: "https://example.com/image3.jpg", // آدرس پیش‌فرض برای تصویر صفحه اول شناسنامه
-    file4: "https://example.com/image4.jpg", // آدرس پیش‌فرض برای تصویر صفحه دوم شناسنامه
-    file5: "https://example.com/image5.jpg", // آدرس پیش‌فرض برای تصویر سایر مدارک
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem("stepFourData");
+    return savedData
+      ? JSON.parse(savedData)
+      : {
+          idCard: "/assets/images/idCard.png", // تصویر کارت ملی
+          degree: "/assets/images/fa.png", // تصویر مدرک تحصیلی
+          birthCertPage1: "/assets/images/hghj.png", // تصویر صفحه اول شناسنامه
+          birthCertPage2: "/assets/images/page2.png", // تصویر صفحه دوم شناسنامه
+          birthCertOtherPages: "/assets/images/shxfdb.jpg", // تصویر سایر صفحات شناسنامه
+          otherDocs: "/assets/images/page2.png", // تصویر سایر مدارک
+        };
   });
+
+  const [isEditable, setIsEditable] = useState(false);
+
+  const handleFileChange = (e, field) => {
+    const file = e.target.files[0];
+    if (file) {
+      const fileURL = URL.createObjectURL(file); // ایجاد URL موقت برای پیش‌نمایش
+      setFormData((prevData) => ({
+        ...prevData,
+        [field]: fileURL,
+      }));
+    }
+  };
 
   const handleNext = (e) => {
     e.preventDefault();
+    localStorage.setItem("stepFourData", JSON.stringify(formData));
     if (onNext) {
-      onNext(); // فراخوانی تابع onNext برای رفتن به گام بعدی
+      onNext();
     }
   };
 
   const handlePrevious = (e) => {
     e.preventDefault();
+    localStorage.setItem("stepFourData", JSON.stringify(formData));
     if (onPrevious) {
-      onPrevious(); // فراخوانی تابع onPrevious برای بازگشت به گام قبلی
+      onPrevious();
     }
   };
 
+  const toggleEdit = () => {
+    if (isEditable) {
+      localStorage.setItem("stepFourData", JSON.stringify(formData));
+    }
+    setIsEditable(!isEditable);
+  };
+
+  useEffect(() => {
+    if (!localStorage.getItem("stepFourData")) {
+      localStorage.setItem("stepFourData", JSON.stringify(formData));
+    }
+  }, []);
+
   return (
-    <div className="step-four-container">
-      <form>
-        <div className="form-group">
-          <label>تصویر مدرک شناسایی:</label>
-          <input
-            type="text"
-            name="file1"
-            value={formData.file1}
-            readOnly // غیرقابل ویرایش
-            placeholder="آدرس تصویر مدرک شناسایی"
-          />
+    <div className="step4-container">
+      <form className="formFour" onSubmit={handleNext}>
+        <div className="step4-form-group">
+          <label>تصویر کارت ملی:</label>
+          <div className="step4-file-preview">
+            <img src={formData.idCard} alt="کارت ملی" />
+            {isEditable && (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, "idCard")}
+              />
+            )}
+          </div>
         </div>
 
-        <div className="form-group">
+        <div className="step4-form-group">
           <label>تصویر مدرک تحصیلی:</label>
-          <input
-            type="text"
-            name="file2"
-            value={formData.file2}
-            readOnly // غیرقابل ویرایش
-            placeholder="آدرس تصویر مدرک تحصیلی"
-          />
+          <div className="step4-file-preview">
+            <img src={formData.degree} alt="مدرک تحصیلی" />
+            {isEditable && (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, "degree")}
+              />
+            )}
+          </div>
         </div>
 
-        <div className="form-group">
+        <div className="step4-form-group">
           <label>تصویر صفحه اول شناسنامه:</label>
-          <input
-            type="text"
-            name="file3"
-            value={formData.file3}
-            readOnly // غیرقابل ویرایش
-            placeholder="آدرس تصویر صفحه اول شناسنامه"
-          />
+          <div className="step4-file-preview">
+            <img src={formData.birthCertPage1} alt="صفحه اول شناسنامه" />
+            {isEditable && (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, "birthCertPage1")}
+              />
+            )}
+          </div>
         </div>
 
-        <div className="form-group">
+        <div className="step4-form-group">
           <label>تصویر صفحه دوم شناسنامه:</label>
-          <input
-            type="text"
-            name="file4"
-            value={formData.file4}
-            readOnly // غیرقابل ویرایش
-            placeholder="آدرس تصویر صفحه دوم شناسنامه"
-          />
+          <div className="step4-file-preview">
+            <img src={formData.birthCertPage2} alt="صفحه دوم شناسنامه" />
+            {isEditable && (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, "birthCertPage2")}
+              />
+            )}
+          </div>
         </div>
 
-        <div className="form-group">
+        <div className="step4-form-group">
+          <label>تصویر سایر صفحات شناسنامه:</label>
+          <div className="step4-file-preview">
+            <img src={formData.birthCertOtherPages} alt="عکس پرسنلی" />
+            {isEditable && (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, "birthCertOtherPages")}
+              />
+            )}
+          </div>
+        </div>
+
+        <div className="step4-form-group">
           <label>تصویر سایر مدارک:</label>
-          <input
-            type="text"
-            name="file5"
-            value={formData.file5}
-            readOnly // غیرقابل ویرایش
-            placeholder="آدرس تصویر سایر مدارک"
-          />
+          <div className="step4-file-preview">
+            <img src={formData.otherDocs} alt="سایر مدارک" />
+            {isEditable && (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, "otherDocs")}
+              />
+            )}
+          </div>
         </div>
 
-        <div className="form-actions">
-          <button className="prev-button" onClick={handlePrevious}>
+        <div className="step4-form-actions">
+          <button
+            type="button"
+            className="step4-prev-button"
+            onClick={handlePrevious}
+          >
             مرحله قبل
           </button>
-          <button className="next-button" onClick={handleNext}>
+          <button type="submit" className="step4-next-button">
             مرحله بعد
+          </button>
+          <button
+            type="button"
+            className="step4-edit-button"
+            onClick={toggleEdit}
+          >
+            {isEditable ? "ذخیره" : "ویرایش"}
           </button>
         </div>
       </form>

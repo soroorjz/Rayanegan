@@ -1,66 +1,121 @@
-.step-four-container {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.step4-container {
+  width: 100%;
+  max-width: 1200px; // افزایش عرض برای 4 ستون
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+
+  .formFour {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr; // 4 ستون
+    gap: 20px;
+
+    .step4-form-group {
+      margin-bottom: 15px;
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #333;
+      }
+
+      .step4-file-preview {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 10px;
+        background: #f9f9f9;
+        position: relative;
+
+        img {
+          width: 45px;
+          height: 35px;
+          object-fit: cover;
+          border-radius: 4px;
+          margin-right: 10px;
+        }
+
+        input[type="file"] {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          cursor: pointer;
+        }
+
+        &::after {
+          content: "📄"; // آیکون مشابه تصویر
+          font-size: 20px;
+          color: #666;
+          position: absolute;
+          right: 10px;
+        }
+      }
+    }
+
+    .step4-form-actions {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-top: 20px;
+
+      .step4-prev-button {
+        background-color: #04364a;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+
+        &:hover {
+          background-color: #03283a;
+        }
+      }
+
+      .step4-next-button {
+        background-color: #04364a;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+
+        &:hover {
+          background-color: #03283a;
+        }
+      }
+
+      .step4-edit-button {
+        background-color: #f39c12;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+
+        &:hover {
+          background-color: #e67e22;
+        }
+      }
+    }
   }
-  
-  .form-group {
-    margin-bottom: 15px;
+
+  @media (max-width: 768px) {
+    .formFour {
+      grid-template-columns: 1fr;
+
+      .step4-form-actions {
+        grid-column: 1 / 2;
+      }
+    }
   }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 14px;
-    color: #333;
-  }
-  
-  .file-input {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
-    background: #f9f9f9;
-  }
-  
-  .file-input input[type="file"] {
-    display: none; // مخفی کردن ورودی پیش‌فرض فایل
-  }
-  
-  .file-input span {
-    cursor: pointer;
-    color: #04364a;
-    font-size: 14px;
-  }
-  
-  .file-input input[type="file"] + span::before {
-    content: "📄";
-    margin-right: 5px;
-  }
-  
-  .form-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .prev-button,
-  .next-button {
-    background-color: #04364a;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .prev-button:hover,
-  .next-button:hover {
-    background-color: #03283a;
-  }
+}
