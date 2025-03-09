@@ -106,7 +106,7 @@ const ExamsAnnounces = ({ announcements, examData }) => {
         {announcements && announcements.length > 0 ? (
           announcements.map((announce, index) => (
             <li key={index} className="announce-item">
-              <span className="announce-date">{announce.date}</span>:
+              <span className="announce-date">{announce.date}:</span>
               <p className="announce-text">
                 {announce.text}
                 {announce.link && (

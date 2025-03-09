@@ -1,13 +1,18 @@
+@import "../../../../styles/responsive.scss";
+$tablet-resize: 900px;
 .exams-announces {
   width: 90%;
-
-  margin: 20px auto;
-  padding: 20px 50px;
-  //   border: 1px solid #ccc;
+  margin: 0 auto;
   border-radius: 8px;
   background-color: #fff;
   text-align: right;
+  padding-bottom: 57px;
+  @include responsive($tablet) {
+    width: 90%;
+    padding: 20px 50px;
+  margin: 20px auto;
 
+  }
   .announce-title {
     font-size: 24px;
     font-weight: bold;
@@ -46,10 +51,7 @@
         list-style-type: disc;
         display: flex;
         gap: 10px;
-
-        &:last-child {
-          margin-bottom: 0;
-        }
+       
       }
     }
   }
@@ -69,6 +71,10 @@
 .announce-item {
   display: flex;
   gap: 5px;
+  flex-direction: column;
+  @include responsive($tablet) {
+    flex-direction: row;
+  }
 }
 .announce-date {
   color: #555555a1;
@@ -77,6 +83,7 @@
 .announce-list {
   display: flex;
   flex-direction: column-reverse;
+  padding: 0 !important;
 }
 .highlight {
   color: #e55604;
