@@ -5,21 +5,9 @@ import ExamForm from "../HomePageComp/ExamForm/ExamForm";
 import { Link } from "react-router";
 import { useAuth } from "../../AuthContext";
 import NotificationList from "../../pages/NotificationList/NotificationList";
+
 const notifications = [
-  {
-    date: "1403-12-01",
-    timeAgo: "1 هفته پیش",
-    title: "تاریخ برگزاری ارزیابی تکمیلی اعلام شد.",
-    isImportant: true,
-    downloadLink: null, // لینک فرضی دانلود
-  },
-  {
-    date: "1403-12-01",
-    timeAgo: "2 هفته پیش",
-    title: "نتایج آزمون کتبی اعلام شد.",
-    isImportant: true,
-    downloadLink: null, 
-  },
+
   {
     date: "1403-07-08",
     timeAgo: "5 ماه پیش",
@@ -32,24 +20,32 @@ const notifications = [
     timeAgo: "5 ماه پیش",
     title: "اطلاحیه دفترچه راهنمای آزمون منتشر شد.",
     isImportant: true,
-    downloadLink: "/public/assets/pdfs/medu_notifications_1.pdf",
+    downloadLink: "/assets/pdfs/medu_notifications_1.pdf",
   },
   {
     date: "1402-11-17",
     timeAgo: "5 ماه پیش",
     title: "دفترچه راهنمای آزمون منتشر شد.",
     isImportant: false,
-    downloadLink: "/public/assets/pdfs/medu_notifications_1.pdf",
+    downloadLink: "/assets/pdfs/medu_notifications_1.pdf",
   },
   {
     date: "1403-06-19",
     timeAgo: "6 ماه پیش",
     title: "ظرفیت درخواستی آزمون اعلام شد.",
     isImportant: false,
-    downloadLink: null, 
+    downloadLink: null,
   },
 ];
-const ExamInfoComponent = () => {
+
+const ExamInfoComponent = ({
+  startDate,
+  endDate,
+  cardIssueDate,
+  eventDate,
+  toPersianDigits,
+  examName,
+}) => {
   const [activeSection, setActiveSection] = useState("introduction");
   const { user } = useAuth();
 
@@ -100,11 +96,6 @@ const ExamInfoComponent = () => {
               <p className="description">{item.description}</p>
             </div>
           ))}
-          {/* <button className="RegistrationPageBtn">
-            <Link to={user ? "/RegistrationPage" : "/logIn"}>
-              {user ? "ثبت نام" : "ورود به حساب کاربری"}
-            </Link>
-          </button> */}
         </section>
       )}
 
@@ -118,8 +109,11 @@ const ExamInfoComponent = () => {
       {activeSection === "announcements" && (
         <section id="announcements" className="exam-section-sj">
           <h2>اطلاعیه‌ها</h2>
-          {/* <p>اطلاعات مربوط به اطلاعیه‌ها در این بخش قرار می‌گیرد.</p> */}
-          <NotificationList notifications={notifications} />
+          <NotificationList
+            examName={examName}
+            endDate={endDate}
+            notifications={notifications}
+          />
         </section>
       )}
 

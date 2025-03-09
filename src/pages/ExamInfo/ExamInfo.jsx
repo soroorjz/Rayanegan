@@ -27,102 +27,6 @@ const ExamInfo = () => {
   };
 
   useEffect(() => {
-    if (examData) {
-      const hasSeenTutorial = localStorage.getItem("hasSeenExamTutorial");
-
-      if (!hasSeenTutorial && window.innerWidth > 728) {
-        setTimeout(() => {
-          const registrationBtn = document.querySelector("#RegistrationBtn");
-          if (registrationBtn) {
-            registrationBtn.scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-            });
-
-            const rect = registrationBtn.getBoundingClientRect();
-            if (rect.top >= 0 && rect.left >= 0) {
-              startTutorial();
-              localStorage.setItem("hasSeenExamTutorial", "true");
-            } else {
-              console.log(
-                "موقعیت #RegistrationBtn قابل محاسبه نیست، دوباره تلاش می‌کنم..."
-              );
-              setTimeout(() => {
-                startTutorial();
-                localStorage.setItem("hasSeenExamTutorial", "true");
-              }, 300);
-            }
-          } else {
-            console.log("المان #RegistrationBtn هنوز رندر نشده است.");
-          }
-        }, 500);
-      }
-    }
-  }, [examData]);
-
-  const startTutorial = () => {
-    if (window.innerWidth <= 728) {
-      return;
-    }
-
-    const intro = introJs();
-    const steps = [
-      {
-        element: "#RegistrationBtn",
-        intro: "برای ثبت‌نام در آزمون، این دکمه را فشار دهید.",
-        position: "bottom",
-      },
-      {
-        element: "#ExamIntroduction",
-        intro: "در این قسمت، توضیحات آزمون را مشاهده خواهید کرد.",
-        position: "right",
-      },
-      {
-        element: "#bookletBtn",
-        intro: "برای دریافت دفترچه راهنما، این دکمه را کلیک کنید.",
-        position: "left",
-      },
-      {
-        element: "#announcementsBtn",
-        intro: "اطلاعیه‌های مهم مربوط به آزمون را در این قسمت ببینید.",
-        position: "top",
-      },
-      {
-        element: "#InfojobSearchBtn",
-        intro: "در این قسمت می‌توانید اطلاعات شغل‌های مرتبط را جستجو کنید.",
-        position: "left",
-      },
-    ];
-
-    // بررسی وجود دکمه #RegistrationBtn و حذف مرحله مربوط به آن در صورت عدم وجود
-    const registrationBtn = document.getElementById("RegistrationBtn");
-    if (!registrationBtn) {
-      const registrationStepIndex = steps.findIndex(
-        (step) => step.element === "#RegistrationBtn"
-      );
-      if (registrationStepIndex !== -1) {
-        steps.splice(registrationStepIndex, 1);
-      }
-    }
-
-    intro.setOptions({
-      steps: steps,
-      nextLabel: "متوجه شدم!",
-      prevLabel: "قبلی",
-      skipLabel: "",
-      doneLabel: "متوجه شدم!",
-      showProgress: false,
-      showPrevButton: false,
-      showBullets: false,
-      disableInteraction: true,
-      tooltipClass: "examTooltip-IntroJs",
-      highlightClass: "examHighlight-IntroJs",
-    });
-
-    intro.start();
-  };
-
-  useEffect(() => {
     const fetchExamInfo = async () => {
       const token = localStorage.getItem("RayanToken");
 
@@ -194,6 +98,67 @@ const ExamInfo = () => {
     }
   }, [examData]);
 
+  const startTutorial = () => {
+    if (window.innerWidth <= 728) {
+      return;
+    }
+
+    const intro = introJs();
+    const steps = [
+      {
+        element: "#RegistrationBtn",
+        intro: "برای ثبت‌نام در آزمون، این دکمه را فشار دهید.",
+        position: "bottom",
+      },
+      {
+        element: "#ExamIntroduction",
+        intro: "در این قسمت، توضیحات آزمون را مشاهده خواهید کرد.",
+        position: "right",
+      },
+      {
+        element: "#bookletBtn",
+        intro: "برای دریافت دفترچه راهنما، این دکمه را کلیک کنید.",
+        position: "left",
+      },
+      {
+        element: "#announcementsBtn",
+        intro: "اطلاعیه‌های مهم مربوط به آزمون را در این قسمت ببینید.",
+        position: "top",
+      },
+      {
+        element: "#InfojobSearchBtn",
+        intro: "در این قسمت می‌توانید اطلاعات شغل‌های مرتبط را جستجو کنید.",
+        position: "left",
+      },
+    ];
+
+    const registrationBtn = document.getElementById("RegistrationBtn");
+    if (!registrationBtn) {
+      const registrationStepIndex = steps.findIndex(
+        (step) => step.element === "#RegistrationBtn"
+      );
+      if (registrationStepIndex !== -1) {
+        steps.splice(registrationStepIndex, 1);
+      }
+    }
+
+    intro.setOptions({
+      steps: steps,
+      nextLabel: "متوجه شدم!",
+      prevLabel: "قبلی",
+      skipLabel: "",
+      doneLabel: "متوجه شدم!",
+      showProgress: false,
+      showPrevButton: false,
+      showBullets: false,
+      disableInteraction: true,
+      tooltipClass: "examTooltip-IntroJs",
+      highlightClass: "examHighlight-IntroJs",
+    });
+
+    intro.start();
+  };
+
   if (loading) return <p>در حال بارگذاری...</p>;
   if (error) return <p className="error-text">{error}</p>;
   if (!examData) return <p>اطلاعاتی یافت نشد</p>;
@@ -210,6 +175,9 @@ const ExamInfo = () => {
   const cardIssueDate = moment(examData.examWithdrawCard, "jYYYY/jMM/jDD");
   const eventDate = moment(examData.examDate, "jYYYY/jMM/jDD");
 
+  // تبدیل endDate به فرمت رشته‌ای برای NotificationList
+  const formattedEndDate = endDate.format("jYYYY-jMM-jDD");
+
   return (
     <div className="examInfoContainer">
       <NavbarTop />
@@ -224,7 +192,14 @@ const ExamInfo = () => {
         examName={examData.examName}
       />
 
-      <ExamInfoComponent />
+      <ExamInfoComponent
+        startDate={startDate}
+        endDate={formattedEndDate} // فرمت رشته‌ای برای NotificationList
+        cardIssueDate={cardIssueDate}
+        eventDate={eventDate}
+        toPersianDigits={toPersianDigits}
+        examName={examData.examName}
+      />
 
       <button className="homeBtn">
         <Link to="/">
@@ -232,7 +207,6 @@ const ExamInfo = () => {
         </Link>
       </button>
 
-      {/* دکمه نمایش توتاریال */}
       <button className="ExamInfo-tutorialBtn" onClick={startTutorial}>
         <RiQuestionFill />
       </button>
