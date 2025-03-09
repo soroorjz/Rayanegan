@@ -43,6 +43,9 @@ $tablet-resize: 900px;
     border-bottom: 1px solid $nav-border;
     width: 95%;
     margin: 0 auto;
+    &:nth-last-child(1) {
+      border: none;
+    }
     h2 {
       font-size: 24px;
       color: #333;
