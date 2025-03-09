@@ -16,6 +16,7 @@ const StepOne = ({ onNext }) => {
           phoneNumber: "1802142",
           provice: "البرز",
           city: "کرج",
+          birtDate:"1375/05/12",
           religion: "اسلام(شیعه)",
           mariage: "متاهل",
           children: "0",
@@ -114,6 +115,17 @@ const StepOne = ({ onNext }) => {
             onChange={handleChange}
             readOnly={!isEditable}
             placeholder="شماره شناسنامه خود را وارد کنید"
+          />
+        </div>
+        <div className="step1-form-group">
+          <label> تاریخ تولد:</label>
+          <input
+            type="text"
+            name="birtDate"
+            value={formData.birtDate}
+            onChange={handleChange}
+            readOnly={!isEditable}
+            placeholder="تاریخ تولد  خود را وارد کنید"
           />
         </div>
 

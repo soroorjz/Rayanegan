@@ -8,8 +8,8 @@ const StepFive = ({ onNext, onPrevious }) => {
       ? JSON.parse(savedData)
       : {
           quota: "آزاد",
-          militaryStatus: "معافیت پزشکی", // وضعیت نظام وظیفه
-          serviceDuration: "0 ", // میزان خدمت
+          militaryStatus: "پایان خدمت", // وضعیت نظام وظیفه
+          serviceDuration: "24ماه ", // میزان خدمت
           serviceEndDate: "1400/03/25", // تاریخ پایان خدمت
         };
   });
