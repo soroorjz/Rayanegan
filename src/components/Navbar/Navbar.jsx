@@ -11,7 +11,7 @@ import { IoHome } from "react-icons/io5";
 
 const Navbar = () => {
   const [activeIndex, setActiveIndex] = useState(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900); // هماهنگ با SCSS
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
 
   const menuItems = useMemo(
     () => [
@@ -41,25 +41,38 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  console.log("isMobile:", isMobile); // برای دیباگ
+  useEffect(() => {
+    const handleActiveSection = () => {
+      let currentIndex = null;
+      menuItems.forEach((item, index) => {
+        const section = document.getElementById(item.target);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+            currentIndex = index;
+          }
+        }
+      });
+      setActiveIndex(currentIndex);
+    };
+
+    window.addEventListener("scroll", handleActiveSection);
+    return () => window.removeEventListener("scroll", handleActiveSection);
+  }, [menuItems]);
 
   return (
     <div className="navbar-container">
       {!isMobile && (
         <div className="sidebarNav">
           {menuItems.map((item, index) => (
-            <li 
+            <li
             id={`menuItem-${index}`}
               key={index}
               className={`menu-item ${activeIndex === index ? "active" : ""}`}
               onClick={() => handleScroll(item.target, index)}
             >
               {item.icon}
-              <span
-                className={`menu-text ${
-                  activeIndex === index ? "active-text" : ""
-                }`}
-              >
+              <span className={`menu-text ${activeIndex === index ? "active-text" : ""}`}>
                 {item.text}
               </span>
             </li>
@@ -76,11 +89,7 @@ const Navbar = () => {
               onClick={() => handleScroll(item.target, index)}
             >
               {item.icon}
-              <span
-                className={`menu-text ${
-                  activeIndex === index ? "active-text" : ""
-                }`}
-              >
+              <span className={`menu-text ${activeIndex === index ? "active-text" : ""}`}>
                 {item.text}
               </span>
             </li>
@@ -92,5 +101,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
