@@ -18,10 +18,17 @@ const ExamsAnnounces = ({ announcements, examData }) => {
     if (linkText.includes("رسید ثبت‌نام")) {
       ComponentToRender = Receipt;
       fileName = "receipt.pdf";
-    } else if (linkText.includes("کارت ورود به جلسه آزمون کتبی")) {
-      ComponentToRender = ExamCardFile;
-      fileName = "exam-entry-card.pdf";
-    } else if (linkText.includes("کارت ورود به جلسه ارزیابی تکمیلی")) {
+    } else if (linkText === "دریافت کارت ورود به جلسه") {
+      // دانلود مستقیم فایل PDF برای "دریافت کارت ورود به جلسه"
+      const pdfUrl = "/assets/pdfs/ExamEntryCard.pdf"; // مسیر فایل PDF رو درست کن
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.download = "ExamEntryCard.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return; // خارج شدن از تابع
+    } else if (linkText.includes("دریافت کارت ورود به جلسه ارزیابی تکمیلی")) {
       ComponentToRender = ExamEntryCard;
       fileName = "evaluation-card.pdf";
     } else {
@@ -37,10 +44,9 @@ const ExamsAnnounces = ({ announcements, examData }) => {
 
     let RenderedComponent;
     if (ComponentToRender === ExamCardFile) {
-      // پاس دادن دیتای آزمون به ExamCardFile
       const candidateData = {
-        logo: "/assets/images/logo.png", // لوگوی پیش‌فرض یا از بک‌اند
-        candidateNumber: "1802142", // اینجا باید دیتای واقعی از examData بیاد
+        logo: "/assets/images/logo.png",
+        candidateNumber: "1802142",
         nationalCode: "1234567890",
         quota: "آزاد",
         lastName: "نام خانوادگی",
@@ -96,7 +102,7 @@ const ExamsAnnounces = ({ announcements, examData }) => {
       } else {
         console.error("Element not found");
       }
-    }, 2000); // تأخیر 2000ms
+    }, 2000);
   };
 
   return (
