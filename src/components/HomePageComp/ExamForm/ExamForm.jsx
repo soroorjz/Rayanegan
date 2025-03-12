@@ -12,7 +12,7 @@ const ExamForm = () => {
   const { user } = useAuth();
   const [workExperience, setWorkExperience] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [showList, setShowList] = useState(false); // حالت پیش‌فرض false
+  const [showList, setShowList] = useState(false);
   const [educationLevels, setEducationLevels] = useState([]);
   const [birthProvinces, setBirthProvinces] = useState([]);
   const [quotas, setQuotas] = useState([]);
@@ -314,6 +314,14 @@ const ExamForm = () => {
                 </div>
               </div>
             </div>
+            {/* دکمه جستجو وقتی کاربر لاگین نکرده باشه اینجا نمایش داده می‌شه */}
+            <button
+              type="button"
+              className="search-button"
+              onClick={handleSearch}
+            >
+              جستجو
+            </button>
           </div>
         )}
 
@@ -324,15 +332,18 @@ const ExamForm = () => {
           <p>
             سیستم هوشمند ما با تحلیل اطلاعات شما، بهترین آزمون‌های استخدامی را
             پیشنهاد می‌دهد. با مشاهده و مقایسه‌ی این فرصت‌ها، می‌توانید انتخابی
-            آگاهانه داشته باشید و در مسیر شغلی خود گام بردارید。
+            آگاهانه داشته باشید و در مسیر شغلی خود گام بردارید
           </p>
-          <button
-            type="button"
-            className="search-button"
-            onClick={handleSearch}
-          >
-            جستجو
-          </button>
+          {/* دکمه جستجو وقتی کاربر لاگین کرده باشه اینجا نمایش داده می‌شه */}
+          {user && (
+            <button
+              type="button"
+              className="search-button"
+              onClick={handleSearch}
+            >
+              جستجو
+            </button>
+          )}
         </div>
       </form>
 
@@ -341,8 +352,8 @@ const ExamForm = () => {
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }} // انیمیشن خروج
-            transition={{ duration: 0.8, ease: "easeInOut" }} // زمان طولانی‌تر و easing نرم‌تر
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
             className="result-container"
           >
             <ExamFormResult setShowList={setShowList} />

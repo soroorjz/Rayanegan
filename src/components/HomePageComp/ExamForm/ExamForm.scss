@@ -71,7 +71,6 @@ $tablet-resize: 900px;
       }
       .search-button {
         width: 50%;
-
         display: block;
         margin: 20px auto;
         padding: 0.7rem;
@@ -138,6 +137,25 @@ $tablet-resize: 900px;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .search-button {
+        width: 50%;
+        display: block;
+        margin: 20px auto;
+        padding: 0.7rem;
+        background-color: #e55604;
+        color: #dafffb;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 50px;
+
+        &:hover {
+          background-color: #e55604d6;
+          color: #fff;
+        }
       }
       .form-group {
         margin-bottom: 1rem;
@@ -269,56 +287,3 @@ $tablet-resize: 900px;
     width: 100%;
   }
 }
-// .ExamFormTooltip-IntroJs {
-//   // background-color: #04364ae8 !important;
-//   color: #04364a !important;
-//   border-radius: 10px !important;
-//   // padding: 15px !important;
-//   font-size: 16px;
-
-//   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
-
-//   &::before {
-//     border-top-color: #04364add !important;
-//   }
-//   .introjs-progressbar{
-//     background-color: #e55604 !important;
-//   }
-//   .introjs-tooltiptext{
-//     font-family: Vazirmatn !important;
-
-//   }
-// }
-
-// .ExamFormHighlight-IntroJs {
-//   // box-shadow: 0 0 10px 3px rgba(229, 86, 4, 0.6) !important;
-//   border-radius: 8px !important;
-// }
-
-// .introjs-tooltipbuttons {
-//   button {
-//     font-size: 14px !important;
-//     padding: 8px 12px !important;
-//     border-radius: 6px !important;
-//   }
-
-//   .introjs-button {
-//     // color: #fff !important;
-//     border: 0 !important;
-//     font-family: Vazirmatn !important;
-
-//     transition: background-color 0.3s;
-
-//     &:hover {
-//       // background-color: #c74403 !important;
-//     }
-//   }
-
-//   .introjs-prevbutton {
-//     // background-color: #255162 !important;
-//   }
-
-//   .introjs-skipbutton {
-//     // background-color: #aaa !important;
-//   }
-// }
