@@ -29,7 +29,17 @@ const Navbar = () => {
     setActiveIndex(index);
     const element = document.getElementById(targetId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      const elementRect = element.getBoundingClientRect();
+      const elementHeight = elementRect.height;
+      const windowHeight = window.innerHeight;
+      const offset = (windowHeight - elementHeight) / 2;
+
+      const scrollPosition = elementRect.top + window.scrollY - offset;
+
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: "smooth",
+      });
     } else {
       console.warn(`المان با آیدی ${targetId} پیدا نشد!`);
     }
@@ -48,7 +58,10 @@ const Navbar = () => {
         const section = document.getElementById(item.target);
         if (section) {
           const rect = section.getBoundingClientRect();
-          if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+          if (
+            rect.top <= window.innerHeight / 2 &&
+            rect.bottom >= window.innerHeight / 2
+          ) {
             currentIndex = index;
           }
         }
@@ -66,13 +79,17 @@ const Navbar = () => {
         <div className="sidebarNav">
           {menuItems.map((item, index) => (
             <li
-            id={`menuItem-${index}`}
+              id={`menuItem-${index}`}
               key={index}
               className={`menu-item ${activeIndex === index ? "active" : ""}`}
               onClick={() => handleScroll(item.target, index)}
             >
               {item.icon}
-              <span className={`menu-text ${activeIndex === index ? "active-text" : ""}`}>
+              <span
+                className={`menu-text ${
+                  activeIndex === index ? "active-text" : ""
+                }`}
+              >
                 {item.text}
               </span>
             </li>
@@ -89,7 +106,11 @@ const Navbar = () => {
               onClick={() => handleScroll(item.target, index)}
             >
               {item.icon}
-              <span className={`menu-text ${activeIndex === index ? "active-text" : ""}`}>
+              <span
+                className={`menu-text ${
+                  activeIndex === index ? "active-text" : ""
+                }`}
+              >
                 {item.text}
               </span>
             </li>
