@@ -8,6 +8,12 @@ $tablet-resize: 900px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+  }
   @include responsive($tablet-resize) {
     margin-top: 100px;
     min-height: 90vh;
@@ -95,8 +101,7 @@ $tablet-resize: 900px;
       // height: 70vh;
       @include responsive($tablet) {
         padding: 40px 20px;
-      gap: 60px;
-
+        gap: 60px;
       }
       h2 {
         // text-align: center;

@@ -17,7 +17,15 @@ const ExamForm = () => {
   const [birthProvinces, setBirthProvinces] = useState([]);
   const [quotas, setQuotas] = useState([]);
   const [error, setError] = useState(null);
-  const [selectedEducationLevel, setSelectedEducationLevel] = useState("");
+  const [formData, setFormData] = useState({
+    educationLevel: "",
+    fieldOfStudy: "",
+    birthProvince: "",
+    quota: "",
+    gender: "",
+    maritalStatus: "",
+  });
+  const [formErrors, setFormErrors] = useState({});
 
   const fetchToken = useCallback(async () => {
     try {
@@ -42,7 +50,6 @@ const ExamForm = () => {
   }, []);
 
   const fetchData = useCallback(async () => {
-    // بررسی وجود داده‌ها در localStorage
     const cachedEducationLevels = localStorage.getItem("educationLevels");
     const cachedBirthProvinces = localStorage.getItem("birthProvinces");
     const cachedQuotas = localStorage.getItem("quotas");
@@ -51,7 +58,7 @@ const ExamForm = () => {
       setEducationLevels(JSON.parse(cachedEducationLevels));
       setBirthProvinces(JSON.parse(cachedBirthProvinces));
       setQuotas(JSON.parse(cachedQuotas));
-      return; // اگر داده‌ها در localStorage بودند، از API درخواست نمی‌کنیم
+      return;
     }
 
     let token = localStorage.getItem("RayanToken");
@@ -80,7 +87,6 @@ const ExamForm = () => {
       const quotasData =
         quotaResponse.data.filter((quota) => quota.quotaParent === null) || [];
 
-      // ذخیره داده‌ها در localStorage
       localStorage.setItem(
         "educationLevels",
         JSON.stringify(educationLevelsData)
@@ -91,7 +97,6 @@ const ExamForm = () => {
       );
       localStorage.setItem("quotas", JSON.stringify(quotasData));
 
-      // به‌روزرسانی state
       setEducationLevels(educationLevelsData);
       setBirthProvinces(birthProvincesData);
       setQuotas(quotasData);
@@ -105,16 +110,42 @@ const ExamForm = () => {
     fetchData();
   }, [fetchData]);
 
+  // مدیریت تغییرات فیلدها
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  // اعتبارسنجی فرم
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.educationLevel) errors.educationLevel = "انتخاب مقطع تحصیلی الزامی است";
+    if (!formData.fieldOfStudy) errors.fieldOfStudy = "انتخاب رشته تحصیلی الزامی است";
+    if (!selectedDate) errors.birthDate = "انتخاب تاریخ تولد الزامی است";
+    if (!formData.birthProvince) errors.birthProvince = "انتخاب استان محل تولد الزامی است";
+    if (!formData.quota) errors.quota = "انتخاب سهمیه الزامی است";
+    if (!formData.gender) errors.gender = "انتخاب جنسیت الزامی است";
+    if (!formData.maritalStatus) errors.maritalStatus = "انتخاب وضعیت تاهل الزامی است";
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSearch = () => {
-    setShowList(true);
+    if (!user) {
+      // اگر کاربر لاگین نکرده و فرم وجود داره
+      if (validateForm()) {
+        setShowList(true);
+      }
+    } else {
+      // اگر کاربر لاگین کرده، بدون شرط
+      setShowList(true);
+    }
   };
 
   const handleToggle = () => {
     setWorkExperience(!workExperience);
-  };
-
-  const handleEducationLevelChange = (e) => {
-    setSelectedEducationLevel(e.target.value);
   };
 
   return (
@@ -128,8 +159,8 @@ const ExamForm = () => {
                 <select
                   id="educationLevel"
                   name="educationLevel"
-                  value={selectedEducationLevel}
-                  onChange={handleEducationLevelChange}
+                  value={formData.educationLevel}
+                  onChange={handleInputChange}
                 >
                   <option value="">انتخاب کنید</option>
                   {educationLevels.map((level) => (
@@ -138,14 +169,23 @@ const ExamForm = () => {
                     </option>
                   ))}
                 </select>
+                {formErrors.educationLevel && (
+                  <span className="error">{formErrors.educationLevel}</span>
+                )}
               </div>
               <div className="form-group field">
                 <label htmlFor="fieldOfStudy">رشته تحصیلی</label>
                 <input
                   type="text"
+                  name="fieldOfStudy"
+                  value={formData.fieldOfStudy}
+                  onChange={handleInputChange}
                   placeholder="رشته تحصیلی خود را بنویسید"
-                  disabled={!selectedEducationLevel}
+                  disabled={!formData.educationLevel}
                 />
+                {formErrors.fieldOfStudy && (
+                  <span className="error">{formErrors.fieldOfStudy}</span>
+                )}
               </div>
               <div className="form-group birthDay">
                 <label htmlFor="birthDate">تاریخ تولد</label>
@@ -157,10 +197,18 @@ const ExamForm = () => {
                   inputClass="custom-date-input"
                   placeholder="تاریخ خود را انتخاب کنید"
                 />
+                {formErrors.birthDate && (
+                  <span className="error">{formErrors.birthDate}</span>
+                )}
               </div>
               <div className="form-group birthLoc">
                 <label htmlFor="birthProvince">استان محل تولد</label>
-                <select id="birthProvince" name="birthProvince">
+                <select
+                  id="birthProvince"
+                  name="birthProvince"
+                  value={formData.birthProvince}
+                  onChange={handleInputChange}
+                >
                   <option value="">انتخاب کنید</option>
                   {birthProvinces.map((province) => (
                     <option
@@ -171,10 +219,18 @@ const ExamForm = () => {
                     </option>
                   ))}
                 </select>
+                {formErrors.birthProvince && (
+                  <span className="error">{formErrors.birthProvince}</span>
+                )}
               </div>
               <div className="form-group fond">
                 <label htmlFor="quota">سهمیه</label>
-                <select id="quota" name="quota">
+                <select
+                  id="quota"
+                  name="quota"
+                  value={formData.quota}
+                  onChange={handleInputChange}
+                >
                   <option value="">انتخاب کنید</option>
                   {quotas.map((quota) => (
                     <option key={quota.quotaId} value={quota.quotaId}>
@@ -182,37 +238,70 @@ const ExamForm = () => {
                     </option>
                   ))}
                 </select>
+                {formErrors.quota && (
+                  <span className="error">{formErrors.quota}</span>
+                )}
               </div>
-              <br />
               <div className="form-group gender-radio">
                 <label>جنسیت </label>
                 <div className="radio-group">
                   <label>
-                    <input type="radio" name="gender" value="female" />
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="female"
+                      onChange={handleInputChange}
+                    />
                     خانم
                   </label>
                   <label>
-                    <input type="radio" name="gender" value="male" />
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="male"
+                      onChange={handleInputChange}
+                    />
                     آقا
                   </label>
                 </div>
+                {formErrors.gender && (
+                  <span className="error">{formErrors.gender}</span>
+                )}
               </div>
               <div className="form-group maritalRadio">
                 <label>وضعیت تاهل</label>
                 <div className="radio-group">
                   <label>
-                    <input type="radio" name="maritalStatus" value="single" />
+                    <input
+                      type="radio"
+                      name="maritalStatus"
+                      value="single"
+                      onChange={handleInputChange}
+                    />
                     مجرد
                   </label>
                   <label>
-                    <input type="radio" name="maritalStatus" value="married" />
+                    <input
+                      type="radio"
+                      name="maritalStatus"
+                      value="married"
+                      onChange={handleInputChange}
+                    />
                     متاهل
                   </label>
                   <label>
-                    <input type="radio" name="maritalStatus" value="married" />
+                    <input
+                      type="radio"
+                      name="maritalStatus"
+                      value="dependents"
+                      onChange={handleInputChange}
+                    />
                     معیل
                   </label>
                 </div>
+                {formErrors.maritalStatus && (
+                  <span className="error">{formErrors.maritalStatus}</span>
+                )}
               </div>
               <div className="form-group Experience">
                 <div className="toggle-container" onClick={handleToggle}>
@@ -235,7 +324,7 @@ const ExamForm = () => {
           <p>
             سیستم هوشمند ما با تحلیل اطلاعات شما، بهترین آزمون‌های استخدامی را
             پیشنهاد می‌دهد. با مشاهده و مقایسه‌ی این فرصت‌ها، می‌توانید انتخابی
-            آگاهانه داشته باشید و در مسیر شغلی خود گام بردارید.
+            آگاهانه داشته باشید و در مسیر شغلی خود گام بردارید。
           </p>
           <button
             type="button"
