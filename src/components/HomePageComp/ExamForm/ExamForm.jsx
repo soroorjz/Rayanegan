@@ -1,9 +1,9 @@
 import React, { useCallback, useState, useEffect } from "react";
 import "./ExamForm.scss";
-import { motion } from "framer-motion";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../../../AuthContext";
 import ExamFormResult from "./ExamFormResult/ExamFormResult";
 import axios from "axios";
@@ -12,7 +12,7 @@ const ExamForm = () => {
   const { user } = useAuth();
   const [workExperience, setWorkExperience] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [showList, setShowList] = useState(false);
+  const [showList, setShowList] = useState(false); // حالت پیش‌فرض false
   const [educationLevels, setEducationLevels] = useState([]);
   const [birthProvinces, setBirthProvinces] = useState([]);
   const [quotas, setQuotas] = useState([]);
@@ -110,23 +110,25 @@ const ExamForm = () => {
     fetchData();
   }, [fetchData]);
 
-  // مدیریت تغییرات فیلدها
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     setFormErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  // اعتبارسنجی فرم
   const validateForm = () => {
     const errors = {};
-    if (!formData.educationLevel) errors.educationLevel = "انتخاب مقطع تحصیلی الزامی است";
-    if (!formData.fieldOfStudy) errors.fieldOfStudy = "انتخاب رشته تحصیلی الزامی است";
+    if (!formData.educationLevel)
+      errors.educationLevel = "انتخاب مقطع تحصیلی الزامی است";
+    if (!formData.fieldOfStudy)
+      errors.fieldOfStudy = "انتخاب رشته تحصیلی الزامی است";
     if (!selectedDate) errors.birthDate = "انتخاب تاریخ تولد الزامی است";
-    if (!formData.birthProvince) errors.birthProvince = "انتخاب استان محل تولد الزامی است";
+    if (!formData.birthProvince)
+      errors.birthProvince = "انتخاب استان محل تولد الزامی است";
     if (!formData.quota) errors.quota = "انتخاب سهمیه الزامی است";
     if (!formData.gender) errors.gender = "انتخاب جنسیت الزامی است";
-    if (!formData.maritalStatus) errors.maritalStatus = "انتخاب وضعیت تاهل الزامی است";
+    if (!formData.maritalStatus)
+      errors.maritalStatus = "انتخاب وضعیت تاهل الزامی است";
 
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
@@ -134,12 +136,10 @@ const ExamForm = () => {
 
   const handleSearch = () => {
     if (!user) {
-      // اگر کاربر لاگین نکرده و فرم وجود داره
       if (validateForm()) {
         setShowList(true);
       }
     } else {
-      // اگر کاربر لاگین کرده، بدون شرط
       setShowList(true);
     }
   };
@@ -320,7 +320,7 @@ const ExamForm = () => {
         <div
           className={`searchForm-side ${user ? "searchForm-side-single" : ""}`}
         >
-          <h2>آزمون‌ مناسب خود را پیدا کنید. </h2>
+          <h2>آزمون‌ مناسب خود را پیدا کنید.</h2>
           <p>
             سیستم هوشمند ما با تحلیل اطلاعات شما، بهترین آزمون‌های استخدامی را
             پیشنهاد می‌دهد. با مشاهده و مقایسه‌ی این فرصت‌ها، می‌توانید انتخابی
@@ -335,16 +335,20 @@ const ExamForm = () => {
           </button>
         </div>
       </form>
-      {showList && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="result-container"
-        >
-          <ExamFormResult />
-        </motion.div>
-      )}
+
+      <AnimatePresence>
+        {showList && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }} // انیمیشن خروج
+            transition={{ duration: 0.8, ease: "easeInOut" }} // زمان طولانی‌تر و easing نرم‌تر
+            className="result-container"
+          >
+            <ExamFormResult setShowList={setShowList} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

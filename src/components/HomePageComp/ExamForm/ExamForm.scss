@@ -28,7 +28,7 @@ $tablet-resize: 900px;
     justify-content: center;
     position: relative;
     @include responsive($tablet) {
-      width: 70%;
+      width: 80%;
     }
     @include responsive($tablet-resize) {
       width: 80%;

@@ -1,13 +1,79 @@
 @import "../../../../styles/responsive.scss";
 $tablet-resize: 900px;
 
+.ResultExam-container {
+  width: 90%;
+  margin: 10px auto 0;
+  overflow: hidden;
+  @include responsive($tablet) {
+    width: 80%;
+  }
+}
+
+.ResultExam-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #04364a;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 10px;
+
+  .ResultExam-header-info {
+   display: none;
+    @include responsive($tablet-resize){
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    span {
+      font-weight: bold;
+      font-size: 14px;
+      @include responsive($tablet) {
+        width: 20%; // تقسیم‌بندی برای موبایل و تبلت
+        text-align: center;
+      }
+    }
+    .ResultExamHeaderInfo-name {
+      width: 26%;
+      text-align: right;
+    }
+    .ResultExamHeaderInfo-date {
+      width: 6%;
+    }
+    .ResultExamHeaderInfo-jobLocCode {
+      width: 10%;
+    }
+    .ResultExamHeaderInfo-jobLoc{
+      text-align: left;
+    }
+  }
+
+  .ResultExam-close-btn {
+    background-color: #255162;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    @include responsive-reverse($tablet-resize){
+      width: 50%;
+      margin: 0 auto;
+    }
+    &:hover {
+      background-color: #1a2e3d;
+    }
+  }
+}
+
 .ResultExam-list {
   display: flex;
   flex-direction: column;
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
   @include responsive($tablet) {
-    width: 80%;
+    width: 100%;
   }
   .ResultExam-item {
     display: flex;
@@ -17,16 +83,14 @@ $tablet-resize: 900px;
     align-items: center;
     background-color: #f8f8f8;
     padding: 20px 12px;
-    // border-radius: 8px;
-    // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    @include responsive($tablet-resize) {
-      flex-direction: row;
-      gap: 0;
-    }
     border-bottom: 1px solid #ddd;
     &:nth-last-child(1) {
       border: 0;
       border-radius: 0 0 10px 10px;
+    }
+    @include responsive($tablet-resize) {
+      flex-direction: row;
+      gap: 0;
     }
     .ResultExam-name {
       font-weight: bold;
@@ -37,7 +101,6 @@ $tablet-resize: 900px;
         width: 40%;
       }
     }
-
     .ResultExam-date {
       width: 100%;
       text-align: center;
@@ -56,7 +119,6 @@ $tablet-resize: 900px;
         width: 30%;
       }
     }
-
     .ResultExam-more {
       width: 100%;
       text-align: center;
