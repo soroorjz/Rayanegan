@@ -57,7 +57,11 @@ const ResponsiveNavbarTop = ({
             <div className="responsive-userProfile">
               <div className="responsive-user-info">
                 {/* <FaCircleUser className="responsive-user-avatar" /> */}
-                <img src="/assets/images/shxfdb.jpg" alt=""  className="responsive-user-avatar"/>
+                <img
+                  src="/assets/images/shxfdb.jpg"
+                  alt=""
+                  className="responsive-user-avatar"
+                />
                 <div className="responsive-user-details">
                   <span className="responsive-user-name">محمد معروفی</span>
                 </div>
@@ -73,9 +77,11 @@ const ResponsiveNavbarTop = ({
               </div>
             </div>
           ) : (
-            <button className="sidebar-login-button">
-              <Link to="/logIn">ورود به حساب کاربری</Link>
-            </button>
+            <Link to="/logIn">
+              <button className="sidebar-login-button">
+                ورود به حساب کاربری
+              </button>
+            </Link>
           )}
 
           {!hideJobSearch && (
@@ -84,11 +90,11 @@ const ResponsiveNavbarTop = ({
             </button>
           )}
 
-          {!hideRepotBtn && (
+          {!hideRepotBtn && user && (
             <div className="sideBar-JobSearchBtn">
-              <button>
-                <Link to="/ReportForm">ثبت اعتراض </Link>
-              </button>
+              <Link to="/ReportForm">
+                <button>ثبت اعتراض</button>
+              </Link>
             </div>
           )}
         </div>

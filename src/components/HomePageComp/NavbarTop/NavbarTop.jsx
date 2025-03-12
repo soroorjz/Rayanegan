@@ -48,7 +48,7 @@ const NavbarTop = ({
         <div className="logoPart">
           <Link to="/">
             <img src="/assets/images/logo2.png" alt="لوگو" />
-            <p>مرکز آموزشی و پژوهشی رایانگان</p>
+            {/* <p>مرکز آموزشی و پژوهشی رایانگان</p> */}
           </Link>
         </div>
 
@@ -61,9 +61,9 @@ const NavbarTop = ({
 
           {!hideRepotBtn && user && (
             <div className="jobSearchBtn" id="reportBtn">
-              <button>
-                <Link to="/ReportForm">ثبت اعتراض </Link>
-              </button>
+              <Link to="/ReportForm">
+                <button>ثبت اعتراض</button>
+              </Link>
             </div>
           )}
 
@@ -78,7 +78,11 @@ const NavbarTop = ({
             <div className="userProfile">
               <div className="user-info">
                 {/* <FaCircleUser className="user-avatar" /> */}
-                <img src="/assets/images/shxfdb.jpg" alt=""  className="user-avatar"/>
+                <img
+                  src="/assets/images/shxfdb.jpg"
+                  alt=""
+                  className="user-avatar"
+                />
                 <div className="user-details">
                   <span className="user-name">محمد معروفی</span>
                 </div>
@@ -96,9 +100,12 @@ const NavbarTop = ({
             </div>
           ) : (
             <div className="logInPart">
-              <button>
+              <Link to="/logIn">
+                <button>ورود به حساب کاربری</button>
+              </Link>
+              {/* <button>
                 <Link to="/logIn">ورود به حساب کاربری</Link>
-              </button>
+              </button> */}
             </div>
           )}
         </div>
