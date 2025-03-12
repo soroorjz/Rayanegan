@@ -124,6 +124,7 @@ const ExamInfo = () => {
         element: "#announcementsBtn",
         intro: "اطلاعیه‌های مهم مربوط به آزمون را در این قسمت ببینید.",
         position: "top",
+        
       },
       {
         element: "#InfojobSearchBtn",
@@ -180,7 +181,7 @@ const ExamInfo = () => {
 
   return (
     <div className="examInfoContainer">
-      <NavbarTop />
+      <NavbarTop hideJobSearch={true} />
       <Countdown registrationDeadline={endDate} />
 
       <ExamInfoCard

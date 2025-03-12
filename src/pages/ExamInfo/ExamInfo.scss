@@ -20,7 +20,6 @@
   color: #fff !important;
   border-radius: 8px;
   font-size: 17px;
-
   font-weight: 900;
   padding: 0 !important;
   box-shadow: none !important;
@@ -28,6 +27,13 @@
   gap: 20px;
   flex-direction: column;
   align-items: center;
+  .introjs-arrow.top {
+    left: unset !important;
+    right: 138px;
+    // top: -42px !important;
+        top: -4px !important;
+      transform: rotate(270deg);
+  }
 }
 .introjs-tooltiptext {
   font-family: Vazirmatn !important;
@@ -126,11 +132,13 @@
   bottom: -60px !important;
   transform: rotate(0deg);
 }
-.introjs-arrow.top {
-  left: unset !important;
-  right: 138px;
-  top: -42px !important;
-}
+// .introjs-arrow.top {
+//   left: unset !important;
+//   right: 138px;
+//   top: -42px !important;
+//     //   top: -4px !important;
+//     // transform: rotate(270deg);
+// }
 .top-middle {
   transform: rotate(90deg) !important;
 }
