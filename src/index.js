@@ -4,13 +4,25 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { StrictMode } from "react";
-// import { initializePWA } from "./pwa";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"; // تغییر به اینجا
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 60, // 1 ساعت
+      cacheTime: 1000 * 60 * 60 * 24, // 24 ساعت
+      retry: 1,
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </QueryClientProvider>
   </StrictMode>
 );

@@ -33,10 +33,12 @@ const EmploymentTestsIcons = () => {
       {
         root: null,
         rootMargin: "0px",
-        threshold: 0.5, // وقتی 50٪ از المنت قابل مشاهده باشد
+        threshold: 0.5,
       }
     );
-    const targets = document.querySelectorAll("[id^=InProgress], [id^=Registering], [id^=EndOfRegistering], [id^=ExamCard], [id^=Held], [id^=UnderReview], [id^=Announcing], [id^=Filter], [id^=Selection], [id^=Expired]");
+    const targets = document.querySelectorAll(
+      "[id^=InProgress], [id^=Registering], [id^=EndOfRegistering], [id^=ExamCard], [id^=Held], [id^=UnderReview], [id^=Announcing], [id^=Filter], [id^=Selection], [id^=Expired]"
+    );
     targets.forEach((target) => observer.observe(target));
 
     return () => {
@@ -48,7 +50,17 @@ const EmploymentTestsIcons = () => {
     setSelected(selected === id ? null : id);
     const targetElement = document.getElementById(id);
     if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      const elementRect = targetElement.getBoundingClientRect();
+      const elementHeight = elementRect.height;
+      const windowHeight = window.innerHeight;
+      const offset = (windowHeight - elementHeight) / 2;
+
+      const scrollPosition = elementRect.top + window.scrollY - offset;
+
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -56,7 +68,10 @@ const EmploymentTestsIcons = () => {
     if (scrollRef.current) {
       const { current } = scrollRef;
       const scrollAmount = 150;
-      current.scrollBy({ left: direction === "left" ? -scrollAmount : scrollAmount, behavior: "smooth" });
+      current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -68,12 +83,32 @@ const EmploymentTestsIcons = () => {
       <div className="EmploymentTestsIcons-Container" ref={scrollRef}>
         {[
           { id: "InProgress", icon: <FaHourglassHalf />, text: "در انتظار" },
-          { id: "Registering", icon: <LuClipboardPenLine />, text: "درحال ثبت‌نام" },
-          { id: "EndOfRegistering", icon: <LuClipboardX />, text: "پایان ثبت‌نام" },
-          { id: "ExamCard", icon: <FaRegAddressCard />, text: "دریافت کارت ورود به جلسه" },
-          { id: "Held", icon: <MdOutlineDownloadDone />, text: "آزمون کتبی برگزار شده" },
+          {
+            id: "Registering",
+            icon: <LuClipboardPenLine />,
+            text: "درحال ثبت‌نام",
+          },
+          {
+            id: "EndOfRegistering",
+            icon: <LuClipboardX />,
+            text: "پایان ثبت‌نام",
+          },
+          {
+            id: "ExamCard",
+            icon: <FaRegAddressCard />,
+            text: "دریافت کارت ورود به جلسه",
+          },
+          {
+            id: "Held",
+            icon: <MdOutlineDownloadDone />,
+            text: "آزمون کتبی برگزار شده",
+          },
           { id: "UnderReview", icon: <RiLoader2Fill />, text: "درحال بررسی" },
-          { id: "Announcing", icon: <HiOutlineSpeakerphone />, text: "درحال اعلام نتایج" },
+          {
+            id: "Announcing",
+            icon: <HiOutlineSpeakerphone />,
+            text: "درحال اعلام نتایج",
+          },
           { id: "Filter", icon: <FaFileSignature />, text: " ارزیابی تکمیلی " },
           { id: "Selection", icon: <FiFilter />, text: "درحال گزینش" },
           { id: "Expired", icon: <BiSolidNoEntry />, text: "پایان آزمون" },
@@ -84,7 +119,11 @@ const EmploymentTestsIcons = () => {
             onClick={() => handleSelect(id)}
           >
             {icon}
-            <span className={`icon-text ${isMobile && selected !== id ? "hidden" : ""}`}>
+            <span
+              className={`icon-text ${
+                isMobile && selected !== id ? "hidden" : ""
+              }`}
+            >
               {text}
             </span>
           </button>

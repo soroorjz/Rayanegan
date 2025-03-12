@@ -1,137 +1,88 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./EmploymentTests.scss";
 import { IoMdHome } from "react-icons/io";
+import { useQuery } from "@tanstack/react-query";
 import EmploymentTestsComp from "../../components/EmploymentTestsComp/EmploymentTestsComp";
 import EmploymentTestsIcons from "../../components/EmploymentTestsComp/EmploymentTestsIcons/EmploymentTestsIcons";
 import NavbarTop from "../../components/HomePageComp/NavbarTop/NavbarTop";
 import EmploymentTestsBanner from "../../components/EmploymentTestsComp/EmploymentTestsBanner/EmploymentTestsBanner";
-import { Link } from "react-router";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import { getExamStatuses, getExams } from "../../apiService";
 
 const EmploymentTests = () => {
-  const [examCards, setExamCards] = useState([]);
-  const [examStatuses, setExamStatuses] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // دیباگ وضعیت‌ها
+  console.log("Component Rendered");
 
-  const fetchToken = async () => {
-    try {
-      const response = await fetch("/api/auth", {
-        headers: {
-          "RAYAN-USERNAME": "S.JAMEIE",
-          "RAYAN-PASSWORD": "1156789",
-          "RAYAN-DEBUG": true,
-        },
-        method: "post",
-      });
-      const data = await response.json();
-      localStorage.setItem("RayanToken", data.token);
-      return data.token;
-    } catch (err) {
-      console.error("Error fetching token:", err);
-      setError("خطا در دریافت توکن!");
-      throw err;
-    }
-  };
+  // گرفتن وضعیت آزمون‌ها
+  const {
+    data: examStatuses,
+    isLoading: statusesLoading,
+    error: statusesError,
+    isFetching: statusesFetching,
+  } = useQuery({
+    queryKey: ["examStatuses"],
+    queryFn: async () => {
+      const data = await getExamStatuses();
+      console.log("Exam Statuses Loaded:", data);
+      return data;
+    },
+    staleTime: 1000 * 60 * 60, // 1 ساعت
+    cacheTime: 1000 * 60 * 60 * 24, // 24 ساعت
+    retry: 1,
+    onError: (err) => console.log("Exam Statuses Error:", err),
+  });
 
-  const fetchExamStatuses = async (token) => {
-    // Check localStorage for cached statuses
-    const cachedStatuses = localStorage.getItem("examStatuses");
-    if (cachedStatuses) {
-      const statusMap = JSON.parse(cachedStatuses);
-      setExamStatuses(statusMap);
-      return statusMap;
-    }
-
-    try {
-      const response = await axios.get("/api/examStatus/examStatuses", {
-        headers: {
-          "RAYAN-TOKEN": token,
-          "RAYAN-DEBUG": true,
-        },
-      });
-
-      const statusMap = response.data.reduce((acc, status) => {
-        acc[status.examStatusId] = status.examStatusName;
-        return acc;
-      }, {});
-
-      console.log("Exam Statuses:", statusMap);
-      localStorage.setItem("examStatuses", JSON.stringify(statusMap));
-      setExamStatuses(statusMap);
-      return statusMap;
-    } catch (err) {
-      console.error("Error fetching exam statuses:", err);
-      setError("خطا در دریافت وضعیت آزمون‌ها!");
-      throw err;
-    }
-  };
-
-  const fetchExams = async (token) => {
-    try {
-      const response = await axios.get("/api/exam/exams", {
-        headers: {
-          "RAYAN-TOKEN": token,
-          "RAYAN-DEBUG": true,
-        },
-      });
-
-      const updatedExams = response.data.map((exam) => ({
+  // گرفتن آزمون‌ها
+  const {
+    data: examCards,
+    isLoading: examsLoading,
+    error: examsError,
+    isFetching: examsFetching,
+  } = useQuery({
+    queryKey: ["exams"], // موقتاً وابستگی به examStatuses رو برداشتم
+    queryFn: async () => {
+      const data = await getExams();
+      console.log("Exams Loaded:", data);
+      return data.map((exam) => ({
         ...exam,
         examStatusRef: Number(exam.examStatusRef),
       }));
+    },
+    staleTime: 1000 * 60 * 60, // 1 ساعت
+    cacheTime: 1000 * 60 * 60 * 24, // 24 ساعت
+    retry: 1,
+    onError: (err) => console.log("Exams Error:", err),
+  });
 
-      console.log("Updated Exams:", updatedExams);
-      setExamCards(updatedExams);
-      return updatedExams;
-    } catch (err) {
-      console.error("Error fetching exams:", err);
-      setError("خطا در دریافت اطلاعات آزمون‌ها!");
-      throw err;
-    }
-  };
+  const loading = statusesLoading || examsLoading;
+  const fetching = statusesFetching || examsFetching;
+  const error = statusesError || examsError;
 
-  useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        // Check for existing token
-        let token = localStorage.getItem("RayanToken");
-        if (!token) {
-          token = await fetchToken();
-        }
-
-        // Fetch statuses and exams in parallel
-        const [statuses, exams] = await Promise.all([
-          fetchExamStatuses(token),
-          fetchExams(token),
-        ]);
-
-        // Ensure state is updated only if not already set (from cache)
-        if (!examStatuses) {
-          setExamStatuses(statuses);
-        }
-        setExamCards(exams);
-      } catch (err) {
-        console.error("Error fetching all data:", err);
-        if (!error) setError("خطا در دریافت اطلاعات!");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAllData();
-  }, []);
-
+  // تابع فیلتر کردن آزمون‌ها
   const getFilteredExams = (statusTitle) => {
-    if (!examStatuses) return [];
+    if (!examStatuses || !examCards) return [];
     const statusId = Object.keys(examStatuses).find(
       (key) => examStatuses[key] === statusTitle
     );
+    console.log(`Filtering ${statusTitle}: statusId=${statusId}`);
     return examCards.filter((exam) => exam.examStatusRef === Number(statusId));
   };
+
+  if (loading) {
+    console.log("Still Loading...");
+    return <div className="EmploymentTests">در حال بارگذاری...</div>;
+  }
+
+  if (error) {
+    console.log("Error occurred:", error);
+    return (
+      <div className="EmploymentTests">
+        خطا در دریافت اطلاعات: {error.message}
+      </div>
+    );
+  }
+
+  console.log("Rendering with data:", { examStatuses, examCards });
 
   return (
     <div className="EmploymentTests">
@@ -142,6 +93,9 @@ const EmploymentTests = () => {
       <div className="EmploymentTestsIcons">
         <EmploymentTestsIcons />
       </div>
+      {fetching && (
+        <div className="fetching-message">در حال به‌روزرسانی داده‌ها...</div>
+      )}
       <div id="InProgress" className="EmploymentTestsComp">
         <EmploymentTestsComp
           examData={getFilteredExams("در انتظار")}
