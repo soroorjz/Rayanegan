@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./CountDown.scss";
 import { Link } from "react-router";
 import { useAuth } from "../../../AuthContext";
-const Countdown = ({ registrationDeadline }) => {
-  const { user } = useAuth(); 
+
+const Countdown = ({ registrationDeadline, startDate }) => {
+  const { user } = useAuth();
 
   const toPersianNumbers = (num) => num.toLocaleString("fa-IR");
   const [timeLeft, setTimeLeft] = useState(null);
@@ -22,21 +23,35 @@ const Countdown = ({ registrationDeadline }) => {
   };
 
   useEffect(() => {
-    if (!registrationDeadline) return;
+    if (!registrationDeadline || !startDate) return;
 
-    setTimeLeft(calculateTimeLeft());
-    const timer = setInterval(() => {
+    // فقط اگر زمان فعلی بین startDate و registrationDeadline باشد، تایمر را فعال کن
+    const now = new Date();
+    if (now >= new Date(startDate) && now <= new Date(registrationDeadline)) {
       setTimeLeft(calculateTimeLeft());
-    }, 1000);
+      const timer = setInterval(() => {
+        setTimeLeft(calculateTimeLeft());
+      }, 1000);
 
-    return () => clearInterval(timer);
-  }, [registrationDeadline]);
+      return () => clearInterval(timer);
+    }
+  }, [registrationDeadline, startDate]);
 
-  if (!registrationDeadline) {
+  // بررسی وضعیت زمان
+  const now = new Date();
+  const isBeforeStart = startDate && now < new Date(startDate);
+  const isAfterEnd =
+    registrationDeadline && now > new Date(registrationDeadline);
+
+  if (!registrationDeadline || !startDate) {
     return <div className="countdown">در انتظار دریافت تاریخ...</div>;
   }
 
-  if (!timeLeft) {
+  if (isBeforeStart) {
+    return <div className="countdown">ثبت‌نام آغاز نشده است!</div>;
+  }
+
+  if (isAfterEnd || !timeLeft) {
     return <div className="countdown">مهلت ثبت‌نام به پایان رسیده است!</div>;
   }
 
@@ -74,9 +89,10 @@ const Countdown = ({ registrationDeadline }) => {
         className="examSignUpbtn"
         id="RegistrationBtn"
       >
-        ثبت ‌نام
+        ثبت‌نام
       </Link>
     </div>
   );
 };
+
 export default Countdown;

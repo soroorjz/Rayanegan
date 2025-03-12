@@ -175,14 +175,12 @@ const ExamInfo = () => {
   const endDate = moment(examData.examRegisterEndDate, "jYYYY/jMM/jDD");
   const cardIssueDate = moment(examData.examWithdrawCard, "jYYYY/jMM/jDD");
   const eventDate = moment(examData.examDate, "jYYYY/jMM/jDD");
-
-  // تبدیل endDate به فرمت رشته‌ای برای NotificationList
   const formattedEndDate = endDate.format("jYYYY-jMM-jDD");
 
   return (
     <div className="examInfoContainer">
       <NavbarTop hideJobSearch={true} />
-      <Countdown registrationDeadline={endDate} />
+      <Countdown registrationDeadline={endDate} startDate={startDate} />
 
       <ExamInfoCard
         startDate={startDate}
