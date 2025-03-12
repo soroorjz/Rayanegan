@@ -40,24 +40,25 @@ const EmploymentTestsComp = ({ examData, title }) => {
                 <img src={exam.img} alt="" />
               </div> */}
               <div className="exam-title-sj">{exam.examName}</div>
-              <div className="exam-deadline-sj">تاریخ برگزاری آزمون: {exam.examDate}</div>
+              <div className="exam-deadline-sj">
+                تاریخ برگزاری آزمون: {exam.examDate}
+              </div>
               <div className="examCard-Footer">
                 {!user && (
-                  <button className="btn1">
-                    <Link to="/signUpForm" key="signup">
-                      ثبت‌نام
-                    </Link>
-                  </button>
-                )}
-                <button className="btn2">دفترچه</button>
-                <button className="btn3">
-                  <Link
-                    to={`/examInfo/${exam.examId}`}
-                    key={`examInfo-${exam.examId}`}
-                  >
-                    بیشتر
+                  <Link to="/signUpForm" key="signup">
+                    <button className="btn1">ثبت‌نام</button>{" "}
                   </Link>
-                </button>
+                )}
+                <a href="">
+                  <button className="btn2">دفترچه</button>
+                </a>
+
+                <Link
+                  to={`/examInfo/${exam.examId}`}
+                  key={`examInfo-${exam.examId}`}
+                >
+                  <button className="btn3">بیشتر </button>
+                </Link>
               </div>
             </SwiperSlide>
           ))}

@@ -22,16 +22,18 @@ $tablet-resize: 900px;
     padding: 0 50px;
     .exam-card-sj {
       background: white;
-      padding:25px 15px;
+      padding: 25px 15px;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       text-align: center;
       width: 23%;
       transition: transform 0.3s ease-in-out;
-
-      &:hover {
-        transform: translateY(-5px);
+      @include responsive($tablet) {
+        &:hover {
+          transform: translateY(-5px);
+        }
       }
+
       .exam-Logo-sj {
         img {
           width: 50%;
@@ -103,20 +105,22 @@ $tablet-resize: 900px;
         display: flex;
         justify-content: center;
         gap: 10px;
-        button {
-          width: 25%;
-          padding: 10px;
-          border-radius: 10px;
-          border: 0;
-          background-color: #578e7e;
-          cursor: pointer;
+
+        a {
+          text-decoration: none;
           color: #fff;
-          a {
-            text-decoration: none;
+          width: 25%;
+          button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 0;
+            background-color: #578e7e;
+            cursor: pointer;
             color: #fff;
-          }
-          &:hover {
-            background-color: #e55604;
+            &:hover {
+              background-color: #e55604;
+            }
           }
         }
       }

@@ -8,11 +8,10 @@
 // const ExamCard = () => {
 //   const { user } = useAuth();
 //   const [examCards, setExamCards] = useState([]);
-//   const [examStatuses, setExamStatuses] = useState(null); 
+//   const [examStatuses, setExamStatuses] = useState(null);
 //   const [loading, setLoading] = useState(true);
 //   const [error, setError] = useState(null);
 
-  
 //   const fetchToken = useCallback(async () => {
 //     try {
 //       const response = await fetch("/api/auth", {
@@ -192,8 +191,7 @@ const ExamCard = () => {
 
   const fetchToken = useCallback(async () => {
     const cachedToken = localStorage.getItem("RayanToken");
-    if (cachedToken) return; // اگر توکن در localStorage موجود است، از API درخواست نده
-
+    if (cachedToken) return;
     try {
       const response = await fetch("/api/auth", {
         headers: {
@@ -328,21 +326,21 @@ const ExamCard = () => {
                 </div>
                 <div className="examCard-Footer">
                   {!user && (
-                    <button className="btn1">
-                      <Link to="/signUpForm" key="signup">
-                        ثبت‌نام
-                      </Link>
-                    </button>
-                  )}
-                  <button className="btn2">دفترچه</button>
-                  <button className="btn3">
-                    <Link
-                      to={`/examInfo/${examCard.examId}`}
-                      key={`examInfo-${examCard.examId}`}
-                    >
-                      بیشتر
+                    <Link to="/signUpForm" key="signup">
+                      <button className="btn1">ثبت‌نام</button>
                     </Link>
-                  </button>
+                  )}
+
+                  <a href="">
+                    <button className="btn2">دفترچه</button>
+                  </a>
+
+                  <Link
+                    to={`/examInfo/${examCard.examId}`}
+                    key={`examInfo-${examCard.examId}`}
+                  >
+                    <button className="btn3">بیشتر</button>
+                  </Link>
                 </div>
               </div>
             </SwiperSlide>

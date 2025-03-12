@@ -236,7 +236,6 @@ a {
   }
 }
 
-// استایل پروفایل کاربری و دراپ‌داون
 .userProfile {
   position: relative;
   display: flex;
@@ -270,11 +269,13 @@ a {
     top: 55px;
     background-color: #04364a;
     border-radius: 10px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    // box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
     width: 100%;
     display: none;
     flex-direction: column;
     z-index: 10;
+    border: none;
+    background: transparent;
   }
 
   &:hover .dropdown-menu {
@@ -297,6 +298,7 @@ a {
     border-radius: 10px !important;
     transition: background 0.3s;
     overflow: hidden;
+    background-color: #04364a;
     &:hover {
       background: #f1f1f1;
       color: #04364a;

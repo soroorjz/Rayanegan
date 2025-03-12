@@ -84,21 +84,41 @@ $tablet-resize: 900px;
         display: flex;
         justify-content: center;
         gap: 10px;
-        button {
-          width: 25%;
-          padding: 10px;
-          border-radius: 10px;
-          border: 0;
-          background-color: #578e7e;
-          cursor: pointer;
+
+        // button {
+        //   width: 25%;
+        //   padding: 10px;
+        //   border-radius: 10px;
+        //   border: 0;
+        //   background-color: #578e7e;
+        //   cursor: pointer;
+        //   color: #fff;
+        //   font-size: 14px;
+        //   a {
+        //     text-decoration: none;
+        //     color: #fff;
+        //   }
+        //   &:hover {
+        //     background-color: #e55604;
+        //   }
+        // }
+
+        a {
+          text-decoration: none;
           color: #fff;
-          font-size: 14px;
-          a {
-            text-decoration: none;
+          width: 25%;
+          button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 0;
+            background-color: #578e7e;
+            cursor: pointer;
             color: #fff;
-          }
-          &:hover {
-            background-color: #e55604;
+            font-size: 14px;
+            &:hover {
+              background-color: #e55604;
+            }
           }
         }
       }

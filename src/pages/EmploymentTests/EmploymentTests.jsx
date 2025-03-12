@@ -13,7 +13,6 @@ const EmploymentTests = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // دریافت و ذخیره‌ی توکن
   const fetchToken = useCallback(async () => {
     try {
       const response = await fetch("/api/auth", {
@@ -32,7 +31,6 @@ const EmploymentTests = () => {
     }
   }, []);
 
-  // دریافت وضعیت‌های آزمون و تبدیل آن‌ها به یک Map
   const fetchExamStatuses = useCallback(async () => {
     try {
       const response = await axios.get("/api/examStatus/examStatuses", {
@@ -44,7 +42,7 @@ const EmploymentTests = () => {
 
       const statusMap = response.data.reduce((acc, status) => {
         acc[status.examStatusId] = status.examStatusName;
-        // examStatusId → examStatusName
+
         return acc;
       }, {});
 
@@ -103,7 +101,7 @@ const EmploymentTests = () => {
   }, [examStatuses]);
 
   const getFilteredExams = (statusTitle) => {
-    if (!examStatuses) return []; // اطمینان از آماده بودن داده‌ها
+    if (!examStatuses) return [];
     const statusId = Object.keys(examStatuses).find(
       (key) => examStatuses[key] === statusTitle
     );
@@ -153,6 +151,24 @@ const EmploymentTests = () => {
         <EmploymentTestsComp
           examData={getFilteredExams("در حال بررسی")}
           title="در حال بررسی"
+        />
+      </div>
+      <div id="Announcing" className="EmploymentTestsComp">
+        <EmploymentTestsComp
+          examData={getFilteredExams("اعلام نتایج آزمون کتبی")}
+          title="اعلام نتایج آزمون کتبی"
+        />
+      </div>
+      <div id="Filter" className="EmploymentTestsComp">
+        <EmploymentTestsComp
+          examData={getFilteredExams("ارزیابی تکمیلی")}
+          title="ارزیابی تکمیلی"
+        />
+      </div>
+      <div id="Selection" className="EmploymentTestsComp">
+        <EmploymentTestsComp
+          examData={getFilteredExams("گزینش")}
+          title="گزینش"
         />
       </div>
       <div id="Expired" className="EmploymentTestsComp expiredExams">
