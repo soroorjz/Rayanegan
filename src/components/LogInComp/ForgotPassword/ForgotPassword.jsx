@@ -50,11 +50,11 @@ const ForgotPassword = () => {
           </div>
         </div>
       </div>
-      <button className="homeBtn">
-        <Link to="/">
+      <Link to="/">
+        <button className="homeBtn">
           <IoMdHome />
-        </Link>
-      </button>
+        </button>
+      </Link>
     </>
   );
 };

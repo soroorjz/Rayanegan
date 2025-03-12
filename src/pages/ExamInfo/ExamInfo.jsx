@@ -124,7 +124,6 @@ const ExamInfo = () => {
         element: "#announcementsBtn",
         intro: "اطلاعیه‌های مهم مربوط به آزمون را در این قسمت ببینید.",
         position: "top",
-        
       },
       {
         element: "#InfojobSearchBtn",
@@ -199,12 +198,11 @@ const ExamInfo = () => {
         toPersianDigits={toPersianDigits}
         examName={examData.examName}
       />
-
-      <button className="homeBtn">
-        <Link to="/">
+      <Link to="/">
+        <button className="homeBtn">
           <IoMdHome />
-        </Link>
-      </button>
+        </button>{" "}
+      </Link>
 
       <button className="ExamInfo-tutorialBtn" onClick={startTutorial}>
         <RiQuestionFill />

@@ -16,11 +16,11 @@ const ReportTracking = () => {
         <ReportTrackingComp />
       </div>
 
-      <button className="homeBtn">
-        <Link to="/">
+      <Link to="/">
+        <button className="homeBtn">
           <IoMdHome />
-        </Link>
-      </button>
+        </button>
+      </Link>
     </div>
   );
 };

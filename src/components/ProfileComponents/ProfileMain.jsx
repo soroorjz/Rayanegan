@@ -50,11 +50,11 @@ const ProfileMain = ({ selectedComponent }) => {
     <div className="ProfileMain-Container">
       {content}
 
-      <button className="homeBtn">
-        <Link to="/">
+      <Link to="/">
+        <button className="homeBtn">
           <IoMdHome />
-        </Link>
-      </button>
+        </button>
+      </Link>
     </div>
   );
 };

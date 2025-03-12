@@ -10,11 +10,12 @@ const LogIn = () => {
     <div className="logInContainer">
       <NavbarTop hideJobSearch={true} />
       <LogInMain />
-      <button className="homeBtn">
-        <Link to="/">
+
+      <Link to="/" className="homeBtn">
+        <button className="homeBtn">
           <IoMdHome />
-        </Link>
-      </button>
+        </button>
+      </Link>
     </div>
   );
 };

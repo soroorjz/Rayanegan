@@ -1,40 +1,40 @@
 @font-face {
   font-family: "Vazirmatn";
   src:
-   /* url("/public/assets/fonts/Vazirmatn-Black.woff2") format("woff2"), */
-    url("/public/assets/fonts/font2/Vazirmatn-Black.ttf") format("truetype");
+   /* url("/public/assets/fonts/Vazirmatn-Black.woff2") format("woff2"), */ url("/public/assets/fonts/font2/Vazirmatn-Black.ttf")
+    format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "Vazirmatn";
   src:
-   /* url("/public/assets/fonts/Vazirmatn-Bold.woff2") format("woff2"), */
-    url("/public/assets/fonts/font2/Vazirmatn-Bold.ttf") format("truetype");
+   /* url("/public/assets/fonts/Vazirmatn-Bold.woff2") format("woff2"), */ url("/public/assets/fonts/font2/Vazirmatn-Bold.ttf")
+    format("truetype");
   font-weight: bold;
   font-style: bold;
 }
 @font-face {
   font-family: "Vazirmatn";
   src:
-   /* url("/public/assets/fonts/Vazirmatn-Thin.woff2") format("woff2"), */
-    url("/public/assets/fonts/font2/Vazirmatn-Thin.ttf") format("truetype");
+   /* url("/public/assets/fonts/Vazirmatn-Thin.woff2") format("woff2"), */ url("/public/assets/fonts/font2/Vazirmatn-Thin.ttf")
+    format("truetype");
   font-weight: thin;
   font-style: thin;
 }
 @font-face {
   font-family: "Vazirmatn";
   src:
-   /* url("/public/assets/fonts/Vazirmatn-Light.woff2") format("woff2"), */
-    url("/public/assets/fonts/font2/Vazirmatn-Light.ttf") format("truetype");
+   /* url("/public/assets/fonts/Vazirmatn-Light.woff2") format("woff2"), */ url("/public/assets/fonts/font2/Vazirmatn-Light.ttf")
+    format("truetype");
   font-weight: Light;
   font-style: Light;
 }
 @font-face {
   font-family: "Vazirmatn";
   src: 
-  /* url("/public/assets/fonts/Vazirmatn-Medium.woff2") format("woff2"), */
-    url("/public/assets/fonts/font2/Vazirmatn-FD-Medium.ttf") format("truetype");
+  /* url("/public/assets/fonts/Vazirmatn-Medium.woff2") format("woff2"), */ url("/public/assets/fonts/font2/Vazirmatn-FD-Medium.ttf")
+    format("truetype");
   font-weight: Medium;
   font-style: Medium;
 }
@@ -44,7 +44,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: Vazirmatn;
-  a{
+  a {
     text-decoration: none !important;
   }
 }
@@ -66,7 +66,7 @@
   font-family: Vazirmatn !important;
   padding: 0 !important;
   text-shadow: none !important;
-max-width: 150px;
+  max-width: 150px;
   text-align: center !important;
 }
 .introjs-tooltipbuttons {
@@ -110,7 +110,7 @@ max-width: 150px;
   font-size: 14px !important;
   font-weight: 900;
   /* color: #dafffb !important; */
-  
+
   border-radius: 0 !important;
 }
 .introjs-nextbutton:focus {
@@ -121,18 +121,18 @@ max-width: 150px;
   color: #fff !important;
   box-shadow: none !important;
 }
-.introjs-nextbutton:hover{
+.introjs-nextbutton:hover {
   color: #e55604;
-  }
+}
 .introjs-prevbutton {
   display: none !important;
 }
 
-.introjs-skipbutton{
+.introjs-skipbutton {
   transition: all 0.3s ease-in-out !important;
   font-weight: 400;
 }
-.introjs-skipbutton:hover{
+.introjs-skipbutton:hover {
   color: #e55604 !important;
 }
 .homeHighlight-IntroJs {
@@ -156,4 +156,9 @@ max-width: 150px;
 .top-middle {
   transform: rotate(90deg) !important;
 }
-
+.homeBtn {
+  svg {
+    font-size: 35px;
+    color: #dafffb;
+  }
+}

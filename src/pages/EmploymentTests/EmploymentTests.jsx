@@ -202,11 +202,11 @@ const EmploymentTests = () => {
           title="پایان آزمون"
         />
       </div>
-      <button className="homeBtn">
-        <Link to="/">
+      <Link to="/">
+        <button className="homeBtn">
           <IoMdHome />
-        </Link>
-      </button>
+        </button>
+      </Link>
     </div>
   );
 };

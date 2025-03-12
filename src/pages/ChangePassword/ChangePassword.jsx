@@ -85,11 +85,7 @@ const ChangePassword = () => {
           </Link>
         </form>
       </div>
-      <button className="homeBtn">
-              <Link to="/">
-                <IoMdHome />
-              </Link>
-            </button>
+      
     </>
   );
 };

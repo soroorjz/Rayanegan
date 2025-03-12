@@ -25,11 +25,12 @@ const ExamSignUpForm = ({
         mode={mode}
         initialData={initialData} // پاس دادن اطلاعات اولیه
       />
-      <button className="homeBtn">
-        <Link to="/">
+
+      <Link to="/">
+        <button className="homeBtn">
           <IoMdHome />
-        </Link>
-      </button>
+        </button>{" "}
+      </Link>
     </div>
   );
 };
