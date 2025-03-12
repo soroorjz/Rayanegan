@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./EmploymentTests.scss";
 import { IoMdHome } from "react-icons/io";
 import EmploymentTestsComp from "../../components/EmploymentTestsComp/EmploymentTestsComp";
@@ -7,13 +7,14 @@ import NavbarTop from "../../components/HomePageComp/NavbarTop/NavbarTop";
 import EmploymentTestsBanner from "../../components/EmploymentTestsComp/EmploymentTestsBanner/EmploymentTestsBanner";
 import { Link } from "react-router";
 import axios from "axios";
+
 const EmploymentTests = () => {
   const [examCards, setExamCards] = useState([]);
   const [examStatuses, setExamStatuses] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchToken = useCallback(async () => {
+  const fetchToken = async () => {
     try {
       const response = await fetch("/api/auth", {
         headers: {
@@ -25,80 +26,104 @@ const EmploymentTests = () => {
       });
       const data = await response.json();
       localStorage.setItem("RayanToken", data.token);
+      return data.token;
     } catch (err) {
       console.error("Error fetching token:", err);
       setError("خطا در دریافت توکن!");
+      throw err;
     }
-  }, []);
+  };
 
-  const fetchExamStatuses = useCallback(async () => {
+  const fetchExamStatuses = async (token) => {
+    // Check localStorage for cached statuses
+    const cachedStatuses = localStorage.getItem("examStatuses");
+    if (cachedStatuses) {
+      const statusMap = JSON.parse(cachedStatuses);
+      setExamStatuses(statusMap);
+      return statusMap;
+    }
+
     try {
       const response = await axios.get("/api/examStatus/examStatuses", {
         headers: {
-          "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
+          "RAYAN-TOKEN": token,
           "RAYAN-DEBUG": true,
         },
       });
 
       const statusMap = response.data.reduce((acc, status) => {
         acc[status.examStatusId] = status.examStatusName;
-
         return acc;
       }, {});
 
-      console.log(" Exam Statuses:", statusMap);
-
+      console.log("Exam Statuses:", statusMap);
+      localStorage.setItem("examStatuses", JSON.stringify(statusMap));
       setExamStatuses(statusMap);
+      return statusMap;
     } catch (err) {
       console.error("Error fetching exam statuses:", err);
       setError("خطا در دریافت وضعیت آزمون‌ها!");
+      throw err;
     }
-  }, []);
+  };
 
-  const fetchExams = useCallback(async () => {
-    if (!examStatuses) return;
-    setLoading(true);
-    setError(null);
-
+  const fetchExams = async (token) => {
     try {
       const response = await axios.get("/api/exam/exams", {
         headers: {
-          "RAYAN-TOKEN": localStorage.getItem("RayanToken"),
+          "RAYAN-TOKEN": token,
           "RAYAN-DEBUG": true,
         },
       });
 
       const updatedExams = response.data.map((exam) => ({
         ...exam,
-        examStatusRef: Number(exam.examStatusRef), // حفظ مقدار عددی وضعیت
+        examStatusRef: Number(exam.examStatusRef),
       }));
 
-      console.log(" Updated Exams:", updatedExams);
-
+      console.log("Updated Exams:", updatedExams);
       setExamCards(updatedExams);
+      return updatedExams;
     } catch (err) {
       console.error("Error fetching exams:", err);
       setError("خطا در دریافت اطلاعات آزمون‌ها!");
-    } finally {
-      setLoading(false);
+      throw err;
     }
-  }, [examStatuses]);
+  };
 
-  // اجرای توابع به ترتیب مناسب
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchToken();
-      await fetchExamStatuses();
+    const fetchAllData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Check for existing token
+        let token = localStorage.getItem("RayanToken");
+        if (!token) {
+          token = await fetchToken();
+        }
+
+        // Fetch statuses and exams in parallel
+        const [statuses, exams] = await Promise.all([
+          fetchExamStatuses(token),
+          fetchExams(token),
+        ]);
+
+        // Ensure state is updated only if not already set (from cache)
+        if (!examStatuses) {
+          setExamStatuses(statuses);
+        }
+        setExamCards(exams);
+      } catch (err) {
+        console.error("Error fetching all data:", err);
+        if (!error) setError("خطا در دریافت اطلاعات!");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchData();
+    fetchAllData();
   }, []);
-
-  useEffect(() => {
-    if (examStatuses) {
-      fetchExams();
-    }
-  }, [examStatuses]);
 
   const getFilteredExams = (statusTitle) => {
     if (!examStatuses) return [];
