@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 // import { FaUserGraduate } from "react-icons/fa";
 import { BsQrCode } from "react-icons/bs";
 import { FaBookReader } from "react-icons/fa";
+import { RiLockPasswordLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 import { FaUserPen, FaBars } from "react-icons/fa6";
 import "./ProfileSideBar.scss";
+import { Link } from "react-router";
 const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
@@ -71,6 +73,20 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
             <FaUserPen />
             مشخصات شخصی
           </button>
+          {/* <Link to="/ChangePassword"> */}
+          <button
+            onClick={() => {
+              setSelectedComponent("password");
+              setIsSidebarOpen(false);
+            }}
+            className={selectedComponent === "password" ? "active" : ""}
+          >
+            {" "}
+            <RiLockPasswordLine />
+            تغییر رمز عبور
+          </button>
+          {/* </Link> */}
+
           <button
             onClick={() => {
               setSelectedComponent("exams");

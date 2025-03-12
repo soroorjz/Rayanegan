@@ -34,12 +34,18 @@
       background-color: #e55604;
     }
   }
-  .profilePersonalDetails{
-    .examSignUpForm-Contaner{
-      margin-top:50px;
+  .profilePersonalDetails {
+    .examSignUpForm-Contaner {
+      margin-top: 50px;
     }
-    .homeBtn{
+    .homeBtn {
       display: none;
     }
+  }
+  .passwordChangingPart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
   }
 }

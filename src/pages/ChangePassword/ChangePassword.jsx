@@ -49,7 +49,7 @@ const ChangePassword = () => {
 
   return (
     <>
-      <NavbarTop hideJobSearch={true} hideRepotBtn={true} />
+      {/* <NavbarTop hideJobSearch={true} hideRepotBtn={true} /> */}
       <div className="change-password-container">
         <h2>تغییر رمز عبور</h2>
         <form onSubmit={handleSubmit}>

@@ -47,6 +47,7 @@ const ProfileHeader = () => {
         </div>
 
         <div className="leftPart" ref={dropdownRef}>
+        
           <button className="user-btn" onClick={toggleDropdown}>
             محمد معروفی
             <FaAngleDown
@@ -63,13 +64,6 @@ const ProfileHeader = () => {
               <button className="logout-btn" onClick={handleLogout}>
                 خروج
                 <FaSignOutAlt />
-              </button>
-
-              <button className="logout-btn changePassWord">
-                <Link to="/ChangePassword">
-                  تغییر رمز عبور
-                  <RiLockPasswordLine />
-                </Link>
               </button>
             </div>
           )}

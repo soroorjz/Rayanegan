@@ -11,6 +11,7 @@ import ExamEntryCopm from "./ExamEntryCard/ExamEntryCopm";
 import EvaluationCard from "./ExamEntryCard/EvaluationCard";
 import ExamSignUpForm from "../../pages/ExamSignUpForm/ExamSignUpForm";
 import CompletedForm from "../../pages/CompletedForm/CompletedForm";
+import ChangePassword from "../../pages/ChangePassword/ChangePassword";
 
 const ProfileMain = ({ selectedComponent }) => {
   let content;
@@ -18,29 +19,31 @@ const ProfileMain = ({ selectedComponent }) => {
     case "personal":
       content = (
         <div className="profilePersonalDetails">
-          {/* <ExamSignUpForm
-            title="ویرایش اطلاعات "
-            showNavbar={false}
-            successMessage="اطلاعات به روز شد!"
-            redirectAfterSubmit={false}
-          /> */}
-          <CompletedForm/>
+          <CompletedForm />
         </div>
       );
-      // content = <PersonalDetails />;
+
+      break;
+
+    case "password":
+      content = (
+        <div className="passwordChangingPart">
+          <ChangePassword />
+        </div>
+      );
+
       break;
     case "exams":
       content = <MyExams />;
       break;
     case "suggested":
-      // content = <ExamEntryCard />;
       content = <ExamEntryCopm />;
       break;
     case "news":
       content = <EvaluationCard />;
       break;
     default:
-      content =<CompletedForm/>;
+      content = <CompletedForm />;
   }
 
   return (
