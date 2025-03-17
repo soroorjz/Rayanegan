@@ -1,3 +1,4 @@
+@import "../../../styles/responsive.scss";
 .step4-container {
   width: 100%;
   max-width: 1200px; // افزایش عرض برای 4 ستون
@@ -10,9 +11,16 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr; // 4 ستون
     gap: 20px;
+    @include responsive-reverse($tablet) {
+      grid-template-columns: 1fr;
+    }
+
 
     .step4-form-group {
       margin-bottom: 15px;
+      @include responsive-reverse($tablet){
+        width: 80%;
+      }
 
       label {
         display: block;
@@ -64,7 +72,11 @@
       align-items: center;
       gap: 15px;
       margin-top: 20px;
-
+      @include responsive-reverse($tablet) {
+        grid-column: 1 / 2;
+        width: 100%;
+        gap: 5px;
+      }
       .step4-prev-button {
         background-color: #04364a;
         color: white;
@@ -73,7 +85,10 @@
         border-radius: 4px;
         cursor: pointer;
         font-size: 14px;
-
+        @include responsive-reverse($tablet) {
+          width: 33.3%;
+          padding: 10px 5px;
+        }
         &:hover {
           background-color: #03283a;
         }
@@ -87,7 +102,10 @@
         border-radius: 4px;
         cursor: pointer;
         font-size: 14px;
-
+        @include responsive-reverse($tablet) {
+          width: 33.3%;
+          padding: 10px 5px;
+        }
         &:hover {
           background-color: #03283a;
         }
@@ -101,7 +119,10 @@
         border-radius: 4px;
         cursor: pointer;
         font-size: 14px;
-
+        @include responsive-reverse($tablet) {
+          width: 33.3%;
+          padding: 10px 5px;
+        }
         &:hover {
           background-color: #e67e22;
         }
@@ -109,13 +130,5 @@
     }
   }
 
-  @media (max-width: 768px) {
-    .formFour {
-      grid-template-columns: 1fr;
-
-      .step4-form-actions {
-        grid-column: 1 / 2;
-      }
-    }
-  }
+  
 }

@@ -1,8 +1,12 @@
-.completed-form-container {
-  width: 90%;
+@import "../../styles/responsive.scss";
 
+.completed-form-container {
+  width: 100%;
   margin: 50px auto;
   padding: 20px;
+  @include responsive($tablet) {
+    width: 90%;
+  }
 }
 
 .completed-stepper {
@@ -43,11 +47,16 @@
   background-color: #e55604; // رنگ سبز برای مراحل تکمیل‌شده
 }
 
-.step-content {
+.Complete-step-content {
   background: #fff;
-  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 50px;
+  @include responsive($tablet) {
+    padding: 20px;
+
+    margin-bottom: unset;
+  }
 }
 
 .placeholder-content {

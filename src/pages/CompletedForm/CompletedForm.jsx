@@ -61,7 +61,7 @@ const CompletedForm = () => {
           </div>
         ))}
       </div>
-      <div className="step-content">
+      <div className="Complete-step-content">
         {renderStepContent()}
         {currentStep === steps.length - 1 && (
           <div className="confirmation-message">

@@ -1,18 +1,25 @@
+@import "../../../styles/responsive.scss";
 .step2-container {
   width: 100%;
   margin: 0 auto;
   padding: 20px;
   background: #fff;
   border-radius: 8px;
-//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   .formTwo {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+
     gap: 20px;
+    @include responsive($tablet) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
 
     .step2-form-group {
       margin-bottom: 15px;
+      @include responsive-reverse($tablet) {
+        width: 80%;
+      }
 
       label {
         display: block;
@@ -52,18 +59,28 @@
       grid-column: 1 / -1;
       display: flex;
       justify-content: center;
-      // align-items: center;
-      gap: 15px;
+      gap: 5px;
+      width: 100%;
       margin-top: 20px;
+      @include responsive($tablet) {
+        grid-column: 1 / 2;
+
+        gap: 15px;
+      }
 
       .step2-prev-button {
-          background-color: #04364a;;
+        background-color: #04364a;
         color: white;
-        padding: 10px 20px;
+
         border: none;
         border-radius: 4px;
         cursor: pointer;
         font-size: 14px;
+        padding: 10px 5px;
+        width: 33.3%;
+        @include responsive($tablet) {
+          padding: 10px 20px;
+        }
 
         &:hover {
           background-color: #03283a;
@@ -73,11 +90,15 @@
       .step2-next-button {
         background-color: #04364a;
         color: white;
-        padding: 10px 20px;
+        padding: 10px 5px;
+        width: 33.3%;
         border: none;
         border-radius: 4px;
         cursor: pointer;
         font-size: 14px;
+        @include responsive($tablet) {
+          padding: 10px 20px;
+        }
 
         &:hover {
           background-color: #03283a;
@@ -87,25 +108,19 @@
       .step2-edit-button {
         background-color: #f39c12;
         color: white;
-        padding: 10px 20px;
+       
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        padding: 10px 5px;
+        width: 33.3%;
         font-size: 14px;
-
+        @include responsive($tablet) {
+          padding: 10px 20px;
+        }
         &:hover {
           background-color: #e67e22;
         }
-      }
-    }
-  }
-
-  @media (max-width: 768px) {
-    .formTwo {
-      grid-template-columns: 1fr;
-
-      .step2-form-actions {
-        grid-column: 1 / 2;
       }
     }
   }
