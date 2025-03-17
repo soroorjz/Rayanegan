@@ -5,9 +5,12 @@ $tablet-resize: 900px;
   width: 90%;
   // max-height: 85vh;
   margin: 30px auto 0;
-  padding: 20px;
+
   background: #fff;
   border-radius: 10px;
+  @include responsive($tablet) {
+    padding: 20px;
+  }
   h2 {
     text-align: center;
   }
@@ -60,4 +63,7 @@ $tablet-resize: 900px;
   display: flex;
   gap: 15px;
   padding: 5px;
+  @include responsive-reverse($tablet) {
+    font-size: 14px;
+  }
 }

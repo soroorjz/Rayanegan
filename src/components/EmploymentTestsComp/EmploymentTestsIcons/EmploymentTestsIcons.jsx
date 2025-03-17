@@ -12,8 +12,11 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const EmploymentTestsIcons = () => {
   const [selected, setSelected] = useState(null);
+  const [isClickScroll, setIsClickScroll] = useState(false);
   const scrollRef = useRef(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 900);
@@ -24,11 +27,13 @@ const EmploymentTestsIcons = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setSelected(entry.target.id);
-          }
-        });
+        if (!isClickScroll) {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setSelected(entry.target.id);
+            }
+          });
+        }
       },
       {
         root: null,
@@ -36,6 +41,7 @@ const EmploymentTestsIcons = () => {
         threshold: 0.5,
       }
     );
+
     const targets = document.querySelectorAll(
       "[id^=InProgress], [id^=Registering], [id^=EndOfRegistering], [id^=ExamCard], [id^=Held], [id^=UnderReview], [id^=Announcing], [id^=Filter], [id^=Selection], [id^=Expired]"
     );
@@ -44,10 +50,44 @@ const EmploymentTestsIcons = () => {
     return () => {
       targets.forEach((target) => observer.unobserve(target));
     };
+  }, [isClickScroll]);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const updateScrollState = () => {
+      if (container) {
+        const maxScrollLeft = container.scrollWidth - container.clientWidth;
+        setCanScrollLeft(container.scrollLeft > 0);
+        setCanScrollRight(container.scrollLeft < maxScrollLeft - 1);
+        console.log({
+          scrollLeft: container.scrollLeft,
+          scrollWidth: container.scrollWidth,
+          clientWidth: container.clientWidth,
+          maxScrollLeft: maxScrollLeft,
+          canScrollLeft: container.scrollLeft > 0,
+          canScrollRight: container.scrollLeft < maxScrollLeft - 1,
+        });
+      }
+    };
+
+    // یه تأخیر کوچک برای اطمینان از رندر شدن DOM
+    setTimeout(() => {
+      updateScrollState();
+    }, 100);
+
+    container.addEventListener("scroll", updateScrollState, { passive: true });
+
+    return () => {
+      container.removeEventListener("scroll", updateScrollState);
+    };
   }, []);
 
   const handleSelect = (id) => {
-    setSelected(selected === id ? null : id);
+    setSelected(id);
+    setIsClickScroll(true);
+
     const targetElement = document.getElementById(id);
     if (targetElement) {
       const elementRect = targetElement.getBoundingClientRect();
@@ -55,29 +95,52 @@ const EmploymentTestsIcons = () => {
       const windowHeight = window.innerHeight;
       const offset = (windowHeight - elementHeight) / 2;
 
-      const scrollPosition = elementRect.top + window.scrollY - offset;
-
       window.scrollTo({
-        top: scrollPosition,
+        top: elementRect.top + window.scrollY - offset,
         behavior: "smooth",
       });
+
+      setTimeout(() => {
+        setIsClickScroll(false);
+      }, 1000);
     }
   };
 
-  const scroll = (direction) => {
+  const handleHorizontalScroll = (direction) => {
     if (scrollRef.current) {
-      const { current } = scrollRef;
-      const scrollAmount = 150;
-      current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
+      const container = scrollRef.current;
+      const scrollAmount = 200;
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+
+      let newScrollLeft = container.scrollLeft;
+      if (direction === "left" && container.scrollLeft > 0) {
+        newScrollLeft = Math.max(0, container.scrollLeft - scrollAmount);
+      } else if (
+        direction === "right" &&
+        container.scrollLeft < maxScrollLeft
+      ) {
+        newScrollLeft = Math.min(
+          maxScrollLeft,
+          container.scrollLeft + scrollAmount
+        );
+      }
+
+      container.scrollTo({
+        left: newScrollLeft,
         behavior: "smooth",
       });
+
+      console.log(`Scrolling ${direction}: newScrollLeft = ${newScrollLeft}`);
     }
   };
 
   return (
     <div className="EmploymentTestsIcons-Wrap">
-      <button className="scroll-button left" onClick={() => scroll("left")}>
+      <button
+        className="scroll-button left"
+        onClick={() => handleHorizontalScroll("left")}
+        disabled={!canScrollLeft}
+      >
         <IoIosArrowBack />
       </button>
       <div className="EmploymentTestsIcons-Container" ref={scrollRef}>
@@ -109,7 +172,7 @@ const EmploymentTestsIcons = () => {
             icon: <HiOutlineSpeakerphone />,
             text: "درحال اعلام نتایج",
           },
-          { id: "Filter", icon: <FaFileSignature />, text: " ارزیابی تکمیلی " },
+          { id: "Filter", icon: <FaFileSignature />, text: "ارزیابی تکمیلی" },
           { id: "Selection", icon: <FiFilter />, text: "درحال گزینش" },
           { id: "Expired", icon: <BiSolidNoEntry />, text: "پایان آزمون" },
         ].map(({ id, icon, text }) => (
@@ -129,7 +192,11 @@ const EmploymentTestsIcons = () => {
           </button>
         ))}
       </div>
-      <button className="scroll-button right" onClick={() => scroll("right")}>
+      <button
+        className="scroll-button right"
+        onClick={() => handleHorizontalScroll("right")}
+        disabled={!canScrollRight}
+      >
         <IoIosArrowForward />
       </button>
     </div>

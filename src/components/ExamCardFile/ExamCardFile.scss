@@ -3,7 +3,7 @@ $tablet-resize: 900px;
 
 .exam-entryContainer {
   @include responsive-reverse($tablet) {
-    transform: scale(0.5);
+    transform: scale(0.4);
     position: absolute;
     top: -150px;
     right: calc(50% - 450px);
@@ -125,7 +125,6 @@ $tablet-resize: 900px;
           .info-cell {
             flex: 1;
             display: flex;
-            // justify-content: space-between;
             padding: 2px;
 
             &.full-width {
@@ -254,7 +253,7 @@ $tablet-resize: 900px;
 
 // تنظیمات پرینت
 @media print {
-  // مخفی کردن همه چیز به جز exam-entryContainer
+  
   body * {
     visibility: hidden;
   }
@@ -274,7 +273,7 @@ $tablet-resize: 900px;
     padding: 0;
   }
 
-  // مطمئن شدن که فقط exam-entry-card پرینت بشه و بقیه مخفی بشن
+  
   .printBtn,
   .examCardeDesc,
   h4 {
