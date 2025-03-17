@@ -10,10 +10,7 @@ import { Link } from "react-router-dom";
 import { getExamStatuses, getExams } from "../../apiService";
 
 const EmploymentTests = () => {
-  // دیباگ وضعیت‌ها
-  console.log("Component Rendered");
 
-  // گرفتن وضعیت آزمون‌ها
   const {
     data: examStatuses,
     isLoading: statusesLoading,
@@ -32,14 +29,13 @@ const EmploymentTests = () => {
     onError: (err) => console.log("Exam Statuses Error:", err),
   });
 
-  // گرفتن آزمون‌ها
   const {
     data: examCards,
     isLoading: examsLoading,
     error: examsError,
     isFetching: examsFetching,
   } = useQuery({
-    queryKey: ["exams"], // موقتاً وابستگی به examStatuses رو برداشتم
+    queryKey: ["exams"],
     queryFn: async () => {
       const data = await getExams();
       console.log("Exams Loaded:", data);
@@ -58,7 +54,7 @@ const EmploymentTests = () => {
   const fetching = statusesFetching || examsFetching;
   const error = statusesError || examsError;
 
-  // تابع فیلتر کردن آزمون‌ها
+  //  فیلتر کردن آزمون‌ها
   const getFilteredExams = (statusTitle) => {
     if (!examStatuses || !examCards) return [];
     const statusId = Object.keys(examStatuses).find(

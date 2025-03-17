@@ -26,9 +26,10 @@ $tablet-resize: 900px;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       text-align: center;
-      width: 23%;
+      width: 100%;
       transition: transform 0.3s ease-in-out;
       @include responsive($tablet) {
+        width: 23%;
         &:hover {
           transform: translateY(-5px);
         }
@@ -109,7 +110,9 @@ $tablet-resize: 900px;
         a {
           text-decoration: none;
           color: #fff;
-          width: 25%;
+          @include responsive($tablet-resize) {
+            width: 25%;
+          }
           button {
             width: 100%;
             padding: 10px;

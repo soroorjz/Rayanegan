@@ -23,13 +23,9 @@ const EmploymentTestsComp = ({ examData, title }) => {
               slidesPerView: 3,
               spaceBetween: 30,
             },
-            426: {
+            899: { 
               slidesPerView: 1,
               spaceBetween: 10,
-            },
-            0: {
-              slidesPerView: 1,
-              spaceBetween: 5,
             },
           }}
           className="active-exams-slider-sj"
