@@ -26,51 +26,59 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
       });
       const data = await response.json();
       localStorage.setItem("RayanToken", data.token);
+      return data.token;
     } catch (err) {
       console.error("Error fetching token:", err);
       setError("خطا در دریافت توکن!");
+      return null;
     }
   };
 
-  const fetchQuotas = async () => {
+  const fetchQuotas = async (token) => {
     try {
-      const token = localStorage.getItem("RayanToken");
       const response = await axios.get("/api/quota/quotas", {
         headers: {
           "RAYAN-TOKEN": token,
           "RAYAN-DEBUG": true,
         },
       });
-
-      // فیلتر کردن سهمیه‌هایی که quotaParent آنها null است
       const filteredQuotas = response.data.filter(
         (quota) => quota.quotaParent === null
       );
-      setQuotaOptions(filteredQuotas);
+      setQuotaOptions(Array.isArray(filteredQuotas) ? filteredQuotas : []);
     } catch (err) {
       console.error("Error fetching quotas:", err);
       setError("خطا در دریافت سهمیه‌ها!");
+      setQuotaOptions([]);
     }
   };
-  const fetchMilitaryStatuses = async () => {
+
+  const fetchMilitaryStatuses = async (token) => {
     try {
-      const token = localStorage.getItem("RayanToken");
       const response = await axios.get("/api/dutystatus/dutystatuses", {
-        headers: { "RAYAN-TOKEN": token },
+        headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
       });
-      setMilitaryOptions(response.data);
+      console.log("Military statuses response:", response.data); // برای دیباگ
+      setMilitaryOptions(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
       console.error("Error fetching military statuses:", err);
       setError("خطا در دریافت وضعیت نظام وظیفه!");
+      setMilitaryOptions([]);
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetchToken();
-      await fetchQuotas();
-      if (gender === "male") {
-        await fetchMilitaryStatuses();
+      setLoading(true);
+      const token = await fetchToken();
+      if (token) {
+        await Promise.all([
+          fetchQuotas(token),
+          gender === "male" ? fetchMilitaryStatuses(token) : Promise.resolve(),
+        ]);
+      } else {
+        setQuotaOptions([]);
+        setMilitaryOptions([]);
       }
       setLoading(false);
     };
@@ -83,13 +91,10 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
       is: (val) => val === "disability",
       then: yup.string().required("لطفاً نوع معلولیت را مشخص کنید"),
     }),
-
-    // اعتبارسنجی نظام وظیفه فقط برای مردان
     militaryStatus: yup.string().when("gender", {
       is: "male",
       then: yup.string().required("لطفاً وضعیت نظام وظیفه را انتخاب کنید"),
     }),
-
     serviceDuration: yup
       .number()
       .typeError("مدت خدمت باید عدد باشد")
@@ -98,12 +103,10 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
         is: "male",
         then: yup.number().required("لطفاً میزان خدمت را به ماه وارد کنید"),
       }),
-
     serviceEndDate: yup.string().when("gender", {
       is: "male",
       then: yup.string().required("لطفاً تاریخ پایان خدمت را وارد کنید"),
     }),
-
     workExperience: yup
       .number()
       .typeError("میزان سابقه باید عدد باشد")
@@ -123,27 +126,29 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      workExperienceEnabled: false, // مقدار پیش‌فرض
-      workExperience: 0, // برای جلوگیری از خطای اعتبارسنجی
+      workExperienceEnabled: false,
+      workExperience: 0,
     },
+    context: { gender }, // برای دسترسی به gender در schema
   });
 
   const [workExperienceEnabled, setWorkExperienceEnabled] = useState(false);
   const selectedQuota = watch("quota");
   const serviceEndDate = watch("serviceEndDate");
 
-  // تابع برای تغییر تاریخ پایان خدمت
   const handleDateChange = (value) => {
-    setValue("serviceEndDate", value.format("YYYY-MM-DD"));
+    if (value) {
+      setValue("serviceEndDate", value.format("YYYY-MM-DD"), {
+        shouldValidate: true,
+      });
+    }
   };
 
-  // تابع ثبت فرم
   const onSubmit = (data) => {
     console.log("Background Data:", data);
     onFinalSubmit();
   };
 
-  // تغییر وضعیت "سابقه کار دارم / ندارم"
   const handleToggle = () => {
     const newValue = !workExperienceEnabled;
     setWorkExperienceEnabled(newValue);
@@ -151,25 +156,26 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
     setValue("workExperience", newValue ? 0 : 0);
   };
 
+  if (loading) {
+    return <div>در حال بارگذاری...</div>;
+  }
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="background-form-sj">
       <div className="backgroundFormWrapper">
         <div className="form-group">
           <label>سهمیه:</label>
-          {loading ? (
-            <p>در حال بارگذاری...</p>
-          ) : error ? (
-            <p>{error}</p>
-          ) : (
-            <select {...register("quota")}>
-              <option value="">انتخاب کنید</option>
-              {quotaOptions.map((quota) => (
-                <option key={quota.quotaId} value={quota.quotaTitle}>
-                  {quota.quotaTitle}
-                </option>
-              ))}
-            </select>
-          )}
+          <select {...register("quota")}>
+            <option value="">انتخاب کنید</option>
+            {quotaOptions.map((quota) => (
+              <option key={quota.quotaId} value={quota.quotaTitle}>
+                {quota.quotaTitle}
+              </option>
+            ))}
+          </select>
           {errors.quota && <span>{errors.quota.message}</span>}
         </div>
 
@@ -187,23 +193,17 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
           <>
             <div className="form-group">
               <label>وضعیت نظام وظیفه:</label>
-              {loading ? (
-                <p>در حال بارگذاری...</p>
-              ) : error ? (
-                <p>{error}</p>
-              ) : (
-                <select {...register("militaryStatus")}>
-                  <option value="">انتخاب کنید</option>
-                  {militaryOptions.map((status) => (
-                    <option
-                      key={status.dutyStatusId}
-                      value={status.dutyStatusName}
-                    >
-                      {status.dutyStatusName}
-                    </option>
-                  ))}
-                </select>
-              )}
+              <select {...register("militaryStatus")}>
+                <option value="">انتخاب کنید</option>
+                {militaryOptions.map((status) => (
+                  <option
+                    key={status.dutyStatusId}
+                    value={status.dutyStatusName}
+                  >
+                    {status.dutyStatusName}
+                  </option>
+                ))}
+              </select>
               {errors.militaryStatus && (
                 <span>{errors.militaryStatus.message}</span>
               )}
