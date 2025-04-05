@@ -1,88 +1,64 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useStepFiveLogic } from "./useStepFiveLogic";
+import DatePicker from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
 import "./StepFive.scss";
 
 const StepFive = ({ onNext, onPrevious }) => {
-  const [formData, setFormData] = useState(() => {
-    const savedData = localStorage.getItem("stepFiveData");
-    return savedData
-      ? JSON.parse(savedData)
-      : {
-          quota: "آزاد",
-          militaryStatus: "پایان خدمت", // وضعیت نظام وظیفه
-          serviceDuration: "24ماه ", // میزان خدمت
-          serviceEndDate: "1400/03/25", // تاریخ پایان خدمت
-        };
-  });
-
-  const [isEditable, setIsEditable] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    localStorage.setItem("stepFiveData", JSON.stringify(formData));
-    console.log("Form submitted:", formData);
-    if (onNext) {
-      onNext(); // رفتن به مرحله نهایی (پیام موفقیت)
-    }
-  };
-
-  const handlePrevious = (e) => {
-    e.preventDefault();
-    localStorage.setItem("stepFiveData", JSON.stringify(formData));
-    if (onPrevious) {
-      onPrevious();
-    }
-  };
-
-  const toggleEdit = () => {
-    if (isEditable) {
-      localStorage.setItem("stepFiveData", JSON.stringify(formData));
-    }
-    setIsEditable(!isEditable);
-  };
-
-  useEffect(() => {
-    if (!localStorage.getItem("stepFiveData")) {
-      localStorage.setItem("stepFiveData", JSON.stringify(formData));
-    }
-  }, []);
+  const {
+    formData,
+    isEditable,
+    quotaOptions,
+    militaryOptions,
+    handleChange,
+    handleDateChange,
+    handleSubmit,
+    handlePrevious,
+    toggleEdit,
+  } = useStepFiveLogic({ onNext, onPrevious });
 
   return (
     <div className="step5-container">
       <form className="formFive" onSubmit={handleSubmit}>
         <div className="step5-form-group">
           <label>سهمیه:</label>
-          <input
-            type="text"
-            name="quota"
-            value={formData.quota}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="سهمیه خود را وارد کنید"
-          />
+          {isEditable ? (
+            <select name="quota" value={formData.quota} onChange={handleChange}>
+              <option value="">انتخاب کنید</option>
+              {quotaOptions.map((quota) => (
+                <option key={quota.quotaId} value={quota.quotaTitle}>
+                  {quota.quotaTitle}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <input type="text" value={formData.quota} readOnly />
+          )}
         </div>
 
         <div className="step5-form-group">
           <label>وضعیت نظام وظیفه:</label>
-          <input
-            type="text"
-            name="militaryStatus"
-            value={formData.militaryStatus}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="وضعیت نظام وظیفه خود را وارد کنید"
-          />
+          {isEditable ? (
+            <select
+              name="militaryStatus"
+              value={formData.militaryStatus}
+              onChange={handleChange}
+            >
+              <option value="">انتخاب کنید</option>
+              {militaryOptions.map((status) => (
+                <option key={status.dutyStatusId} value={status.dutyStatusName}>
+                  {status.dutyStatusName}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <input type="text" value={formData.militaryStatus} readOnly />
+          )}
         </div>
 
         <div className="step5-form-group">
-          <label>میزان خدمت:</label>
+          <label>میزان خدمت( به ماه):</label>
           <input
             type="text"
             name="serviceDuration"
@@ -95,14 +71,18 @@ const StepFive = ({ onNext, onPrevious }) => {
 
         <div className="step5-form-group">
           <label>تاریخ پایان خدمت:</label>
-          <input
-            type="text"
-            name="serviceEndDate"
-            value={formData.serviceEndDate}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="تاریخ پایان خدمت خود را وارد کنید"
-          />
+          {isEditable ? (
+            <DatePicker
+              value={formData.serviceEndDate}
+              onChange={(date) => handleDateChange(date, "serviceEndDate")}
+              calendar={persian}
+              locale={persian_fa}
+              format="YYYY/MM/DD"
+              calendarPosition="bottom-right"
+            />
+          ) : (
+            <input type="text" value={formData.serviceEndDate} readOnly />
+          )}
         </div>
 
         <div className="step5-form-actions">
@@ -111,8 +91,11 @@ const StepFive = ({ onNext, onPrevious }) => {
             className="step5-prev-button"
             onClick={handlePrevious}
           >
-            بازگشت
+            مرحله قبل
           </button>
+          {/* <button type="submit" className="step5-prev-button">
+            ثبت نهایی
+          </button> */}
           <button
             type="button"
             className="step5-edit-button"
