@@ -16,17 +16,17 @@ const CompletedForm = () => {
     "سوابق",
   ];
 
-  const [currentStep, setCurrentStep] = useState(0); // گام فعلی (0 برای StepOne)
+  const [currentStep, setCurrentStep] = useState(0); 
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1); // رفتن به گام بعدی
+      setCurrentStep(currentStep + 1); 
     }
   };
 
   const handlePrevious = () => {
     if (currentStep > 0) {
-      setCurrentStep(currentStep - 1); // بازگشت به گام قبلی
+      setCurrentStep(currentStep - 1); 
     }
   };
 
@@ -39,7 +39,7 @@ const CompletedForm = () => {
       case 2:
         return <StepThree onNext={handleNext} onPrevious={handlePrevious} />;
       case 3:
-        return <StepFour onNext={handleNext} onPrevious={handlePrevious} />; // رندر StepFour
+        return <StepFour onNext={handleNext} onPrevious={handlePrevious} />; 
       case 4:
         return <StepFive onNext={handleNext} onPrevious={handlePrevious} />; 
       default:

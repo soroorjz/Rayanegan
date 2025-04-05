@@ -1,223 +1,219 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./StepOne.scss";
+import { useFormLogic } from "./useFormLogic";
+import { useGeography } from "./useGeography";
+import TextInput from "./TextInput";
+import GenderRadio from "./GenderRadio";
 
 const StepOne = ({ onNext }) => {
-  const [formData, setFormData] = useState(() => {
-    const savedData = localStorage.getItem("formData");
-    return savedData
-      ? JSON.parse(savedData)
-      : {
-          nationalCode: "0015838791",
-          firstName: "محمد",
-          lastName: "معروفی",
-          fatherName: "احمد",
-          gender: "مرد",
-          phoneNumber: "1802142",
-          provice: "البرز",
-          city: "کرج",
-          birtDate:"1375/05/12",
-          religion: "اسلام(شیعه)",
-          mariage: "متاهل",
-          children: "0",
-        };
-  });
+  const {
+    formData,
+    isEditable,
+    errors,
+    handleChange,
+    toggleEdit,
+    handleSubmit,
+  } = useFormLogic({ onNext });
 
-  const [isEditable, setIsEditable] = useState(false); // حالت ویرایش
+  const { provinces, cities, loading, error, updateCities, allGeographies } =
+    useGeography();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const handleProvinceChange = (e) => {
+    const provinceId = e.target.value;
+    handleChange({ target: { name: "city", value: "" } }); // ریست شهر
+    handleChange(e); // آپدیت استان
+    updateCities(provinceId); // آپدیت لیست شهرها
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (onNext) {
-      localStorage.setItem("formData", JSON.stringify(formData)); // ذخیره در localStorage
-      onNext();
+  // تابع برای گرفتن نام از ID یا نمایش مقدار خام
+  const getDisplayValue = (key, type) => {
+    const value = formData[key];
+    if (!value) return "";
+    // اگه مقدار یه عدد (ID) باشه و API لود شده باشه، نام رو برگردون
+    if (!isNaN(value) && allGeographies.length > 0) {
+      const item =
+        type === "province"
+          ? provinces.find((p) => p.geographyId === Number(value))
+          : cities.find((c) => c.geographyId === Number(value));
+      return item ? item.geographyName : "";
     }
+    // اگه مقدار اسم باشه (مثل "البرز")، همون رو نشون بده
+    return value;
   };
-
-  const toggleEdit = () => {
-    if (isEditable) {
-      localStorage.setItem("formData", JSON.stringify(formData)); // ذخیره تغییرات هنگام غیرفعال کردن ویرایش
-    }
-    setIsEditable(!isEditable); // تغییر حالت ویرایش
-  };
-
-  // ذخیره اولیه در localStorage هنگام بارگذاری کامپوننت (اگر چیزی از قبل نباشد)
-  useEffect(() => {
-    if (!localStorage.getItem("formData")) {
-      localStorage.setItem("formData", JSON.stringify(formData));
-    }
-  }, []);
 
   return (
     <div className="step1-container">
       <form className="formOne" onSubmit={handleSubmit}>
-        <div className="step1-form-group">
-          <label>کد ملی:</label>
-          <input
-            type="text"
-            name="nationalCode"
-            value={formData.nationalCode}
-            onChange={handleChange}
-            readOnly={!isEditable} // فقط در حالت ویرایش قابل تغییر است
-            placeholder="کد ملی خود را وارد کنید"
-          />
-        </div>
-
-        <div className="step1-form-group">
-          <label>نام:</label>
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="نام خود را وارد کنید"
-          />
-        </div>
-
-        <div className="step1-form-group">
-          <label>نام خانوادگی:</label>
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="نام خانوادگی خود را وارد کنید"
-          />
-        </div>
-
-        <div className="step1-form-group">
-          <label>نام پدر:</label>
-          <input
-            type="text"
-            name="fatherName"
-            value={formData.fatherName}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="نام پدر خود را وارد کنید"
-          />
-        </div>
-
-        <div className="step1-form-group">
-          <label>شماره شناسنامه:</label>
-          <input
-            type="text"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="شماره شناسنامه خود را وارد کنید"
-          />
-        </div>
-        <div className="step1-form-group">
-          <label> تاریخ تولد:</label>
-          <input
-            type="text"
-            name="birtDate"
-            value={formData.birtDate}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="تاریخ تولد  خود را وارد کنید"
-          />
-        </div>
-
-        <div className="step1-form-group">
-          <label>استان:</label>
-          <input
-            type="text"
-            name="provice"
-            value={formData.provice}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="استان خود را وارد کنید"
-          />
-        </div>
-
-        <div className="step1-form-group">
-          <label>شهر:</label>
-          <input
-            type="text"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="شهر خود را وارد کنید"
-          />
-        </div>
-
-        <div className="step1-form-group">
-          <label>دین:</label>
-          <input
-            type="text"
-            name="religion"
-            value={formData.religion}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="دین خود را وارد کنید"
-          />
-        </div>
-
-        <div className="step1-form-group">
-          <label>تاهل:</label>
-          <input
-            type="text"
-            name="mariage"
-            value={formData.mariage}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="وضعیت تاهل خود را وارد کنید"
-          />
-        </div>
-
-        <div className="step1-form-group">
-          <label>تعداد فرزند:</label>
-          <input
-            type="text"
-            name="children"
-            value={formData.children}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="تعداد فرزندان خود را وارد کنید"
-          />
-        </div>
-
-        <div className="step1-form-group">
-          <label>جنسیت:</label>
-          <div className="step1-radio-group">
-            <label>
-              <input
-                type="radio"
-                name="gender"
-                value="مرد"
-                checked={formData.gender === "مرد"}
-                onChange={handleChange}
-                disabled={!isEditable} // فقط در حالت ویرایش قابل تغییر است
-              />
-              مرد
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="gender"
-                value="زن"
-                checked={formData.gender === "زن"}
-                onChange={handleChange}
-                disabled={!isEditable}
-              />
-              زن
-            </label>
-          </div>
-        </div>
+        <TextInput
+          label="کد ملی"
+          name="nationalCode"
+          value={formData.nationalCode}
+          onChange={handleChange}
+          isEditable={isEditable}
+          placeholder="کد ملی خود را وارد کنید"
+          error={errors.nationalCode}
+        />
+        <TextInput
+          label="نام"
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleChange}
+          isEditable={isEditable}
+          placeholder="نام خود را وارد کنید"
+          error={errors.firstName}
+        />
+        <TextInput
+          label="نام خانوادگی"
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleChange}
+          isEditable={isEditable}
+          placeholder="نام خانوادگی خود را وارد کنید"
+          error={errors.lastName}
+        />
+        <TextInput
+          label="نام پدر"
+          name="fatherName"
+          value={formData.fatherName}
+          onChange={handleChange}
+          isEditable={isEditable}
+          placeholder="نام پدر خود را وارد کنید"
+          error={errors.fatherName}
+        />
+        <TextInput
+          label="شماره شناسنامه"
+          name="phoneNumber"
+          value={formData.phoneNumber}
+          onChange={handleChange}
+          isEditable={isEditable}
+          placeholder="شماره شناسنامه خود را وارد کنید"
+          error={errors.phoneNumber}
+        />
+        <TextInput
+          label="تاریخ تولد"
+          name="birtDate"
+          value={formData.birtDate}
+          onChange={handleChange}
+          isEditable={isEditable}
+          placeholder="تاریخ تولد خود را وارد کنید"
+          error={errors.birtDate}
+        />
+        {isEditable ? (
+          <>
+            {loading && <p>در حال بارگذاری...</p>}
+            {error && <div className="error">{error}</div>}
+            {!loading && !error && (
+              <>
+                <div className="step1-form-group">
+                  <label>استان:</label>
+                  <select
+                    name="provice"
+                    value={formData.provice}
+                    onChange={handleProvinceChange}
+                  >
+                    <option value="">انتخاب کنید</option>
+                    {provinces.map((province) => (
+                      <option
+                        key={province.geographyId}
+                        value={province.geographyId}
+                      >
+                        {province.geographyName}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.provice && (
+                    <small className="error">{errors.provice}</small>
+                  )}
+                </div>
+                <div className="step1-form-group">
+                  <label>شهر:</label>
+                  <select
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
+                    disabled={!formData.provice}
+                  >
+                    <option value="">انتخاب کنید</option>
+                    {cities.map((city) => (
+                      <option key={city.geographyId} value={city.geographyId}>
+                        {city.geographyName}
+                      </option>
+                    ))}
+                  </select>
+                  {(errors.city ||
+                    (!formData.city && formData.provice && isEditable)) && (
+                    <small className="error">
+                      {errors.city || "لطفاً شهر را انتخاب کنید"}
+                    </small>
+                  )}
+                </div>
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <TextInput
+              label="استان"
+              name="provice"
+              value={getDisplayValue("provice", "province")}
+              onChange={handleChange}
+              isEditable={false}
+              placeholder="استان خود را وارد کنید"
+              error={errors.provice}
+            />
+            <TextInput
+              label="شهر"
+              name="city"
+              value={getDisplayValue("city", "city")}
+              onChange={handleChange}
+              isEditable={false}
+              placeholder="شهر خود را وارد کنید"
+              error={errors.city}
+            />
+          </>
+        )}
+        <TextInput
+          label="دین"
+          name="religion"
+          value={formData.religion}
+          onChange={handleChange}
+          isEditable={isEditable}
+          placeholder="دین خود را وارد کنید"
+          error={errors.religion}
+        />
+        <TextInput
+          label="تاهل"
+          name="mariage"
+          value={formData.mariage}
+          onChange={handleChange}
+          isEditable={isEditable}
+          placeholder="وضعیت تاهل خود را وارد کنید"
+          error={errors.mariage}
+        />
+        <TextInput
+          label="تعداد فرزند"
+          name="children"
+          value={formData.children}
+          onChange={handleChange}
+          isEditable={isEditable}
+          placeholder="تعداد فرزندان خود را وارد کنید"
+          error={errors.children}
+        />
+        <GenderRadio
+          value={formData.gender}
+          onChange={handleChange}
+          isEditable={isEditable}
+        />
 
         <div className="step1-form-actions">
-          <button type="submit" className="step1-next-button">
+          <button
+            type="submit"
+            className="step1-next-button"
+            disabled={
+              Object.keys(errors).length > 0 ||
+              (isEditable && formData.provice && !formData.city)
+            }
+          >
             مرحله بعد
           </button>
           <button

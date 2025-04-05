@@ -7,7 +7,7 @@ import BackgroundForm from "./BackgroundForm/BackgroundForm";
 import FileInput from "../FileInput";
 import { useNavigate } from "react-router";
 import Receipt from "./Receipt/Receipt";
-import Swal from "sweetalert2"; // اضافه کردن SweetAlert2
+import Swal from "sweetalert2"; 
 
 const SignUpStepper = ({initialData, successMessage, redirectAfterSubmit = true }) => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -36,7 +36,6 @@ const SignUpStepper = ({initialData, successMessage, redirectAfterSubmit = true 
   };
 
   const handleFinalSubmit = () => {
-    // نمایش SweetAlert به جای setTimeout
     Swal.fire({
       title: "ثبت نام شما با موفقیت انجام شد",
       text: "نام کاربری و رمزعبور، کد ملی شما می‌باشد.",
@@ -45,7 +44,7 @@ const SignUpStepper = ({initialData, successMessage, redirectAfterSubmit = true 
       confirmButtonColor: "#04364a",
     }).then((result) => {
       if (result.isConfirmed && redirectAfterSubmit) {
-        navigate("/logIn"); // هدایت به صفحه ورود بعد از تأیید
+        navigate("/logIn"); 
       }
     });
   };
