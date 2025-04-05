@@ -15,10 +15,9 @@
       grid-template-columns: 1fr;
     }
 
-
     .step4-form-group {
       margin-bottom: 15px;
-      @include responsive-reverse($tablet){
+      @include responsive-reverse($tablet) {
         width: 80%;
       }
 
@@ -31,6 +30,7 @@
 
       .step4-file-preview {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         border: 1px solid #ccc;
@@ -38,7 +38,9 @@
         padding: 10px;
         background: #f9f9f9;
         position: relative;
-
+        .error {
+          font-size: 12px;
+        }
         img {
           width: 45px;
           height: 35px;
@@ -129,6 +131,4 @@
       }
     }
   }
-
-  
 }

@@ -1,62 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useStepFourLogic } from "./useStepFourLogic";
 import "./StepFour.scss";
 
 const StepFour = ({ onNext, onPrevious }) => {
-  const [formData, setFormData] = useState(() => {
-    const savedData = localStorage.getItem("stepFourData");
-    return savedData
-      ? JSON.parse(savedData)
-      : {
-          idCard: "/assets/images/idCard.png", // تصویر کارت ملی
-          degree: "/assets/images/fa.png", // تصویر مدرک تحصیلی
-          birthCertPage1: "/assets/images/hghj.png", // تصویر صفحه اول شناسنامه
-          birthCertPage2: "/assets/images/page2.png", // تصویر صفحه دوم شناسنامه
-          birthCertOtherPages: "/assets/images/shxfdb.jpg", // تصویر سایر صفحات شناسنامه
-          otherDocs: "/assets/images/page2.png", // تصویر سایر مدارک
-        };
-  });
-
-  const [isEditable, setIsEditable] = useState(false);
-
-  const handleFileChange = (e, field) => {
-    const file = e.target.files[0];
-    if (file) {
-      const fileURL = URL.createObjectURL(file); // ایجاد URL موقت برای پیش‌نمایش
-      setFormData((prevData) => ({
-        ...prevData,
-        [field]: fileURL,
-      }));
-    }
-  };
-
-  const handleNext = (e) => {
-    e.preventDefault();
-    localStorage.setItem("stepFourData", JSON.stringify(formData));
-    if (onNext) {
-      onNext();
-    }
-  };
-
-  const handlePrevious = (e) => {
-    e.preventDefault();
-    localStorage.setItem("stepFourData", JSON.stringify(formData));
-    if (onPrevious) {
-      onPrevious();
-    }
-  };
-
-  const toggleEdit = () => {
-    if (isEditable) {
-      localStorage.setItem("stepFourData", JSON.stringify(formData));
-    }
-    setIsEditable(!isEditable);
-  };
-
-  useEffect(() => {
-    if (!localStorage.getItem("stepFourData")) {
-      localStorage.setItem("stepFourData", JSON.stringify(formData));
-    }
-  }, []);
+  const {
+    formData,
+    isEditable,
+    errors,
+    handleFileChange,
+    handleNext,
+    handlePrevious,
+    toggleEdit,
+  } = useStepFourLogic({ onNext, onPrevious });
 
   return (
     <div className="step4-container">
@@ -72,6 +27,7 @@ const StepFour = ({ onNext, onPrevious }) => {
                 onChange={(e) => handleFileChange(e, "idCard")}
               />
             )}
+            {errors.idCard && <span className="error">{errors.idCard}</span>}
           </div>
         </div>
 
@@ -86,6 +42,7 @@ const StepFour = ({ onNext, onPrevious }) => {
                 onChange={(e) => handleFileChange(e, "degree")}
               />
             )}
+            {errors.degree && <span className="error">{errors.degree}</span>}
           </div>
         </div>
 
@@ -99,6 +56,9 @@ const StepFour = ({ onNext, onPrevious }) => {
                 accept="image/*"
                 onChange={(e) => handleFileChange(e, "birthCertPage1")}
               />
+            )}
+            {errors.birthCertPage1 && (
+              <span className="error">{errors.birthCertPage1}</span>
             )}
           </div>
         </div>
@@ -114,6 +74,9 @@ const StepFour = ({ onNext, onPrevious }) => {
                 onChange={(e) => handleFileChange(e, "birthCertPage2")}
               />
             )}
+            {errors.birthCertPage2 && (
+              <span className="error">{errors.birthCertPage2}</span>
+            )}
           </div>
         </div>
 
@@ -128,6 +91,9 @@ const StepFour = ({ onNext, onPrevious }) => {
                 onChange={(e) => handleFileChange(e, "birthCertOtherPages")}
               />
             )}
+            {errors.birthCertOtherPages && (
+              <span className="error">{errors.birthCertOtherPages}</span>
+            )}
           </div>
         </div>
 
@@ -141,6 +107,9 @@ const StepFour = ({ onNext, onPrevious }) => {
                 accept="image/*"
                 onChange={(e) => handleFileChange(e, "otherDocs")}
               />
+            )}
+            {errors.otherDocs && (
+              <span className="error">{errors.otherDocs}</span>
             )}
           </div>
         </div>
