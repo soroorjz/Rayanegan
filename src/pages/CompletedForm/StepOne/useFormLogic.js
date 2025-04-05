@@ -84,6 +84,7 @@ export const useFormLogic = ({ onNext }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log("تغییر توی useFormLogic:", name, value); // دیباگ
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,

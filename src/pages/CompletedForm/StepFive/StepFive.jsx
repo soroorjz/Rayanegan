@@ -5,7 +5,8 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import "./StepFive.scss";
 
-const StepFive = ({ onNext, onPrevious }) => {
+const StepFive = ({ onNext, onPrevious, gender }) => {
+  // اضافه کردن gender
   const {
     formData,
     isEditable,
@@ -36,38 +37,44 @@ const StepFive = ({ onNext, onPrevious }) => {
             <input type="text" value={formData.quota} readOnly />
           )}
         </div>
+        {gender === "مرد" && (
+          <>
+            <div className="step5-form-group">
+              <label>وضعیت نظام وظیفه:</label>
+              {isEditable ? (
+                <select
+                  name="militaryStatus"
+                  value={formData.militaryStatus}
+                  onChange={handleChange}
+                >
+                  <option value="">انتخاب کنید</option>
+                  {militaryOptions.map((status) => (
+                    <option
+                      key={status.dutyStatusId}
+                      value={status.dutyStatusName}
+                    >
+                      {status.dutyStatusName}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input type="text" value={formData.militaryStatus} readOnly />
+              )}
+            </div>
 
-        <div className="step5-form-group">
-          <label>وضعیت نظام وظیفه:</label>
-          {isEditable ? (
-            <select
-              name="militaryStatus"
-              value={formData.militaryStatus}
-              onChange={handleChange}
-            >
-              <option value="">انتخاب کنید</option>
-              {militaryOptions.map((status) => (
-                <option key={status.dutyStatusId} value={status.dutyStatusName}>
-                  {status.dutyStatusName}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <input type="text" value={formData.militaryStatus} readOnly />
-          )}
-        </div>
-
-        <div className="step5-form-group">
-          <label>میزان خدمت( به ماه):</label>
-          <input
-            type="text"
-            name="serviceDuration"
-            value={formData.serviceDuration}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="میزان خدمت خود را وارد کنید"
-          />
-        </div>
+            <div className="step5-form-group">
+              <label>میزان خدمت( به ماه):</label>
+              <input
+                type="text"
+                name="serviceDuration"
+                value={formData.serviceDuration}
+                onChange={handleChange}
+                readOnly={!isEditable}
+                placeholder="میزان خدمت خود را وارد کنید"
+              />
+            </div>
+          </>
+        )}
 
         <div className="step5-form-group">
           <label>تاریخ پایان خدمت:</label>
@@ -93,9 +100,6 @@ const StepFive = ({ onNext, onPrevious }) => {
           >
             مرحله قبل
           </button>
-          {/* <button type="submit" className="step5-prev-button">
-            ثبت نهایی
-          </button> */}
           <button
             type="button"
             className="step5-edit-button"

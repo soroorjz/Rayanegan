@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./StepOne.scss";
 import { useFormLogic } from "./useFormLogic";
 import { useGeography } from "./useGeography";
@@ -8,7 +8,7 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 
-const StepOne = ({ onNext }) => {
+const StepOne = ({ onNext, onGenderChange }) => {
   const {
     formData,
     isEditable,
@@ -45,6 +45,18 @@ const StepOne = ({ onNext }) => {
     }
     return value;
   };
+  const handleGenderChange = (e) => {
+    console.log("جنسیت انتخاب‌شده توی StepOne:", e.target.value); // دیباگ
+    handleChange(e);
+    onGenderChange(e.target.value);
+  };
+
+  useEffect(() => {
+    if (formData.gender) {
+      console.log("جنسیت اولیه فرستاده‌شده به والد:", formData.gender); // دیباگ
+      onGenderChange(formData.gender);
+    }
+  }, [formData.gender, onGenderChange]);
 
   return (
     <div className="step1-container">
@@ -226,7 +238,7 @@ const StepOne = ({ onNext }) => {
         />
         <GenderRadio
           value={formData.gender}
-          onChange={handleChange}
+          onChange={handleGenderChange} // استفاده از تابع جدید
           isEditable={isEditable}
         />
 
