@@ -4,6 +4,9 @@ import { useFormLogic } from "./useFormLogic";
 import { useGeography } from "./useGeography";
 import TextInput from "./TextInput";
 import GenderRadio from "./GenderRadio";
+import DatePicker from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
 
 const StepOne = ({ onNext }) => {
   const {
@@ -25,11 +28,14 @@ const StepOne = ({ onNext }) => {
     updateCities(provinceId); // آپدیت لیست شهرها
   };
 
-  // تابع برای گرفتن نام از ID یا نمایش مقدار خام
+  const handleDateChange = (date) => {
+    const formattedDate = date ? date.format("YYYY/MM/DD") : "";
+    handleChange({ target: { name: "birtDate", value: formattedDate } });
+  };
+
   const getDisplayValue = (key, type) => {
     const value = formData[key];
     if (!value) return "";
-    // اگه مقدار یه عدد (ID) باشه و API لود شده باشه، نام رو برگردون
     if (!isNaN(value) && allGeographies.length > 0) {
       const item =
         type === "province"
@@ -37,7 +43,6 @@ const StepOne = ({ onNext }) => {
           : cities.find((c) => c.geographyId === Number(value));
       return item ? item.geographyName : "";
     }
-    // اگه مقدار اسم باشه (مثل "البرز")، همون رو نشون بده
     return value;
   };
 
@@ -89,15 +94,35 @@ const StepOne = ({ onNext }) => {
           placeholder="شماره شناسنامه خود را وارد کنید"
           error={errors.phoneNumber}
         />
-        <TextInput
-          label="تاریخ تولد"
-          name="birtDate"
-          value={formData.birtDate}
-          onChange={handleChange}
-          isEditable={isEditable}
-          placeholder="تاریخ تولد خود را وارد کنید"
-          error={errors.birtDate}
-        />
+        {isEditable ? (
+          <div className="step1-form-group">
+            <label>تاریخ تولد:</label>
+            <DatePicker
+              style={{ width: "100%" }}
+              id="birtDate"
+              name="birtDate"
+              calendar={persian}
+              locale={persian_fa}
+              value={formData.birtDate}
+              onChange={handleDateChange}
+              placeholder="تاریخ تولد را انتخاب کنید"
+              format="YYYY/MM/DD"
+            />
+            {errors.birtDate && (
+              <small className="error">{errors.birtDate}</small>
+            )}
+          </div>
+        ) : (
+          <TextInput
+            label="تاریخ تولد"
+            name="birtDate"
+            value={formData.birtDate}
+            onChange={handleChange}
+            isEditable={false}
+            placeholder="تاریخ تولد خود را وارد کنید"
+            error={errors.birtDate}
+          />
+        )}
         {isEditable ? (
           <>
             {loading && <p>در حال بارگذاری...</p>}
