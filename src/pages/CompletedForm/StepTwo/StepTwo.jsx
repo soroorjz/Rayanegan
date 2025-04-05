@@ -72,18 +72,14 @@ const StepTwo = ({ onNext, onPrevious }) => {
     e.preventDefault();
     if (Object.keys(errors).length === 0) {
       localStorage.setItem("stepTwoData", JSON.stringify(formData));
-      if (onNext) {
-        onNext();
-      }
+      if (onNext) onNext();
     }
   };
 
   const handlePrevious = (e) => {
     e.preventDefault();
     localStorage.setItem("stepTwoData", JSON.stringify(formData));
-    if (onPrevious) {
-      onPrevious();
-    }
+    if (onPrevious) onPrevious();
   };
 
   const toggleEdit = () => {
@@ -133,7 +129,7 @@ const StepTwo = ({ onNext, onPrevious }) => {
             <input
               type="text"
               name="studentType"
-              value={formData.uniKind}
+              value={formData.studentType}
               onChange={handleChange}
               readOnly
               placeholder="مقطع تحصیلی خود را وارد کنید"
@@ -143,7 +139,6 @@ const StepTwo = ({ onNext, onPrevious }) => {
 
         <div className="step2-form-group">
           <label>رشته تحصیلی:</label>
-
           <input
             type="text"
             name="major"
