@@ -1,85 +1,72 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useStepThreeLogic } from "./useStepThreeLogic";
 import "./StepThree.scss";
 
 const StepThree = ({ onNext, onPrevious }) => {
-  const [formData, setFormData] = useState(() => {
-    const savedData = localStorage.getItem("stepThreeData");
-    return savedData
-      ? JSON.parse(savedData)
-      : {
-          postalCode: "315594771",
-          city: "تهران",
-          address: " البرز، کرج، میدان اسبی ",
-          mobile: "09355986776", // مقدار پیش‌فرض برای تلفن همراه
-          province: "تهران", // مقدار پیش‌فرض برای استان
-        };
-  });
-
-  const [isEditable, setIsEditable] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleNext = (e) => {
-    e.preventDefault();
-    localStorage.setItem("stepThreeData", JSON.stringify(formData));
-    if (onNext) {
-      onNext();
-    }
-  };
-
-  const handlePrevious = (e) => {
-    e.preventDefault();
-    localStorage.setItem("stepThreeData", JSON.stringify(formData));
-    if (onPrevious) {
-      onPrevious();
-    }
-  };
-
-  const toggleEdit = () => {
-    if (isEditable) {
-      localStorage.setItem("stepThreeData", JSON.stringify(formData));
-    }
-    setIsEditable(!isEditable);
-  };
-
-  useEffect(() => {
-    if (!localStorage.getItem("stepThreeData")) {
-      localStorage.setItem("stepThreeData", JSON.stringify(formData));
-    }
-  }, []);
+  const {
+    formData,
+    isEditable,
+    provinces,
+    cities,
+    errors,
+    handleChange,
+    handleProvinceChange,
+    handleCityChange,
+    handleNext,
+    handlePrevious,
+    toggleEdit,
+  } = useStepThreeLogic({ onNext, onPrevious });
 
   return (
     <div className="step3-container">
       <form className="formThree" onSubmit={handleNext}>
-        
         <div className="step3-form-group">
           <label>استان:</label>
-          <input
-            type="text"
-            name="province"
-            value={formData.province}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="استان خود را وارد کنید"
-          />
+          {isEditable ? (
+            <select
+              name="province"
+              value={
+                provinces.find((p) => p.geographyName === formData.province)
+                  ?.geographyId || ""
+              }
+              onChange={handleProvinceChange}
+            >
+              <option value="">انتخاب کنید</option>
+              {provinces.map((province) => (
+                <option key={province.geographyId} value={province.geographyId}>
+                  {province.geographyName}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <input type="text" value={formData.province} readOnly />
+          )}
+          {errors.province && <span className="error">{errors.province}</span>}
         </div>
 
         <div className="step3-form-group">
           <label>شهر:</label>
-          <input
-            type="text"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-            readOnly={!isEditable}
-            placeholder="شهر خود را وارد کنید"
-          />
+          {isEditable ? (
+            <select
+              name="city"
+              value={
+                cities.find((c) => c.geographyName === formData.city)
+                  ?.geographyId || ""
+              }
+              onChange={handleCityChange}
+              disabled={!formData.province}
+            >
+              <option value="">انتخاب کنید</option>
+              {cities.map((city) => (
+                <option key={city.geographyId} value={city.geographyId}>
+                  {city.geographyName}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <input type="text" value={formData.city} readOnly />
+          )}
+          {errors.city && <span className="error">{errors.city}</span>}
         </div>
 
         <div className="step3-form-group">
@@ -93,6 +80,7 @@ const StepThree = ({ onNext, onPrevious }) => {
             placeholder="آدرس خود را وارد کنید"
           />
         </div>
+
         <div className="step3-form-group">
           <label>کد پستی:</label>
           <input
@@ -103,6 +91,9 @@ const StepThree = ({ onNext, onPrevious }) => {
             readOnly={!isEditable}
             placeholder="کد پستی خود را وارد کنید"
           />
+          {errors.postalCode && (
+            <span className="error">{errors.postalCode}</span>
+          )}
         </div>
 
         <div className="step3-form-group">
@@ -115,9 +106,8 @@ const StepThree = ({ onNext, onPrevious }) => {
             readOnly={!isEditable}
             placeholder="تلفن همراه خود را وارد کنید"
           />
+          {errors.mobile && <span className="error">{errors.mobile}</span>}
         </div>
-
-        
 
         <div className="step3-form-actions">
           <button
