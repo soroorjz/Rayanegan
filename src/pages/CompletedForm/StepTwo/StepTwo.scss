@@ -27,9 +27,13 @@
         font-size: 14px;
         color: #333;
       }
-
+      .rmdp-input {
+        height: unset;
+        border: none;
+      }
       input[type="text"],
-      select {
+      select,
+      .rmdp-input {
         width: 100%;
         padding: 10px;
         border: 1px solid #ccc;
@@ -108,7 +112,7 @@
       .step2-edit-button {
         background-color: #f39c12;
         color: white;
-       
+
         border: none;
         border-radius: 4px;
         cursor: pointer;
