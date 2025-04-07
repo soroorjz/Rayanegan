@@ -7,14 +7,12 @@ a {
   color: #dafffb;
 }
 
-// استایل پیام‌های خطا
 .error {
   color: #e50404;
   margin-top: 3px;
   font-size: 12px;
 }
 
-// استایل نوار بالا
 .navBarTopPart {
   position: fixed;
   background-color: #fff;
@@ -80,6 +78,8 @@ a {
       @include responsive($tablet-resize) {
         width: fit-content;
       }
+    }
+    .navTotarialBtn{
     }
   }
 
@@ -151,12 +151,10 @@ a {
   }
 }
 
-// کلاس برای تغییر رنگ نوار هنگام اسکرول
 .scrolledNav {
   background-color: #fff;
 }
 
-// استایل overlay
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -164,7 +162,7 @@ a {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.3);
-  z-index: 99998; // یک کمتر از سایدبار
+  z-index: 99998;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease-in-out;
@@ -175,7 +173,6 @@ a {
   }
 }
 
-// استایل سایدبار
 .sidebar {
   position: fixed;
   z-index: 99999;

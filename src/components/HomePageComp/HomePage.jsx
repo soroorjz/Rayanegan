@@ -134,7 +134,7 @@ const HomePage = () => {
 
   return (
     <div className="homeContainer">
-      <NavbarTop />
+      <NavbarTop showTutorialBtn={true} startIntro={startIntro} />
       <Navbar />
       <div id="home">
         <Banner />
@@ -154,9 +154,9 @@ const HomePage = () => {
       <div id="footer">
         <Footer />
       </div>
-      <button className="tutorialBtn" onClick={startIntro}>
+      {/* <button className="tutorialBtn" onClick={startIntro}>
         <RiQuestionFill />
-      </button>
+      </button> */}
       <ChatBot />
     </div>
   );
