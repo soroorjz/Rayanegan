@@ -84,7 +84,7 @@ const ExamInfo = () => {
               localStorage.setItem("hasSeenExamTutorial", "true");
             } else {
               console.log(
-                "موقعیت #RegistrationBtn قابل محاسبه نیست، دوباره تلاش می‌کنم..."
+                "موقعیت #RegistrationBtn قابل محاسبه نیست"
               );
               setTimeout(() => {
                 startTutorial();

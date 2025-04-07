@@ -5,6 +5,7 @@ import "swiper/css/navigation";
 import "./EmploymentTestsComp.scss";
 import { Link } from "react-router";
 import { useAuth } from "../../AuthContext";
+import ExamCardSkeleton from "../../pages/EmploymentTests/ExamCardSkeleton";
 
 const EmploymentTestsComp = ({ examData, title }) => {
   const { user } = useAuth();
@@ -60,7 +61,7 @@ const EmploymentTestsComp = ({ examData, title }) => {
           ))}
         </Swiper>
       ) : (
-        <p className="no-exam-message">درحال حاضر آزمونی وجود ندارد</p>
+        <ExamCardSkeleton/>
       )}
     </div>
   );

@@ -8,6 +8,7 @@ import NavbarTop from "../../components/HomePageComp/NavbarTop/NavbarTop";
 import EmploymentTestsBanner from "../../components/EmploymentTestsComp/EmploymentTestsBanner/EmploymentTestsBanner";
 import { Link } from "react-router-dom";
 import { getExamStatuses, getExams } from "../../apiService";
+import ExamCardSkeleton from "./ExamCardSkeleton";
 
 const EmploymentTests = () => {
 
@@ -66,7 +67,7 @@ const EmploymentTests = () => {
 
   // if (loading) {
   //   console.log("Still Loading...");
-  //   return <div className="EmploymentTests">در حال بارگذاری...</div>;
+  //   return <ExamCardSkeleton/>;
   // }
 
   if (error) {
@@ -90,7 +91,7 @@ const EmploymentTests = () => {
         <EmploymentTestsIcons />
       </div>
       {fetching && (
-        <div className="fetching-message">در حال به‌روزرسانی داده‌ها...</div>
+        <ExamCardSkeleton/>
       )}
       <div id="InProgress" className="EmploymentTestsComp">
         <EmploymentTestsComp
@@ -157,6 +158,9 @@ const EmploymentTests = () => {
           <IoMdHome />
         </button>
       </Link>
+      {/* <Link to="/ExamCardSkeleton">
+       4532452
+      </Link> */}
     </div>
   );
 };
