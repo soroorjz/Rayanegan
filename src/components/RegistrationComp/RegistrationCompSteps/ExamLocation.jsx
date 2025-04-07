@@ -49,7 +49,7 @@ const ExamLocation = ({ onNext, handlePreviousStep }) => {
       // چک کردن کش
       const cachedGeoData = localStorage.getItem("GeoData");
       if (cachedGeoData) {
-        console.log("داده‌ها از کش خوانده شدند");
+        // console.log("داده‌ها از کش خوانده شدند");
         const geoData = JSON.parse(cachedGeoData);
         setProvinces(geoData.filter((item) => item.geographyParent === null));
         setAllGeographies(geoData);

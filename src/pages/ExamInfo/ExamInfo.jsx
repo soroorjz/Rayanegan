@@ -178,7 +178,12 @@ const ExamInfo = () => {
 
   return (
     <div className="examInfoContainer">
-      <NavbarTop hideJobSearch={true} />
+      <NavbarTop
+        hideJobSearch={true}
+        showTutorialBtn={true}
+        startIntro={startTutorial}
+        tutorialBtnClass="ExamInfo-tutorialBtn"
+      />
       <Countdown registrationDeadline={endDate} startDate={startDate} />
 
       <ExamInfoCard
@@ -192,7 +197,7 @@ const ExamInfo = () => {
 
       <ExamInfoComponent
         startDate={startDate}
-        endDate={formattedEndDate} // فرمت رشته‌ای برای NotificationList
+        endDate={formattedEndDate} 
         cardIssueDate={cardIssueDate}
         eventDate={eventDate}
         toPersianDigits={toPersianDigits}
@@ -204,9 +209,6 @@ const ExamInfo = () => {
         </button>{" "}
       </Link>
 
-      <button className="ExamInfo-tutorialBtn" onClick={startTutorial}>
-        <RiQuestionFill />
-      </button>
     </div>
   );
 };

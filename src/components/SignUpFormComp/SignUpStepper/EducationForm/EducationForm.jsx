@@ -74,7 +74,7 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
       const response = await axios.get("/api/grade/grades", {
         headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
       });
-      console.log("Degrees response:", response.data); // برای دیباگ
+      // console.log("Degrees response:", response.data); // برای دیباگ
       setDegrees(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
       console.error("Error fetching degrees:", err);
@@ -87,7 +87,7 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
       const response = await axios.get("/api/universitytype/universitytypes", {
         headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
       });
-      console.log("UniversityTypes response:", response.data); // برای دیباگ
+      // console.log("UniversityTypes response:", response.data); // برای دیباگ
       setUniversityTypes(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
       console.error("Error fetching university types:", err);

@@ -12,7 +12,7 @@ const ExamSignUpForm = ({
   redirectAfterSubmit,
   mode = "signup",
 }) => {
-  // اگه mode برابر "edit" باشه، اطلاعات اولیه رو از JSON می‌گیره
+
   const initialData = mode === "edit" ? userData : {};
 
   return (
@@ -23,7 +23,7 @@ const ExamSignUpForm = ({
         successMessage={successMessage}
         redirectAfterSubmit={redirectAfterSubmit}
         mode={mode}
-        initialData={initialData} // پاس دادن اطلاعات اولیه
+        initialData={initialData}
       />
 
       <Link to="/">

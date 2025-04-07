@@ -58,7 +58,7 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
       const response = await axios.get("/api/dutystatus/dutystatuses", {
         headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
       });
-      console.log("Military statuses response:", response.data); // برای دیباگ
+      // console.log("Military statuses response:", response.data); // برای دیباگ
       setMilitaryOptions(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
       console.error("Error fetching military statuses:", err);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SignUpStepper.scss";
 import SignUpForm from "../SignUpForm";
 import EducationForm from "./EducationForm/EducationForm";
@@ -6,22 +6,37 @@ import ContactForm from "./ContactForm/ContactForm";
 import BackgroundForm from "./BackgroundForm/BackgroundForm";
 import FileInput from "../FileInput";
 import { useNavigate } from "react-router";
-import Receipt from "./Receipt/Receipt";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
+import axios from "axios";
 
-const SignUpStepper = ({initialData, successMessage, redirectAfterSubmit = true }) => {
+const SignUpStepper = ({
+  initialData,
+  successMessage,
+  redirectAfterSubmit = true,
+}) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [showModal, setShowModal] = useState(false);
+  const [allFormData, setAllFormData] = useState({});
   const [gender, setGender] = useState(null);
   const persianNumbers = ["۱", "۲", "۳", "۴", "۵"];
   const navigate = useNavigate();
   const steps = [
-    " اطلاعات فردی",
-    "اطلاعات تحصیلی ",
-    " اطلاعات محل سکونت",
+    "اطلاعات فردی",
+    "اطلاعات تحصیلی",
+    "اطلاعات محل سکونت",
     "بارگذاری تصاویر",
     "سوابق",
   ];
+
+  useEffect(() => {
+    const savedData = JSON.parse(localStorage.getItem("signupData")) || {};
+    setAllFormData(savedData);
+  }, []);
+
+  const updateFormData = (stepData, stepKey) => {
+    const updatedData = { ...allFormData, [stepKey]: stepData };
+    setAllFormData(updatedData);
+    localStorage.setItem("signupData", JSON.stringify(updatedData));
+  };
 
   const handleNextStep = () => {
     if (currentStep < steps.length) {
@@ -35,60 +50,108 @@ const SignUpStepper = ({initialData, successMessage, redirectAfterSubmit = true 
     }
   };
 
-  const handleFinalSubmit = () => {
-    Swal.fire({
-      title: "ثبت نام شما با موفقیت انجام شد",
-      text: "نام کاربری و رمزعبور، کد ملی شما می‌باشد.",
-      icon: "success",
-      confirmButtonText: "تأیید",
-      confirmButtonColor: "#04364a",
-    }).then((result) => {
-      if (result.isConfirmed && redirectAfterSubmit) {
-        navigate("/logIn"); 
+  const handleFinalSubmit = async () => {
+    try {
+      const token = localStorage.getItem("RayanToken");
+      if (!token) {
+        throw new Error("توکن نگرفت");
       }
-    });
+
+      const apiData = {
+        preRegisterFirstName: allFormData.step1?.firstName || "",
+        preRegisterLastName: allFormData.step1?.lastName || "",
+        preRegisterNationalCode: allFormData.step1?.nationalCode || "",
+      };
+      console.log("Data being sent to API:", apiData);
+
+      const response = await axios.post(
+        "https://smp.devrayan.ir/api/preregisters",
+        apiData,
+        {
+          headers: {
+            "RAYAN-TOKEN": token,
+            "RAYAN-DEBUG": true,
+          },
+        }
+      );
+      console.log("Response from API:", response.data);
+
+      localStorage.removeItem("signupData");
+
+      Swal.fire({
+        title: "ثبت نام شما با موفقیت انجام شد",
+        text: `نام کاربری و رمزعبور، کد ملی شما می‌باشد. ID ثبت‌شده: ${
+          response.data.preRegisterId || "نامشخص"
+        }`,
+        icon: "success",
+        confirmButtonText: "تأیید",
+        confirmButtonColor: "#04364a",
+      }).then((result) => {
+        if (result.isConfirmed && redirectAfterSubmit) {
+          navigate("/logIn");
+        }
+      });
+    } catch (error) {
+      console.error("Error posting data:", error.response || error);
+      Swal.fire({
+        title: "خطا",
+        text:
+          error.response?.data?.message ||
+          error.message ||
+          "مشکلی در ثبت‌نام پیش آمد.",
+        icon: "error",
+      });
+    }
   };
 
   const renderContent = () => {
     switch (currentStep) {
       case 1:
-        return <SignUpForm initialData={initialData} onNext={handleNextStep} setGender={setGender} />;
+        return (
+          <SignUpForm
+            initialData={initialData}
+            onNext={handleNextStep}
+            setGender={setGender}
+            updateFormData={updateFormData}
+            savedData={allFormData.step1 || {}}
+          />
+        );
       case 2:
         return (
-          <div>
-            <EducationForm
-              handlePreviousStep={handlePreviousStep}
-              onNext={handleNextStep}
-            />
-          </div>
+          <EducationForm
+            handlePreviousStep={handlePreviousStep}
+            onNext={handleNextStep}
+            updateFormData={updateFormData}
+            savedData={allFormData.step2 || {}}
+          />
         );
       case 3:
         return (
-          <div>
-            <ContactForm
-              handlePreviousStep={handlePreviousStep}
-              onNext={handleNextStep}
-            />
-          </div>
+          <ContactForm
+            handlePreviousStep={handlePreviousStep}
+            onNext={handleNextStep}
+            updateFormData={updateFormData}
+            savedData={allFormData.step3 || {}}
+          />
         );
       case 4:
         return (
-          <div className="fileInputPart">
-            <FileInput
-              handlePreviousStep={handlePreviousStep}
-              onNext={handleNextStep}
-            />
-          </div>
+          <FileInput
+            handlePreviousStep={handlePreviousStep}
+            onNext={handleNextStep}
+            updateFormData={updateFormData}
+            savedData={allFormData.step4 || {}}
+          />
         );
       case 5:
         return (
-          <div>
-            <BackgroundForm
-              handlePreviousStep={handlePreviousStep}
-              onFinalSubmit={handleFinalSubmit}
-              gender={gender}
-            />
-          </div>
+          <BackgroundForm
+            handlePreviousStep={handlePreviousStep}
+            onFinalSubmit={handleFinalSubmit}
+            gender={gender}
+            updateFormData={updateFormData}
+            savedData={allFormData.step5 || {}}
+          />
         );
       default:
         return null;

@@ -49,7 +49,7 @@ const SelectInput = ({ formData, handleChange, errors }) => {
       const cachedReligionData = localStorage.getItem("ReligionData");
 
       if (cachedGeoData && cachedReligionData) {
-        console.log(" داده‌ها از کش خوانده شدند");
+        // console.log(" داده‌ها از کش خوانده شدند");
         const geoData = JSON.parse(cachedGeoData);
         const religionData = JSON.parse(cachedReligionData);
         setProvinces(geoData.filter((item) => item.geographyParent === null));
