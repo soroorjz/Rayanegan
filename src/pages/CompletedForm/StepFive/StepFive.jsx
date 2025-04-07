@@ -1,12 +1,12 @@
 import React from "react";
 import { useStepFiveLogic } from "./useStepFiveLogic";
 import DatePicker from "react-multi-date-picker";
+import Swal from "sweetalert2";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import "./StepFive.scss";
 
-const StepFive = ({ onNext, onPrevious, gender }) => {
-  // اضافه کردن gender
+const StepFive = ({ onNext, onPrevious, gender, onReset }) => {
   const {
     formData,
     isEditable,
@@ -18,6 +18,19 @@ const StepFive = ({ onNext, onPrevious, gender }) => {
     handlePrevious,
     toggleEdit,
   } = useStepFiveLogic({ onNext, onPrevious });
+
+  const handleFinalConfirmation = () => {
+    Swal.fire({
+      title: "تأیید نهایی",
+      text: "اطلاعات شما با موفقیت تأیید شد!",
+      icon: "success",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+    }).then(() => {
+      onReset(); // استفاده از onReset برای بازگشت به مرحله اول
+    });
+  };
 
   return (
     <div className="step5-container">
@@ -106,6 +119,14 @@ const StepFive = ({ onNext, onPrevious, gender }) => {
             onClick={toggleEdit}
           >
             {isEditable ? "ذخیره" : "ویرایش"}
+          </button>
+
+          <button
+            type="button"
+            className="step5-submit-button"
+            onClick={handleFinalConfirmation}
+          >
+            تأیید نهایی
           </button>
         </div>
       </form>

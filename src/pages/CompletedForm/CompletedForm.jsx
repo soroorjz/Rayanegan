@@ -17,7 +17,7 @@ const CompletedForm = () => {
   ];
 
   const [currentStep, setCurrentStep] = useState(0);
-  const [gender, setGender] = useState(""); // اضافه کردن state برای جنسیت
+  const [gender, setGender] = useState("");
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
@@ -31,8 +31,13 @@ const CompletedForm = () => {
     }
   };
 
+  // تابع جدید برای بازگشت به مرحله اول
+  const resetToFirstStep = () => {
+    setCurrentStep(0);
+  };
+
   const handleGenderChange = (newGender) => {
-    console.log("جنسیت جدید توی CompletedForm:", newGender); // دیباگ
+    console.log("جنسیت جدید توی CompletedForm:", newGender);
     setGender(newGender);
   };
 
@@ -53,7 +58,8 @@ const CompletedForm = () => {
           <StepFive
             onNext={handleNext}
             onPrevious={handlePrevious}
-            gender={gender} // پاس دادن جنسیت به StepFive
+            gender={gender}
+            onReset={resetToFirstStep} // پاس دادن تابع جدید
           />
         );
       default:
