@@ -43,7 +43,7 @@ function App() {
         <Route path="/RegistrationPage" element={<RegistrationPage />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/ChangePassword" element={<ChangePassword />} />
-        <Route path="/CardListSkeleton" element={<CardListSkeleton />} />
+        {/* <Route path="/CardListSkeleton" element={<CardListSkeleton />} /> */}
         
       </Routes>
     </AuthProvider>

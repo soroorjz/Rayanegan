@@ -89,9 +89,22 @@ $tablet-resize: 900px;
     display: none;
   }
   .infoConfirmed {
-    width: 80%;
+    width:95%;
     display: flex;
     gap: 5px;
+    @include responsive($tablet) {
+      width: 80%;
+    }
+  }
+  .edit-profile-link {
+    text-align: right;
+    align-self: flex-start;
+    width:95%;
+    margin: 0 auto;
+    @include responsive($tablet) {
+      width: 80%;
+
+    }
   }
   .ConfirmInfoBtns {
     display: flex;
@@ -107,8 +120,7 @@ $tablet-resize: 900px;
     button {
       @include responsive($tablet) {
         width: 20%;
-      margin: 20px 0;
-
+        margin: 20px 0;
       }
       display: block;
       margin: 10px 0 70px;
@@ -124,7 +136,7 @@ $tablet-resize: 900px;
       &:hover {
         background: #e55604;
       }
-      a{
+      a {
         color: #f0f0f0;
       }
     }

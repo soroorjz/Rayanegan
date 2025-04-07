@@ -4,6 +4,7 @@ import { FaCheckDouble } from "react-icons/fa6";
 import { FaDownload } from "react-icons/fa6";
 import { FaTimes } from "react-icons/fa";
 import { GoQuestion } from "react-icons/go";
+
 const SelectRegion = ({ onNext, handlePreviousStep }) => {
   const [residency, setResidency] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -43,7 +44,7 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
     document.getElementById("file-upload").value = "";
   };
 
-  const isNextDisabled = residency === "بومی" && !selectedFile;
+  const isNextDisabled = !residency || (residency === "بومی" && !selectedFile);
 
   return (
     <div className="job-selection-residency">
@@ -68,7 +69,7 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
           محل سکونت خود را به شهرستان مورد نظر منتقل کنند.
         </p>
       </div>
-
+      
       <div className="selection">
         <p>
           <FaCheckDouble />
@@ -84,7 +85,6 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
           <span>صورت گرفته است.</span>
         </p>
       </div>
-
       {residency === "بومی" && (
         <div className="boomi-options">
           <p className="OathPart" onClick={() => setIsModalOpen(true)}>
@@ -126,7 +126,6 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
           </div>
         </div>
       )}
-
       <div className="SelectRegionSubmitBtns">
         <button className="RegionPrevBtn" onClick={handlePreviousStep}>
           مرحله قبل
@@ -139,8 +138,6 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
           مرحله بعد
         </button>
       </div>
-
-      {/* مودال */}
       {isModalOpen && (
         <div className="modal-container show">
           <div className="modal-content">
@@ -175,4 +172,5 @@ const SelectRegion = ({ onNext, handlePreviousStep }) => {
     </div>
   );
 };
+
 export default SelectRegion;

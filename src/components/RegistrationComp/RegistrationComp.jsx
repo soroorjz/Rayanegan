@@ -10,8 +10,8 @@ import Receipt from "../SignUpFormComp/SignUpStepper/Receipt/Receipt";
 
 const RegistrationComp = () => {
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search); // خواندن پارامترهای URL
-  const fromExam = queryParams.get("from") === "exam"; // بررسی اینکه آیا از ExamFormResult آمده است
+  const queryParams = new URLSearchParams(location.search); 
+  const fromExam = queryParams.get("from") === "exam"; // بررسی اینکه آیا از ExamFormResult  اومده
   const examId = queryParams.get("examId"); // دریافت examId در صورت نیاز
 
   const [currentStep, setCurrentStep] = useState(fromExam ? 2 : 1); // شروع از مرحله 2 اگر از ExamFormResult باشد

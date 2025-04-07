@@ -128,7 +128,11 @@ $tablet-resize: 900px;
   .SelectRegionSubmitBtns {
     display: flex;
     gap: 15px;
-
+    justify-content: flex-start;
+    margin-bottom: 50px;
+    @include responsive($tablet) {
+      justify-content: flex-end;
+    }
     button {
       display: block;
       margin: 20px 0;

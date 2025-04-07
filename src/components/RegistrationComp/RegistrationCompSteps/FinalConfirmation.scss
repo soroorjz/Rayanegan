@@ -95,6 +95,11 @@ $tablet-resize: 900px;
     display: flex;
     align-items: center;
     gap: 15px;
+
+    margin-bottom: 50px;
+    @include responsive($tablet) {
+      justify-content: flex-end;
+    }
     .submit-button {
       @include responsive($tablet) {
         width: 20%;

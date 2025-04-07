@@ -63,6 +63,7 @@ const sections = [
 
 const ConfirmInfo = ({ onNext, handlePreviousStep }) => {
   const [isChecked, setIsChecked] = useState(false);
+
   return (
     <div className="timeline-container">
       {sections.map((section, index) => (
@@ -88,6 +89,12 @@ const ConfirmInfo = ({ onNext, handlePreviousStep }) => {
           </div>
         </div>
       ))}
+      <div className="edit-profile-link">
+        <p>
+          چنانچه در اطلاعات فوق مغایرتی وجود دارد، با رفتن به{" "}
+          <Link to="/profile">حساب کاربری</Link> خود آن را اصلاح کنید.
+        </p>
+      </div>
       <label className="infoConfirmed">
         <input
           type="checkbox"
@@ -97,9 +104,6 @@ const ConfirmInfo = ({ onNext, handlePreviousStep }) => {
         مشخصات فوق مورد تأیید است.
       </label>
       <div className="ConfirmInfoBtns">
-        <button>
-          <Link to="/profile">ویرایش اطلاعات </Link>
-        </button>
         <button onClick={handlePreviousStep}>صفحه قبل</button>
         <button
           className={`submit-button ${!isChecked ? "disabled-button" : ""}`}
