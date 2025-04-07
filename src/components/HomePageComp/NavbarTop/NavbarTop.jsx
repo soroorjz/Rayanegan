@@ -55,6 +55,12 @@ const NavbarTop = ({
         </div>
 
         <div className="navbarLeftPart">
+          {showTutorialBtn && (
+            <button className="navTotarialBtn" onClick={startIntro}>
+              راهنمای سامانه
+              {/* <FaQuestion />   */}
+            </button>
+          )}
           {!hideJobSearch && (
             <div className="jobSearchBtn" id="jobSearchBtn">
               <button onFocus={handleSearchFocus}>جست و جوی مشاغل</button>
@@ -90,8 +96,8 @@ const NavbarTop = ({
                 </div>
               </div>
 
-              <div className="dropdown-menu">
-                <Link to="/profile">
+              <div className="topNavDropdown-menu">
+                <Link to="/profile" className="goToProfileBtn">
                   <FaUser /> حساب کاربری
                 </Link>
                 <button className="exit" onClick={handleLogout}>
@@ -105,12 +111,6 @@ const NavbarTop = ({
                 <button>ورود به حساب کاربری</button>
               </Link>
             </div>
-          )}
-
-          {showTutorialBtn && (
-            <button className="navTotarialBtn" onClick={startIntro}>راهنمای سامانه
-              {/* <FaQuestion />   */}
-            </button>
           )}
         </div>
 
