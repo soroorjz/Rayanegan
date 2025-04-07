@@ -16,6 +16,7 @@ import ForgotPassword from "./components/LogInComp/ForgotPassword/ForgotPassword
 import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import ExamInfoSkeleton from "./pages/ExamInfo/ExamInfoSkeleton";
 import ExamCardSkeleton from "./pages/EmploymentTests/ExamCardSkeleton";
+import CardListSkeleton from "./components/HomePageComp/ExamCardPart/CardListSkeleton";
 
 function App() {
   return (
@@ -42,7 +43,7 @@ function App() {
         <Route path="/RegistrationPage" element={<RegistrationPage />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/ChangePassword" element={<ChangePassword />} />
-        <Route path="/ExamCardSkeleton" element={<ExamCardSkeleton />} />
+        <Route path="/CardListSkeleton" element={<CardListSkeleton />} />
         
       </Routes>
     </AuthProvider>

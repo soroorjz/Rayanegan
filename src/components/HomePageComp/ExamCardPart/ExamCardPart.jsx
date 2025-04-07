@@ -14,6 +14,7 @@ const ExamCardPart = () => {
             <FaAngleLeft />
           </button>
         </Link>
+        {/* <Link to="/CardListSkeleton">dvsf</Link> */}
       </div>
       <div className="examCards">
         <ExamCard />

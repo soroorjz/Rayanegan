@@ -6,6 +6,8 @@ import { useAuth } from "../../../AuthContext";
 import { Link } from "react-router-dom";
 import { getExamStatuses, getExams } from "../../../apiService";
 import "./ExamCard.scss";
+import ExamCardSkeleton from "../../../pages/EmploymentTests/ExamCardSkeleton";
+import CardListSkeleton from "./CardListSkeleton";
 
 const ExamCard = () => {
   const { user } = useAuth();
@@ -41,7 +43,7 @@ const ExamCard = () => {
   const error = statusesError || examsError;
 
   if (loading)
-    return <div className="examCard-Container">در حال بارگذاری...</div>;
+    return <CardListSkeleton />;
   if (error)
     return <div className="examCard-Container">خطا: {error.message}</div>;
 
