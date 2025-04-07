@@ -157,7 +157,7 @@ const BackgroundForm = ({ onFinalSubmit, handlePreviousStep, gender }) => {
   };
 
   if (loading) {
-    return <div>در حال بارگذاری...</div>;
+    // return <div>در حال بارگذاری...</div>;
   }
   if (error) {
     return <div className="error">{error}</div>;

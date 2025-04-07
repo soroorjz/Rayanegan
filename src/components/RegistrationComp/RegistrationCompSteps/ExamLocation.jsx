@@ -107,7 +107,7 @@ const ExamLocation = ({ onNext, handlePreviousStep }) => {
       <h1 className="title">انتخاب محل آزمون</h1>
 
       {error && <div className="error">{error}</div>}
-      {loading && <p>در حال بارگذاری...</p>}
+      {/* {loading && <p>در حال بارگذاری...</p>} */}
 
       {!loading && !error && (
         <div className="ExamLocation-selections">

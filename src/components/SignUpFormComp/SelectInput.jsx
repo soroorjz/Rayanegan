@@ -99,7 +99,7 @@ const SelectInput = ({ formData, handleChange, errors }) => {
   return (
     <>
       {error && <div className="error">{error}</div>}
-      {loading && <p>در حال بارگذاری...</p>}
+      {/* {loading && <p>در حال بارگذاری...</p>} */}
 
       {!loading && !error && (
         <>

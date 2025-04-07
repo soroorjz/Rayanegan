@@ -14,6 +14,7 @@ import ReportTracking from "./pages/ReportTracking/ReportTracking";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 import ForgotPassword from "./components/LogInComp/ForgotPassword/ForgotPassword";
 import ChangePassword from "./pages/ChangePassword/ChangePassword";
+import ExamInfoSkeleton from "./pages/ExamInfo/ExamInfoSkeleton";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="/RegistrationPage" element={<RegistrationPage />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/ChangePassword" element={<ChangePassword />} />
+        <Route path="/ExamInfoSkeleton" element={<ExamInfoSkeleton />} />
         
       </Routes>
     </AuthProvider>

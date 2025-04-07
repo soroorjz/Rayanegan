@@ -137,7 +137,7 @@ const StepOne = ({ onNext, onGenderChange }) => {
         )}
         {isEditable ? (
           <>
-            {loading && <p>در حال بارگذاری...</p>}
+            {/* {loading && <p>در حال بارگذاری...</p>} */}
             {error && <div className="error">{error}</div>}
             {!loading && !error && (
               <>

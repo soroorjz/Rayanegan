@@ -100,7 +100,7 @@ const StepTwo = ({ onNext, onPrevious }) => {
       <form className="formTwo" onSubmit={handleNext}>
         {isEditable ? (
           <>
-            {loading && <p>در حال بارگذاری...</p>}
+            {/* {loading && <p>در حال بارگذاری...</p>} */}
             {error && <div className="error">{error}</div>}
             {!loading && !error && (
               <div className="step2-form-group">

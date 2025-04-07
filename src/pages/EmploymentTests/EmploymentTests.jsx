@@ -64,10 +64,10 @@ const EmploymentTests = () => {
     return examCards.filter((exam) => exam.examStatusRef === Number(statusId));
   };
 
-  if (loading) {
-    console.log("Still Loading...");
-    return <div className="EmploymentTests">در حال بارگذاری...</div>;
-  }
+  // if (loading) {
+  //   console.log("Still Loading...");
+  //   return <div className="EmploymentTests">در حال بارگذاری...</div>;
+  // }
 
   if (error) {
     console.log("Error occurred:", error);

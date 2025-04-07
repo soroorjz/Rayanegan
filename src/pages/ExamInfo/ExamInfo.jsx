@@ -14,6 +14,7 @@ import ExamInfoCard from "../../components/ExamInfoComp/ExamInfoCard/ExamInfoCar
 import { useAuth } from "../../AuthContext";
 
 import "./ExamInfo.scss";
+import ExamInfoSkeleton from "./ExamInfoSkeleton";
 
 const ExamInfo = () => {
   const { id } = useParams();
@@ -159,7 +160,7 @@ const ExamInfo = () => {
     intro.start();
   };
 
-  if (loading) return <p>در حال بارگذاری...</p>;
+  if (loading) return <ExamInfoSkeleton />;
   if (error) return <p className="error-text">{error}</p>;
   if (!examData) return <p>اطلاعاتی یافت نشد</p>;
 
@@ -197,7 +198,7 @@ const ExamInfo = () => {
 
       <ExamInfoComponent
         startDate={startDate}
-        endDate={formattedEndDate} 
+        endDate={formattedEndDate}
         cardIssueDate={cardIssueDate}
         eventDate={eventDate}
         toPersianDigits={toPersianDigits}
@@ -208,7 +209,7 @@ const ExamInfo = () => {
           <IoMdHome />
         </button>{" "}
       </Link>
-
+      {/* <Link to="/ExamInfoSkeleton">agdf</Link> */}
     </div>
   );
 };
