@@ -7,76 +7,89 @@ $tablet-resize: 900px;
   background: #f9f9f9;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 16px;
 
-  @include responsive($tablet) {
-    width: 90%;
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-    
-    label {
-      font-size: 14px;
-      margin-bottom: 8px;
-      color: #555;
+  .formContent {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+    margin-bottom: 50px;
+    @include responsive($tablet) {
+      // width: 90%;
+      grid-template-columns: repeat(3, 1fr);
     }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
 
-    input,
-    select {
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 14px;
-      transition: all 0.3s ease;
+      label {
+        font-size: 14px;
+        margin-bottom: 8px;
+        color: #555;
+      }
 
-      &:focus {
-        border-color: #007bff;
-        outline: none;
+      input,
+      select {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+
+        &:focus {
+          border-color: #007bff;
+          outline: none;
+        }
+      }
+
+      span {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
       }
     }
 
-    span {
-      color: red;
-      font-size: 12px;
-      margin-top: 5px;
+    .form-actions {
+      grid-column: span 2;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 20px;
+
+      @include responsive($tablet) {
+        grid-column: span 1;
+        flex-direction: column;
+        align-items: center;
+      }
     }
   }
-
-  .form-actions {
-    grid-column: span 2;
+  .educationSubmitBtns {
+    width: 100%;
     display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 20px;
-
+    gap: 5px;
+    flex-direction: column;
+    margin-bottom: 50px;
     @include responsive($tablet) {
-      grid-column: span 1;
-      flex-direction: column;
-      align-items: center;
+      width: 25%;
+      flex-direction: row;
     }
-  }
+    .submit-btn {
+      @include responsive($tablet) {
+        width: 40%;
+        flex-direction: row;
+      }
+      padding: 12px;
+      background: #04364a;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
 
-  .submit-btn {
-    @include responsive($tablet) {
-      width: 40%;
-    }
-    padding: 12px;
-    background: #04364a;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-
-    &:hover {
-      background: #e55604;
+      &:hover {
+        background: #e55604;
+      }
     }
   }
 }

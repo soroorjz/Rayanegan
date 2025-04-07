@@ -92,7 +92,13 @@ $tablet-resize: 900px;
   margin-top: 20px;
   width: 100%;
   justify-content: flex-start;
+  flex-direction: column;
+  margin-bottom: 90px;
+  @include responsive($tablet) {
+    flex-direction: row;
+    width: 60%;
 
+  }
   .prev-button,
   .next-button {
     padding: 12px;

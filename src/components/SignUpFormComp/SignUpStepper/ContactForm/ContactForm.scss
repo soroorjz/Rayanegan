@@ -56,6 +56,14 @@ $tablet-resize: 900px;
   .contactSubmitBtns {
     display: flex;
     gap: 15px;
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 50px;
+    @include responsive($tablet) {
+      // width: 50%;
+    flex-direction: row;
+
+    }
     .contactSubmit-btn {
       padding: 12px;
       background: #04364a;
@@ -66,6 +74,10 @@ $tablet-resize: 900px;
       font-size: 16px;
       cursor: pointer;
       transition: background 0.3s ease;
+      @include responsive($tablet) {
+        width:14%;
+  
+      }
       &:hover {
         background: #e55604;
       }

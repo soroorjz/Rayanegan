@@ -117,84 +117,93 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="education-form-sj">
-      <div className="form-group">
-        <label>مقطع تحصیلی:</label>
-        <select {...register("degree")}>
-          <option value="">انتخاب کنید</option>
-          {degrees.map((degree) => (
-            <option key={degree.gradeId} value={degree.gradeId}>
-              {degree.gradeTitle}
-            </option>
-          ))}
-        </select>
-        {errors.degree && <span>{errors.degree.message}</span>}
-      </div>
+      <div className="formContent">
+        <div className="form-group">
+          <label>مقطع تحصیلی:</label>
+          <select {...register("degree")}>
+            <option value="">انتخاب کنید</option>
+            {degrees.map((degree) => (
+              <option key={degree.gradeId} value={degree.gradeId}>
+                {degree.gradeTitle}
+              </option>
+            ))}
+          </select>
+          {errors.degree && <span>{errors.degree.message}</span>}
+        </div>
 
-      <div className="form-group">
-        <label>رشته تحصیلی:</label>
-        <input
-          type="text"
-          {...register("fieldOfStudy")}
-          disabled={!selectedDegree}
-        />
-        {errors.fieldOfStudy && <span>{errors.fieldOfStudy.message}</span>}
-      </div>
+        <div className="form-group">
+          <label>رشته تحصیلی:</label>
+          <input
+            type="text"
+            {...register("fieldOfStudy")}
+            disabled={!selectedDegree}
+          />
+          {errors.fieldOfStudy && <span>{errors.fieldOfStudy.message}</span>}
+        </div>
 
-      <div className="form-group">
-        <label>نوع دانشگاه:</label>
-        <select {...register("universityType")}>
-          <option value="">انتخاب کنید</option>
-          {universityTypes.map((uniType) => (
-            <option key={uniType.id} value={uniType.id}>
-              {uniType.universityTypeName}
-            </option>
-          ))}
-        </select>
-        {errors.universityType && <span>{errors.universityType.message}</span>}
-      </div>
+        <div className="form-group">
+          <label>نوع دانشگاه:</label>
+          <select {...register("universityType")}>
+            <option value="">انتخاب کنید</option>
+            {universityTypes.map((uniType) => (
+              <option key={uniType.id} value={uniType.id}>
+                {uniType.universityTypeName}
+              </option>
+            ))}
+          </select>
+          {errors.universityType && (
+            <span>{errors.universityType.message}</span>
+          )}
+        </div>
 
-      <div className="form-group">
-        <label>نام دانشگاه:</label>
-        <input
-          type="text"
-          {...register("universityName")}
-          disabled={!selectedUniversityType}
-        />
-        {errors.universityName && <span>{errors.universityName.message}</span>}
-      </div>
+        <div className="form-group">
+          <label>نام دانشگاه:</label>
+          <input
+            type="text"
+            {...register("universityName")}
+            disabled={!selectedUniversityType}
+          />
+          {errors.universityName && (
+            <span>{errors.universityName.message}</span>
+          )}
+        </div>
 
-      <div className="form-group">
-        <label>تاریخ فارغ‌التحصیلی:</label>
-        <DatePicker
-          calendar={persian}
-          locale={persian_fa}
-          inputClass="custom-date-input"
-          style={{ width: "100%" }}
-          placeholder="تاریخ را انتخاب کنید"
-          onChange={(value) => {
-            if (value) {
-              const gregorianDate = value.convert(gregorian).toDate();
-              setValue("graduationDate", gregorianDate, {
-                shouldValidate: true,
-              });
-            }
-          }}
-        />
-        {errors.graduationDate && <span>{errors.graduationDate.message}</span>}
-      </div>
+        <div className="form-group">
+          <label>تاریخ فارغ‌التحصیلی:</label>
+          <DatePicker
+            calendar={persian}
+            locale={persian_fa}
+            inputClass="custom-date-input"
+            style={{ width: "100%" }}
+            placeholder="تاریخ را انتخاب کنید"
+            onChange={(value) => {
+              if (value) {
+                const gregorianDate = value.convert(gregorian).toDate();
+                setValue("graduationDate", gregorianDate, {
+                  shouldValidate: true,
+                });
+              }
+            }}
+          />
+          {errors.graduationDate && (
+            <span>{errors.graduationDate.message}</span>
+          )}
+        </div>
 
-      <div className="form-group">
-        <label>معدل:</label>
-        <input type="number" step="0.01" {...register("gpa")} />
-        {errors.gpa && <span>{errors.gpa.message}</span>}
+        <div className="form-group">
+          <label>معدل:</label>
+          <input type="number" step="0.01" {...register("gpa")} />
+          {errors.gpa && <span>{errors.gpa.message}</span>}
+        </div>
       </div>
-
-      <button onClick={handlePreviousStep} className="submit-btn">
-        مرحله قبل
-      </button>
-      <button type="submit" className="submit-btn">
-        مرحله بعد
-      </button>
+      <div className="educationSubmitBtns">
+        <button onClick={handlePreviousStep} className="submit-btn">
+          مرحله قبل
+        </button>
+        <button type="submit" className="submit-btn">
+          مرحله بعد
+        </button>
+      </div>
     </form>
   );
 };

@@ -116,6 +116,8 @@ $tablet-resize: 900px;
       border-radius: 6px;
       font-size: 16px;
       cursor: pointer;
+      width: 100%;
+      margin-bottom: 50px;
       transition: background 0.3s ease;
       @include responsive($tablet) {
         width: 20%;

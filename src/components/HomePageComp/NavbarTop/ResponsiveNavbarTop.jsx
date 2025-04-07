@@ -11,6 +11,7 @@ const ResponsiveNavbarTop = ({
   hideJobSearch,
   handleSearchFocus,
   hideRepotBtn,
+  showReportTrackingBtn,
 }) => {
   const sidebarRef = useRef(null);
 
@@ -32,7 +33,6 @@ const ResponsiveNavbarTop = ({
     };
   }, [isSidebarOpen, toggleSidebar]);
 
-  // تابع جدید برای مدیریت کلیک دکمه جستجو
   const handleJobSearchClick = () => {
     handleSearchFocus();
     toggleSidebar();
@@ -40,7 +40,6 @@ const ResponsiveNavbarTop = ({
 
   return (
     <>
-      {/* Overlay جداگانه */}
       <div
         className={`sidebar-overlay ${isSidebarOpen ? "open" : ""}`}
         onClick={toggleSidebar}
@@ -95,6 +94,13 @@ const ResponsiveNavbarTop = ({
               <Link to="/ReportForm">
                 <button>ثبت اعتراض</button>
               </Link>
+            </div>
+          )}
+          {showReportTrackingBtn && (
+            <div className="sideBar-JobSearchBtn">
+              <button>
+                <Link to="/ReportTracking">پیگیری اعتراض</Link>
+              </button>
             </div>
           )}
         </div>

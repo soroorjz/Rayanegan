@@ -128,6 +128,7 @@ const NavbarTop = ({
         toggleSidebar={toggleSidebar}
         user={user}
         logout={handleLogout}
+        showReportTrackingBtn={showReportTrackingBtn}
         hideJobSearch={hideJobSearch}
         handleSearchFocus={handleSearchFocus}
         hideRepotBtn={hideRepotBtn}
