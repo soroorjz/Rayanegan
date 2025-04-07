@@ -9,11 +9,16 @@ import { FiFilter } from "react-icons/fi";
 import { RiLoader2Fill } from "react-icons/ri";
 import { FaFileSignature } from "react-icons/fa6";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+// ایمپورت Swiper
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 
 const EmploymentTestsIcons = () => {
   const [selected, setSelected] = useState(null);
   const [isClickScroll, setIsClickScroll] = useState(false);
-  const scrollRef = useRef(null);
+  const swiperRef = useRef(null); // برای دسترسی به Swiper
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -30,7 +35,12 @@ const EmploymentTestsIcons = () => {
         if (!isClickScroll) {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              setSelected(entry.target.id);
+              const id = entry.target.id;
+              setSelected(id);
+              const index = items.findIndex((item) => item.id === id);
+              if (swiperRef.current && swiperRef.current.swiper) {
+                swiperRef.current.swiper.slideTo(index);
+              }
             }
           });
         }
@@ -53,34 +63,19 @@ const EmploymentTestsIcons = () => {
   }, [isClickScroll]);
 
   useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
+    if (!swiperRef.current || !swiperRef.current.swiper) return;
 
+    const swiper = swiperRef.current.swiper;
     const updateScrollState = () => {
-      if (container) {
-        const maxScrollLeft = container.scrollWidth - container.clientWidth;
-        setCanScrollLeft(container.scrollLeft > 0);
-        setCanScrollRight(container.scrollLeft < maxScrollLeft - 1);
-        console.log({
-          scrollLeft: container.scrollLeft,
-          scrollWidth: container.scrollWidth,
-          clientWidth: container.clientWidth,
-          maxScrollLeft: maxScrollLeft,
-          canScrollLeft: container.scrollLeft > 0,
-          canScrollRight: container.scrollLeft < maxScrollLeft - 1,
-        });
-      }
+      setCanScrollLeft(swiper.isBeginning !== true);
+      setCanScrollRight(swiper.isEnd !== true);
     };
 
-    // یه تأخیر کوچک برای اطمینان از رندر شدن DOM
-    setTimeout(() => {
-      updateScrollState();
-    }, 100);
-
-    container.addEventListener("scroll", updateScrollState, { passive: true });
+    updateScrollState();
+    swiper.on("slideChange", updateScrollState);
 
     return () => {
-      container.removeEventListener("scroll", updateScrollState);
+      swiper.off("slideChange", updateScrollState);
     };
   }, []);
 
@@ -100,6 +95,12 @@ const EmploymentTestsIcons = () => {
         behavior: "smooth",
       });
 
+      // اسکرول Swiper به اسلاید انتخاب‌شده
+      const index = items.findIndex((item) => item.id === id);
+      if (swiperRef.current && swiperRef.current.swiper) {
+        swiperRef.current.swiper.slideTo(index);
+      }
+
       setTimeout(() => {
         setIsClickScroll(false);
       }, 1000);
@@ -107,98 +108,84 @@ const EmploymentTestsIcons = () => {
   };
 
   const handleHorizontalScroll = (direction) => {
-    if (scrollRef.current) {
-      const container = scrollRef.current;
-      const scrollAmount = 200;
-      const maxScrollLeft = container.scrollWidth - container.clientWidth;
-
-      let newScrollLeft = container.scrollLeft;
-      if (direction === "left" && container.scrollLeft > 0) {
-        newScrollLeft = Math.max(0, container.scrollLeft - scrollAmount);
-      } else if (
-        direction === "right" &&
-        container.scrollLeft < maxScrollLeft
-      ) {
-        newScrollLeft = Math.min(
-          maxScrollLeft,
-          container.scrollLeft + scrollAmount
-        );
+    if (swiperRef.current && swiperRef.current.swiper) {
+      const swiper = swiperRef.current.swiper;
+      if (direction === "left") {
+        swiper.slidePrev();
+      } else if (direction === "right") {
+        swiper.slideNext();
       }
-
-      container.scrollTo({
-        left: newScrollLeft,
-        behavior: "smooth",
-      });
-
-      console.log(`Scrolling ${direction}: newScrollLeft = ${newScrollLeft}`);
     }
   };
 
+  const items = [
+    { id: "InProgress", icon: <FaHourglassHalf />, text: "در انتظار" },
+    { id: "Registering", icon: <LuClipboardPenLine />, text: "درحال ثبت‌نام" },
+    { id: "EndOfRegistering", icon: <LuClipboardX />, text: "پایان ثبت‌نام" },
+    {
+      id: "ExamCard",
+      icon: <FaRegAddressCard />,
+      text: "دریافت کارت ورود به جلسه",
+    },
+    {
+      id: "Held",
+      icon: <MdOutlineDownloadDone />,
+      text: "آزمون کتبی برگزار شده",
+    },
+    { id: "UnderReview", icon: <RiLoader2Fill />, text: "درحال بررسی" },
+    {
+      id: "Announcing",
+      icon: <HiOutlineSpeakerphone />,
+      text: "درحال اعلام نتایج",
+    },
+    { id: "Filter", icon: <FaFileSignature />, text: "ارزیابی تکمیلی" },
+    { id: "Selection", icon: <FiFilter />, text: "درحال گزینش" },
+    { id: "Expired", icon: <BiSolidNoEntry />, text: "پایان آزمون" },
+  ];
+
   return (
     <div className="EmploymentTestsIcons-Wrap">
-      <button
+      {/* <button
         className="scroll-button left"
         onClick={() => handleHorizontalScroll("left")}
         disabled={!canScrollLeft}
       >
         <IoIosArrowBack />
-      </button>
-      <div className="EmploymentTestsIcons-Container" ref={scrollRef}>
-        {[
-          { id: "InProgress", icon: <FaHourglassHalf />, text: "در انتظار" },
-          {
-            id: "Registering",
-            icon: <LuClipboardPenLine />,
-            text: "درحال ثبت‌نام",
-          },
-          {
-            id: "EndOfRegistering",
-            icon: <LuClipboardX />,
-            text: "پایان ثبت‌نام",
-          },
-          {
-            id: "ExamCard",
-            icon: <FaRegAddressCard />,
-            text: "دریافت کارت ورود به جلسه",
-          },
-          {
-            id: "Held",
-            icon: <MdOutlineDownloadDone />,
-            text: "آزمون کتبی برگزار شده",
-          },
-          { id: "UnderReview", icon: <RiLoader2Fill />, text: "درحال بررسی" },
-          {
-            id: "Announcing",
-            icon: <HiOutlineSpeakerphone />,
-            text: "درحال اعلام نتایج",
-          },
-          { id: "Filter", icon: <FaFileSignature />, text: "ارزیابی تکمیلی" },
-          { id: "Selection", icon: <FiFilter />, text: "درحال گزینش" },
-          { id: "Expired", icon: <BiSolidNoEntry />, text: "پایان آزمون" },
-        ].map(({ id, icon, text }) => (
-          <button
-            key={id}
-            className={`icon-button ${selected === id ? "selected" : ""}`}
-            onClick={() => handleSelect(id)}
-          >
-            {icon}
-            <span
-              className={`icon-text ${
-                isMobile && selected !== id ? "hidden" : ""
-              }`}
+      </button> */}
+      <Swiper
+        ref={swiperRef}
+        modules={[Navigation]}
+        spaceBetween={3}
+        slidesPerView="auto"
+        centeredSlides={false}
+        navigation={false}
+         className="EmploymentTestsIcons-Container"
+      >
+        {items.map(({ id, icon, text }) => (
+          <SwiperSlide key={id} className="EmploymentTestsIcons-slider">
+            <button
+              className={`icon-button ${selected === id ? "selected" : ""}`}
+              onClick={() => handleSelect(id)}
             >
-              {text}
-            </span>
-          </button>
+              {icon}
+              <span
+                className={`icon-text ${
+                  isMobile && selected !== id ? "hidden" : ""
+                }`}
+              >
+                {text}
+              </span>
+            </button>
+          </SwiperSlide>
         ))}
-      </div>
-      <button
+      </Swiper>
+      {/* <button
         className="scroll-button right"
         onClick={() => handleHorizontalScroll("right")}
         disabled={!canScrollRight}
       >
         <IoIosArrowForward />
-      </button>
+      </button> */}
     </div>
   );
 };

@@ -42,6 +42,25 @@ $tablet-resize: 900px;
   white-space: nowrap;
   gap: 3px;
   padding: 10px;
+  .EmploymentTestsIcons-slider {
+    width: fit-content;
+  }
+  .swiper-button-prev {
+    &::after {
+      font-size: 20px;
+      color: #e55604;
+      font-weight: 900;
+      // margin-right: 30px;
+    }
+  }
+  .swiper-button-next{
+    &::after {
+      font-size: 20px;
+      color: #e55604;
+      font-weight: 900;
+      // margin-left: 30px;
+    }
+  }
 }
 
 .icon-button {
@@ -80,7 +99,7 @@ $tablet-resize: 900px;
     }
     &.selected .icon-text {
       // display: inline;
-      max-width: 150px; 
+      max-width: 150px;
       opacity: 1;
       transform: scale(1);
       font-size: 14px;
