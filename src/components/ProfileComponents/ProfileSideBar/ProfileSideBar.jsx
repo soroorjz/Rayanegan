@@ -4,6 +4,7 @@ import { BsQrCode } from "react-icons/bs";
 import { FaBookReader } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
+import { IoDocuments } from "react-icons/io5";
 import { FaUserPen, FaBars } from "react-icons/fa6";
 import "./ProfileSideBar.scss";
 import { Link } from "react-router";
@@ -74,6 +75,7 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
             مشخصات شخصی
           </button>
           {/* <Link to="/ChangePassword"> */}
+
           <button
             onClick={() => {
               setSelectedComponent("password");
@@ -107,6 +109,16 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
             <BsQrCode />
             کارت ورود به جلسه
             <span>(آزمون کتبی)</span>
+          </button>
+          <button
+            onClick={() => {
+              setSelectedComponent("DocumentReview");
+              setIsSidebarOpen(false);
+            }}
+            className={selectedComponent === "DocumentReview" ? "active" : ""}
+          >
+            <IoDocuments />
+            نتیجه‌ی بررسی مدارک
           </button>
           <button
             onClick={() => {

@@ -12,6 +12,7 @@ import EvaluationCard from "./ExamEntryCard/EvaluationCard";
 import ExamSignUpForm from "../../pages/ExamSignUpForm/ExamSignUpForm";
 import CompletedForm from "../../pages/CompletedForm/CompletedForm";
 import ChangePassword from "../../pages/ChangePassword/ChangePassword";
+import DocumentReviewResult from "./ProfileSideBar/DocumentReviewResult/DocumentReviewResult";
 
 const ProfileMain = ({ selectedComponent }) => {
   let content;
@@ -20,6 +21,14 @@ const ProfileMain = ({ selectedComponent }) => {
       content = (
         <div className="profilePersonalDetails">
           <CompletedForm />
+        </div>
+      );
+
+      break;
+    case "DocumentReview":
+      content = (
+        <div className="profilePersonalDetails">
+         <DocumentReviewResult/>
         </div>
       );
 

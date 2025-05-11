@@ -1,0 +1,178 @@
+.document-review-result {
+  padding: 30px;
+  direction: rtl;
+  max-width: 800px;
+  margin: 0 auto;
+
+  .title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #2c3e50;
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+
+    .tab {
+      padding: 12px 25px;
+      background-color: #04364a;
+      border: 1px solid #dfe6e9;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      color: white;
+      font-weight: 500;
+      transition: all 0.3s ease;
+
+      &.active {
+        background-color: #e55604;
+        color: white;
+        border: none;
+      }
+
+      &:hover {
+        background-color: #e55604;
+      }
+    }
+  }
+
+  .tab-content-wrapper {
+    padding: 25px;
+    // border: 1px solid #e9ecef;
+    // border-radius: 10px;
+    background-color: #fff;
+    // box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    min-height: 250px;
+
+    .tab-content {
+      text-align: center;
+      font-size: 18px;
+      color: #34495e;
+          display: flex
+;
+    flex-direction: column;
+    align-items: center;
+
+      &.approved {
+        svg {
+          color: #27ae60;
+          font-size: 60px;
+          margin-bottom: 20px;
+        }
+        p {
+          //   color: #27ae60;
+          font-weight: 600;
+        }
+      }
+
+      &.rejected {
+        svg {
+          color: #c0392b;
+          font-size: 60px;
+          margin-bottom: 20px;
+        }
+        p {
+          font-weight: 600;
+        }
+
+        .details-button {
+          margin-top: 15px;
+          padding: 10px 20px;
+          background-color: #e55604;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: #e53c04;
+          }
+        }
+
+        .rejection-details {
+          margin-top: 20px;
+          font-size: 16px;
+          color: #7f8c8d;
+          line-height: 1.6;
+        }
+      }
+
+      &.incomplete {
+        svg {
+          color: #e67e22;
+          font-size: 60px;
+          margin-bottom: 20px;
+        }
+        p {
+          //   color: #e67e22;
+          font-weight: 600;
+          margin-bottom: 20px;
+        }
+
+        .documents-list {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+    width: 100%;
+          .document-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            align-items: center;
+          padding: 10px 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #2c3e50;
+            .upload-button-wrapper {
+              .upload-button {
+                background: none;
+                padding: 8px 15px;
+                // background-color: #3498db;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                svg {
+                  color: #888;
+                  font-size: 18px;
+                    transition: color 0.3s ease;
+                  margin: 0;
+                  &:hover {
+                    color: #e67e22;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &.inperson {
+        p {
+          font-weight: 600;
+          margin-bottom: 20px;
+        }
+
+        .appointment-details {
+          text-align: right;
+          font-size: 16px;
+        display: flex
+;
+    flex-direction: column;
+    align-items: center;
+
+          p {
+            margin: 5px 0;
+          }
+        }
+      }
+    }
+  }
+}
