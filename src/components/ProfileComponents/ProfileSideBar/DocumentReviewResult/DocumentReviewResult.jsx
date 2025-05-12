@@ -162,7 +162,8 @@ const DocumentReviewResult = () => {
             <p>
               مدارک شما بررسی شده است و نیاز به حضور شما در تاریخ{" "}
               <span className="bold">1404/03/25</span> و ساعت{" "}
-              <span className="bold">8:00</span> در نشانی تهران، نجات اللهی، خیابان مفتح، خیابان کریم خان زند می‌باشد.
+              <span className="bold">8:00</span> در نشانی تهران، نجات اللهی،
+              خیابان مفتح، خیابان کریم خان زند می‌باشد.
             </p>
             <button
               className="details-button"

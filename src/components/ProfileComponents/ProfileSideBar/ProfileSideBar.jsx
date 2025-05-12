@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-// import { FaUserGraduate } from "react-icons/fa";
 import { BsQrCode } from "react-icons/bs";
 import { FaBookReader } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -8,10 +7,11 @@ import { IoDocuments } from "react-icons/io5";
 import { FaUserPen, FaBars } from "react-icons/fa6";
 import "./ProfileSideBar.scss";
 import { Link } from "react-router";
+
 const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
-  const sidebarRef = useRef(null); // تعریف ref برای سایدبار
+  const sidebarRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -28,7 +28,6 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // بستن سایدبار هنگام کلیک بیرون از آن
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -41,7 +40,7 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.addEventListener("mousedown", handleClickOutside);
   }, [isSidebarOpen]);
 
   return (
@@ -58,7 +57,6 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
         ref={sidebarRef}
         className={`profileSide-Container ${isSidebarOpen ? "open" : "closed"}`}
       >
-        {/* دکمه بستن سایدبار */}
         <button className="close-btn" onClick={() => setIsSidebarOpen(false)}>
           <IoClose className="sideBar-Close" />
         </button>
@@ -67,15 +65,13 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
           <button
             onClick={() => {
               setSelectedComponent("personal");
-              setIsSidebarOpen(false); // بستن سایدبار
+              setIsSidebarOpen(false);
             }}
             className={selectedComponent === "personal" ? "active" : ""}
           >
             <FaUserPen />
             مشخصات شخصی
           </button>
-          {/* <Link to="/ChangePassword"> */}
-
           <button
             onClick={() => {
               setSelectedComponent("password");
@@ -83,12 +79,9 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
             }}
             className={selectedComponent === "password" ? "active" : ""}
           >
-            {" "}
             <RiLockPasswordLine />
             تغییر رمز عبور
           </button>
-          {/* </Link> */}
-
           <button
             onClick={() => {
               setSelectedComponent("exams");
@@ -119,6 +112,7 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
           >
             <IoDocuments />
             نتیجه‌ی بررسی مدارک
+            <span className="docNotifNum">1</span>
           </button>
           <button
             onClick={() => {

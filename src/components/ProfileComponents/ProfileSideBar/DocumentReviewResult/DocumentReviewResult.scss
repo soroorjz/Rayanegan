@@ -34,6 +34,7 @@
       cursor: pointer;
       transition: background-color 0.3s, color 0.3s;
       white-space: nowrap;
+        position: relative;
 
       &.active {
         background-color: #ffffff;
