@@ -85,7 +85,8 @@ const NavbarTop = ({
 
           {user ? (
             <div className="userProfile">
-              <div className="user-info">
+              <div className="user-info"> 
+                <div className="docNotifNum">1</div>
                 <img
                   src="/assets/images/shxfdb.jpg"
                   alt=""
@@ -98,6 +99,7 @@ const NavbarTop = ({
 
               <div className="topNavDropdown-menu">
                 <Link to="/profile" className="goToProfileBtn">
+                <span className="docNotifNum">1</span>
                   <FaUser /> حساب کاربری
                 </Link>
                 <button className="exit" onClick={handleLogout}>

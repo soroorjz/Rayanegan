@@ -244,7 +244,20 @@ a {
   z-index: 5;
   width: 15%;
   justify-content: center;
-
+.docNotifNum{
+ position: absolute;
+    color: #fff;
+    background-color: red;
+    border-radius: 50%;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    top: 10%;
+    left: 77%;
+}
   .user-info {
     display: flex;
     align-items: center;
@@ -300,6 +313,9 @@ a {
     &:hover {
       background: #f1f1f1;
       color: #04364a;
+    }
+    .docNotifNum{
+      left: 35%;
     }
   }
   .exit {
