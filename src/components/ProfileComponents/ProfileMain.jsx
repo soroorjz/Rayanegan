@@ -2,17 +2,14 @@ import React from "react";
 import PersonalDetails from "./PersonalDetails/PersonalDetails";
 import "./ProfileMain.scss";
 import MyExams from "./MyExams/MyExams";
-import ExamEntryCard from "./ExamEntryCard/ExamEntryCard";
-import NoEntryCard from "./NoEntryCard/NoEntryCard";
-import { IoMdHome } from "react-icons/io";
-
-import { Link } from "react-router";
 import ExamEntryCopm from "./ExamEntryCard/ExamEntryCopm";
 import EvaluationCard from "./ExamEntryCard/EvaluationCard";
-import ExamSignUpForm from "../../pages/ExamSignUpForm/ExamSignUpForm";
-import CompletedForm from "../../pages/CompletedForm/CompletedForm";
 import ChangePassword from "../../pages/ChangePassword/ChangePassword";
 import DocumentReviewResult from "./ProfileSideBar/DocumentReviewResult/DocumentReviewResult";
+import CompletedForm from "../../pages/CompletedForm/CompletedForm";
+import { IoMdHome } from "react-icons/io";
+import { Link } from "react-router";
+import Selection from "./ProfileSideBar/Selection/Selection";
 
 const ProfileMain = ({ selectedComponent }) => {
   let content;
@@ -23,24 +20,20 @@ const ProfileMain = ({ selectedComponent }) => {
           <CompletedForm />
         </div>
       );
-
       break;
     case "DocumentReview":
       content = (
         <div className="profilePersonalDetails">
-         <DocumentReviewResult/>
+          <DocumentReviewResult />
         </div>
       );
-
       break;
-
     case "password":
       content = (
         <div className="passwordChangingPart">
           <ChangePassword />
         </div>
       );
-
       break;
     case "exams":
       content = <MyExams />;
@@ -50,6 +43,9 @@ const ProfileMain = ({ selectedComponent }) => {
       break;
     case "news":
       content = <EvaluationCard />;
+      break;
+    case "selection":
+      content = <Selection />;
       break;
     default:
       content = <CompletedForm />;

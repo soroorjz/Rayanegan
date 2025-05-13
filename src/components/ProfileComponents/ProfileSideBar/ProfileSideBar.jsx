@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BsQrCode } from "react-icons/bs";
-import { FaBookReader } from "react-icons/fa";
+import { FaBookReader, FaCheckCircle } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { IoClose } from "react-icons/io5";
-import { IoDocuments } from "react-icons/io5";
+import { IoClose, IoDocuments } from "react-icons/io5";
 import { FaUserPen, FaBars } from "react-icons/fa6";
 import "./ProfileSideBar.scss";
 import { Link } from "react-router";
@@ -40,7 +39,7 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isSidebarOpen]);
 
   return (
@@ -124,6 +123,16 @@ const ProfileSideBar = ({ selectedComponent, setSelectedComponent }) => {
             <BsQrCode />
             کارت ورود به جلسه
             <span>(ارزیابی تکمیلی)</span>
+          </button>
+          <button
+            onClick={() => {
+              setSelectedComponent("selection");
+              setIsSidebarOpen(false);
+            }}
+            className={selectedComponent === "selection" ? "active" : ""}
+          >
+            <FaCheckCircle />
+            گزینش
           </button>
         </div>
       </div>
