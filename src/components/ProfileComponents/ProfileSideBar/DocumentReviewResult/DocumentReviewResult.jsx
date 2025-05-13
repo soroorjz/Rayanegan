@@ -52,7 +52,9 @@ const DocumentReviewResult = () => {
         return (
           <div className="tab-content approved">
             <FaCircleCheck />
-            <p>مدارک شما در بررسی و تایید شده است.</p>
+            <p>
+             مدارک شما مورد بررسی قرار گرفته و تأیید گردید.
+             </p>
           </div>
         );
       case "rejected":
@@ -161,7 +163,7 @@ const DocumentReviewResult = () => {
             <FaLocationDot />
             <p>
               مدارک شما بررسی شده است و نیاز به حضور شما در تاریخ{" "}
-              <span className="bold">1404/03/25</span> و ساعت{" "}
+              <span className="bold">1404/03/25</span> و رأس ساعت{" "}
               <span className="bold">8:00</span> در نشانی تهران، نجات اللهی،
               خیابان مفتح، خیابان کریم خان زند می‌باشد.
             </p>
@@ -180,7 +182,7 @@ const DocumentReviewResult = () => {
                   exit={{ height: 0, opacity: 0, y: -10 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 >
-                  لطفاً در زمان و مکان مشخص‌شده حضور یابید و مدارک لازم را
+                  لطفاً در زمان و مکان مشخص‌شده حاضر شوید و مدارک لازم را
                   به‌صورت فیزیکی ارائه دهید. عدم حضور ممکن است منجر به رد نهایی
                   مدارک شود.
                 </motion.p>
