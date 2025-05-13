@@ -106,7 +106,7 @@ const EvaluationCard = () => {
         {selectedExam &&
           exams.find((exam) => exam.id === selectedExam)?.status === "card" && (
             <div className="cardDetailBtn">
-              <button
+              {/* <button
                 className="exam-card-button"
                 onClick={handleDownloadExamCard}
               >
@@ -117,7 +117,7 @@ const EvaluationCard = () => {
                 onClick={handleDownloadReceipt}
               >
                 دریافت رسید ثبت‌نام
-              </button>
+              </button> */}
             </div>
           )}
       </div>
