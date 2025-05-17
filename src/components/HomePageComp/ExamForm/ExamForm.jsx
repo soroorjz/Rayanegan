@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./ExamForm.scss";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
@@ -6,17 +6,18 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../../../AuthContext";
 import ExamFormResult from "./ExamFormResult/ExamFormResult";
-import axios from "axios";
+import { useQueries } from "@tanstack/react-query";
+import {
+  getEducationLevels,
+  getBirthProvinces,
+  getQuotas,
+} from "../../../apiService";
 
 const ExamForm = () => {
   const { user } = useAuth();
   const [workExperience, setWorkExperience] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showList, setShowList] = useState(false);
-  const [educationLevels, setEducationLevels] = useState([]);
-  const [birthProvinces, setBirthProvinces] = useState([]);
-  const [quotas, setQuotas] = useState([]);
-  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     educationLevel: "",
     fieldOfStudy: "",
@@ -27,88 +28,44 @@ const ExamForm = () => {
   });
   const [formErrors, setFormErrors] = useState({});
 
-  const fetchToken = useCallback(async () => {
-    try {
-      const response = await axios.post(
-        "/api/auth",
-        {},
-        {
-          headers: {
-            "RAYAN-USERNAME": "S.JAMEIE",
-            "RAYAN-PASSWORD": "1156789",
-            "RAYAN-DEBUG": true,
-          },
-        }
-      );
-      localStorage.setItem("RayanToken", response.data.token);
-      return response.data.token;
-    } catch (err) {
-      console.error("Error fetching token:", err);
-      setError("خطا در دریافت توکن!");
-      return null;
-    }
-  }, []);
+  // فچ دیتا با React Query
+  const [
+    {
+      data: educationLevels = [],
+      isLoading: isLoadingEducation,
+      error: errorEducation,
+    },
+    {
+      data: birthProvinces = [],
+      isLoading: isLoadingProvinces,
+      error: errorProvinces,
+    },
+    { data: quotas = [], isLoading: isLoadingQuotas, error: errorQuotas },
+  ] = useQueries({
+    queries: [
+      {
+        queryKey: ["educationLevels"],
+        queryFn: getEducationLevels,
+        staleTime: 1000 * 60 * 60, // ۱ ساعت
+        retry: 0,
+      },
+      {
+        queryKey: ["birthProvinces"],
+        queryFn: getBirthProvinces,
+        staleTime: 1000 * 60 * 60, // ۱ ساعت
+        retry: 0,
+      },
+      {
+        queryKey: ["quotas"],
+        queryFn: getQuotas,
+        staleTime: 1000 * 60 * 60, // ۱ ساعت
+        retry: 0,
+      },
+    ],
+  });
 
-  const fetchData = useCallback(async () => {
-    const cachedEducationLevels = localStorage.getItem("educationLevels");
-    const cachedBirthProvinces = localStorage.getItem("birthProvinces");
-    const cachedQuotas = localStorage.getItem("quotas");
-
-    if (cachedEducationLevels && cachedBirthProvinces && cachedQuotas) {
-      setEducationLevels(JSON.parse(cachedEducationLevels));
-      setBirthProvinces(JSON.parse(cachedBirthProvinces));
-      setQuotas(JSON.parse(cachedQuotas));
-      return;
-    }
-
-    let token = localStorage.getItem("RayanToken");
-    if (!token) {
-      token = await fetchToken();
-      if (!token) return;
-    }
-
-    try {
-      const [geoResponse, quotaResponse, gradeResponse] = await Promise.all([
-        axios.get("/api/geography/geographies", {
-          headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
-        }),
-        axios.get("/api/quota/quotas", {
-          headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
-        }),
-        axios.get("/api/grade/grades", {
-          headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
-        }),
-      ]);
-
-      const educationLevelsData = gradeResponse.data || [];
-      const birthProvincesData = geoResponse.data.filter(
-        (item) => item.geographyParent === null
-      );
-      const quotasData =
-        quotaResponse.data.filter((quota) => quota.quotaParent === null) || [];
-
-      localStorage.setItem(
-        "educationLevels",
-        JSON.stringify(educationLevelsData)
-      );
-      localStorage.setItem(
-        "birthProvinces",
-        JSON.stringify(birthProvincesData)
-      );
-      localStorage.setItem("quotas", JSON.stringify(quotasData));
-
-      setEducationLevels(educationLevelsData);
-      setBirthProvinces(birthProvincesData);
-      setQuotas(quotasData);
-    } catch (err) {
-      console.error("Error fetching data:", err);
-      setError("خطا در دریافت داده‌ها!");
-    }
-  }, [fetchToken]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const isLoading = isLoadingEducation || isLoadingProvinces || isLoadingQuotas;
+  const error = errorEducation || errorProvinces || errorQuotas;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -147,6 +104,19 @@ const ExamForm = () => {
   const handleToggle = () => {
     setWorkExperience(!workExperience);
   };
+
+  if (isLoading) {
+    return <div className="exam-form">در حال بارگذاری...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="exam-form">
+        <p>خطا: {error.message}</p>
+        <button onClick={() => window.location.reload()}>تلاش مجدد</button>
+      </div>
+    );
+  }
 
   return (
     <div className="exam-form">
@@ -314,7 +284,6 @@ const ExamForm = () => {
                 </div>
               </div>
             </div>
-            {/* دکمه جستجو وقتی کاربر لاگین نکرده باشه اینجا نمایش داده می‌شه */}
             <button
               type="button"
               className="search-button"
@@ -334,7 +303,6 @@ const ExamForm = () => {
             پیشنهاد می‌دهد. با مشاهده و مقایسه‌ی این فرصت‌ها، می‌توانید انتخابی
             آگاهانه داشته باشید و در مسیر شغلی خود گام بردارید
           </p>
-          {/* دکمه جستجو وقتی کاربر لاگین کرده باشه اینجا نمایش داده می‌شه */}
           {user && (
             <button
               type="button"

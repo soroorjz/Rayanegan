@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./CountDown.scss";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../../AuthContext";
 
 const Countdown = ({ registrationDeadline, startDate }) => {
@@ -25,7 +25,6 @@ const Countdown = ({ registrationDeadline, startDate }) => {
   useEffect(() => {
     if (!registrationDeadline || !startDate) return;
 
-    // فقط اگر زمان فعلی بین startDate و registrationDeadline باشد، تایمر را فعال کن
     const now = new Date();
     if (now >= new Date(startDate) && now <= new Date(registrationDeadline)) {
       setTimeLeft(calculateTimeLeft());
@@ -37,7 +36,6 @@ const Countdown = ({ registrationDeadline, startDate }) => {
     }
   }, [registrationDeadline, startDate]);
 
-  // بررسی وضعیت زمان
   const now = new Date();
   const isBeforeStart = startDate && now < new Date(startDate);
   const isAfterEnd =

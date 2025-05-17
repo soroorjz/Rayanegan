@@ -2,12 +2,11 @@ import { useState } from "react";
 import "./ExamInfoComponent.scss";
 import { examSections } from "./examInfoData";
 import ExamForm from "../HomePageComp/ExamForm/ExamForm";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
 import NotificationList from "../../pages/NotificationList/NotificationList";
 
 const notifications = [
-  
   {
     date: "1402-11-17",
     timeAgo: "5 ماه پیش",
@@ -82,18 +81,13 @@ const ExamInfoComponent = ({
       {activeSection === "introduction" && (
         <section id="introduction" className="exam-section-sj">
           <h2>معرفی آزمون</h2>
-          {activeSection === "introduction" && (
-            <section id="introduction" className="exam-section-sj">
-              {/* <h2>معرفی آزمون</h2> */}
-              {examSections.map((item, index) => (
-                <div key={index} className="introduction-item">
-                  <p className="date">{item.date}</p>
-                  <h3 className="title">{item.title}</h3>
-                  <p className="description">{item.description}</p>
-                </div>
-              ))}
-            </section>
-          )}
+          {examSections.map((item, index) => (
+            <div key={index} className="introduction-item">
+              <p className="date">{item.date}</p>
+              <h3 className="title">{item.title}</h3>
+              <p className="description">{item.description}</p>
+            </div>
+          ))}
         </section>
       )}
 
