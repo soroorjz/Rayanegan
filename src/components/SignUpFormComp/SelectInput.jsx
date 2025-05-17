@@ -1,107 +1,69 @@
-import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import { useQueries } from "@tanstack/react-query";
+import { getHandler } from "../../apiService";
 
 const SelectInput = ({ formData, handleChange, errors }) => {
   const [selectedProvince, setSelectedProvince] = useState("");
-  const [provinces, setProvinces] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [allGeographies, setAllGeographies] = useState([]);
-  const [religions, setReligions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [filteredCities, setFilteredCities] = useState([]);
 
-  // دریافت و ذخیره توکن
-  const fetchToken = useCallback(async () => {
-    try {
-      const response = await axios.post("/api/auth", null, {
-        headers: {
-          "RAYAN-USERNAME": "S.JAMEIE",
-          "RAYAN-PASSWORD": "1156789",
-          "RAYAN-DEBUG": true,
-        },
-      });
+  // Fetch data using react-query
+  const [
+    {
+      data: geographies = [],
+      isLoading: isLoadingGeographies,
+      error: errorGeographies,
+    },
+    {
+      data: religions = [],
+      isLoading: isLoadingReligions,
+      error: errorReligions,
+    },
+  ] = useQueries({
+    queries: [
+      {
+        queryKey: ["geographies"],
+        queryFn: () => getHandler("geography"),
+        staleTime: 1000 * 60 * 60, // 1 hour
+        retry: 1,
+      },
+      {
+        queryKey: ["religions"],
+        queryFn: () => getHandler("religion"),
+        staleTime: 1000 * 60 * 60, // 1 hour
+        retry: 1,
+      },
+    ],
+  });
 
-      if (response.status !== 200) throw new Error("خطا در دریافت توکن!");
+  // Derive provinces and cities from geographies
+  const provinces = geographies.filter((item) => item.geographyParent === null);
+  const allCities = geographies.filter((item) => item.geographyParent !== null);
 
-      localStorage.setItem("RayanToken", response.data.token);
-      return response.data.token;
-    } catch (err) {
-      console.error("Error fetching token:", err);
-      setError("خطا در دریافت توکن!");
-      return null;
-    }
-  }, []);
+  // Update filtered cities when province changes
+  const handleProvinceChange = (e) => {
+    const provinceId = e.target.value;
+    setSelectedProvince(provinceId);
+    handleChange(e);
 
-  // تابع دریافت داده‌ها با کش کردن
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+    // Filter cities based on selected province
+    const filtered = allCities.filter(
+      (city) => city.geographyParent === Number(provinceId)
+    );
+    setFilteredCities(filtered);
+  };
 
-    try {
-      let token = localStorage.getItem("RayanToken");
-      if (!token) {
-        token = await fetchToken();
-        if (!token) return;
-      }
-
-      // چک کردن کش
-      const cachedGeoData = localStorage.getItem("GeoData");
-      const cachedReligionData = localStorage.getItem("ReligionData");
-
-      if (cachedGeoData && cachedReligionData) {
-        // console.log(" داده‌ها از کش خوانده شدند");
-        const geoData = JSON.parse(cachedGeoData);
-        const religionData = JSON.parse(cachedReligionData);
-        setProvinces(geoData.filter((item) => item.geographyParent === null));
-        setAllGeographies(geoData);
-        setReligions(religionData);
-        setLoading(false);
-        return;
-      }
-
-      // درخواست همزمان برای استان‌ها و دین‌ها
-      const [geoResponse, religionResponse] = await Promise.all([
-        axios.get("/api/geography/geographies", {
-          headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
-        }),
-        axios.get("/api/religion/religions", {
-          headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
-        }),
-      ]);
-
-      if (geoResponse.status !== 200 || religionResponse.status !== 200) {
-        throw new Error("خطا در دریافت داده‌ها!");
-      }
-
-      const geoData = geoResponse.data;
-      const religionData = religionResponse.data;
-
-      // ذخیره داده‌ها در localStorage
-      localStorage.setItem("GeoData", JSON.stringify(geoData));
-      localStorage.setItem("ReligionData", JSON.stringify(religionData));
-
-      setProvinces(geoData.filter((item) => item.geographyParent === null));
-      setAllGeographies(geoData);
-      setReligions(religionData);
-    } catch (err) {
-      console.error("Error fetching data:", err);
-      setError("خطا در دریافت داده‌ها!");
-    } finally {
-      setLoading(false);
- 
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // Combine loading and error states
+  const isLoading = isLoadingGeographies || isLoadingReligions;
+  const error = errorGeographies || errorReligions;
 
   return (
     <>
-      {error && <div className="error">{error}</div>}
-      {/* {loading && <p>در حال بارگذاری...</p>} */}
+      {error && (
+        <div className="error">خطا در دریافت داده‌ها: {error.message}</div>
+      )}
+      {isLoading && <p>در حال بارگذاری...</p>}
 
-      {!loading && !error && (
+      {!isLoading && !error && (
         <>
           <div className="form-group">
             <label htmlFor="province">استان :</label>
@@ -109,15 +71,7 @@ const SelectInput = ({ formData, handleChange, errors }) => {
               id="province"
               name="province"
               value={formData.province}
-              onChange={(e) => {
-                setSelectedProvince(e.target.value);
-                handleChange(e);
-                // فیلتر کردن شهرهای مرتبط با استان انتخابی
-                const filteredCities = allGeographies.filter(
-                  (city) => city.geographyParent === Number(e.target.value)
-                );
-                setCities(filteredCities);
-              }}
+              onChange={handleProvinceChange}
             >
               <option value="">انتخاب نمایید</option>
               {provinces.length > 0 ? (
@@ -145,10 +99,11 @@ const SelectInput = ({ formData, handleChange, errors }) => {
               name="city"
               value={formData.city}
               onChange={handleChange}
+              disabled={!selectedProvince}
             >
               <option value="">انتخاب نمایید</option>
-              {cities.length > 0 ? (
-                cities.map((city) => (
+              {filteredCities.length > 0 ? (
+                filteredCities.map((city) => (
                   <option key={city.geographyId} value={city.geographyId}>
                     {city.geographyName}
                   </option>

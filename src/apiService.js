@@ -208,3 +208,77 @@ export const getQuotas = async () => {
     throw new Error("خطا در دریافت سهمیه‌ها: " + error.message);
   }
 };
+
+// tool
+export function plural(word) {
+  if (!word) return word;
+
+  // Define irregular plurals
+  const irregulars = {
+    person: "people",
+    child: "children",
+    man: "men",
+    woman: "women",
+    mouse: "mice",
+    goose: "geese",
+    foot: "feet",
+    tooth: "teeth",
+  };
+
+  // Check for irregular plurals
+  if (irregulars[word.toLowerCase()]) {
+    return irregulars[word.toLowerCase()];
+  }
+
+  // Handle words ending in -y
+  if (word.match(/y$/i) && !word.match(/[aeiou]y$/i)) {
+    return word.replace(/y$/i, "ies");
+  }
+
+  // Handle words ending in -s, -sh, -ch, -x, -z
+  if (word.match(/(s|sh|ch|x|z)$/i)) {
+    return word + "es";
+  }
+
+  // Default: add -s
+  return word + "s";
+}
+
+export const getHandler = async (tableName) => {
+  try {
+    const response = await api.get("/" + tableName + "/" + plural(tableName));
+    console.log("Table Fetched : " + tableName);
+    console.log(response.data);
+    return (await response.data) || [];
+  } catch (error) {
+    console.log("Error while fetching: " + tableName);
+    console.error(error);
+    throw new Error("خطا در دریافت جدول : " + error.message);
+  }
+};
+
+export const getbyIDHandler = async (tableName, specID) => {
+  try {
+    const response = await api.get("/" + tableName + "/" + specID);
+    console.log("Table Fetched : " + tableName);
+    console.log(response.data);
+    return (await response.data) || [];
+  } catch (error) {
+    console.log("Error while fetching: " + tableName);
+    console.error(error);
+    throw new Error("خطا در دریافت جدول : " + error.message);
+  }
+};
+
+// export const getbyConditionHandler = async (tableName, Condition) => {
+//   try {
+//     const response = await api.get("/" + tableName + "/" + specID);
+//     console.log("Table Fetched : " + tableName);
+//     console.log(response.data);
+//     return (await response.data) || [];
+//   } catch (error) {
+//     console.log("Error while fetching: " + tableName);
+//     console.error(error);
+//     throw new Error("خطا در دریافت جدول : " + error.message);
+//   }
+// };

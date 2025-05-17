@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { getHandler } from "../../../../apiService";
 import "./ContactForm.scss";
 
-//  اعتبارسنجی
+// Validation schema
 const schema = yup.object().shape({
   phone: yup
     .string()
@@ -33,75 +34,34 @@ const ContactForm = ({ onNext, handlePreviousStep }) => {
   });
 
   const [selectedProvince, setSelectedProvince] = useState("");
-  const [provinces, setProvinces] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [allGeographies, setAllGeographies] = useState([]);
+  const [filteredCities, setFilteredCities] = useState([]);
 
-  const fetchToken = useCallback(async () => {
-    try {
-      const response = await axios.post("/api/auth", null, {
-        headers: {
-          "RAYAN-USERNAME": "S.JAMEIE",
-          "RAYAN-PASSWORD": "1156789",
-          "RAYAN-DEBUG": true,
-        },
-      });
-      if (response.status !== 200) throw new Error("خطا در دریافت توکن!");
-      localStorage.setItem("RayanToken", response.data.token);
-      return response.data.token;
-    } catch (err) {
-      console.error("Error fetching token:", err);
-      return null;
-    }
-  }, []);
+  // Fetch geographies using react-query
+  const {
+    data: geographies = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["geographies"],
+    queryFn: () => getHandler("geography"),
+    staleTime: 1000 * 60 * 60, // 1 hour
+    retry: 1,
+  });
 
-  const fetchGeographies = useCallback(async () => {
-    try {
-      let token = localStorage.getItem("RayanToken");
-      if (!token) {
-        token = await fetchToken();
-        if (!token) return;
-      }
+  // Derive provinces and cities
+  const provinces = geographies.filter((item) => item.geographyParent === null);
+  const allCities = geographies.filter((item) => item.geographyParent !== null);
 
-      const cachedGeoData = localStorage.getItem("GeoData");
-      if (cachedGeoData) {
-        console.log("داده‌های جغرافیایی از کش خوانده شدند");
-        const geoData = JSON.parse(cachedGeoData);
-        setProvinces(geoData.filter((item) => item.geographyParent === null));
-        setAllGeographies(geoData);
-        return;
-      }
-
-      // درخواست به API
-      const response = await axios.get("/api/geography/geographies", {
-        headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
-      });
-
-      if (response.status !== 200) throw new Error("خطا در دریافت داده‌ها!");
-
-      const geoData = response.data;
-      localStorage.setItem("GeoData", JSON.stringify(geoData));
-      setProvinces(geoData.filter((item) => item.geographyParent === null));
-      setAllGeographies(geoData);
-    } catch (err) {
-      console.error("Error fetching geographies:", err);
-      setProvinces([]);
-      setAllGeographies([]);
-    }
-  }, [fetchToken]);
-
-  useEffect(() => {
-    fetchGeographies();
-  }, [fetchGeographies]);
-
+  // Handle province selection
   const handleProvinceChange = (e) => {
     const provinceId = e.target.value;
     setSelectedProvince(provinceId);
 
-    const filteredCities = allGeographies.filter(
+    // Filter cities based on selected province
+    const filtered = allCities.filter(
       (city) => city.geographyParent === Number(provinceId)
     );
-    setCities(filteredCities);
+    setFilteredCities(filtered);
   };
 
   const onSubmit = (data) => {
@@ -112,49 +72,69 @@ const ContactForm = ({ onNext, handlePreviousStep }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="contact-form-sj">
       <div className="contact-formWrapper">
-        <div className="form-group">
-          <label>تلفن همراه:</label>
-          <input type="text" {...register("phone")} />
-          {errors.phone && <span>{errors.phone.message}</span>}
-        </div>
+        {error && (
+          <div className="error">خطا در دریافت داده‌ها: {error.message}</div>
+        )}
+        {isLoading && <p>در حال بارگذاری...</p>}
 
-        <div className="form-group">
-          <label>کد پستی:</label>
-          <input type="text" {...register("postalCode")} />
-          {errors.postalCode && <span>{errors.postalCode.message}</span>}
-        </div>
+        {!isLoading && !error && (
+          <>
+            <div className="form-group">
+              <label>تلفن همراه:</label>
+              <input type="text" {...register("phone")} />
+              {errors.phone && <span>{errors.phone.message}</span>}
+            </div>
 
-        <div className="form-group">
-          <label>استان:</label>
-          <select {...register("province")} onChange={handleProvinceChange}>
-            <option value="">انتخاب کنید</option>
-            {provinces.map((province) => (
-              <option key={province.geographyId} value={province.geographyId}>
-                {province.geographyName}
-              </option>
-            ))}
-          </select>
-          {errors.province && <span>{errors.province.message}</span>}
-        </div>
+            <div className="form-group">
+              <label>کد پستی:</label>
+              <input type="text" {...register("postalCode")} />
+              {errors.postalCode && <span>{errors.postalCode.message}</span>}
+            </div>
 
-        <div className="form-group">
-          <label>شهر:</label>
-          <select {...register("city")} disabled={!selectedProvince}>
-            <option value="">انتخاب کنید</option>
-            {cities.map((city) => (
-              <option key={city.geographyId} value={city.geographyId}>
-                {city.geographyName}
-              </option>
-            ))}
-          </select>
-          {errors.city && <span>{errors.city.message}</span>}
-        </div>
+            <div className="form-group">
+              <label>استان:</label>
+              <select {...register("province")} onChange={handleProvinceChange}>
+                <option value="">انتخاب کنید</option>
+                {provinces.length > 0 ? (
+                  provinces.map((province) => (
+                    <option
+                      key={province.geographyId}
+                      value={province.geographyId}
+                    >
+                      {province.geographyName}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>داده‌ای یافت نشد</option>
+                )}
+              </select>
+              {errors.province && <span>{errors.province.message}</span>}
+            </div>
 
-        <div className="form-group">
-          <label>آدرس:</label>
-          <textarea {...register("address")} rows="3"></textarea>
-          {errors.address && <span>{errors.address.message}</span>}
-        </div>
+            <div className="form-group">
+              <label>شهر:</label>
+              <select {...register("city")} disabled={!selectedProvince}>
+                <option value="">انتخاب کنید</option>
+                {filteredCities.length > 0 ? (
+                  filteredCities.map((city) => (
+                    <option key={city.geographyId} value={city.geographyId}>
+                      {city.geographyName}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>ابتدا استان را انتخاب کنید</option>
+                )}
+              </select>
+              {errors.city && <span>{errors.city.message}</span>}
+            </div>
+
+            <div className="form-group">
+              <label>آدرس:</label>
+              <textarea {...register("address")} rows="3"></textarea>
+              {errors.address && <span>{errors.address.message}</span>}
+            </div>
+          </>
+        )}
       </div>
 
       <div className="contactSubmitBtns">
@@ -164,7 +144,11 @@ const ContactForm = ({ onNext, handlePreviousStep }) => {
         >
           مرحله قبل
         </button>
-        <button type="submit" className="contactSubmit-btn">
+        <button
+          type="submit"
+          className="contactSubmit-btn"
+          disabled={isLoading || error}
+        >
           مرحله بعد
         </button>
       </div>

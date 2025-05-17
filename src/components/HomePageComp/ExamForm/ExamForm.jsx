@@ -10,7 +10,7 @@ import { useQueries } from "@tanstack/react-query";
 import {
   getEducationLevels,
   getBirthProvinces,
-  getQuotas,
+  getHandler,
 } from "../../../apiService";
 
 const ExamForm = () => {
@@ -45,21 +45,21 @@ const ExamForm = () => {
     queries: [
       {
         queryKey: ["educationLevels"],
-        queryFn: getEducationLevels,
+        queryFn: () => getHandler("grade"),
         staleTime: 1000 * 60 * 60, // ۱ ساعت
         retry: 0,
       },
       {
         queryKey: ["birthProvinces"],
-        queryFn: getBirthProvinces,
+        queryFn: () => getHandler("geography"),
         staleTime: 1000 * 60 * 60, // ۱ ساعت
         retry: 0,
       },
       {
-        queryKey: ["quotas"],
-        queryFn: getQuotas,
-        staleTime: 1000 * 60 * 60, // ۱ ساعت
-        retry: 0,
+        queryKey: ["quota"], // Match the singular form used in getHandler
+        queryFn: () => getHandler("quota"), // Return the Promise from getHandler
+        staleTime: 1000 * 60 * 60, // 1 hour
+        retry: 1, // Allow one retry for transient errors
       },
     ],
   });
@@ -105,9 +105,9 @@ const ExamForm = () => {
     setWorkExperience(!workExperience);
   };
 
-  if (isLoading) {
-    return <div className="exam-form">در حال بارگذاری...</div>;
-  }
+  // if (isLoading) {
+  //   return <div className="exam-form">در حال بارگذاری...</div>;
+  // }
 
   if (error) {
     return (

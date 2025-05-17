@@ -7,11 +7,10 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import gregorian from "react-date-object/calendars/gregorian";
 import "./EducationForm.scss";
-import { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
+import { useQueries } from "@tanstack/react-query";
+import { getHandler } from "../../../../apiService";
 
-//اعتبارسنجی
+// Validation schema
 const schema = yup.object().shape({
   degree: yup.string().required("مقطع تحصیلی را انتخاب کنید"),
   fieldOfStudy: yup
@@ -43,72 +42,37 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
     resolver: yupResolver(schema),
   });
 
-  const [degrees, setDegrees] = useState([]);
-  const [universityTypes, setUniversityTypes] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   const selectedDegree = watch("degree");
   const selectedUniversityType = watch("universityType");
 
-  const fetchToken = async () => {
-    try {
-      const response = await fetch("/api/auth", {
-        headers: {
-          "RAYAN-USERNAME": "S.JAMEIE",
-          "RAYAN-PASSWORD": "1156789",
-          "RAYAN-DEBUG": true,
-        },
-        method: "POST",
-      });
-      const data = await response.json();
-      localStorage.setItem("RayanToken", data.token);
-      return data.token;
-    } catch (err) {
-      console.error("Error fetching token:", err);
-      return null;
-    }
-  };
+  // Fetch data using react-query
+  const [
+    { data: degrees = [], isLoading: isLoadingDegrees, error: errorDegrees },
+    {
+      data: universityTypes = [],
+      isLoading: isLoadingUniversityTypes,
+      error: errorUniversityTypes,
+    },
+  ] = useQueries({
+    queries: [
+      {
+        queryKey: ["degrees"],
+        queryFn: () => getHandler("grade"),
+        staleTime: 1000 * 60 * 60, // 1 hour
+        retry: 1,
+      },
+      {
+        queryKey: ["universityTypes"],
+        queryFn: () => getHandler("universitytype"),
+        staleTime: 1000 * 60 * 60, // 1 hour
+        retry: 1,
+      },
+    ],
+  });
 
-  const fetchDegrees = async (token) => {
-    try {
-      const response = await axios.get("/api/grade/grades", {
-        headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
-      });
-      // console.log("Degrees response:", response.data); // برای دیباگ
-      setDegrees(Array.isArray(response.data) ? response.data : []);
-    } catch (err) {
-      console.error("Error fetching degrees:", err);
-      setDegrees([]);
-    }
-  };
-
-  const fetchUniversityTypes = async (token) => {
-    try {
-      const response = await axios.get("/api/universitytype/universitytypes", {
-        headers: { "RAYAN-TOKEN": token, "RAYAN-DEBUG": true },
-      });
-      // console.log("UniversityTypes response:", response.data); // برای دیباگ
-      setUniversityTypes(Array.isArray(response.data) ? response.data : []);
-    } catch (err) {
-      console.error("Error fetching university types:", err);
-      setUniversityTypes([]);
-    }
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = await fetchToken();
-      if (token) {
-        await Promise.all([fetchDegrees(token), fetchUniversityTypes(token)]);
-      } else {
-        console.error("Token not found");
-        setDegrees([]);
-        setUniversityTypes([]);
-      }
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
+  // Combine loading and error states
+  const isLoading = isLoadingDegrees || isLoadingUniversityTypes;
+  const error = errorDegrees || errorUniversityTypes;
 
   const onSubmit = (data) => {
     console.log("فرم ارسال شد:", data);
@@ -117,90 +81,110 @@ const EducationForm = ({ onNext, handlePreviousStep }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="education-form-sj">
-      <div className="formContent">
-        <div className="form-group">
-          <label>مقطع تحصیلی:</label>
-          <select {...register("degree")}>
-            <option value="">انتخاب کنید</option>
-            {degrees.map((degree) => (
-              <option key={degree.gradeId} value={degree.gradeId}>
-                {degree.gradeTitle}
-              </option>
-            ))}
-          </select>
-          {errors.degree && <span>{errors.degree.message}</span>}
-        </div>
+      {error && (
+        <div className="error">خطا در دریافت داده‌ها: {error.message}</div>
+      )}
+      {isLoading && <p>در حال بارگذاری...</p>}
 
-        <div className="form-group">
-          <label>رشته تحصیلی:</label>
-          <input
-            type="text"
-            {...register("fieldOfStudy")}
-            disabled={!selectedDegree}
-          />
-          {errors.fieldOfStudy && <span>{errors.fieldOfStudy.message}</span>}
-        </div>
+      {!isLoading && !error && (
+        <div className="formContent">
+          <div className="form-group">
+            <label>مقطع تحصیلی:</label>
+            <select {...register("degree")}>
+              <option value="">انتخاب کنید</option>
+              {degrees.length > 0 ? (
+                degrees.map((degree) => (
+                  <option key={degree.gradeId} value={degree.gradeId}>
+                    {degree.gradeTitle}
+                  </option>
+                ))
+              ) : (
+                <option disabled>داده‌ای یافت نشد</option>
+              )}
+            </select>
+            {errors.degree && <span>{errors.degree.message}</span>}
+          </div>
 
-        <div className="form-group">
-          <label>نوع دانشگاه:</label>
-          <select {...register("universityType")}>
-            <option value="">انتخاب کنید</option>
-            {universityTypes.map((uniType) => (
-              <option key={uniType.id} value={uniType.id}>
-                {uniType.universityTypeName}
-              </option>
-            ))}
-          </select>
-          {errors.universityType && (
-            <span>{errors.universityType.message}</span>
-          )}
-        </div>
+          <div className="form-group">
+            <label>رشته تحصیلی:</label>
+            <input
+              type="text"
+              {...register("fieldOfStudy")}
+              disabled={!selectedDegree}
+            />
+            {errors.fieldOfStudy && <span>{errors.fieldOfStudy.message}</span>}
+          </div>
 
-        <div className="form-group">
-          <label>نام دانشگاه:</label>
-          <input
-            type="text"
-            {...register("universityName")}
-            disabled={!selectedUniversityType}
-          />
-          {errors.universityName && (
-            <span>{errors.universityName.message}</span>
-          )}
-        </div>
+          <div className="form-group">
+            <label>نوع دانشگاه:</label>
+            <select {...register("universityType")}>
+              <option value="">انتخاب کنید</option>
+              {universityTypes.length > 0 ? (
+                universityTypes.map((uniType) => (
+                  <option key={uniType.id} value={uniType.id}>
+                    {uniType.universityTypeName}
+                  </option>
+                ))
+              ) : (
+                <option disabled>داده‌ای یافت نشد</option>
+              )}
+            </select>
+            {errors.universityType && (
+              <span>{errors.universityType.message}</span>
+            )}
+          </div>
 
-        <div className="form-group">
-          <label>تاریخ فارغ‌التحصیلی:</label>
-          <DatePicker
-            calendar={persian}
-            locale={persian_fa}
-            inputClass="custom-date-input"
-            style={{ width: "100%" }}
-            placeholder="تاریخ را انتخاب کنید"
-            onChange={(value) => {
-              if (value) {
-                const gregorianDate = value.convert(gregorian).toDate();
-                setValue("graduationDate", gregorianDate, {
-                  shouldValidate: true,
-                });
-              }
-            }}
-          />
-          {errors.graduationDate && (
-            <span>{errors.graduationDate.message}</span>
-          )}
-        </div>
+          <div className="form-group">
+            <label>نام دانشگاه:</label>
+            <input
+              type="text"
+              {...register("universityName")}
+              disabled={!selectedUniversityType}
+            />
+            {errors.universityName && (
+              <span>{errors.universityName.message}</span>
+            )}
+          </div>
 
-        <div className="form-group">
-          <label>معدل:</label>
-          <input type="number" step="0.01" {...register("gpa")} />
-          {errors.gpa && <span>{errors.gpa.message}</span>}
+          <div className="form-group">
+            <label>تاریخ فارغ‌التحصیلی:</label>
+            <DatePicker
+              calendar={persian}
+              locale={persian_fa}
+              inputClass="custom-date-input"
+              style={{ width: "100%" }}
+              placeholder="تاریخ را انتخاب کنید"
+              onChange={(value) => {
+                if (value) {
+                  const gregorianDate = value.convert(gregorian).toDate();
+                  setValue("graduationDate", gregorianDate, {
+                    shouldValidate: true,
+                  });
+                }
+              }}
+            />
+            {errors.graduationDate && (
+              <span>{errors.graduationDate.message}</span>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label>معدل:</label>
+            <input type="number" step="0.01" {...register("gpa")} />
+            {errors.gpa && <span>{errors.gpa.message}</span>}
+          </div>
         </div>
-      </div>
+      )}
+
       <div className="educationSubmitBtns">
         <button onClick={handlePreviousStep} className="submit-btn">
           مرحله قبل
         </button>
-        <button type="submit" className="submit-btn">
+        <button
+          type="submit"
+          className="submit-btn"
+          disabled={isLoading || error}
+        >
           مرحله بعد
         </button>
       </div>

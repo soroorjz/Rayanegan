@@ -1,22 +1,24 @@
 import React from "react";
 import "./EmploymentTests.scss";
 import { IoMdHome } from "react-icons/io";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import EmploymentTestsComp from "../../components/EmploymentTestsComp/EmploymentTestsComp";
 import EmploymentTestsIcons from "../../components/EmploymentTestsComp/EmploymentTestsIcons/EmploymentTestsIcons";
 import NavbarTop from "../../components/HomePageComp/NavbarTop/NavbarTop";
 import EmploymentTestsBanner from "../../components/EmploymentTestsComp/EmploymentTestsBanner/EmploymentTestsBanner";
 import { Link } from "react-router-dom";
-import { getExamStatuses, getExams } from "../../apiService";
+import { getExamStatuses } from "../../apiService";
 import ExamCardSkeleton from "./ExamCardSkeleton";
 
 const EmploymentTests = () => {
+  const queryClient = useQueryClient();
 
   const {
     data: examStatuses,
     isLoading: statusesLoading,
     error: statusesError,
     isFetching: statusesFetching,
+    refetch: refetchStatuses,
   } = useQuery({
     queryKey: ["examStatuses"],
     queryFn: async () => {
@@ -26,60 +28,58 @@ const EmploymentTests = () => {
     },
     staleTime: 1000 * 60 * 60, // 1 ساعت
     cacheTime: 1000 * 60 * 60 * 24, // 24 ساعت
-    retry: 1,
+    retry: 2,
     onError: (err) => console.log("Exam Statuses Error:", err),
   });
 
-  const {
-    data: examCards,
-    isLoading: examsLoading,
-    error: examsError,
-    isFetching: examsFetching,
-  } = useQuery({
-    queryKey: ["exams"],
-    queryFn: async () => {
-      const data = await getExams();
-      console.log("Exams Loaded:", data);
-      return data.map((exam) => ({
-        ...exam,
-        examStatusRef: Number(exam.examStatusRef),
-      }));
-    },
-    staleTime: 1000 * 60 * 60, // 1 ساعت
-    cacheTime: 1000 * 60 * 60 * 24, // 24 ساعت
-    retry: 1,
-    onError: (err) => console.log("Exams Error:", err),
-  });
+  const loading = statusesLoading;
+  const fetching = statusesFetching;
+  const error = statusesError;
 
-  const loading = statusesLoading || examsLoading;
-  const fetching = statusesFetching || examsFetching;
-  const error = statusesError || examsError;
-
-  //  فیلتر کردن آزمون‌ها
-  const getFilteredExams = (statusTitle) => {
-    if (!examStatuses || !examCards) return [];
-    const statusId = Object.keys(examStatuses).find(
-      (key) => examStatuses[key] === statusTitle
+  if (loading) {
+    console.log("Still Loading Statuses...");
+    return (
+      <div className="EmploymentTests">
+        <NavbarTop hideJobSearch={true} />
+        <ExamCardSkeleton />
+      </div>
     );
-    console.log(`Filtering ${statusTitle}: statusId=${statusId}`);
-    return examCards.filter((exam) => exam.examStatusRef === Number(statusId));
-  };
-
-  // if (loading) {
-  //   console.log("Still Loading...");
-  //   return <ExamCardSkeleton/>;
-  // }
+  }
 
   if (error) {
     console.log("Error occurred:", error);
     return (
       <div className="EmploymentTests">
-        خطا در دریافت اطلاعات: {error.message}
+        <NavbarTop hideJobSearch={true} />
+        <div className="error-message">
+          <p>خطا در دریافت اطلاعات: {error.message}</p>
+          <button
+            onClick={() => {
+              queryClient.invalidateQueries(["examStatuses"]);
+              refetchStatuses();
+            }}
+          >
+            تلاش مجدد
+          </button>
+        </div>
       </div>
     );
   }
 
-  console.log("Rendering with data:", { examStatuses, examCards });
+  console.log("Rendering with examStatuses:", examStatuses);
+
+  const statusTitles = [
+    { title: "در انتظار", id: "InProgress" },
+    { title: "درحال ثبت نام", id: "Registering" },
+    { title: "پایان ثبت نام", id: "EndOfRegistering" },
+    { title: "دریافت کارت ورود به جلسه", id: "ExamCard" },
+    { title: "آزمون کتبی برگزار شده", id: "Held" },
+    { title: "در حال بررسی", id: "UnderReview" },
+    { title: "اعلام نتایج آزمون کتبی", id: "Announcing" },
+    { title: "ارزیابی تکمیلی", id: "Filter" },
+    { title: "گزینش", id: "Selection" },
+    { title: "پایان آزمون", id: "Expired" },
+  ];
 
   return (
     <div className="EmploymentTests">
@@ -88,79 +88,29 @@ const EmploymentTests = () => {
         <EmploymentTestsBanner />
       </div>
       <div className="EmploymentTestsIcons">
-        <EmploymentTestsIcons />
+        <EmploymentTestsIcons statusTitles={statusTitles} />
       </div>
-      {fetching && (
-        <ExamCardSkeleton/>
-      )}
-      <div id="InProgress" className="EmploymentTestsComp">
-        <EmploymentTestsComp
-          examData={getFilteredExams("در انتظار")}
-          title="در انتظار"
-        />
-      </div>
-      <div id="Registering" className="EmploymentTestsComp">
-        <EmploymentTestsComp
-          examData={getFilteredExams("درحال ثبت نام")}
-          title="درحال ثبت نام"
-        />
-      </div>
-      <div id="EndOfRegistering" className="EmploymentTestsComp">
-        <EmploymentTestsComp
-          examData={getFilteredExams("پایان ثبت نام")}
-          title="پایان ثبت نام"
-        />
-      </div>
-      <div id="ExamCard" className="EmploymentTestsComp">
-        <EmploymentTestsComp
-          examData={getFilteredExams("دریافت کارت ورود به جلسه")}
-          title="دریافت کارت ورود به جلسه"
-        />
-      </div>
-      <div id="Held" className="EmploymentTestsComp">
-        <EmploymentTestsComp
-          examData={getFilteredExams("آزمون کتبی برگزار شده")}
-          title="آزمون کتبی برگزار شده"
-        />
-      </div>
-      <div id="UnderReview" className="EmploymentTestsComp">
-        <EmploymentTestsComp
-          examData={getFilteredExams("در حال بررسی")}
-          title="در حال بررسی"
-        />
-      </div>
-      <div id="Announcing" className="EmploymentTestsComp">
-        <EmploymentTestsComp
-          examData={getFilteredExams("اعلام نتایج آزمون کتبی")}
-          title="اعلام نتایج آزمون کتبی"
-        />
-      </div>
-      <div id="Filter" className="EmploymentTestsComp">
-        <EmploymentTestsComp
-          examData={getFilteredExams("ارزیابی تکمیلی")}
-          title="ارزیابی تکمیلی"
-        />
-      </div>
-      <div id="Selection" className="EmploymentTestsComp">
-        <EmploymentTestsComp
-          examData={getFilteredExams("گزینش")}
-          title="گزینش"
-        />
-      </div>
-      <div id="Expired" className="EmploymentTestsComp expiredExams">
-        <EmploymentTestsComp
-          examData={getFilteredExams("پایان آزمون")}
-          title="پایان آزمون"
-        />
-      </div>
+      {fetching && <ExamCardSkeleton />}
+      {statusTitles.map(({ title, id }) => (
+        <div
+          key={title}
+          id={id}
+          className={`EmploymentTestsComp ${
+            title === "پایان آزمون" ? "expiredExams" : ""
+          }`}
+        >
+          <EmploymentTestsComp
+            examStatuses={examStatuses}
+            statusTitle={title}
+            title={title}
+          />
+        </div>
+      ))}
       <Link to="/">
         <button className="homeBtn">
           <IoMdHome />
         </button>
       </Link>
-      {/* <Link to="/ExamCardSkeleton">
-       4532452
-      </Link> */}
     </div>
   );
 };
