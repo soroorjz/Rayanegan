@@ -7,11 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../../../AuthContext";
 import ExamFormResult from "./ExamFormResult/ExamFormResult";
 import { useQueries } from "@tanstack/react-query";
-import {
-  getEducationLevels,
-  getBirthProvinces,
-  getHandler,
-} from "../../../apiService";
+import { getHandler } from "../../../apiService";
 
 const ExamForm = () => {
   const { user } = useAuth();
@@ -24,11 +20,11 @@ const ExamForm = () => {
     birthProvince: "",
     quota: "",
     gender: "",
-    maritalStatus: "",
+    marriage: "",
   });
   const [formErrors, setFormErrors] = useState({});
 
-  // فچ دیتا با React Query
+  // Fetch data with React Query for education levels, provinces, quotas, genders, and marriage (وضعیت تاهل)
   const [
     {
       data: educationLevels = [],
@@ -41,31 +37,68 @@ const ExamForm = () => {
       error: errorProvinces,
     },
     { data: quotas = [], isLoading: isLoadingQuotas, error: errorQuotas },
+    { data: genders = [], isLoading: isLoadingGenders, error: errorGenders },
+    {
+      data: marriageStatuses = [], 
+      isLoading: isLoadingMarriageStatuses,
+      error: errorMarriageStatuses,
+    },
   ] = useQueries({
     queries: [
       {
         queryKey: ["educationLevels"],
         queryFn: () => getHandler("grade"),
-        staleTime: 1000 * 60 * 60, // ۱ ساعت
+        staleTime: 1000 * 60 * 60, // 1 hour
         retry: 0,
       },
       {
         queryKey: ["birthProvinces"],
         queryFn: () => getHandler("geography"),
-        staleTime: 1000 * 60 * 60, // ۱ ساعت
+        staleTime: 1000 * 60 * 60, // 1 hour
         retry: 0,
       },
       {
-        queryKey: ["quota"], // Match the singular form used in getHandler
-        queryFn: () => getHandler("quota"), // Return the Promise from getHandler
+        queryKey: ["quota"],
+        queryFn: () => getHandler("quota"),
         staleTime: 1000 * 60 * 60, // 1 hour
-        retry: 1, // Allow one retry for transient errors
+        retry: 1,
+      },
+      {
+        queryKey: ["genders"],
+        queryFn: () => getHandler("gender"),
+        select: (data) => {
+          console.log("Genders API raw response:", data); // Debug log
+          return Array.isArray(data) ? data : [];
+        },
+        staleTime: 1000 * 60 * 60, // 1 hour
+        retry: 0,
+      },
+      {
+        queryKey: ["marriages"], // Renamed for clarity
+        queryFn: () => getHandler("marriage"),
+        select: (data) => {
+          console.log("Marriage Statuses API raw response:", data); // Debug log
+          return Array.isArray(data) ? data : [];
+        },
+        staleTime: 1000 * 60 * 60, // 1 hour
+        retry: 0,
       },
     ],
   });
 
-  const isLoading = isLoadingEducation || isLoadingProvinces || isLoadingQuotas;
-  const error = errorEducation || errorProvinces || errorQuotas;
+  // Combine loading and error states
+  const isLoading =
+    isLoadingEducation ||
+    isLoadingProvinces ||
+    isLoadingQuotas ||
+    isLoadingGenders ||
+    isLoadingMarriageStatuses;
+  const error =
+    errorEducation ||
+    errorProvinces ||
+    errorQuotas ||
+    errorGenders ||
+    errorMarriageStatuses;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -84,8 +117,7 @@ const ExamForm = () => {
       errors.birthProvince = "انتخاب استان محل تولد الزامی است";
     if (!formData.quota) errors.quota = "انتخاب سهمیه الزامی است";
     if (!formData.gender) errors.gender = "انتخاب جنسیت الزامی است";
-    if (!formData.maritalStatus)
-      errors.maritalStatus = "انتخاب وضعیت تاهل الزامی است";
+    if (!formData.marriage) errors.marriage = "انتخاب وضعیت تاهل الزامی است";
 
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
@@ -104,10 +136,6 @@ const ExamForm = () => {
   const handleToggle = () => {
     setWorkExperience(!workExperience);
   };
-
-  // if (isLoading) {
-  //   return <div className="exam-form">در حال بارگذاری...</div>;
-  // }
 
   if (error) {
     return (
@@ -133,11 +161,25 @@ const ExamForm = () => {
                   onChange={handleInputChange}
                 >
                   <option value="">انتخاب کنید</option>
-                  {educationLevels.map((level) => (
-                    <option key={level.gradeId} value={level.gradeId}>
-                      {level.gradeTitle}
-                    </option>
-                  ))}
+                  {console.log(
+                    "isLoadingEducation:",
+                    isLoadingEducation,
+                    "errorEducation:",
+                    errorEducation,
+                    "educationLevels:",
+                    educationLevels
+                  )}{" "}
+                  {/* Debug log */}
+                  {educationLevels.length > 0 &&
+                  educationLevels.every((l) => l.gradeId && l.gradeTitle) ? (
+                    educationLevels.map((level) => (
+                      <option key={level.gradeId} value={level.gradeId}>
+                        {level.gradeTitle}
+                      </option>
+                    ))
+                  ) : (
+                    <option disabled>داده‌ای یافت نشد</option>
+                  )}
                 </select>
                 {formErrors.educationLevel && (
                   <span className="error">{formErrors.educationLevel}</span>
@@ -180,14 +222,30 @@ const ExamForm = () => {
                   onChange={handleInputChange}
                 >
                   <option value="">انتخاب کنید</option>
-                  {birthProvinces.map((province) => (
-                    <option
-                      key={province.geographyId}
-                      value={province.geographyId}
-                    >
-                      {province.geographyName}
-                    </option>
-                  ))}
+                  {console.log(
+                    "isLoadingProvinces:",
+                    isLoadingProvinces,
+                    "errorProvinces:",
+                    errorProvinces,
+                    "birthProvinces:",
+                    birthProvinces
+                  )}{" "}
+                  {/* Debug log */}
+                  {birthProvinces.length > 0 &&
+                  birthProvinces.every(
+                    (p) => p.geographyId && p.geographyName
+                  ) ? (
+                    birthProvinces.map((province) => (
+                      <option
+                        key={province.geographyId}
+                        value={province.geographyId}
+                      >
+                        {province.geographyName}
+                      </option>
+                    ))
+                  ) : (
+                    <option disabled>داده‌ای یافت نشد</option>
+                  )}
                 </select>
                 {formErrors.birthProvince && (
                   <span className="error">{formErrors.birthProvince}</span>
@@ -202,75 +260,100 @@ const ExamForm = () => {
                   onChange={handleInputChange}
                 >
                   <option value="">انتخاب کنید</option>
-                  {quotas.map((quota) => (
-                    <option key={quota.quotaId} value={quota.quotaId}>
-                      {quota.quotaTitle}
-                    </option>
-                  ))}
+                  {console.log(
+                    "isLoadingQuotas:",
+                    isLoadingQuotas,
+                    "errorQuotas:",
+                    errorQuotas,
+                    "quotas:",
+                    quotas
+                  )}{" "}
+                  {/* Debug log */}
+                  {quotas.length > 0 &&
+                  quotas.every((q) => q.quotaId && q.quotaTitle) ? (
+                    quotas.map((quota) => (
+                      <option key={quota.quotaId} value={quota.quotaId}>
+                        {quota.quotaTitle}
+                      </option>
+                    ))
+                  ) : (
+                    <option disabled>داده‌ای یافت نشد</option>
+                  )}
                 </select>
                 {formErrors.quota && (
                   <span className="error">{formErrors.quota}</span>
                 )}
               </div>
               <div className="form-group gender-radio">
-                <label>جنسیت </label>
+                <label>جنسیت</label>
                 <div className="radio-group">
-                  <label>
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="female"
-                      onChange={handleInputChange}
-                    />
-                    خانم
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="male"
-                      onChange={handleInputChange}
-                    />
-                    آقا
-                  </label>
+                  {console.log(
+                    "isLoadingGenders:",
+                    isLoadingGenders,
+                    "errorGenders:",
+                    errorGenders,
+                    "genders:",
+                    genders
+                  )}{" "}
+                  {/* Debug log */}
+                  {genders.length > 0 &&
+                  genders.every((g) => g.genderId && g.genderName) ? (
+                    genders.map((gender) => (
+                      <label key={gender.genderId}>
+                        <input
+                          type="radio"
+                          name="gender"
+                          value={gender.genderId}
+                          checked={formData.gender === String(gender.genderId)}
+                          onChange={handleInputChange}
+                        />
+                        {gender.genderName}
+                      </label>
+                    ))
+                  ) : (
+                    <span>داده‌ای یافت نشد</span>
+                  )}
                 </div>
                 {formErrors.gender && (
                   <span className="error">{formErrors.gender}</span>
                 )}
               </div>
               <div className="form-group maritalRadio">
-                <label>وضعیت تاهل</label>
+                <label>وضعیت تاهل</label> {/* Marriage status */}
                 <div className="radio-group">
-                  <label>
-                    <input
-                      type="radio"
-                      name="maritalStatus"
-                      value="single"
-                      onChange={handleInputChange}
-                    />
-                    مجرد
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="maritalStatus"
-                      value="married"
-                      onChange={handleInputChange}
-                    />
-                    متاهل
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="maritalStatus"
-                      value="dependents"
-                      onChange={handleInputChange}
-                    />
-                    معیل
-                  </label>
+                  {console.log(
+                    "isLoadingMarriageStatuses:",
+                    isLoadingMarriageStatuses,
+                    "errorMarriageStatuses:",
+                    errorMarriageStatuses,
+                    "marriageStatuses:",
+                    marriageStatuses
+                  )}{" "}
+                  {/* Debug log */}
+                  {marriageStatuses.length > 0 &&
+                  marriageStatuses.every(
+                    (m) => m.marriageId && m.marriageName
+                  ) ? (
+                    marriageStatuses.map((status) => (
+                      <label key={status.marriageId}>
+                        <input
+                          type="radio"
+                          name="marriage"
+                          value={status.marriageId}
+                          checked={
+                            formData.marriage === String(status.marriageId)
+                          }
+                          onChange={handleInputChange}
+                        />
+                        {status.marriageName}
+                      </label>
+                    ))
+                  ) : (
+                    <span>داده‌ای یافت نشد</span>
+                  )}
                 </div>
-                {formErrors.maritalStatus && (
-                  <span className="error">{formErrors.maritalStatus}</span>
+                {formErrors.marriage && (
+                  <span className="error">{formErrors.marriage}</span>
                 )}
               </div>
               <div className="form-group Experience">

@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./StepOne.scss";
 import { useFormLogic } from "./useFormLogic";
-import { useGeography } from "./useGeography";
+import { useQueries } from "@tanstack/react-query";
+import { getHandler } from "../../../apiService";
 import TextInput from "./TextInput";
 import GenderRadio from "./GenderRadio";
 import DatePicker from "react-multi-date-picker";
@@ -18,14 +19,60 @@ const StepOne = ({ onNext, onGenderChange }) => {
     handleSubmit,
   } = useFormLogic({ onNext });
 
-  const { provinces, cities, loading, error, updateCities, allGeographies } =
-    useGeography();
+  const [filteredCities, setFilteredCities] = useState([]);
+
+  // Static marriage status options (replace with API call if endpoint exists)
+  const marriageOptions = [
+    { value: "single", label: "مجرد" },
+    { value: "married", label: "متاهل" },
+  ];
+
+  // Fetch geographies and religions using react-query
+  const [
+    {
+      data: geographies = [],
+      isLoading: isLoadingGeographies,
+      error: errorGeographies,
+    },
+    {
+      data: religions = [],
+      isLoading: isLoadingReligions,
+      error: errorReligions,
+    },
+  ] = useQueries({
+    queries: [
+      {
+        queryKey: ["geographies"],
+        queryFn: () => getHandler("geography"),
+        staleTime: 1000 * 60 * 60, // 1 hour
+        retry: 1,
+      },
+      {
+        queryKey: ["religions"],
+        queryFn: () => getHandler("religion"),
+        staleTime: 1000 * 60 * 60, // 1 hour
+        retry: 1,
+      },
+    ],
+  });
+
+  // Derive provinces and cities
+  const provinces = geographies.filter((item) => item.geographyParent === null);
+  const allCities = geographies.filter((item) => item.geographyParent !== null);
+
+  // Combine loading and error states
+  const isLoading = isLoadingGeographies || isLoadingReligions;
+  const error = errorGeographies || errorReligions;
 
   const handleProvinceChange = (e) => {
     const provinceId = e.target.value;
-    handleChange({ target: { name: "city", value: "" } }); // ریست شهر
-    handleChange(e); // آپدیت استان
-    updateCities(provinceId); // آپدیت لیست شهرها
+    handleChange({ target: { name: "city", value: "" } }); // Reset city
+    handleChange(e); // Update province
+    // Filter cities based on selected province
+    const filtered = allCities.filter(
+      (city) => city.geographyParent === Number(provinceId)
+    );
+    setFilteredCities(filtered);
   };
 
   const handleDateChange = (date) => {
@@ -36,24 +83,31 @@ const StepOne = ({ onNext, onGenderChange }) => {
   const getDisplayValue = (key, type) => {
     const value = formData[key];
     if (!value) return "";
-    if (!isNaN(value) && allGeographies.length > 0) {
-      const item =
-        type === "province"
-          ? provinces.find((p) => p.geographyId === Number(value))
-          : cities.find((c) => c.geographyId === Number(value));
-      return item ? item.geographyName : "";
+    if (type === "province" || type === "city") {
+      if (!isNaN(value) && geographies.length > 0) {
+        const item =
+          type === "province"
+            ? provinces.find((p) => p.geographyId === Number(value))
+            : filteredCities.find((c) => c.geographyId === Number(value));
+        return item ? item.geographyName : "";
+      }
+    } else if (type === "religion") {
+      const religion = religions.find((r) => r.religionName === value);
+      return religion ? religion.religionName : value;
+    } else if (type === "marriage") {
+      const marriage = marriageOptions.find((m) => m.value === value);
+      return marriage ? marriage.label : value;
     }
     return value;
   };
+
   const handleGenderChange = (e) => {
-    console.log("جنسیت انتخاب‌شده توی StepOne:", e.target.value); // دیباگ
     handleChange(e);
     onGenderChange(e.target.value);
   };
 
   useEffect(() => {
     if (formData.gender) {
-      console.log("جنسیت اولیه فرستاده‌شده به والد:", formData.gender); // دیباگ
       onGenderChange(formData.gender);
     }
   }, [formData.gender, onGenderChange]);
@@ -137,29 +191,37 @@ const StepOne = ({ onNext, onGenderChange }) => {
         )}
         {isEditable ? (
           <>
-            {/* {loading && <p>در حال بارگذاری...</p>} */}
-            {error && <div className="error">{error}</div>}
-            {!loading && !error && (
+            {isLoading && <p>در حال بارگذاری...</p>}
+            {error && (
+              <div className="error">
+                خطا در دریافت داده‌ها: {error.message}
+              </div>
+            )}
+            {!isLoading && !error && (
               <>
                 <div className="step1-form-group">
                   <label>استان:</label>
                   <select
-                    name="provice"
-                    value={formData.provice}
+                    name="province"
+                    value={formData.province}
                     onChange={handleProvinceChange}
                   >
                     <option value="">انتخاب کنید</option>
-                    {provinces.map((province) => (
-                      <option
-                        key={province.geographyId}
-                        value={province.geographyId}
-                      >
-                        {province.geographyName}
-                      </option>
-                    ))}
+                    {provinces.length > 0 ? (
+                      provinces.map((province) => (
+                        <option
+                          key={province.geographyId}
+                          value={province.geographyId}
+                        >
+                          {province.geographyName}
+                        </option>
+                      ))
+                    ) : (
+                      <option disabled>داده‌ای یافت نشد</option>
+                    )}
                   </select>
-                  {errors.provice && (
-                    <small className="error">{errors.provice}</small>
+                  {errors.province && (
+                    <small className="error">{errors.province}</small>
                   )}
                 </div>
                 <div className="step1-form-group">
@@ -168,20 +230,64 @@ const StepOne = ({ onNext, onGenderChange }) => {
                     name="city"
                     value={formData.city}
                     onChange={handleChange}
-                    disabled={!formData.provice}
+                    disabled={!formData.province}
                   >
                     <option value="">انتخاب کنید</option>
-                    {cities.map((city) => (
-                      <option key={city.geographyId} value={city.geographyId}>
-                        {city.geographyName}
+                    {filteredCities.length > 0 ? (
+                      filteredCities.map((city) => (
+                        <option key={city.geographyId} value={city.geographyId}>
+                          {city.geographyName}
+                        </option>
+                      ))
+                    ) : (
+                      <option disabled>ابتدا استان را انتخاب کنید</option>
+                    )}
+                  </select>
+                  {errors.city && (
+                    <small className="error">{errors.city}</small>
+                  )}
+                </div>
+                <div className="step1-form-group">
+                  <label>دین:</label>
+                  <select
+                    name="religion"
+                    value={formData.religion}
+                    onChange={handleChange}
+                  >
+                    <option value="">انتخاب کنید</option>
+                    {religions.length > 0 ? (
+                      religions.map((religion) => (
+                        <option
+                          key={religion.religionId}
+                          value={religion.religionName}
+                        >
+                          {religion.religionName}
+                        </option>
+                      ))
+                    ) : (
+                      <option disabled>داده‌ای یافت نشد</option>
+                    )}
+                  </select>
+                  {errors.religion && (
+                    <small className="error">{errors.religion}</small>
+                  )}
+                </div>
+                <div className="step1-form-group">
+                  <label>تاهل:</label>
+                  <select
+                    name="marriage"
+                    value={formData.marriage}
+                    onChange={handleChange}
+                  >
+                    <option value="">انتخاب کنید</option>
+                    {marriageOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
                       </option>
                     ))}
                   </select>
-                  {(errors.city ||
-                    (!formData.city && formData.provice && isEditable)) && (
-                    <small className="error">
-                      {errors.city || "لطفاً شهر را انتخاب کنید"}
-                    </small>
+                  {errors.marriage && (
+                    <small className="error">{errors.marriage}</small>
                   )}
                 </div>
               </>
@@ -191,12 +297,12 @@ const StepOne = ({ onNext, onGenderChange }) => {
           <>
             <TextInput
               label="استان"
-              name="provice"
-              value={getDisplayValue("provice", "province")}
+              name="province"
+              value={getDisplayValue("province", "province")}
               onChange={handleChange}
               isEditable={false}
               placeholder="استان خود را وارد کنید"
-              error={errors.provice}
+              error={errors.province}
             />
             <TextInput
               label="شهر"
@@ -207,26 +313,26 @@ const StepOne = ({ onNext, onGenderChange }) => {
               placeholder="شهر خود را وارد کنید"
               error={errors.city}
             />
+            <TextInput
+              label="دین"
+              name="religion"
+              value={getDisplayValue("religion", "religion")}
+              onChange={handleChange}
+              isEditable={false}
+              placeholder="دین خود را وارد کنید"
+              error={errors.religion}
+            />
+            <TextInput
+              label="تاهل"
+              name="marriage"
+              value={getDisplayValue("marriage", "marriage")}
+              onChange={handleChange}
+              isEditable={false}
+              placeholder="وضعیت تاهل خود را وارد کنید"
+              error={errors.marriage}
+            />
           </>
         )}
-        <TextInput
-          label="دین"
-          name="religion"
-          value={formData.religion}
-          onChange={handleChange}
-          isEditable={isEditable}
-          placeholder="دین خود را وارد کنید"
-          error={errors.religion}
-        />
-        <TextInput
-          label="تاهل"
-          name="mariage"
-          value={formData.mariage}
-          onChange={handleChange}
-          isEditable={isEditable}
-          placeholder="وضعیت تاهل خود را وارد کنید"
-          error={errors.mariage}
-        />
         <TextInput
           label="تعداد فرزند"
           name="children"
@@ -238,7 +344,7 @@ const StepOne = ({ onNext, onGenderChange }) => {
         />
         <GenderRadio
           value={formData.gender}
-          onChange={handleGenderChange} // استفاده از تابع جدید
+          onChange={handleGenderChange}
           isEditable={isEditable}
         />
 
@@ -246,10 +352,7 @@ const StepOne = ({ onNext, onGenderChange }) => {
           <button
             type="submit"
             className="step1-next-button"
-            disabled={
-              Object.keys(errors).length > 0 ||
-              (isEditable && formData.provice && !formData.city)
-            }
+            disabled={Object.keys(errors).length > 0}
           >
             مرحله بعد
           </button>
